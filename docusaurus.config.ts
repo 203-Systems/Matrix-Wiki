@@ -86,10 +86,11 @@ const config: Config = {
           type: 'docsVersionDropdown',
           position: 'right',
         },
-        {
-          type: 'localeDropdown',
-          position: 'right',
-        },
+        // Disable Chinese for now
+        // {
+        //   type: 'localeDropdown',
+        //   position: 'right',
+        // },
         {
           href: 'https://github.com/203-Systems',
           label: 'GitHub',
