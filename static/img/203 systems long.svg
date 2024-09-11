@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 291.74 42.69">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: .2em;
+      }
+
+      .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        letter-spacing: .19em;
+      }
+
+      .cls-4 {
+        font-family: LabourMedium-Regular, 'Labour Medium';
+        font-size: 39.97px;
+      }
+    </style>
+  </defs>
+  <g>
+    <g>
+      <polygon class="cls-2" points="32.7 21.21 32.7 34.45 51.6 34.45 32.7 21.21"/>
+      <polygon class="cls-2" points="52.31 5.21 33.4 5.21 52.31 18.45 52.31 5.21"/>
+      <path class="cls-2" d="M30.3,2.77v34.12h24.41V2.77h-24.41ZM32.7,21.21V5.21h19.6v29.25h-19.6v-13.24Z"/>
+    </g>
+    <g>
+      <polygon class="cls-2" points="82.53 4.51 82.53 4.51 82.53 4.51 82.53 4.51"/>
+      <path class="cls-2" d="M84.25,2.84l-24.88-.12v.67h0v2.03s22.1.11,22.1.11l-15.25,14.43,15.25,14.36-21.69-.11v2.03s0,0,0,0v.67s24.45.12,24.45.12h.03V2.84ZM82.53,4.51h0,0s0,0,0,0Z"/>
+    </g>
+    <path class="cls-2" d="M26.92,2.84H1.71l14.34,10.89L0,36.86h.97c1.88,0,8.58,0,14.45,0h9.75l-14.54-11.04L26.92,2.84Z"/>
+  </g>
+  <text class="cls-4" transform="translate(103.56 33.97)"><tspan class="cls-3" x="0" y="0">SY</tspan><tspan class="cls-1" x="54" y="0">STEMS</tspan></text>
+</svg>
