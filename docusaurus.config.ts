@@ -7,7 +7,7 @@ const config: Config = {
   favicon: 'img/favicon.png',
 
   // Set the production url of your site here
-  url: 'https://wiki.203.io',
+  url: 'https://matrix.203.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',

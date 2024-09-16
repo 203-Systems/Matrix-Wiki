@@ -2,46 +2,22 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Welcome to your new Mystrix
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Mystrix is a multipurpose grid controller, designed to be community centric, highly customizable, and fully open sourced. 
 
 ## Getting Started
 
-Get started by **creating a new site**.
+First thing you should do is to apply the included silicon anti slip pad in the packaging to your Mystrix.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+We can not apply it in the factory because we want to hide the metal device info label under the pad so it appear cleaner and prevert the label from wear and scretches.
 
-### What you'll need
+## Matrix OS
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+The Mystrix section will cover basic usage of the Mystrix and Matrix OS.
 
-## Generate a new site
+Matrix OS is the soul of Mystrix, enabling Mystrix to be multi purpose and have enhanced standalone capabilities. All software features are shipped as Matrix OS applications and be mostly independent of each other. 
 
-Generate a new Docusaurus site using the **classic template**.
+See more what each Matrix OS applications do in detail. See the Matrix OS section of this wiki.
 
-The classic template will automatically be added to your project after you run the command:
 
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
