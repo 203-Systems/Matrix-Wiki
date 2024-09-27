@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './styles.module.css';
+import { ArrowRight } from '@carbon/icons-react';
 
 interface UIProps {
   functions: [];
@@ -25,6 +26,10 @@ const MystrixVisualizer = () => {
     }
   };
 
+  var function_name = "Mystrix Visualizer";
+  var function_description = "Mystrix Visualizer is a great way to visualize how the Matrix OS UI is going to be looking like on the Mystrix device";
+  var function_color = "rgb(0, 255, 255)";
+    
   return (
     <div className={styles.MystrixVisualizer}>
         <div className={styles.mystrix}>
@@ -107,7 +112,12 @@ const MystrixVisualizer = () => {
         <div className={styles.mystrixCenterKey}/>
         </div>
         <div className={styles.functionDisplay}>
-            <span style={{ fontSize: "20px" }}>Mystrix Visualizer</span>
+            <div className={styles.functionName}>{function_name}</div>
+            <div className={styles.functionDesc}>{function_description}</div>
+            <button className={styles.functionDetailBtn}>
+                <div>Detail</div>
+                {/* <ArrowRight size="24" /> */}
+            </button>
         </div>
     </div>
   );
