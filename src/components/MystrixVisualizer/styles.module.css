@@ -1,0 +1,170 @@
+.MystrixVisualizer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(240, 240, 240);
+  border-radius: 3%;
+}
+
+.functionDisplay {
+  width: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(40, 40, 40);
+  border-radius: 3%;
+  color: aliceblue;
+  margin: 3%;
+  padding-top: 3%;
+  justify-content: top;
+  align-items: center;
+}
+
+.mystrix {
+  position: relative;
+  aspect-ratio: 1/1;
+  z-index: 1;
+  margin: 10%;
+  margin-right: 5%;
+  width: 90%;
+  height: 50%;
+}
+
+.mystrixBorder {
+  background-color: rgb(20, 20, 20);
+  border: 2px solid rgb(120, 120, 120);
+  border-radius: 3%;
+  position: absolute;
+  width: 100%;
+  aspect-ratio: 1/1;
+  z-index: 2;
+}
+
+.mystrixUnderglow {
+  position: absolute;
+  top: -3%;
+  left: -3%;
+  height: 106%;
+  width: 106%;
+  filter: blur(20px) saturate(200%) brightness(200%);
+  z-index: 1;
+}
+
+.mystrixUnderglowRow {
+  height: 6%;
+  display: flex;
+  padding-left: 6%;
+  padding-right: 6%;
+  gap: 1.5%;
+}
+
+.mystrixUnderglowColumn {
+  height: 100%;
+  width: 6%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+}
+
+.mystrixUnderglowLed{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.0);
+}
+
+.mystrixControls {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  gap: 1.5%;
+  z-index: 10;
+}
+
+.mystrixControlsRow {
+  height: 100%;
+  display: flex;
+  gap: 1.5%;
+}
+
+.mystrixBtn {
+  height: 100%;
+  width: 100%;
+  border-radius: 10%;
+  background-color: rgb(80, 80, 80);
+  justify-content: center;
+  align-items: center;
+}
+
+
+.mystrixTouchKey {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  padding: 1px;
+}
+
+.mystrixTouchKeyRow {
+  height: 3%;
+  display: flex;
+  padding-left: 3%;
+  padding-right: 3%;
+  gap: 1.5%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.mystrixTouchKeyColumn {
+  height: 100%;
+  width: 3%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5%;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.mystrixTouchkeyBtn {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.mystrixTouchkeyBtnChild {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(20, 20, 20);
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+}
+
+.mystrixTouchkeyBtnChild:hover {
+  background-color: rgb(80, 80, 80);
+}
+
+.mystrixCenterKey {
+  position: absolute;
+  height: 3.2%;
+  width: 3.2%;
+  z-index: 5;
+  background-color: rgb(20, 20, 20);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-radius: 20%;
+  transition: background-color 0.3s ease;
+}
+
+.mystrixCenterKey:hover {
+  background-color: rgb(80, 80, 80);
+}
