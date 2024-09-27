@@ -1,10 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 0
 ---
 
 # Matrix OS Basic
-
-
 
 
 After connecting Matrix to power, a boot animation will start playing. 

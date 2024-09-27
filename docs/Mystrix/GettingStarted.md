@@ -18,6 +18,4 @@ The Mystrix section will cover basic usage of the Mystrix and Matrix OS.
 
 Matrix OS is the soul of Mystrix, enabling Mystrix to be multi purpose and have enhanced standalone capabilities. All software features are shipped as Matrix OS applications and be mostly independent of each other. 
 
-See more what each Matrix OS applications do in detail. See the Matrix OS section of this wiki.
-
 

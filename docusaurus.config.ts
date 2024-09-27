@@ -77,9 +77,15 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'matrixOsSidebar',
+          sidebarId: 'developerSidebar',
           position: 'left',
-          label: 'MatrixOS',
+          label: 'Developer',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'resourcesSidebar',
+          position: 'left',
+          label: 'Resources',
         },
         // {to: '/blog', label: 'Updates', position: 'left'},
         {
@@ -109,8 +115,12 @@ const config: Config = {
               to: '/docs/Mystrix',
             },
             {
-              label: 'Matrix OS',
-              to: '/docs/MatrixOS',
+              label: 'Developer',
+              to: '/docs/Developer',
+            },
+            {
+              label: 'Resources',
+              to: '/docs/Resources',
             }
           ],
         },
