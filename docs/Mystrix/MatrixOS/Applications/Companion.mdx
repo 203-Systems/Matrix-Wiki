@@ -1,0 +1,87 @@
+---
+sidebar_position: 4
+---
+
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# Companion App
+
+Companion app is used to connect with Bitfocus Companion to enable advanced and very power control to various things.
+
+Mystrix intergration is available after the 3.4.0 release of the Bitfocus Companion.
+
+Download the latest version of Bitfocus Companion from [here](https://bitfocus.io/companion/)
+
+## Companion View
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+        {
+            "name": "Brightness Control",
+            "description": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+            "origin": [3, 3],
+            "size": [2, 2],
+            "color": "#FFFFFF",
+            "link": "/docs/Mystrix/MatrixOS/SystemSettings#brightness-control"
+        },
+        {
+            "name": "Device Rotation Up",
+            "description": "This technicaally doesn't do anything.",
+            "origin": [3, 2],
+            "size": [2, 1],
+            "color": "#00FF00",
+            "link": "#device-rotation"
+        },
+        {
+            "name": "Device Rotation Left",
+            "description": "Rotate the device so that the top of the device is on the left side.",
+            "origin": [2, 3],
+            "size": [1, 2],
+            "color": "#00FF00",
+            "link": "/docs/Mystrix/MatrixOS/SystemSettings#device-rotation"
+        },
+        {
+            "name": "Device Rotation Down",
+            "description": "Rotate the device so that the top of the device is on the bottom side.",
+            "origin": [3, 5],
+            "size": [2, 1],
+            "color": "#00FF00",
+            "link": "/docs/Mystrix/MatrixOS/SystemSettings#device-rotation"
+        },
+        {
+            "name": "Device Rotation Right",
+            "description": "Rotate the device so that the top of the device is on the right side.",
+            "origin": [5, 3],
+            "size": [1, 2],
+            "color": "#00FF00",
+            "link": "/docs/Mystrix/MatrixOS/SystemSettings#device-rotation"
+        },
+        {
+            "name": "System Settings",
+            "description": "Enter the system settings",
+            "origin": [7, 7],
+            "color": "#FFFFFF",
+            "link": "/docs/Mystrix/MatrixOS/SystemSettings"
+        },
+        {
+            "name": "Companion view or Exit App",
+            "description": "Tap to go back to the companion view. Hold to exit the app.",
+            "origin": ["c"],
+        },
+    ]
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify settings of the app and the device."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ConfigMenu/>
+
+## Set Up Companion
