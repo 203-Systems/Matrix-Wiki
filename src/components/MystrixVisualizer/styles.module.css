@@ -11,35 +11,44 @@
 
 
 .functionDisplay {
-  width: 50%;
+  width: 40%;
   position: relative;
   display: flex;
   flex-direction: column;
   color: black;
   justify-content: top;
-  align-items: center;
+  align-items: left;
   background-color: rgb(200, 200, 200);
+  box-sizing: border-box;
 }
 
 
 .functionName {
   margin: 6%;
-  font-size: 160%;
+  height: auto !important;
+  width: 90% !important;
+  text-wrap: stable;
+  font-size: 220%;
   margin-bottom: 0;
   line-height: 120%;
   font-weight: 600;
   letter-spacing: 0.05em;
+  font-family: "Roboto", sans-serif;
+  transition: height 0.5s ease;
 }
 
 .functionDesc {
   margin: 6%;
-  font-size: 90%;
+  font-size: 120%;
   font-weight: 400;
   line-height: 120%;
+  font-family: "Roboto", sans-serif;
+  transition: transform 0.3s ease;
+  white-space: pre-wrap;
 }
 
 .functionDetailBtn {
-  height: 15%;
+  height: 10%;
   background-color: rgb(40, 40, 40);
   border: none;
   width: 100%;
@@ -59,16 +68,17 @@
   justify-content: center;
   align-items: center;
   gap: 3%;
+  transition: transform 0.3s ease;
 }
-
 
 .mystrix {
   position: relative;
   aspect-ratio: 1/1;
   z-index: 1;
   margin: 6%;
-  width: 100%;
+  width: 60%;
 }
+
 
 .mystrixBorder {
   background-color: rgb(20, 20, 20);
@@ -77,18 +87,25 @@
   position: absolute;
   width: 100%;
   aspect-ratio: 1/1;
-  z-index: 2;
+  z-index: 3;
+  text-wrap: stable;
 }
 
 
 .mystrixUnderglow {
   position: absolute;
+  aspect-ratio: 1/1;
   top: -3%;
   left: -3%;
   height: 106%;
   width: 106%;
-  filter: blur(20px) saturate(200%) brightness(200%);
-  z-index: 1;
+  filter: blur(20px) saturate(200%) grayscale(0%) brightness(200%);
+  transition: filter 0.3s ease;
+  z-index: 2;
+}
+
+.mystrixUnderglowDim {
+  filter:  blur(20px) saturate(100%) grayscale(80%) brightness(80%)
 }
 
 .mystrixUnderglowRow {
@@ -115,7 +132,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.0);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .mystrixControls {
@@ -142,8 +159,61 @@
   background-color: rgb(160, 160, 160);
   justify-content: center;
   align-items: center;
+  background-image: none;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
 }
 
+.mystrixBtnLit {
+  animation: fade-in 0.3s ease forwards;
+}
+
+.mystrixBtnDim {
+  filter: grayscale(80%) brightness(80%)
+}
+
+.mystrixBtnSelected {
+  transform: scale(1.05);
+}
+
+.mystrixBtn:hover {
+  transform: scale(1.05);
+}
+
+@keyframes fade-in {
+  0% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.0) 10%, rgba(255, 255, 255, 0));
+  }
+  10% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 10%, rgba(255, 255, 255, 0));
+  }
+  20% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, rgba(255, 255, 255, 0));
+  }
+  30% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.15) 10%, rgba(255, 255, 255, 0));
+  }
+  40% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, rgba(255, 255, 255, 0));
+  }
+  50% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.25) 10%, rgba(255, 255, 255, 0));
+  }
+  60% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, rgba(255, 255, 255, 0));
+  }
+  70% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.35) 10%, rgba(255, 255, 255, 0));
+  }
+  80% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.4) 10%, rgba(255, 255, 255, 0));
+  }
+  90% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.45) 10%, rgba(255, 255, 255, 0));
+  }
+  100% {
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.5) 10%, rgba(255, 255, 255, 0));
+  }
+}
 
 .mystrixTouchKey {
   position: absolute;
@@ -151,6 +221,7 @@
   width: 100%;
   z-index: 5;
   padding: 1px;
+  pointer-events: none;
 }
 
 .mystrixTouchKeyRow {
@@ -178,33 +249,63 @@
   width: 100%;
   justify-content: center;
   align-items: center;
+  pointer-events: auto;
 }
 
 .mystrixTouchkeyBtnChild {
   height: 100%;
   width: 100%;
-  background-color: rgb(20, 20, 20);
+  background-color: rgba(255, 255, 255, 0.0);
   border-radius: 9999px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  transform: scale(0.8);
+}
+
+.mystrixTouchkeyBtnChildHasElement {
+  background-color:  rgba(255, 255, 255, 0.3);
+}
+
+.mystrixTouchkeyBtnChildSelected {
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.15);
+}
+
+.mystrixTouchkeyBtnChildDim{
+  background-color:  rgba(255, 255, 255, 0.0);
 }
 
 .mystrixTouchkeyBtnChild:hover {
-  background-color: rgb(80, 80, 80);
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.15);
 }
 
 .mystrixCenterKey {
   position: absolute;
-  height: 3.2%;
-  width: 3.2%;
+  height: 2.8%;
+  width: 2.8%;
   z-index: 5;
-  background-color: rgb(20, 20, 20);
+  background-color:rgba(255, 255, 255, 0.1);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(45deg);
   border-radius: 20%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.mystrixCenterKeyHasElement {
+  background-color:  rgba(255, 255, 255, 0.3);
+}
+
+.mystrixCenterKeySelected {
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.2);
+}
+
+.mystrixCenterKeyDim{
+  background-color:  rgba(255, 255, 255, 0.0);
 }
 
 .mystrixCenterKey:hover {
-  background-color: rgb(80, 80, 80);
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.2);
 }
