@@ -113,15 +113,15 @@ const config: Config = {
           items: [
             {
               label: 'Mystrix',
-              to: '/docs/Mystrix',
+              to: 'docs/Mystrix/GettingStarted',
             },
             {
               label: 'Developer',
-              to: '/docs/Developer',
+              to: 'docs/Developer/MatrixOSBasic',
             },
             {
               label: 'Resources',
-              to: '/docs/Resources',
+              to: 'docs/Resources/MystrixHardwareDesigns'
             }
           ],
         },
