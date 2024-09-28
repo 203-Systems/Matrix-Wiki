@@ -62,11 +62,12 @@ export function ApplicationLauncher() {
             "description": "Enter the system settings",
             "origin": [7, 7],
             "color": "#FFFFFF",
+            "link": "/docs/Mystrix/MatrixOS/SystemSettings"
         },
     ]
 
     const uiName = "Application Launcher"
-    const uiDescription = "After connecting device to power, a boot animation will start playing. If Matrix OS can not connect to the host (eg, connected to a power bank), a standby animation will be playing in loop. You can click the center function key to enter the OS."
+    const uiDescription = "Application Launcher is the main menu of the OS. It allows user to select an application to use."
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -76,6 +77,6 @@ export function ApplicationLauncher() {
 
 <ApplicationLauncher />
 
-After connecting device to power, a boot animation will start playing. 
+Application Launcher is the main menu of the OS. It allows user to select an application to use.
 
-If Matrix OS can not connect to the host (eg, connected to a power bank), a standby animation will be playing in loop. You can click the center function key to enter the OS.
+Top section of the app launcher are applications available. The bottom section are the control bars hosting application class / page selection and system setting.
