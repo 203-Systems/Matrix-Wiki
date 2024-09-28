@@ -1,0 +1,81 @@
+---
+sidebar_position: 2
+---
+
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# Application Launcher
+
+export function ApplicationLauncher() {
+
+    const uiElements = [
+        {
+            "name": "Performance APP",
+            "description": "Enter the performance application",
+            "origin": [0, 0],
+            "color": "#FF0000",
+            "link": "/docs/Mystrix/MatrixOS/Applications/Performance"
+        },
+        {
+            "name": "Note APP",
+            "description": "Enter the note application",
+            "origin": [1, 0],
+            "color": "#00FFFF",
+            "link": "/docs/Mystrix/MatrixOS/Applications/Note"
+        },
+        {
+            "name": "Lighting APP",
+            "description": "Enter the lighting application",
+            "origin": [2, 0],
+            "color": "#FF00FF",
+            "link": "/docs/Mystrix/MatrixOS/Applications/Lighting"
+        },
+        {
+            "name": "Gamepad APP",
+            "description": "Enter the gamepad application",
+            "origin": [3, 0],
+            "color": "#6fff00",
+            "link": "/docs/Mystrix/MatrixOS/Applications/Gamepad"
+        },
+        {
+            "name": "Dice APP",
+            "description": "Enter the dice application",
+            "origin": [4, 0],
+            "color": "#FFA500",
+            "link": "/docs/Mystrix/MatrixOS/Applications/Dice"
+        },
+        {
+            "name": "Companion APP",
+            "description": "Enter the companion application",
+            "origin": [5, 0],
+            "color": "#0000FF",
+            "link": "/docs/Mystrix/MatrixOS/Applications/Companion"
+        },
+        {
+            "name": "Application Catalog: Stock Apps",
+            "description": "Switch to the stock application catalog. Currently, the stock application catalog is the only available catalog. In the future, more application catalogs will be available.",
+            "origin": [0, 7],
+            "color": "#00FFFF",
+        },
+        {
+            "name": "System Settings",
+            "description": "Enter the system settings",
+            "origin": [7, 7],
+            "color": "#FFFFFF",
+        },
+    ]
+
+    const uiName = "Application Launcher"
+    const uiDescription = "After connecting device to power, a boot animation will start playing. If Matrix OS can not connect to the host (eg, connected to a power bank), a standby animation will be playing in loop. You can click the center function key to enter the OS."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ApplicationLauncher />
+
+After connecting device to power, a boot animation will start playing. 
+
+If Matrix OS can not connect to the host (eg, connected to a power bank), a standby animation will be playing in loop. You can click the center function key to enter the OS.
