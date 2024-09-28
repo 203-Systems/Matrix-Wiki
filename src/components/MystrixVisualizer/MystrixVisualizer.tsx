@@ -41,14 +41,15 @@ interface UIProps {
 }
 
 const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElements }) => {
-    const [selected_function, set_selected_function] = useState<number | undefined>(undefined);
-    const [selected_function_locked, set_selected_function_locked] = useState<boolean>(false);
+    const [selected_function, setSelectedFunction] = useState<number | undefined>(undefined);
+    const [selected_function_locked, setSelectedFunctionLocked] = useState<boolean>(false);
 
     const [keypadColors, setKeypadColors] = useState<(string | undefined)[]>(Array(64).fill(undefined));
     const [keypadFunctions, setKeypadFunctions] = useState<(number | undefined)[]>(Array(64).fill(undefined));
     const [underglowColors, setUnderglowColors] = useState<(string | undefined)[]>(Array(32).fill(undefined));
     const [touchbarFunctions, setTouchbarFunctions] = useState<(number | undefined)[]>(Array(32).fill(undefined));
     const [centerKeyFunctions, setCenterKeyFunctions] = useState<(number | undefined)>(undefined);
+    const [detailButtonColor, setDetailButtonColor] = useState<string>("unset");
 
 
     const getKeyID = (x: number, y: number) => x + y * 8;
@@ -111,27 +112,38 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     }
   };
 
-  const setSelectedFunction = (function_id: number) => {
-    if (selected_function_locked == false) {
-        set_selected_function(function_id);
+  const selectHighlightFunction = (function_id: number, color : string = "unset") => {
+    if (selected_function_locked == false && function_id != undefined) 
+    {
+        setSelectedFunction(function_id);
         console.log("Select Function ID: " + function_id);
+        if (uiElements[function_id].link != undefined) {
+            setDetailButtonColor(color);
+        }
+    }
+    else if (selected_function_locked == false && function_id == undefined) 
+    {
+        setSelectedFunction(undefined);
     }
   }
 
-  const lockSelectedFunction = (function_id: number) => {
+  const lockSelectedFunction = (function_id: number, color : string = "unset") => {
     console.log("Lock Function ID: " + function_id);
     if (selected_function_locked == true && selected_function == function_id) {
-        set_selected_function_locked(false);
-        set_selected_function(undefined);
+        setSelectedFunctionLocked(false);
+        setSelectedFunction(undefined);
     }
     else if (uiElements[function_id] != undefined && uiElements[function_id].name != undefined) {
-        set_selected_function_locked(true);
-        set_selected_function(function_id);
+        setSelectedFunctionLocked(true);
+        setSelectedFunction(function_id);
+        if (uiElements[function_id].link != undefined) {
+            setDetailButtonColor(color);
+        }
     }
     else
     {
-        set_selected_function_locked(false);
-        set_selected_function(undefined);
+        setSelectedFunctionLocked(false);
+        setSelectedFunction(undefined);
     }
   }
 
@@ -170,7 +182,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
             </div>
         </div>
 
-        <div className={styles.mystrixBorder} onMouseLeave={() => {setSelectedFunction(undefined)}}>
+        <div className={styles.mystrixBorder} onMouseLeave={() => {selectHighlightFunction(undefined)}}>
             <div className={styles.mystrixControls}>
             {Array.from({ length: 8 }, (_, y) => (
                 <div key={y} className={styles.mystrixControlsRow}>
@@ -192,8 +204,8 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                                 backgroundColor: keyColor ? keyColor : "rgb(160, 160, 160)", // Corrected closing parenthesis
                                 boxShadow: (keyColor && ! dim) ? `0 0 5px 1px ${keyColor}` : "none", // Corrected closing parenthesis
                                 }}
-                            onMouseEnter={(e) => { setSelectedFunction(keypadFunctions[y * 8 + x]);}}
-                            onClick={(e) => { lockSelectedFunction(keypadFunctions[y * 8 + x]);  e.stopPropagation()}}
+                            onMouseEnter={(e) => { selectHighlightFunction(keypadFunctions[y * 8 + x], keyColor);}}
+                            onClick={(e) => { lockSelectedFunction(keypadFunctions[y * 8 + x], keyColor);  e.stopPropagation()}}
                         />
                     );
                 })}
@@ -212,7 +224,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                         ${(touchbarFunctions[24 + x] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
                         ${(selected_function != undefined && selected_function !== touchbarFunctions[24 + x]) ? styles.mystrixTouchkeyBtnChildDim : ''}
                         ${(selected_function != undefined && selected_function === touchbarFunctions[24 + x]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {setSelectedFunction(touchbarFunctions[24 + x])}}
+                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[24 + x])}}
                         onClick={(e) => {lockSelectedFunction(keypadFunctions[24 + x]), e.stopPropagation()}}
                     />
                 </div>
@@ -229,7 +241,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                         ${(touchbarFunctions[16 + y] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
                         ${(selected_function != undefined && selected_function !== touchbarFunctions[16 + y]) ? styles.mystrixTouchkeyBtnChildDim : ''}
                         ${(selected_function != undefined && selected_function === touchbarFunctions[16 + y]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {setSelectedFunction(touchbarFunctions[16 + y])}}
+                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[16 + y])}}
                         onClick={(e) => {lockSelectedFunction(keypadFunctions[16 + y]), e.stopPropagation()}}
                     />
                 </div>
@@ -245,7 +257,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                         ${(touchbarFunctions[y] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
                         ${(selected_function != undefined && selected_function !== touchbarFunctions[y]) ? styles.mystrixTouchkeyBtnChildDim : ''}
                         ${(selected_function != undefined && selected_function === touchbarFunctions[y]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {setSelectedFunction(touchbarFunctions[y])}}
+                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[y])}}
                         onClick={(e) => {lockSelectedFunction(keypadFunctions[y]), e.stopPropagation()}}
                     />
                 </div>
@@ -262,7 +274,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                         ${(touchbarFunctions[15 - x] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
                         ${(selected_function != undefined && selected_function !== touchbarFunctions[15 - x]) ? styles.mystrixTouchkeyBtnChildDim : ''}
                         ${(selected_function != undefined && selected_function === touchbarFunctions[15 - x]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {setSelectedFunction(touchbarFunctions[15 - x])}}
+                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[15 - x])}}
                         onClick={(e) => {lockSelectedFunction(keypadFunctions[15 - x]), e.stopPropagation()}}
                     />
                 </div>
@@ -277,14 +289,14 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                 ${(selected_function != undefined && selected_function !== centerKeyFunctions) ? styles.mystrixCenterKeyDim : ''}
                 ${(selected_function != undefined && selected_function === centerKeyFunctions) ? styles.mystrixCenterKeySelected : ''}
             `}
-            onMouseEnter={() => {setSelectedFunction(centerKeyFunctions)}}
+            onMouseEnter={() => {selectHighlightFunction(centerKeyFunctions)}}
             onClick={(e) => {lockSelectedFunction(centerKeyFunctions), e.stopPropagation()}}
         />
 
         </div>
         <div className={styles.functionDisplay}>
             <h2 className={styles.functionName} style={{ position: "absolute"}}>
-                <ReactTextTransition springConfig={presets.gentle} delay={0}>
+                <ReactTextTransition delay={0} direction='up'>
                     {selected_function !== undefined ? uiElements[selected_function].name : uiName}
                 </ReactTextTransition>
             </h2>
@@ -292,13 +304,16 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                     {selected_function !== undefined ? uiElements[selected_function].name : uiName}
             </h2>
             <section className={styles.functionDesc}>
-                <ReactTextTransition springConfig={presets.gentle} delay={100}>
+                <ReactTextTransition delay={150} direction='up'>
                     {selected_function !== undefined ? uiElements[selected_function].description : uiDescription}
                 </ReactTextTransition>
             </section>
             <button
                 className={styles.functionDetailBtn}
-                style={{ transform: (selected_function !== undefined && uiElements[selected_function].link !== undefined) ? "translateY(0)" : "translateY(100%)" }}
+                style={{ 
+                    transform: (selected_function !== undefined && uiElements[selected_function].link !== undefined) ? "translateY(0)" : "translateY(100%)", 
+                    backgroundColor: detailButtonColor
+                }}
                 onClick={() => {
                     if (selected_function !== undefined && uiElements[selected_function].link !== undefined)
                     {
@@ -313,8 +328,11 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                         }
                     }
                 }}
-            >
-                <div>Detail</div>
+            >   
+                <div className={styles.functionDetailBtnContent} style={{color: detailButtonColor}}>
+                    Detail
+                    <ArrowRight size={22} />
+                </div>
             </button>
         </div>
     </div>
