@@ -67,6 +67,7 @@ const config: Config = {
       logo: {
         alt: '203 Systems',
         src: 'img/203.svg',
+        srcDark: 'img/203dark.svg',
       },
       items: [
         {
