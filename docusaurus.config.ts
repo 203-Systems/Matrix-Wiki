@@ -38,6 +38,11 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/203-Systems/Matrix-Wiki/tree/main/',
+          versions: {
+              current: {
+                label: 'Canary 🚧',
+              },
+            },
         },
         blog: {
           showReadingTime: true,
@@ -57,11 +62,25 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        gtag: {
+          trackingID: 'G-999X9XX9XX',
+          anonymizeIP: true,
+        },
+        googleTagManager: {
+          containerId: 'GTM-12345',
+        },
       } satisfies Preset.Options,
     ],
   ],
 
   themeConfig: {
+    docs: {
+      versionPersistence: 'localStorage',
+      sidebar: {
+        hideable: true,
+        autoCollapseCategories: false,
+      },
+    },
     navbar: {
       // title: '203 Systems',
       logo: {
@@ -106,8 +125,9 @@ const config: Config = {
         // },
         {
           href: 'https://github.com/203-Systems',
-          label: 'GitHub',
           position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
@@ -174,13 +194,31 @@ const config: Config = {
           ],
         },
       ],
+      logo: {
+        alt: '203 Systems',
+        src: 'img/203 systems long dark.svg',
+        href: 'https://203.io',
+        target: '_self',
+        style: {
+          maxWidth: 300,
+        },
+      },
       copyright: `Copyright © ${new Date().getFullYear()} 203 Systems`,
     },
+    announcementBar: {
+      id: 'under-development',
+      content: `<b>🚧 Project Matrix Wiki is currently in development. Contents may be incorrect, incomplete, or outdated. 🚧</b>`,
+    },
+    image: 'img/social-card.jpg',
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      darkTheme: prismThemes.vsDark,
     },
   } satisfies Preset.ThemeConfig,
 };
+
+function getNextVersionName() {
+  return 'Canary';
+}
 
 export default config;
