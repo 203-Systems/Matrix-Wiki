@@ -4,34 +4,35 @@ import { ArrowRight, Construction } from '@carbon/icons-react';
 import ReactTextTransition, { presets } from "react-text-transition";
 
 
-type position = [number | "t" | "u" | "c", number];
+type position = [number | "t" | "u" | "c", number?];
+type dimension = [number, number] | number;
 
-interface colorElement{
-    origin: position;
-    color: string | string[];
-    type: "single" | "array" | "area" | "area-array";
+// interface colorElement{
+//     origin: position;
+//     color: string | string[];
+//     type: "single" | "array" | "area" | "area-array";
 
-    pos?: position;
-    size?: [number, number] | number;
+//     pos: position | position[] | [position, dimension] | [position, dimension][]; // For single and array
 
-    // By default, the position in uiElement is used, unless specified here as the new origin
-    // For single, only color is needed - This is the default!
-    // For array, single color and array of pos is needed
-    // For area, single color and size is needed
-    // For area-array, size is needed and color is an array of colors, colors element can be undefined!
-  }
+//     // By default, the position in uiElement is used, unless specified here as the new origin
+//     // For single, only color is needed - This is the default!
+//     // For array, single color and array of pos is needed
+//     // For area, single color and size is needed
+//     // For area-array, size is needed and color is an array of colors, colors element can be undefined!
+//   }
+interface uiDisplayElement {
+    pos: position;
+    size?: dimension;
+    color?: string | string[];
+}
 
 interface uiElement
 {
     // Functions
-    name?: string;
-    description?: string;
-    origin: position;
-    size?: [number, number] | number;
+    name?: string; // If no name, only color will be displayed
+    desc?: string;
     link?: string;
-
-    // Colors
-    color?: string | colorElement | colorElement[]; // If string, fill area with color or use colorElement for more complex color schemes
+    elements: uiDisplayElement[];
 }
 
 interface UIProps {
@@ -62,33 +63,60 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
         let tempCenterKeyFunction: (number | undefined) = undefined;
 
         uiElements.forEach((element, index) => {
-            if (element.origin[0] == "t") {
-                if (!element.size) element.size = 1;
-                for (let i = 0; i < (element.size as number); i++) {
-                    tempTouchbarFunctions[element.origin[1] + i] = index;
-                }
-            } else if (element.origin[0] == "u" && element.color !== undefined) {
-                if (!element.size) element.size = 1;
-                if (typeof element.color === "string") {
-                    for (let i = 0; i < (element.size as number); i++) {
-                        tempUnderglowColors[element.origin[1] + i] = element.color;
-                    }
-                }
-            } else if (element.origin[0] == "c") {
-                tempCenterKeyFunction = index;
-            } else {
-                if (!element.size) element.size = [1, 1];
-                for (let x = 0; x < element.size[0]; x++) {
-                    for (let y = 0; y < element.size[1]; y++) {
-                        const keyID = getKeyID(element.origin[0] as number + x, element.origin[1] + y);
-                        tempKeypadFunctions[keyID] = index;
-                        if (typeof element.color === "string") {
-                            tempKeypadColors[keyID] = element.color;
+            if(element.elements === undefined) return;
+
+            // if(!Array.isArray(element.elements)) {
+            // {
+            //     element.elements = [element.elements as uiDisplayElement];
+            // }
+
+            element.elements?.forEach((displayElement) => {
+                    if (displayElement.pos[0] == "t") {
+                        if (!displayElement.size) displayElement.size = 1;
+                        for (let i = 0; i < (displayElement.size as number); i++) {
+                            tempTouchbarFunctions[displayElement.pos[1] + i] = index;
+                        }
+                    } else if (displayElement.pos[0] == "u" && displayElement.color !== undefined) {
+                        if (!displayElement.size) displayElement.size = 1;
+
+                        if (Array.isArray(displayElement.size)) { return; }
+
+                        if (typeof displayElement.color === "string") {
+                            for (let i = 0; i < (displayElement.size as number); i++) {
+                                tempUnderglowColors[displayElement.pos[1] + i] = displayElement.color;
+                            }
+                        }
+                        else if(Array.isArray(displayElement.color) && displayElement.color.length === displayElement.size)
+                        {
+                            for (let i = 0; i < (displayElement.size as number); i++) {
+                                tempUnderglowColors[displayElement.pos[1] + i] = displayElement.color[i];
+                            }
+                        }
+                    } else if (displayElement.pos[0] == "c") {
+                        tempCenterKeyFunction = index;
+                    } else {
+                        if (!displayElement.size) displayElement.size = [1, 1];
+
+                        if (!Array.isArray(displayElement.size)) { return; }
+                        
+                        if (Array.isArray(displayElement.color) && displayElement.color.length !== displayElement.size[0] * displayElement.size[1]) { return; }
+
+                        for (let x = 0; x < displayElement.size[0]; x++) {
+                            for (let y = 0; y < displayElement.size[1]; y++) {
+                                const keyID = getKeyID(displayElement.pos[0] as number + x, displayElement.pos[1] + y);
+                                tempKeypadFunctions[keyID] = index;
+                                if (typeof displayElement.color === "string") {
+                                    tempKeypadColors[keyID] = displayElement.color;
+                                }
+                                else if(Array.isArray(displayElement.color))
+                                {
+                                    tempKeypadColors[keyID] = displayElement.color[y * displayElement.size[0] + x];
+                                }
+                            }
                         }
                     }
-                }
-            }
-        });
+                });
+            });
 
         setKeypadColors(tempKeypadColors);
         setKeypadFunctions(tempKeypadFunctions);
@@ -112,7 +140,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     }
   };
 
-  const selectHighlightFunction = (function_id: number, color : string = "unset") => {
+  const selectHighlightFunction = (function_id: number, color : string = "rgb(60, 60, 60)") => {
     if (selected_function_locked == false && function_id != undefined) 
     {
         setSelectedFunction(function_id);
@@ -127,7 +155,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     }
   }
 
-  const lockSelectedFunction = (function_id: number, color : string = "unset") => {
+  const lockSelectedFunction = (function_id: number, color : string = "rgb(60, 60, 60)") => {
     console.log("Lock Function ID: " + function_id);
     if (selected_function_locked == true && selected_function == function_id) {
         setSelectedFunctionLocked(false);
@@ -297,15 +325,15 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
         <div className={styles.functionDisplay}>
             <h2 className={styles.functionName} style={{ position: "absolute"}}>
                 <ReactTextTransition delay={0} direction='up'>
-                    {selected_function !== undefined ? uiElements[selected_function].name : uiName}
+                    {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
                 </ReactTextTransition>
             </h2>
             <h2 className={styles.functionName} style={{opacity: "0%"}}>
-                    {selected_function !== undefined ? uiElements[selected_function].name : uiName}
+                    {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
             </h2>
             <section className={styles.functionDesc}>
                 <ReactTextTransition delay={150} direction='up'>
-                    {selected_function !== undefined ? uiElements[selected_function].description : uiDescription}
+                    {selected_function !== undefined && uiElements[selected_function].name !== undefined ? (uiElements[selected_function].desc !== undefined ? uiElements[selected_function].desc : "") : uiDescription}
                 </ReactTextTransition>
             </section>
             <button
