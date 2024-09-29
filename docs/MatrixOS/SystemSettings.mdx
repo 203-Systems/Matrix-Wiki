@@ -1,0 +1,182 @@
+---
+sidebar_position: 3
+---
+
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# System Settings
+
+The System setting controls things that are system wide like brightness, rotation, device specific features, and more.
+
+export function SystemSettings() {
+
+    const uiElements = [
+        {
+            "name": "Device Settings",
+            "desc": "Enter the device settings",
+            "link": "/docs/Mystrix/MystrixSpecific/DeviceSettings",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Brightness Control",
+            "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+            "link": "#brightness-control",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Up",
+            "desc": "This technically doesn't do anything.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 2],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Left",
+            "desc": "Rotate the device so that the top of the device is on the left side.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [2, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Down",
+            "desc": "Rotate the device so that the top of the device is on the bottom side.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 5],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Right",
+            "desc": "Rotate the device so that the top of the device is on the right side.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [5, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Factory Reset",
+            "desc": "Factory reset the device.",
+            "link": "#factory-reset",
+            "elements": [
+                {
+                    "pos": [0, 6],
+                    "color": "#ff00ff"
+                }
+            ]
+        },
+        {
+            "name": "Enter Device Update Mode",
+            "desc": "Reboot the device into the device update mode.",
+            "link": "/docs/Mystrix/MystrixSpecific/UpdateMatrixOS",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "color": "#ff0000"
+                }
+            ]
+        },
+        {
+            "name": "Matrix OS Version",
+            "desc": "View the current version of the Matrix OS.",
+            "elements": [
+                {
+                    "pos": [1, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        },
+        {
+            "name": "Device Name",
+            "desc": "View the name of the device.",
+            "elements": [
+                {
+                    "pos": [2, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        },
+        {
+            "name": "Device Serial",
+            "desc": "View the serial number of the device.",
+            "elements": [
+                {
+                    "pos": [3, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        },
+        {
+            "name": "Device ID",
+            "desc": "Assign a device ID to the device.",
+            "link": "#device-id",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#00FFFF"
+                }
+            ]
+        }
+    ];
+
+
+    const uiName = "System Settings"
+    const uiDescription = "The system settings include system wide settings, configurations, device info, etc for the Matrix OS. There's also device setting page inside for device specific settings."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<SystemSettings />
+
+## Rotate Device
+Rotates the device so that the top of the device is on the specified side.
+
+Some device control are asmymetrical, some controls might not work or function differently when the device in different rotation. 
+
+(eg. in performance app with Mystrix. The touchbar will be mapped differently when the device is rotated, since there are only two touchbars on the device.)
+
+## Brightness Control
+You can tap the brightness control pad to cycle through brightness levels. In addition, you can hold the brightness control pad to enter the brightness control menu.
+
+### Brightness Control Menu
+
+## Factory Reset
+Factory resets the device.
+
+You will have to confirm the factory reset by clicking on the green pad to proceed.
+
+## Device ID
+Assign a device ID to the device. The ID will show up on host after the device's name. This is useful for identifying the device with you have multiple devices connected to the same host.
+
+If set to zero, the device ID will not show up on the host.

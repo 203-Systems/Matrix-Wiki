@@ -8,14 +8,17 @@ Mystrix is a multipurpose grid controller, designed to be community centric, hig
 
 ## Getting Started
 
+### Set up your Mystrix
 First thing you should do is to apply the included silicon anti slip pad in the packaging to your Mystrix.
 
-We can not apply it in the factory because we want to hide the metal device info label under the pad so it appear cleaner and prevert the label from wear and scretches.
+We can not apply it in the factory because we want to hide the metal device info label under the pad so it appear cleaner and pervert the label from wear and scratches.
 
-## Matrix OS
 
-The Mystrix section will cover basic usage of the Mystrix and Matrix OS.
+### Update to the latest OS
+See [Update Matrix OS](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS) on how to update your Mystrix to the latest OS. Since Matrix OS is constantly updated, make sure you are on the latest OS and latest documentation is the key to start using your Mystrix!
 
-Matrix OS is the soul of Mystrix, enabling Mystrix to be multi purpose and have enhanced standalone capabilities. All software features are shipped as Matrix OS applications and be mostly independent of each other. 
+### Start using your Mystrix
+See the Usage Examples section to see what others are using Mystrix for and how to get started with them or deep dive into [Matrix OS](/docs/MatrixOS/MatrixOSBasics)!
+
 
 

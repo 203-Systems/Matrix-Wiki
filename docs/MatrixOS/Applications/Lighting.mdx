@@ -1,0 +1,152 @@
+---
+sidebar_position: 3
+---
+
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# Lighting App
+
+Lighting App is used to make your device as a lighting panel that you can use in different enviorments
+
+Holding down the function key in [config menu](#config-menu) will exit this app and bring you back to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
+
+## Lighting View
+
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+    {
+        "name": "Brightness Control",
+        "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+        "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "size": [2, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Up",
+        "desc": "This technically doesn't do anything.",
+        "link": "#device-rotation",
+        "elements": [
+            {
+                "pos": [3, 2],
+                "size": [2, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Left",
+        "desc": "Rotate the device so that the top of the device is on the left side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Down",
+        "desc": "Rotate the device so that the top of the device is on the bottom side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Right",
+        "desc": "Rotate the device so that the top of the device is on the right side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "RGB Mode",
+        "desc": "Switch to RGB mode",
+        "link": "#rgb-mode",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Temperature",
+        "desc": "Switch to Temperature Mode",
+        "link": "#temperature-mode",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Color Selector",
+        "desc": "Change the color of the lighting view (color may vary based on the mode & config)",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Effect & Speed",
+        "desc": "Change the effect and speed of the lighting view",
+        "link": "#lighting-effect",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Lighting view or Exit App",
+        "desc": "Tap to go back to the lighting view. Hold to exit the app.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify lighting options."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ConfigMenu/>
+
+## RGB Mode
+
+## Temperature Mode
+
+## Lighting Effect

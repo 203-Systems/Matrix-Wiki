@@ -1,0 +1,211 @@
+---
+sidebar_position: 1
+---
+
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# Performance App
+
+The Performance app is used as an user canvas standard midi signals.
+
+It can be used to perform visual performance with Amethyst Player, Ableton Live, or Unipad; used as drumpad in any midi enabled DAW; or used as a canvas for your own DAW intergration via standard midi protocol.
+
+It sends standard Midi signal with aftertouch so it should be compatible with any DAW that accepts midi if it is used as drum pad purpose.
+
+When you first enter the application, you will see a blank canvas. You can click or hold on the function key to enter the action menu.
+
+To exit performance app, enter action menu and hold down the function key. You will be brought back to the [application launcher](/docs/MatrixOS/ApplicationLauncher). (This is also how usually you exit an app in Matrix OS)
+
+## Performance Canvas
+
+## Action Menu
+export function ActionMenu() {
+
+    const uiElements = [
+    {
+        "name": "Flicker Reduction",
+        "desc": "Enable or disable flicker reduction optimization.",
+        "link": "#flicker-reduction",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#A0FF00"
+            }
+        ]
+    },
+    {
+        "name": "Custom Palettes",
+        "desc": "View and edit custom palettes. If a custom palette is loaded, the palette slot will be lit up as cyan.",
+        "link": "#color-palette",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "size": [4, 1],
+                "color": "#D0D0D0"
+            }
+        ]
+    },
+    {
+        "name": "Velocity Sensitivity",
+        "desc": "(Device with Force Sensitive Keypad only) Enable or disable velocity sensitivity.",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Brightness Control",
+        "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+        "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "size": [2, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "System Settings",
+        "desc": "Enter the system settings.",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Touch Combo Keys",
+        "desc": "Enable or disable touch combo keys feature.",
+        "link": "#touchbar-combo-keys",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "Menu Lock",
+        "desc": "Enable or disable menu lock feature.",
+        "link": "#Menu Lock",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Clear Canvas",
+        "desc": "This clears LEDs on the performance canvas.",
+        "elements": [
+            {
+                "pos": [3, 2],
+                "size": [2, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Left",
+        "desc": "Rotate the device so that the top of the device is on the left side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Down",
+        "desc": "Rotate the device so that the top of the device is on the bottom side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Right",
+        "desc": "Rotate the device so that the top of the device is on the right side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Midi Control Pad",
+        "desc": "Extra midi control pad for customizable controls. They are mapped to touchbar on the Mystrix, so they can be used as an alternative.",
+        "link": "#factory-reset",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#ff00ff"
+            }
+        ]
+    },
+    {
+        "name": "Go Back or Exit App",
+        "desc": "Tap to go back to the performance canvas. Hold to exit the app.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+
+    const uiName = "Action Menu"
+    const uiDescription = "The action menu allows you to change the settings, modify palette, send midi controls inside Performance app."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ActionMenu/>
+
+
+### Detect Action Menu State on Host Applications
+Performance App will send out a cc signal when the action menu is entered. (channel 1, cc 121, value 127 for enter, value 0 for exit),
+
+## Note Layout
+
+### Touch Combo Keys
+
+## Flicker Reduction
+Flicker Reduction is used when midi lightshow is causing flickers or when light is so fast it is higher than the device refresh rate.
+It is recommended turn on only in Ableton Live.
+
+## Color Palette
+There are two built in color palettes, and 4 custom color palettes. 
+
+You can edit the custom color palettes in the action menu.
+
+### Built in palette 1
+
+### Built in palette 2 - Classical Palette
+
+### Upload Custom Palette
+
+
+## Sysex API
+
+Sysex API provided more advanced control over the canvas than regular midi signals. Including real RGB LED color and faster LED fill. 

@@ -4,23 +4,22 @@ sidebar_position: 1
 
 import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
 
-# Performance App
+# Color Picker
 
-## Action Menu
-
-export function ActionMenu() {
+## Hue Selection
+export function HueSelector() {
 
     const uiElements = [
         {
             "name": "Flicker Reduction",
-            "description": "Enable or disable flicker reduction optimization.",
+            "desc": "Enable or disable flicker reduction optimization.",
             "origin": [0, 0],
             "color": "#A0FF00",
             "link": "#flicker-reduction"
         },
         {
             "name": "Custom Palettes",
-            "description": "View and edit custom palettes. If a custom palette is loaded, the palette slot will be lit up as cyan",
+            "desc": "View and edit custom palettes. If a custom palette is loaded, the palette slot will be lit up as cyan",
             "origin": [2, 0],
             "size" : [4, 1],
             "color": "#D0D0D0",
@@ -28,74 +27,73 @@ export function ActionMenu() {
         },
         {
             "name": "Velocity Sensitivity",
-            "description": "(Device with Force Sensitive Keypad only)\nEnable or disable velocity sensitivity.",
+            "desc": "(Device with Force Sensitive Keypad only)\nEnable or disable velocity sensitivity.",
             "origin": [7, 0],
             "color": "#FFFFFF",
-            "link": "#flicker-reduction"
         },
         {
             "name": "Brightness Control",
-            "description": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+            "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
             "origin": [3, 3],
             "size": [2, 2],
             "color": "#FFFFFF",
-            "link": "/docs/Mystrix/MatrixOS/SystemSettings#brightness-control"
+            "link": "/docs/MatrixOS/SystemSettings#brightness-control"
         },
         {
             "name": "System Settings",
-            "description": "Enter the system settings",
+            "desc": "Enter the system settings",
             "origin": [7, 5],
             "color": "#FFFFFF",
-            "link": "/docs/Mystrix/MatrixOS/SystemSettings"
+            "link": "/docs/MatrixOS/SystemSettings"
         },
         {
             "name": "Touch Combo Keys",
-            "description": "Enable or disable touch combo keys feature.",
+            "desc": "Enable or disable touch combo keys feature.",
             "origin": [0, 4],
             "color": "#60FF00",
             "link": "#touchbar-controls"
         },
         {
             "name": "Menu Lock",
-            "description": "Enable or disable menu lock feature.",
+            "desc": "Enable or disable menu lock feature.",
             "origin": [0, 5],
             "color": "#FF0000",
             "link": "#Menu Lock"
         },
         {
             "name": "Clear Canvas",
-            "description": "This clears LEDs on the performance canvas.",
+            "desc": "This clears LEDs on the performance canvas.",
             "origin": [3, 2],
             "size": [2, 1],
             "color": "#00FF00",
         },
         {
-            "name": "Device Rotation Left",
-            "description": "Rotate the device so that the top of the device is on the left side.",
+            "name": "Rotate Device Left",
+            "desc": "Rotate the device so that the top of the device is on the left side.",
             "origin": [2, 3],
             "size": [1, 2],
             "color": "#00FF00",
-            "link": "/docs/Mystrix/MatrixOS/SystemSettings#device-rotation"
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation"
         },
         {
-            "name": "Device Rotation Down",
-            "description": "Rotate the device so that the top of the device is on the bottom side.",
+            "name": "Rotate Device Down",
+            "desc": "Rotate the device so that the top of the device is on the bottom side.",
             "origin": [3, 5],
             "size": [2, 1],
             "color": "#00FF00",
-            "link": "/docs/Mystrix/MatrixOS/SystemSettings#device-rotation"
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation"
         },
         {
-            "name": "Device Rotation Right",
-            "description": "Rotate the device so that the top of the device is on the right side.",
+            "name": "Rotate Device Right",
+            "desc": "Rotate the device so that the top of the device is on the right side.",
             "origin": [5, 3],
             "size": [1, 2],
             "color": "#00FF00",
-            "link": "/docs/Mystrix/MatrixOS/SystemSettings#device-rotation"
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation"
         },
         {
             "name": "Midi Control Pad",
-            "description": "Extra midi control pad for customizable controls. They are mapped to touchbar on the Mystrix, so they can be used as an alternative.",
+            "desc": "Extra midi control pad for customizable controls. They are mapped to touchbar on the Mystrix, so they can be used as an alternative.",
             "origin": [0, 6],
             "size": [8, 2],
             "color": "#ff00ff",
@@ -103,7 +101,7 @@ export function ActionMenu() {
         },
         {
             "name": "Go Back or Exit App",
-            "description": "Tap to go back to the performance canvas. Hold to exit the app.",
+            "desc": "Tap to go back to the performance canvas. Hold to exit the app.",
             "origin": ["c"],
         }
     ]
@@ -117,12 +115,8 @@ export function ActionMenu() {
     />
 }
 
-<ActionMenu/>
+<HueSelector/>
 
-## Touchbar controls
+## Saturation Selection
 
-## Flicker Reduction
 
-## Color Palette
-
-## Sysex API

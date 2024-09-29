@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
@@ -7,33 +7,52 @@ import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVis
 # Device Settings
 
 export function DeviceSettings() {
-    const uiElements = [
-        {
-            "name": "Bluetooth Midi",
-            "description": "Enter the Bluetooth Midi settings",
-            "origin": [0, 0],
-            "color": "#0082FC",
-            "link": "/docs/Mystrix/MystrixSpecific/BluetoothMidi"
-        },
-        {
-            "name": "Touchbar Toggle",
-            "description": "Enable or disable the touchbar",
-            "origin": [1, 0],
-            "color": "#7957FB",
-        },
-        {
-            "name": "Keypad Calibration",
-            "description": "(Only on Mystrix Pro) Calibrate Mystrix Pro's keypad",
-            "origin": [7, 0],
-            "color": "#FFFFFF",
-            "link": "/docs/Mystrix/MystrixSpecific/CalibrateKeyPad"
-        },
-        {
-            "name": "Go Back",
-            "description": "Return to the previous screen",
-            "origin": ["c", 0],
-        },
-    ]
+const uiElements = [
+    {
+        "name": "Bluetooth Midi",
+        "desc": "Enter the Bluetooth Midi settings",
+        "link": "/docs/Mystrix/MystrixSpecific/BluetoothMidi",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#0082FC"
+            }
+        ]
+    },
+    {
+        "name": "Touchbar Toggle",
+        "desc": "Enable or disable the touchbar",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#7957FB"
+            }
+        ]
+    },
+    {
+        "name": "Keypad Calibration",
+        "desc": "(Only on Mystrix Pro) Calibrate Mystrix Pro's keypad",
+        "link": "/docs/Mystrix/MystrixSpecific/CalibrateKeyPad",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Return to the previous screen",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+
 
     const uiName = "Device Settings"
     const uiDescription = "Device Settings contains all the settings for the specific for Mystrix."

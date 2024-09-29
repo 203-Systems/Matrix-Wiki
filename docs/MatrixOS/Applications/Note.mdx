@@ -1,0 +1,254 @@
+---
+sidebar_position: 2
+---
+
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# Note App
+
+The Note APP is used as a midi note interface. It can be used to play midi notes with different layout, scale, and modes.
+
+After launching, you will enter the [play view](#play-view), click the function key to enter the [config menu](#config-menu), click again to return to the [play view](#play-view).
+
+To exit note app, enter [config menu](#config-menu) and hold down the function key in the [config menu](#config-menu). You will be brought back to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
+
+## Play View
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+    {
+        "name": "Brightness Control",
+        "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+        "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "size": [2, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Up",
+        "desc": "This technically doesn't do anything.",
+        "link": "#device-rotation",
+        "elements": [
+            {
+                "pos": [3, 2],
+                "size": [2, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Left",
+        "desc": "Rotate the device so that the top of the device is on the left side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Down",
+        "desc": "Rotate the device so that the top of the device is on the bottom side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Right",
+        "desc": "Rotate the device so that the top of the device is on the right side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "System Settings",
+        "desc": "Enter the system settings",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Scale Selector",
+        "desc": "Select the Scale of the active play view (Config Independent)",
+        "link": "#scale",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#FF0090"
+            }
+        ]
+    },
+    {
+        "name": "Enforce Scale",
+        "desc": "Enforce Scale will remove notes that are out of scale in the active play view (Config Independent)",
+        "link": "#enforce-scale",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FF5900"
+            }
+        ]
+    },
+    {
+        "name": "Overlap Selector",
+        "desc": "Select the Overlap of the active play view (Config Independent)",
+        "link": "#overlap",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Midi Channel Selector",
+        "desc": "Select the midi out channel of the active play view (Config Independent)",
+        "link": "#midi-channel",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "Play View 1",
+        "desc": "Switch to play view 1 (Color may change based on the view config)",
+        "link": "#play-view",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play View 2",
+        "desc": "Switch to play view 2 (Color may change based on the view config)",
+        "link": "#play-view",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Color Selector",
+        "desc": "Change the color of the active play view (Color may change based on the active view config)",
+        "link": "#view-color",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Spilt View",
+        "desc": "Enable Spilt View (Unspilt, horizontal spilt, vertical spilt)",
+        "link": "#spilt-view",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Velocity Sensitivity",
+        "desc": "(Device with Force Sensitive Keypad only) Enable or disable velocity sensitivity for the active play view.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFB0"
+            }
+        ]
+    },
+    {
+        "name": "Octave Selector",
+        "desc": "Select the octave of the active play view (Config Independent & Color may change based on the view config)",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 4],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "Play view or Exit App",
+        "desc": "Tap to go back to the play view. Hold to exit the app.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify play view and other customization options."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ConfigMenu/>
+
+## Scale
+### Enforce Scale
+
+## Overlap
+
+## Midi Channel
+
+## View Color
+
+## Spilt View
+
+## Example Views
+
+### Play View 1
+- Enforce Scale: On
+- Overlap: 0
+- Root Aligned: On
+
+### Play View 2
+- Enforce Scale: On
+- Overlap: 3
+- Root Aligned: Off
+
+### Play View 3
+- Enforce Scale: Off
+- Overlap: 0
+- Root Aligned: On

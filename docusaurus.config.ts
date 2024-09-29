@@ -78,6 +78,12 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
+          sidebarId: 'matrixOSSidebar',
+          position: 'left',
+          label: 'Matrix OS',
+        },
+        {
+          type: 'docSidebar',
           sidebarId: 'developerSidebar',
           position: 'left',
           label: 'Developer',
@@ -116,8 +122,12 @@ const config: Config = {
               to: 'docs/Mystrix/GettingStarted',
             },
             {
+              label: 'Matrix OS',
+              to: 'docs/MatrixOS/MatrixOSBasics',
+            },
+            {
               label: 'Developer',
-              to: 'docs/Developer/MatrixOSBasic',
+              to: 'docs/Developer/MatrixOSBasics',
             },
             {
               label: 'Resources',

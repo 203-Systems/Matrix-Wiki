@@ -1,0 +1,119 @@
+---
+sidebar_position: 2
+---
+
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# Application Launcher
+
+Application Launcher is the main menu of the OS. It allows user to select an application to use.
+
+Top section of the app launcher are applications available. The bottom section are the control bars hosting application class / page selection and system setting.
+
+export function ApplicationLauncher() {
+
+    const uiElements = [
+    {
+        "name": "Performance APP",
+        "desc": "Enter the performance application",
+        "link": "/docs/MatrixOS/Applications/Performance",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Note APP",
+        "desc": "Enter the note application",
+        "link": "/docs/MatrixOS/Applications/Note",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Lighting APP",
+        "desc": "Enter the lighting application",
+        "link": "/docs/MatrixOS/Applications/Lighting",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Gamepad APP",
+        "desc": "Enter the gamepad application",
+        "link": "/docs/MatrixOS/Applications/Gamepad",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#6fff00"
+            }
+        ]
+    },
+    {
+        "name": "Dice APP",
+        "desc": "Enter the dice application",
+        "link": "/docs/MatrixOS/Applications/Dice",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#FFA500"
+            }
+        ]
+    },
+    {
+        "name": "Companion APP",
+        "desc": "Enter the companion application",
+        "link": "/docs/MatrixOS/Applications/Companion",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#0000FF"
+            }
+        ]
+    },
+    {
+        "name": "Application Catalog: Stock Apps",
+        "desc": "Switch to the stock application catalog. Currently, the stock application catalog is the only available catalog. In the future, more application catalogs will be available.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "System Settings",
+        "desc": "Enter the system settings",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+
+    const uiName = "Application Launcher"
+    const uiDescription = "Application Launcher is the main menu of the OS. It allows user to select an application to use."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ApplicationLauncher />
+
+Application Launcher is the main menu of the OS. It allows user to select an application to use.
+
+Top section of the app launcher are applications available. The bottom section are the control bars hosting application class / page selection and system setting.

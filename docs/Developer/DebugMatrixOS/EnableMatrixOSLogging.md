@@ -2,4 +2,4 @@
 sidebar_position: 1
 ---
 
-# BitFocus Companion
+# Enable Matrix OS Logging
