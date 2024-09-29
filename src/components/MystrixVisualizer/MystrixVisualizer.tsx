@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { ArrowRight, Construction } from '@carbon/icons-react';
 import ReactTextTransition, { presets } from "react-text-transition";
+import ErrorBoundary from '@docusaurus/ErrorBoundary';
 
 
 type position = [number | "t" | "u" | "c", number?];
@@ -81,7 +82,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
 
                         if (Array.isArray(displayElement.size)) { return; }
 
-                        if (typeof displayElement.color === "string") {
+                        if (typeof displayElement.color === "string" || displayElement.color === undefined) {
                             for (let i = 0; i < (displayElement.size as number); i++) {
                                 tempUnderglowColors[displayElement.pos[1] + i] = displayElement.color;
                             }
@@ -105,7 +106,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                             for (let y = 0; y < displayElement.size[1]; y++) {
                                 const keyID = getKeyID(displayElement.pos[0] as number + x, displayElement.pos[1] + y);
                                 tempKeypadFunctions[keyID] = index;
-                                if (typeof displayElement.color === "string") {
+                                if (typeof displayElement.color === "string" || displayElement.color === undefined) {
                                     tempKeypadColors[keyID] = displayElement.color;
                                 }
                                 else if(Array.isArray(displayElement.color))
@@ -180,190 +181,198 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     }, [uiElements]);
 
   return (
-    <div className={styles.MystrixVisualizer} onClick={() => {lockSelectedFunction(undefined)}}>
-        <div className={styles.mystrix}>
-        <div className={`${styles.mystrixUnderglow} ${selected_function != undefined ? styles.mystrixUnderglowDim : ''}`}>
-            <div className={styles.mystrixUnderglowRow}>
-            {Array.from({ length: 8 }, (_, x) => (
-                <div key={x} className={styles.mystrixUnderglowLed}/>
-            ))}
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "row", height: "88%", justifyContent: "space-between" }}>
-            <div className={styles.mystrixUnderglowColumn}>
-                {Array.from({ length: 8 }, (_, y) => (
-                <div key={y} className={styles.mystrixUnderglowLed}/>
-                ))}
-            </div>
-
-            <div className={styles.mystrixUnderglowColumn}>
-                {Array.from({ length: 8 }, (_, y) => (
-                <div key={y} className={styles.mystrixUnderglowLed}/>
-                ))}
-            </div>
-            </div>
-
-            <div className={styles.mystrixUnderglowRow}>
-            {Array.from({ length: 8 }, (_, x) => (
-                <div key={x} className={styles.mystrixUnderglowLed}/>
-            ))}
-            </div>
+    <ErrorBoundary
+        fallback={({error, tryAgain}) => (
+        <div>
+            <p>The Mystrix Visualizer crashed because of error: {error.message}.</p>
+            <button onClick={tryAgain}>Try Again!</button>
         </div>
+        )}>
+        <div className={styles.MystrixVisualizer} onClick={() => {lockSelectedFunction(undefined)}}>
+            <div className={styles.mystrix}>
+            <div className={`${styles.mystrixUnderglow} ${selected_function != undefined ? styles.mystrixUnderglowDim : ''}`}>
+                <div className={styles.mystrixUnderglowRow}>
+                {Array.from({ length: 8 }, (_, x) => (
+                    <div key={x} className={styles.mystrixUnderglowLed}/>
+                ))}
+                </div>
 
-        <div className={styles.mystrixBorder} onMouseLeave={() => {selectHighlightFunction(undefined)}}>
-            <div className={styles.mystrixControls}>
-            {Array.from({ length: 8 }, (_, y) => (
-                <div key={y} className={styles.mystrixControlsRow}>
-                {Array.from({ length: 8 }, (_, x) => {
-                    let keyColor = keypadColors?.[y * 8 + x]; // Declare keyColor here
-                    let dim = selected_function != undefined && selected_function !== keypadFunctions[y * 8 + x];
-                    let selected = selected_function != undefined && selected_function === keypadFunctions[y * 8 + x];
+                <div style={{ display: "flex", flexDirection: "row", height: "88%", justifyContent: "space-between" }}>
+                <div className={styles.mystrixUnderglowColumn}>
+                    {Array.from({ length: 8 }, (_, y) => (
+                    <div key={y} className={styles.mystrixUnderglowLed}/>
+                    ))}
+                </div>
 
-                    return ( // Return the JSX from the arrow function
-                        <div 
-                            key={x} 
+                <div className={styles.mystrixUnderglowColumn}>
+                    {Array.from({ length: 8 }, (_, y) => (
+                    <div key={y} className={styles.mystrixUnderglowLed}/>
+                    ))}
+                </div>
+                </div>
+
+                <div className={styles.mystrixUnderglowRow}>
+                {Array.from({ length: 8 }, (_, x) => (
+                    <div key={x} className={styles.mystrixUnderglowLed}/>
+                ))}
+                </div>
+            </div>
+
+            <div className={styles.mystrixBorder} onMouseLeave={() => {selectHighlightFunction(undefined)}}>
+                <div className={styles.mystrixControls}>
+                {Array.from({ length: 8 }, (_, y) => (
+                    <div key={y} className={styles.mystrixControlsRow}>
+                    {Array.from({ length: 8 }, (_, x) => {
+                        let keyColor = keypadColors?.[y * 8 + x]; // Declare keyColor here
+                        let dim = selected_function != undefined && selected_function !== keypadFunctions[y * 8 + x];
+                        let selected = selected_function != undefined && selected_function === keypadFunctions[y * 8 + x];
+
+                        return ( // Return the JSX from the arrow function
+                            <div 
+                                key={x} 
+                                className={`
+                                    ${styles.mystrixBtn} 
+                                    ${keyColor ? styles.mystrixBtnLit : ''} 
+                                    ${dim ? styles.mystrixBtnDim : ''} 
+                                    ${selected ? styles.mystrixBtnSelected : ''}`}
+                                style={{ 
+                                    clipPath: getCornerRadius(x, y), 
+                                    backgroundColor: keyColor ? keyColor : "rgb(160, 160, 160)", // Corrected closing parenthesis
+                                    boxShadow: (keyColor && ! dim) ? `0 0 5px 1px ${keyColor}` : "none", // Corrected closing parenthesis
+                                    }}
+                                onMouseEnter={(e) => { selectHighlightFunction(keypadFunctions[y * 8 + x], keyColor);}}
+                                onClick={(e) => { lockSelectedFunction(keypadFunctions[y * 8 + x], keyColor);  e.stopPropagation()}}
+                            />
+                        );
+                    })}
+                    </div>
+                ))}
+                </div>
+            </div>
+
+            <div className={styles.mystrixTouchKey}>
+                <div className={styles.mystrixTouchKeyRow}>
+                {Array.from({ length: 8 }, (_, x) => (
+                    <div key={x} className={styles.mystrixTouchkeyBtn}>
+                        <div   
                             className={`
-                                ${styles.mystrixBtn} 
-                                ${keyColor ? styles.mystrixBtnLit : ''} 
-                                ${dim ? styles.mystrixBtnDim : ''} 
-                                ${selected ? styles.mystrixBtnSelected : ''}`}
-                            style={{ 
-                                clipPath: getCornerRadius(x, y), 
-                                backgroundColor: keyColor ? keyColor : "rgb(160, 160, 160)", // Corrected closing parenthesis
-                                boxShadow: (keyColor && ! dim) ? `0 0 5px 1px ${keyColor}` : "none", // Corrected closing parenthesis
-                                }}
-                            onMouseEnter={(e) => { selectHighlightFunction(keypadFunctions[y * 8 + x], keyColor);}}
-                            onClick={(e) => { lockSelectedFunction(keypadFunctions[y * 8 + x], keyColor);  e.stopPropagation()}}
+                            ${styles.mystrixTouchkeyBtnChild} 
+                            ${(touchbarFunctions[24 + x] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
+                            ${(selected_function != undefined && selected_function !== touchbarFunctions[24 + x]) ? styles.mystrixTouchkeyBtnChildDim : ''}
+                            ${(selected_function != undefined && selected_function === touchbarFunctions[24 + x]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
+                            onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[24 + x])}}
+                            onClick={(e) => {lockSelectedFunction(keypadFunctions[24 + x]), e.stopPropagation()}}
                         />
-                    );
-                })}
-                </div>
-            ))}
-            </div>
-        </div>
-
-        <div className={styles.mystrixTouchKey}>
-            <div className={styles.mystrixTouchKeyRow}>
-            {Array.from({ length: 8 }, (_, x) => (
-                <div key={x} className={styles.mystrixTouchkeyBtn}>
-                    <div   
-                        className={`
-                        ${styles.mystrixTouchkeyBtnChild} 
-                        ${(touchbarFunctions[24 + x] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
-                        ${(selected_function != undefined && selected_function !== touchbarFunctions[24 + x]) ? styles.mystrixTouchkeyBtnChildDim : ''}
-                        ${(selected_function != undefined && selected_function === touchbarFunctions[24 + x]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[24 + x])}}
-                        onClick={(e) => {lockSelectedFunction(keypadFunctions[24 + x]), e.stopPropagation()}}
-                    />
-                </div>
-            ))}
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "row", height: "94%", justifyContent: "space-between" }}>
-            <div className={styles.mystrixTouchKeyColumn}>
-                {Array.from({ length: 8 }, (_, y) => (
-                <div key={y} className={styles.mystrixTouchkeyBtn}>
-                    <div 
-                        className={`
-                        ${styles.mystrixTouchkeyBtnChild} 
-                        ${(touchbarFunctions[16 + y] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
-                        ${(selected_function != undefined && selected_function !== touchbarFunctions[16 + y]) ? styles.mystrixTouchkeyBtnChildDim : ''}
-                        ${(selected_function != undefined && selected_function === touchbarFunctions[16 + y]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[16 + y])}}
-                        onClick={(e) => {lockSelectedFunction(keypadFunctions[16 + y]), e.stopPropagation()}}
-                    />
-                </div>
+                    </div>
                 ))}
-            </div>
-
-            <div className={styles.mystrixTouchKeyColumn}>
-                {Array.from({ length: 8 }, (_, y) => (
-                <div key={y} className={styles.mystrixTouchkeyBtn}>
-                    <div 
-                        className={`
-                        ${styles.mystrixTouchkeyBtnChild} 
-                        ${(touchbarFunctions[y] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
-                        ${(selected_function != undefined && selected_function !== touchbarFunctions[y]) ? styles.mystrixTouchkeyBtnChildDim : ''}
-                        ${(selected_function != undefined && selected_function === touchbarFunctions[y]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[y])}}
-                        onClick={(e) => {lockSelectedFunction(keypadFunctions[y]), e.stopPropagation()}}
-                    />
                 </div>
-                ))}
-            </div>
-            </div>
 
-            <div className={styles.mystrixTouchKeyRow}>
-            {Array.from({ length: 8 }, (_, x) => (
-                <div key={x} className={styles.mystrixTouchkeyBtn}>
+                <div style={{ display: "flex", flexDirection: "row", height: "94%", justifyContent: "space-between" }}>
+                <div className={styles.mystrixTouchKeyColumn}>
+                    {Array.from({ length: 8 }, (_, y) => (
+                    <div key={y} className={styles.mystrixTouchkeyBtn}>
                         <div 
-                        className={`
-                        ${styles.mystrixTouchkeyBtnChild} 
-                        ${(touchbarFunctions[15 - x] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
-                        ${(selected_function != undefined && selected_function !== touchbarFunctions[15 - x]) ? styles.mystrixTouchkeyBtnChildDim : ''}
-                        ${(selected_function != undefined && selected_function === touchbarFunctions[15 - x]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
-                        onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[15 - x])}}
-                        onClick={(e) => {lockSelectedFunction(keypadFunctions[15 - x]), e.stopPropagation()}}
-                    />
+                            className={`
+                            ${styles.mystrixTouchkeyBtnChild} 
+                            ${(touchbarFunctions[16 + y] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
+                            ${(selected_function != undefined && selected_function !== touchbarFunctions[16 + y]) ? styles.mystrixTouchkeyBtnChildDim : ''}
+                            ${(selected_function != undefined && selected_function === touchbarFunctions[16 + y]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
+                            onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[16 + y])}}
+                            onClick={(e) => {lockSelectedFunction(keypadFunctions[16 + y]), e.stopPropagation()}}
+                        />
+                    </div>
+                    ))}
                 </div>
-            ))}
+
+                <div className={styles.mystrixTouchKeyColumn}>
+                    {Array.from({ length: 8 }, (_, y) => (
+                    <div key={y} className={styles.mystrixTouchkeyBtn}>
+                        <div 
+                            className={`
+                            ${styles.mystrixTouchkeyBtnChild} 
+                            ${(touchbarFunctions[y] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
+                            ${(selected_function != undefined && selected_function !== touchbarFunctions[y]) ? styles.mystrixTouchkeyBtnChildDim : ''}
+                            ${(selected_function != undefined && selected_function === touchbarFunctions[y]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
+                            onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[y])}}
+                            onClick={(e) => {lockSelectedFunction(keypadFunctions[y]), e.stopPropagation()}}
+                        />
+                    </div>
+                    ))}
+                </div>
+                </div>
+
+                <div className={styles.mystrixTouchKeyRow}>
+                {Array.from({ length: 8 }, (_, x) => (
+                    <div key={x} className={styles.mystrixTouchkeyBtn}>
+                            <div 
+                            className={`
+                            ${styles.mystrixTouchkeyBtnChild} 
+                            ${(touchbarFunctions[15 - x] != undefined) ? styles.mystrixTouchkeyBtnChildHasElement : ''}
+                            ${(selected_function != undefined && selected_function !== touchbarFunctions[15 - x]) ? styles.mystrixTouchkeyBtnChildDim : ''}
+                            ${(selected_function != undefined && selected_function === touchbarFunctions[15 - x]) ? styles.mystrixTouchkeyBtnChildSelected : ''}`}
+                            onMouseEnter={() => {selectHighlightFunction(touchbarFunctions[15 - x])}}
+                            onClick={(e) => {lockSelectedFunction(keypadFunctions[15 - x]), e.stopPropagation()}}
+                        />
+                    </div>
+                ))}
+                </div>
+            </div>
+            
+            <div 
+                className={`
+                    ${styles.mystrixCenterKey} 
+                    ${(centerKeyFunctions != undefined) ? styles.mystrixCenterKeyHasElement : ''}
+                    ${(selected_function != undefined && selected_function !== centerKeyFunctions) ? styles.mystrixCenterKeyDim : ''}
+                    ${(selected_function != undefined && selected_function === centerKeyFunctions) ? styles.mystrixCenterKeySelected : ''}
+                `}
+                onMouseEnter={() => {selectHighlightFunction(centerKeyFunctions)}}
+                onClick={(e) => {lockSelectedFunction(centerKeyFunctions), e.stopPropagation()}}
+            />
+
+            </div>
+            <div className={styles.functionDisplay}>
+                <h2 className={styles.functionName} style={{ position: "absolute"}}>
+                    <ReactTextTransition delay={0} direction='up'>
+                        {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
+                    </ReactTextTransition>
+                </h2>
+                <h2 className={styles.functionName} style={{opacity: "0%"}}>
+                        {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
+                </h2>
+                <div className={styles.functionDesc}>
+                    <ReactTextTransition delay={150} direction='up'>
+                        {selected_function !== undefined && uiElements[selected_function].name !== undefined ? (uiElements[selected_function].desc !== undefined ? uiElements[selected_function].desc : "") : uiDescription}
+                    </ReactTextTransition>
+                </div>
+                <button
+                    className={styles.functionDetailBtn}
+                    style={{ 
+                        transform: (selected_function !== undefined && uiElements[selected_function].link !== undefined) ? "translateY(0)" : "translateY(100%)", 
+                        backgroundColor: detailButtonColor
+                    }}
+                    onClick={() => {
+                        if (selected_function !== undefined && uiElements[selected_function].link !== undefined)
+                        {
+                            if(uiElements[selected_function].link.startsWith("#"))
+                            {
+                                window.location.hash = "";
+                                window.location.hash = uiElements[selected_function].link;
+                            }
+                            else
+                            {
+                                window.open(uiElements[selected_function].link, "_self");
+                            }
+                        }
+                    }}
+                >   
+                    <div className={styles.functionDetailBtnContent} style={{color: detailButtonColor}}>
+                        Detail
+                        <ArrowRight size={22} />
+                    </div>
+                </button>
             </div>
         </div>
-        
-        <div 
-            className={`
-                ${styles.mystrixCenterKey} 
-                ${(centerKeyFunctions != undefined) ? styles.mystrixCenterKeyHasElement : ''}
-                ${(selected_function != undefined && selected_function !== centerKeyFunctions) ? styles.mystrixCenterKeyDim : ''}
-                ${(selected_function != undefined && selected_function === centerKeyFunctions) ? styles.mystrixCenterKeySelected : ''}
-            `}
-            onMouseEnter={() => {selectHighlightFunction(centerKeyFunctions)}}
-            onClick={(e) => {lockSelectedFunction(centerKeyFunctions), e.stopPropagation()}}
-        />
-
-        </div>
-        <div className={styles.functionDisplay}>
-            <h2 className={styles.functionName} style={{ position: "absolute"}}>
-                <ReactTextTransition delay={0} direction='up'>
-                    {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
-                </ReactTextTransition>
-            </h2>
-            <h2 className={styles.functionName} style={{opacity: "0%"}}>
-                    {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
-            </h2>
-            <section className={styles.functionDesc}>
-                <ReactTextTransition delay={150} direction='up'>
-                    {selected_function !== undefined && uiElements[selected_function].name !== undefined ? (uiElements[selected_function].desc !== undefined ? uiElements[selected_function].desc : "") : uiDescription}
-                </ReactTextTransition>
-            </section>
-            <button
-                className={styles.functionDetailBtn}
-                style={{ 
-                    transform: (selected_function !== undefined && uiElements[selected_function].link !== undefined) ? "translateY(0)" : "translateY(100%)", 
-                    backgroundColor: detailButtonColor
-                }}
-                onClick={() => {
-                    if (selected_function !== undefined && uiElements[selected_function].link !== undefined)
-                    {
-                        if(uiElements[selected_function].link.startsWith("#"))
-                        {
-                            window.location.hash = "";
-                            window.location.hash = uiElements[selected_function].link;
-                        }
-                        else
-                        {
-                            window.open(uiElements[selected_function].link, "_self");
-                        }
-                    }
-                }}
-            >   
-                <div className={styles.functionDetailBtnContent} style={{color: detailButtonColor}}>
-                    Detail
-                    <ArrowRight size={22} />
-                </div>
-            </button>
-        </div>
-    </div>
+    </ErrorBoundary>
   );
 };
 
