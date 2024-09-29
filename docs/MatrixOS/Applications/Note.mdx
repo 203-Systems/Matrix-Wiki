@@ -6,13 +6,19 @@ import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVis
 
 # Note App
 
-The Note APP is used as a midi note interface. It can be used to play midi notes with different layout, scale, and modes.
+The Note APP is used as a MIDI note interface. It can be used to play MIDI notes with different layout, scale, and modes.
 
-After launching, you will enter the [play view](#play-view), click the function key to enter the [config menu](#config-menu), click again to return to the [play view](#play-view).
+After launching, you will enter the [note pad](#note-pad), click the function key to enter the [config menu](#config-menu), click again to return to the [note pad](#note-pad).
 
 To exit note app, enter [config menu](#config-menu) and hold down the function key in the [config menu](#config-menu). You will be brought back to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
 
-## Play View
+## Note Pad
+
+Note pad is the main view of the note app. It shows the current note pad with the selected layout, scale, and mode. 
+
+The pad will differ based the customization options, see [Example Layouts](#example-layouts) for some idea of how the note pad will look with different settings.
+
+Clicking on the function key will bring you to the [config menu](#config-menu).
 
 ## Config Menu
 
@@ -92,7 +98,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Scale Selector",
-        "desc": "Select the Scale of the active play view (Config Independent)",
+        "desc": "Select the Scale of the active note pad layout (Layout Config Independent)",
         "link": "#scale",
         "elements": [
             {
@@ -103,7 +109,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Enforce Scale",
-        "desc": "Enforce Scale will remove notes that are out of scale in the active play view (Config Independent)",
+        "desc": "When on, only notes in the selected scale will be shown, when off, all notes will be shown but notes that are not in the selected scale will be dimmed. (Chromatic mode when off, scale mode when on) (Layout Config Independent)",
         "link": "#enforce-scale",
         "elements": [
             {
@@ -114,7 +120,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Overlap Selector",
-        "desc": "Select the Overlap of the active play view (Config Independent)",
+        "desc": "Selects how much each row above overlaps with the row below it. This is useful if you want to play chords with one hand. (Layout Config Independent)",
         "link": "#overlap",
         "elements": [
             {
@@ -124,8 +130,8 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Midi Channel Selector",
-        "desc": "Select the midi out channel of the active play view (Config Independent)",
+        "name": "MIDI Channel Selector",
+        "desc": "Select the MIDI out channel of the active note pad (Layout Config Independent)",
         "link": "#midi-channel",
         "elements": [
             {
@@ -135,9 +141,9 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Play View 1",
-        "desc": "Switch to play view 1 (Color may change based on the view config)",
-        "link": "#play-view",
+        "name": "Layout 1",
+        "desc": "Use the note pad layout 1 (Color may change based on the layout config)",
+        "link": "#note-pad",
         "elements": [
             {
                 "pos": [3, 0],
@@ -146,9 +152,9 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Play View 2",
-        "desc": "Switch to play view 2 (Color may change based on the view config)",
-        "link": "#play-view",
+        "name": "Layout 2",
+        "desc": "Use the note pad layout 2 (Color may change based on the layout config)",
+        "link": "#note-pad",
         "elements": [
             {
                 "pos": [4, 0],
@@ -158,8 +164,8 @@ export function ConfigMenu() {
     },
     {
         "name": "Color Selector",
-        "desc": "Change the color of the active play view (Color may change based on the active view config)",
-        "link": "#view-color",
+        "desc": "Change the color combination of the active note pad layout (Color may change based on the active note pad layout config)",
+        "link": "#note-pad-color",
         "elements": [
             {
                 "pos": [7, 0],
@@ -168,19 +174,19 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Spilt View",
-        "desc": "Enable Spilt View (Unspilt, horizontal spilt, vertical spilt)",
-        "link": "#spilt-view",
+        "name": "Spilt Mode",
+        "desc": "Cycle though Spilt mode. (Unspiit mode: Dim White, Vertical spilt mode: Cyan, Horizontal spilt mode: Purple)",
+        "link": "#spilt-mode",
         "elements": [
             {
                 "pos": [1, 0],
-                "color": "#FFFFFF"
+                "color": "#C0C0C0"
             }
         ]
     },
     {
         "name": "Velocity Sensitivity",
-        "desc": "(Device with Force Sensitive Keypad only) Enable or disable velocity sensitivity for the active play view.",
+        "desc": "Enable or disable velocity sensitivity for the active note pad layout. (Device with Force Sensitive Keypad only) ",
         "elements": [
             {
                 "pos": [6, 7],
@@ -190,7 +196,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Octave Selector",
-        "desc": "Select the octave of the active play view (Config Independent & Color may change based on the view config)",
+        "desc": "Select the octave of the active note pad layout(Layout Config Independent & Color may change based on the layout config)",
         "elements": [
             {
                 "pos": [0, 0],
@@ -204,8 +210,8 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Play view or Exit App",
-        "desc": "Tap to go back to the play view. Hold to exit the app.",
+        "name": "Note pad or Exit App",
+        "desc": "Tap to go back to the note pad. Hold to exit the app.",
         "elements": [
             {
                 "pos": ["c"]
@@ -215,7 +221,7 @@ export function ConfigMenu() {
 ];
 
     const uiName = "Config Menu"
-    const uiDescription = "The config menu allows you to modify play view and other customization options."
+    const uiDescription = "The config menu allows you to modify note pad layout and other customization options."
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -226,29 +232,725 @@ export function ConfigMenu() {
 <ConfigMenu/>
 
 ## Scale
+
+Highlight or constrain notes to a specific scale.
+This setting is layout config independent.
+
+export function ScaleSelector() {
+
+    const uiElements = [
+    {
+        "name": "Scale Visualizer & Root Key Selector",
+        "desc": "Select the scale and root key of the active note pad layout.",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Natural Minor",
+        "desc": "Use the Natural Minor scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Major",
+        "desc": "Use the Major scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Dorian",
+        "desc": "Use the Dorian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Phrygian",
+        "desc": "Use the Phrygian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Mixolydian",
+        "desc": "Use the Mixolydian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Melodic Minor Ascending",
+        "desc": "Use the Melodic Minor Ascending scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Harmonic Minor",
+        "desc": "Use the Harmonic Minor scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop Dorian",
+        "desc": "Use the Bebop Dorian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Blues",
+        "desc": "Use the Blues scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Minor Pentatonic",
+        "desc": "Use the Minor Pentatonic scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Hungarian Minor",
+        "desc": "Use the Hungarian Minor scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Ukrainian Dorian",
+        "desc": "Use the Ukrainian Dorian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Marva",
+        "desc": "Use the Marva scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Todi",
+        "desc": "Use the Todi scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Whole Tone",
+        "desc": "Use the Whole Tone scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic",
+        "desc": "Use the Chromatic scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Lydian",
+        "desc": "Use the Lydian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Locrian",
+        "desc": "Use the Locrian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Major Pentatonic",
+        "desc": "Use the Major Pentatonic scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Phrygian Dominate",
+        "desc": "Use the Phrygian Dominate scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Half Whole Diminished",
+        "desc": "Use the Half Whole Diminished scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Mixolydian Bebop",
+        "desc": "Use the Mixolydian Bebop scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Super Locrian",
+        "desc": "Use the Super Locrian scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Hirajoshi",
+        "desc": "Use the Hirajoshi scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "In Sen",
+        "desc": "Use the In Sen scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Yo Scale",
+        "desc": "Use the Yo Scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Iwato",
+        "desc": "Use the Iwato scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Whole Half",
+        "desc": "Use the Whole Half scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop Minor",
+        "desc": "Use the Bebop Minor scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Major Blues",
+        "desc": "Use the Major Blues scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Kumoi",
+        "desc": "Use the Kumoi scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop Major",
+        "desc": "Use the Bebop Major scale.",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Scale Selector"
+    const uiDescription = "The Scale Selector allows you to select the scale and root key of the active note pad layout."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ScaleSelector/>
+
+
+
+### Scale Table
+| Index | Scale                     | C | C# | D | Eb | E | F | F# | G | Ab | A | Bb | B |
+|-------|---------------------------|---|----|---|----|---|---|----|---|----|---|----|---|
+| 1     | Natural Minor             | X |    | X | X  |   | X |    | X | X  |   | X  |   |
+| 2     | Major                     | X | X  | X |    | X |   |    | X |    | X |    |   |
+| 3     | Dorian                    | X |    | X | X  |   | X |    | X | X  |   | X  |   |
+| 4     | Phrygian                  | X |    | X | X  |   | X |    | X |    | X |    |   |
+| 5     | Mixolydian                | X |    | X |    | X |   |    | X |    | X |    |   |
+| 6     | Melodic Minor Ascending   | X | X  | X | X  |   | X |    | X | X  |   | X  |   |
+| 7     | Harmonic Minor            | X |    | X | X  |   | X |    | X |    | X |    |   |
+| 8     | Bebop Dorian              | X |    | X | X  |   | X | X  | X | X  |   | X  |   |
+| 9     | Blues                     | X |    |   |    | X |   | X  | X | X  |   |    |   |
+| 10    | Minor Pentatonic         | X |    | X | X  |   | X |    | X | X  |   |    |   |
+| 11    | Hungarian Minor           | X | X  | X |    | X |   |    | X | X  |   | X  |   |
+| 12    | Ukrainian Dorian          | X | X  | X |    | X |   |    | X | X  |   | X  |   |
+| 13    | Marva                     | X |    | X |    | X |   |    | X |    | X |    |   |
+| 14    | Todi                      | X |    |   |    | X |   |    | X | X  |   | X  |   |
+| 15    | Whole Tone                | X |    | X |    | X | X |    | X | X  |   |    |   |
+| 16    | Chromatic                 | X | X  | X | X  | X | X | X  | X | X  | X | X  | X |
+| 17    | Lydian                    | X |    | X |    | X |   | X  | X | X  |   | X  |   |
+| 18    | Locrian                   | X |    |   | X  | X |   | X  | X |    | X |    |   |
+| 19    | Major Pentatonic         | X |    | X |    | X |   |    | X | X  |   |    |   |
+| 20    | Phrygian Dominate         | X | X  | X |    | X |   |    | X | X  |   | X  |   |
+| 21    | Half Whole Diminished     | X | X  | X | X  | X | X | X  | X | X  | X | X  | X |
+| 22    | Mixolydian Bebop          | X |    | X |    | X |   | X  | X | X  |   | X  |   |
+| 23    | Super Locrian             | X |    | X |    | X |   | X  | X |    | X |    |   |
+| 24    | Hirajoshi                 | X |    |   |    |   | X |    | X | X  |   |    |   |
+| 25    | In Sen                    | X |    |   | X  |   |   | X  | X |    |   |    |   |
+| 26    | Yo Scale                  | X |    |   |    | X |   | X  | X |    |   |    |   |
+| 27    | Iwato                     | X |    |   | X  |   |   | X  | X |    |   |    |   |
+| 28    | Whole Half                | X |    | X |    | X | X |    | X |    | X |    |   |
+| 29    | Bebop Minor               | X | X  | X | X  | X |   | X  | X |    | X |    |   |
+| 30    | Major Blues               | X |    | X |    | X |   | X  | X |    |   | X  |   |
+| 31    | Kumoi                     | X |    |   |    |   | X |    | X |    | X |    |   |
+| 32    | Bebop Major               | X | X  | X |    | X |   | X  | X | X  |   | X  |   |
+
 ### Enforce Scale
+When Enforce Scale is on, only notes in the selected scale will be shown, when off, all notes will be shown but notes that are not in the selected scale will be dimmed.
+
 
 ## Overlap
+The Overlap Selector selects how much each row above overlaps with the row below it. This is useful if you want to play chords with one hand.
 
-## Midi Channel
+There is also an align root toggle inside this menu. When on the next row above after the entire scale is completed will realign with root note.
 
-## View Color
+This setting is layout config independent.
 
-## Spilt View
+export function OverlapSelector() {
 
-## Example Views
+    const uiElements = [
+    {
+        "name": "Overlap Display",
+        "desc": "Displays the overlap of the active note pad layout.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 1],
+                "size": [2, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 2],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [5, 3],
+                "size": [3, 1],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Overlap Selector",
+        "desc": "Selects how much each row above overlaps with the row below it.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [7, 1],
+                "color": "#C0C000"
+            },
+            {
+                "pos": [3, 7],
+                "color": "#FFFF00"
+            }
 
-### Play View 1
+        ]
+    },
+    {
+        "name": "Align Root",
+        "desc": "Toggle if the next row above after the entire scale is completed will realign with root note.",
+        "link": "#align-root",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            },
+
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Overlap Selector"
+    const uiDescription = "The Overlap Selector allows you to select how much each row above overlaps with the row below it and if root should be aligned."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<OverlapSelector/>
+
+
+### Align Root
+If align root is on, the next row above after the entire scale is completed will realign with root note. If align root is off, the layout will just continue from the note where the last row ended.
+
+
+## MIDI Channel
+
+This setting is layout config independent.
+
+
+export function ChannelSelector() {
+
+    const uiElements = [
+    {
+        "name": "MIDI Channel Display",
+        "desc": "Displays the MIDI out channel of the active note pad layout.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Channel Selector",
+        "desc": "Selects the MIDI out channel of the active note pad.",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#48C000"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#60FF00"
+            }
+
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "MIDI Channel Selector"
+    const uiDescription = "The MIDI Channel Selector allows you to select the MIDI out channel of the active note pad layout."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ChannelSelector/>
+
+## Note Pad Color
+You can customize the color combination of the active note pad layout in the Note Pad Color Selector.
+This setting is layout config independent.
+
+export function NotePadColorSelector() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad Preview",
+        "desc": "Preview of the active note pad layout with the selected color combination.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "Root Key Color",
+        "desc": "Select the color of the root key.",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "size": [2, 2],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Pad Color",
+        "desc": "Select the color of the note pad.",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "size": [2, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "MIDI Channel Selector"
+    const uiDescription = "The MIDI Channel Selector allows you to select the MIDI out channel of the active note pad layout."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<NotePadColorSelector/>
+
+## Spilt Mode
+
+The Spilt Mode Selector allows you to enable or disable spilt mode. Spilt mode can be unspilt, horizontal spilt, or vertical spilt.
+
+
+The Spilt Mode Selector will show different color based on the current spilt mode.
+
+- Unspiit mode: Dim White
+- Vertical spilt mode: Cyan
+- Horizontal spilt mode: Purple
+
+## Example Layouts
+
+### Example Layout 1
 - Enforce Scale: On
 - Overlap: 0
 - Root Aligned: On
 
-### Play View 2
+### Example Layout 2
 - Enforce Scale: On
 - Overlap: 3
 - Root Aligned: Off
 
-### Play View 3
+### Example Layout 3
 - Enforce Scale: Off
 - Overlap: 0
 - Root Aligned: On

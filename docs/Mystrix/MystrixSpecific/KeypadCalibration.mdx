@@ -6,44 +6,108 @@ import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVis
 
 # Keypad Calibration
 
-export function DeviceSettings() {
+:::danger
+This feature is only for power user and not recommended for general user. 
+
+If the keypad miscalibrated, your device will not work as expected. In the worst case, you may need to reflash the OS and wipe all the data to recover the device.
+:::
+
+:::info
+This feature is only available for Mystrix with force sensitive keypad, for example, Mystrix Pro.
+:::
+
+Keypad Calibration APP is specific to Mystrix with force sensitive keypad. The app is used to calibrate the keypad to the user's preference. You can adjust the minimal trigger force and the maximal trigger force of the keypad.
+
+
+# Keypad Calibration UI
+export function KeypadCalibrationMenu() {
     const uiElements = [
         {
-            "name": "Bluetooth Midi",
-            "desc": "Enter the Bluetooth Midi settings",
-            "link": "/docs/Mystrix/MystrixSpecific/BluetoothMidi",
+            "name": "Max Force Offset",
+            "desc": "Global Offset the max force threshold of the keypad",
+            "link": "#offset-editor",
             "elements": [
                 {
                     "pos": [0, 0],
-                    "color": "#0082FC"
+                    "size": [1, 2],
+                    "color": "#00FFFF"
                 }
             ]
         },
         {
-            "name": "Touchbar Toggle",
-            "desc": "Enable or disable the touchbar",
+            "name": "Max Force Calibration",
+            "desc": "Manually calibrate the max force threshold of the every key on the keypad (if calibrated, the pad will be lit up as green)",
+            "link": "#max-force-calibration",
             "elements": [
                 {
-                    "pos": [1, 0],
-                    "color": "#7957FB"
+                    "pos": [2, 0],
+                    "size": [4, 2],
+                    "color": "#FF0000"
                 }
             ]
         },
         {
-            "name": "Keypad Calibration",
-            "desc": "(Only on Mystrix Pro) Calibrate Mystrix Pro's keypad",
-            "link": "/docs/Mystrix/MystrixSpecific/CalibrateKeyPad",
+            "name": "Clear Max Force Calibration",
+            "desc": "Clear the max force calibration of the keypad",
             "elements": [
                 {
                     "pos": [7, 0],
+                    "size": [1, 2],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "Min Force Offset",
+            "desc": "Global Offset the minimal force threshold of the keypad",
+            "link": "#offset-editor",
+            "elements": [
+                {
+                    "pos": [0, 6],
+                    "size": [1, 2],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "Min Force Calibration",
+            "desc": "Auto calibrate the minimal force threshold of the every key on the keypad (if calibrated, the pad will be lit up as green)",
+            "link": "#minimal-force-calibration",
+            "elements": [
+                {
+                    "pos": [2, 6],
+                    "size": [4, 2],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Clear min Force Calibration",
+            "desc": "Clear the minimal force calibration of the keypad",
+            "elements": [
+                {
+                    "pos": [7, 6],
+                    "size": [1, 2],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "Keypad Tester",
+            "desc": "Test the force sensitivity of the keypad",
+            "link": "#keypad-tester",
+            "elements": [
+                {
+                    "pos": [1, 3],
+                    "size": [6, 2],
                     "color": "#FFFFFF"
                 }
             ]
         },
         {
-            "name": "Go Back",
-            "desc": "Return to the previous screen",
-            "link": "/docs/MatrixOS/SystemSettings",
+            "name": "Exit Keypad Calibration",
+            "desc": "Return to the application launcher",
+            "link": "/docs/MatrixOS/ApplicationLauncher",
             "elements": [
                 {
                     "pos": ["c"]
@@ -61,5 +125,12 @@ export function DeviceSettings() {
     />
 }
 
-<DeviceSettings />
+<KeypadCalibrationMenu />
 
+## Max Force Calibration
+
+## Minimal Force Calibration
+
+## Offset Editor
+
+## Keypad Tester

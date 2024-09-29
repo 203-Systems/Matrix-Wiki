@@ -170,11 +170,209 @@ Some device control are asmymetrical, some controls might not work or function d
 You can tap the brightness control pad to cycle through brightness levels. In addition, you can hold the brightness control pad to enter the brightness control menu.
 
 ### Brightness Control Menu
+Brightness control menu allows you to fine tune the brightness of the device and set brightness multiplier for different led sections (if device supports it).
+
+export function BrightnessControlMenu() {
+
+    const uiElements = [
+    {
+        "name": "Brightness Level Display",
+        "desc": "Shows the current brightness level as a percentage.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 0],
+                "size": [3, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2],
+                "color": undefined
+            }
+        ]
+    },
+    {
+        "name": "Global Brightbess",
+        "desc": "Controls the System Wide Brightness level. (Only shows if device has multiple led sections)",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "LED Sections Brightness Multiplier",
+        "desc": "Adjust the brightness multiplier for different led sections. (Only shows if device has multiple led sections) (For Mystrix Pro it's the underglow)",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            },
+        ]
+    },
+    {
+        "name": "Brightness Selector",
+        "desc": "Adjust the brightness(If LED section is selected, the selector will be the multiplier for that section)",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Brightness Selector (Overdrive)",
+        "desc": "LED Brightness beyound safety limits. Use with caution! (Mostly unsafe for eyes)",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [4, 1],
+                "color": "#C00000"
+            },
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Tap to go back to the previous screen.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Brightness Control Menu"
+    const uiDescription = "The brightness control menu allows you to fine tune the brightness of the device and set brightness multiplier for different led sections (if device supports it)."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<BrightnessControlMenu/>
 
 ## Factory Reset
 Factory resets the device.
 
 You will have to confirm the factory reset by clicking on the green pad to proceed.
+
+export function FactoryResetConfirmMenu() {
+
+    const uiElements = [
+    {
+        "name": "Clear",
+        "desc": "Shows that you are about to factory reset the device.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [3, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 1],
+                "size": [2, 2],
+                "color": undefined
+            },
+            {
+                "pos": [3, 0],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 3],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [7, 0],
+                "color": undefined
+            },
+            {
+                "pos": [6, 1],
+                "color": undefined
+            },
+            {
+                "pos": [7, 2],
+                "color": undefined
+            },
+            {
+                "pos": [6, 3],
+                "color": undefined
+            },
+        ]
+    },
+    {
+        "name": "Cancel",
+        "desc": "Tap to cancel the factory reset.",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "size": [2, 2],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Confirm",
+        "desc": "Tap to confirm the factory reset.",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "size": [2, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Tap to go back to the previous screen.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Factory Reset Confirm Menu"
+    const uiDescription = "The factory reset confirm menu allows you to confirm the factory reset of the device."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<FactoryResetConfirmMenu/>
 
 ## Device ID
 Assign a device ID to the device. The ID will show up on host after the device's name. This is useful for identifying the device with you have multiple devices connected to the same host.

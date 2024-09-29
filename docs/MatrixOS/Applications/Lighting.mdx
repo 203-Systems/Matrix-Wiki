@@ -11,7 +11,9 @@ Lighting App is used to make your device as a lighting panel that you can use in
 Holding down the function key in [config menu](#config-menu) will exit this app and bring you back to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
 
 ## Lighting View
+Lighting view is the main view of the lighting app. It shows the current lighting effect and color.
 
+Clicking on the function key will bring you to the [config menu](#config-menu).
 
 ## Config Menu
 
@@ -146,7 +148,93 @@ export function ConfigMenu() {
 <ConfigMenu/>
 
 ## RGB Mode
+In RGB mode, you can set the color of the lighting view to any color you want via the [Color Picker](/docs/MatrixOS/SharedUI/ColorPicker).
 
 ## Temperature Mode
+In Temperature mode, you can set the color of the lighting view to a color that represents a temperature. The color will change based on the temperature you set. 
+
+The selector UI is similar to the [Color Picker](/docs/MatrixOS/SharedUI/ColorPicker), but the hue selector will be replaced with a temperature selector and there's no saturation selector.
 
 ## Lighting Effect
+
+export function LightingEffect() {
+
+   const uiElements = [
+    {
+        "name": "Effect: Static",
+        "desc": "Set the lighting effect to Static (Basiclly means no effect)",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Effect: Breath",
+        "desc": "Set the lighting effect to Breath",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Effect: Strobe",
+        "desc": "Set the lighting effect to Strobe",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Effect: Saw",
+        "desc": "Set the lighting effect to Saw",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Speed Control",
+        "desc": "Change the speed of the lighting effect",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+
+    const uiName = "Lighting Effect Menu"
+    const uiDescription = "The config menu allows you to modify lighting effect options."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<LightingEffect/>

@@ -6,11 +6,11 @@ import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVis
 
 # Performance App
 
-The Performance app is used as an user canvas standard midi signals.
+The Performance app is used as an user canvas standard MIDI signals.
 
-It can be used to perform visual performance with Amethyst Player, Ableton Live, or Unipad; used as drumpad in any midi enabled DAW; or used as a canvas for your own DAW intergration via standard midi protocol.
+It can be used to perform visual performance with Amethyst Player, Ableton Live, or Unipad; used as drumpad in any MIDI enabled DAW; or used as a canvas for your own DAW intergration via standard MIDI protocol.
 
-It sends standard Midi signal with aftertouch so it should be compatible with any DAW that accepts midi if it is used as drum pad purpose.
+It sends standard MIDI signal with aftertouch so it should be compatible with any DAW that accepts MIDI if it is used as drum pad purpose.
 
 When you first enter the application, you will see a blank canvas. You can click or hold on the function key to enter the action menu.
 
@@ -148,8 +148,8 @@ export function ActionMenu() {
         ]
     },
     {
-        "name": "Midi Control Pad",
-        "desc": "Extra midi control pad for customizable controls. They are mapped to touchbar on the Mystrix, so they can be used as an alternative.",
+        "name": "MIDI Control Pad",
+        "desc": "Extra MIDI control pad for customizable controls. They are mapped to touchbar on the Mystrix, so they can be used as an alternative.",
         "link": "#factory-reset",
         "elements": [
             {
@@ -172,7 +172,7 @@ export function ActionMenu() {
 
 
     const uiName = "Action Menu"
-    const uiDescription = "The action menu allows you to change the settings, modify palette, send midi controls inside Performance app."
+    const uiDescription = "The action menu allows you to change the settings, modify palette, send MIDI controls inside Performance app."
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -191,7 +191,7 @@ Performance App will send out a cc signal when the action menu is entered. (chan
 ### Touch Combo Keys
 
 ## Flicker Reduction
-Flicker Reduction is used when midi lightshow is causing flickers or when light is so fast it is higher than the device refresh rate.
+Flicker Reduction is used when MIDI lightshow is causing flickers or when light is so fast it is higher than the device refresh rate.
 It is recommended turn on only in Ableton Live.
 
 ## Color Palette
@@ -208,4 +208,4 @@ You can edit the custom color palettes in the action menu.
 
 ## Sysex API
 
-Sysex API provided more advanced control over the canvas than regular midi signals. Including real RGB LED color and faster LED fill. 
+Sysex API provided more advanced control over the canvas than regular MIDI signals. Including real RGB LED color and faster LED fill. 
