@@ -1,6 +1,33 @@
 {
     "rewrites": [
-      { "source": "/giscus-dark.css", "destination": "/api/giscus-dark" },
-      { "source": "/giscus-light.css", "destination": "/api/giscus-light" }
+      { 
+        "source": "/giscus-dark.css", 
+        "destination": "/api/giscus-dark"
+      },
+      { 
+        "source": "/giscus-light.css", 
+        "destination": "/api/giscus-light"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/giscus-dark.css",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "https://giscus.app"
+          }
+        ]
+      },
+      {
+        "source": "/giscus-light.css",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "https://giscus.app"
+          }
+        ]
+      }
     ]
   }
+  
