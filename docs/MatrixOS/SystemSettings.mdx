@@ -378,3 +378,129 @@ export function FactoryResetConfirmMenu() {
 Assign a device ID to the device. The ID will show up on host after the device's name. This is useful for identifying the device with you have multiple devices connected to the same host.
 
 If set to zero, the device ID will not show up on the host.
+
+export function DeviceIDSelector() {
+
+    const uiElements = [
+    {
+        "name": "Clear",
+        "desc": "Shows that you are about to factory reset the device.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2],
+                "color": undefined
+            },
+        ]
+    },
+    {
+        "name": "Minus 50",
+        "desc": "Decrease the device ID by 50.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Minus 20",
+        "desc": "Decrease the device ID by 20.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "Minus 5",
+        "desc": "Decrease the device ID by 5.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "Minus 1",
+        "desc": "Decrease the device ID by 1.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "Add 1",
+        "desc": "Increase the device ID by 1.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "Add 5",
+        "desc": "Increase the device ID by 5.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "Add 20",
+        "desc": "Increase the device ID by 20.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "Add 50",
+        "desc": "Increase the device ID by 50.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Tap to go back to the previous screen.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Device ID Selector"
+    const uiDescription = "The device ID selector allows you to assign a device ID to the device."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<DeviceIDSelector/>

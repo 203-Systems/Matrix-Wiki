@@ -940,17 +940,246 @@ The Spilt Mode Selector will show different color based on the current spilt mod
 
 ## Example Layouts
 
-### Example Layout 1
+### Example Layout 1 - Scale Folded Layout
+
+export function ExampleLayout1() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 1",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 8],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Example Layout 1"
+    const uiDescription = "Enforce Scale: On, Overlap: 0, Root Aligned: On"
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ExampleLayout1/>
+
 - Enforce Scale: On
 - Overlap: 0
 - Root Aligned: On
 
-### Example Layout 2
+### Example Layout 2 - Isomorphic Layout
+
+
+export function ExampleLayout2() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 2",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Example Layout 2"
+    const uiDescription = "Enforce Scale: On, Overlap: 3, Root Aligned: Off"
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ExampleLayout2/>
+
 - Enforce Scale: On
 - Overlap: 3
 - Root Aligned: Off
 
-### Example Layout 3
+### Example Layout 3 - Chromatic Layout
+
+
+export function ExampleLayout3() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 3",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [1, 6],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 4],
+                "color": undefined
+            },
+            ,
+            {
+                "pos": [3, 4],
+                "size": [1, 4],
+                "color": undefined
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [6, 7],
+                "size": [1, 1],
+                "color": undefined
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [7, 6],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 3],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [6, 1],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00FF00"
+            },
+            
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Example Layout 3"
+    const uiDescription = "Enforce Scale: On, Overlap: 0, Root Aligned: Off"
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ExampleLayout3/>
+
 - Enforce Scale: Off
 - Overlap: 0
 - Root Aligned: On
