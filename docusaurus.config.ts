@@ -109,6 +109,12 @@ const config: Config = {
           position: 'left',
           label: 'Resources',
         },
+        {
+          type: 'docSidebar',
+          sidebarId: 'supportSidebar',
+          position: 'left',
+          label: 'Support',
+        },
         // {to: '/blog', label: 'Updates', position: 'left'},
         {
           type: 'docsVersionDropdown',
