@@ -1,0 +1,16 @@
+.docItemContainer header + *,
+.docItemContainer article > *:first-child {
+  margin-top: 0;
+}
+
+@media (min-width: 997px) {
+  .docItemCol {
+    max-width: 75% !important;
+  }
+}
+
+.commentSection {
+  margin-top: 2rem;
+  border-top: 2px solid var(--ifm-toc-border-color);
+  padding-top: 1rem;
+}

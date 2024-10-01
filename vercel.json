@@ -1,0 +1,6 @@
+{
+    "rewrites": [
+      { "source": "/giscus-dark.css", "destination": "/api/giscus-dark" },
+      { "source": "/giscus-light.css", "destination": "/api/giscus-light" }
+    ]
+  }

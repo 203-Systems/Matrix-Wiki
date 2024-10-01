@@ -1,24 +1,26 @@
-import React, {useEffect} from 'react';
-import commentBox from 'commentbox.io';
-import {useColorMode} from '@docusaurus/theme-common';
+import React from 'react';
+import Giscus from "@giscus/react";
+import { useColorMode } from '@docusaurus/theme-common';
 
-export const CommentSection = () => {
-    // Depending on the theme, we will show a different
-    // text color in the comments section
-    const {colorMode} = useColorMode();
-    const textColor = colorMode === 'dark' ? 'white' : 'black';
+export default function GiscusComponent() {
+  const { colorMode } = useColorMode();
 
-    useEffect(() => {
-        const box = commentBox('5688857114705920-proj', {
-            textColor: textColor,
-        });
-        return () => box();
-    }, [colorMode]);
-
-
-    return (
-        <div style={{
-            marginTop: '54px',
-        }} className="commentbox"/>
-    );
-};
+  return (
+    <Giscus    
+      repo="203-Systems/Matrix-Wiki"
+      repoId="R_kgDOMv99gw"
+      category="Comments"
+      categoryId="DIC_kwDOMv99g84Ci8V7" 
+      mapping="pathname"
+      strict="1"
+      reactionsEnabled="0"
+      emitMetadata="0"
+      inputPosition="top"
+      theme={colorMode == 'dark' ? 'https://matrix.203.io/giscus-dark.css' : 'https://matrix.203.io/giscus-light.css'}
+      lang="en"
+      loading="lazy"
+      crossorigin="anonymous"
+      async
+    />
+  );
+}
