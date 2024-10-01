@@ -212,6 +212,30 @@ const config: Config = {
       content: `<b>🚧 Project Matrix Wiki is currently in development. Contents may be incorrect, incomplete, or outdated. 🚧</b>`,
     },
     image: 'img/social-card.jpg',
+    algolia: {
+      // The application ID provided by Algolia
+      appId: 'NX86NL0BFF',
+
+      // Public API key: it is safe to commit it
+      apiKey: '39f74a16abae5976cd799acc6a758192',
+
+      indexName: 'matrix-203',
+
+      // Optional: see doc section below
+      contextualSearch: true,
+
+      // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+      replaceSearchResultPathname: {
+        from: '/docs/', // or as RegExp: /\/docs\//
+        to: '/',
+      },
+
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+
+      // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
+      insights: true,
+    },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.vsDark,

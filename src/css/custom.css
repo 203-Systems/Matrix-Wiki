@@ -81,3 +81,8 @@ div[class^='announcementBar_'] {
 {
   fill: var(--ifm-navbar-link-color);
 }
+
+.DocSearch-Logo
+{
+  visibility: hidden !important;
+}
