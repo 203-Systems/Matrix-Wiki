@@ -15,7 +15,7 @@
         "headers": [
           {
             "key": "Access-Control-Allow-Origin",
-            "value": "https://giscus.app"
+            "value": "*"
           }
         ]
       },
@@ -24,7 +24,7 @@
         "headers": [
           {
             "key": "Access-Control-Allow-Origin",
-            "value": "https://giscus.app"
+            "value": "*"
           }
         ]
       }
