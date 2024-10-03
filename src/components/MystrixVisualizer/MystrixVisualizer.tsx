@@ -189,32 +189,37 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
         </div>
         )}>
         <div className={styles.MystrixVisualizer} onClick={() => {lockSelectedFunction(undefined)}}>
+            
             <div className={styles.mystrix}>
             <div className={`${styles.mystrixUnderglow} ${selected_function != undefined ? styles.mystrixUnderglowDim : ''}`}>
                 <div className={styles.mystrixUnderglowRow}>
-                {Array.from({ length: 8 }, (_, x) => (
-                    <div key={x} className={styles.mystrixUnderglowLed}/>
-                ))}
+                {Array.from({ length: 8 }, (_, x) => {
+                    let keyColor = underglowColors?.[x + 24];
+                        return ( <div key={x} className={styles.mystrixUnderglowLed} style={{backgroundColor: keyColor ? keyColor : "rgba(0, 0, 0, 0)"}}/>)
+                })}
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row", height: "88%", justifyContent: "space-between" }}>
                 <div className={styles.mystrixUnderglowColumn}>
-                    {Array.from({ length: 8 }, (_, y) => (
-                    <div key={y} className={styles.mystrixUnderglowLed}/>
-                    ))}
+                    {Array.from({ length: 8 }, (_, y) => {
+                    let keyColor = underglowColors?.[y + 16];
+                        return ( <div key={y} className={styles.mystrixUnderglowLed} style={{backgroundColor: keyColor ? keyColor : "rgba(0, 0, 0, 0)"}}/>)
+                    })}
                 </div>
 
                 <div className={styles.mystrixUnderglowColumn}>
-                    {Array.from({ length: 8 }, (_, y) => (
-                    <div key={y} className={styles.mystrixUnderglowLed}/>
-                    ))}
+                    {Array.from({ length: 8 }, (_, y) => {
+                        let keyColor = underglowColors?.[y];
+                        return ( <div key={y} className={styles.mystrixUnderglowLed} style={{backgroundColor: keyColor ? keyColor : "rgba(0, 0, 0, 0)"}}/>)
+                    })}
                 </div>
                 </div>
 
                 <div className={styles.mystrixUnderglowRow}>
-                {Array.from({ length: 8 }, (_, x) => (
-                    <div key={x} className={styles.mystrixUnderglowLed}/>
-                ))}
+                {Array.from({ length: 8 }, (_, x) => {
+                    let keyColor = underglowColors?.[15 - x];
+                    return ( <div key={x} className={styles.mystrixUnderglowLed} style={{backgroundColor: keyColor ? keyColor : "rgba(0, 0, 0, 0)"}}/>)
+                })}
                 </div>
             </div>
 
@@ -331,23 +336,24 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
 
             </div>
             <div className={styles.functionDisplay}>
-                <h2 className={styles.functionName} style={{ position: "absolute"}}>
-                    <ReactTextTransition delay={0} direction='up'>
-                        {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
-                    </ReactTextTransition>
-                </h2>
-                <h2 className={styles.functionName} style={{opacity: "0%"}}>
-                        {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
-                </h2>
-                <div className={styles.functionDesc}>
-                    <ReactTextTransition delay={150} direction='up'>
-                        {selected_function !== undefined && uiElements[selected_function].name !== undefined ? (uiElements[selected_function].desc !== undefined ? uiElements[selected_function].desc : "") : uiDescription}
-                    </ReactTextTransition>
+                <div className={styles.functionDisplayContent}>
+                    <h2 className={styles.functionName} style={{ position: "absolute"}}>
+                        <ReactTextTransition delay={0} direction='up'>
+                            {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
+                        </ReactTextTransition>
+                    </h2>
+                    <h2 className={styles.functionName} style={{opacity: "0%"}}>
+                            {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
+                    </h2>
+                    <div className={styles.functionDesc}>
+                        {/* <ReactTextTransition delay={150} direction='up'> */}
+                            {selected_function !== undefined && uiElements[selected_function].name !== undefined ? (uiElements[selected_function].desc !== undefined ? uiElements[selected_function].desc : "") : uiDescription}
+                        {/* </ReactTextTransition> */}
+                    </div>
                 </div>
                 <button
-                    className={styles.functionDetailBtn}
+                    className={`${styles.functionDetailBtn} ${(selected_function !== undefined && uiElements[selected_function].link !== undefined) ?  '' : styles.functionDetailBtnHidden}`}
                     style={{ 
-                        transform: (selected_function !== undefined && uiElements[selected_function].link !== undefined) ? "translateY(0)" : "translateY(100%)", 
                         backgroundColor: detailButtonColor
                     }}
                     onClick={() => {
@@ -366,8 +372,8 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                     }}
                 >   
                     <div className={styles.functionDetailBtnContent} style={{color: detailButtonColor}}>
-                        Detail
-                        <ArrowRight size={22} />
+                        <div className={styles.functionDetailBtnText}>DETAILS</div>
+                        <ArrowRight size={28} className={styles.functionDetailBtnArrow}/>
                     </div>
                 </button>
             </div>
