@@ -57,24 +57,24 @@
 }
 
 div[class^='announcementBar_'] {
-  padding: top 0.5rem, bottom 0.5rem;
+  padding: 0.5rem;
   font-size: 20px;
+  background: linear-gradient(125deg, rgba(152, 12, 169, 1), rgba(239, 27, 227, 1) 24%, rgba(255, 0, 56, 1) 100%);
+  
+  animation: gradient-animation 1s infinite;
+}
 
-  /*
-  --site-announcement-bar-stripe-color1: hsl(
-    var(--site-primary-hue-saturation) 85%
-  );
-  --site-announcement-bar-stripe-color2: hsl(
-    var(--site-primary-hue-saturation) 95%
-  );
-   */
 
-  background: linear-gradient(
-    145deg,
-    rgb(0, 255, 255),
-    rgb(255, 0, 255)
-  );
-  font-weight: bold;
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .navbar__logo::before
