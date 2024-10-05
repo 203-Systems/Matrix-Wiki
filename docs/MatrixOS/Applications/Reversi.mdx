@@ -162,13 +162,68 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "System Settings",
-        "desc": "Enter the system settings",
-        "link": "/docs/MatrixOS/SystemSettings",
+        "name": "Player 1 Color",
+        "desc": "Tap to select colors for Player 1.",
+        "link": "/docs/MatrixOS/SharedUI/ColorPicker",
         "elements": [
             {
-                "pos": [7, 7],
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Player 1 First Hand",
+        "desc": "Toggle if Player 1 goes first.",
+        "elements": [
+            {
+                "pos": [7, 6],
                 "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Player 2 Color",
+        "desc": "Tap to select colors for Player 2.",
+        "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Player 2 First Hand",
+        "desc": "Toggle if Player 2 goes first.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Reset Game",
+        "desc": "Reset the game to the initial state.",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "size": [1, 2],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Placement Hint",
+        "desc": "Toggle the placement hint.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
             }
         ]
     },
