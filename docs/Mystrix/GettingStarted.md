@@ -20,6 +20,33 @@ See [Update Matrix OS](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS) on how to u
 ### Start using your Mystrix
 See the Usage Examples section to see what others are using Mystrix for and how to get started with them or deep dive into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
 
+### Join the Community 
+We want to build a vibrant community of Mystrix users and we need your help!
+
+You can join the community in various ways
+
+- Discord - [203 System](https://discord.gg/rRVCBHHPfw)
+- Reddit - r/Mystrix (Currently banned because u/203Null was hacked, working on restoring that!)
+- Github - [Discussion](https://github.com/203-Systems/MatrixOS/discussions)
+- If you have other platform suggestion, leave a comment under [Connect with Us](/docs/Support/ConnectWithUs)
+
+### Share your Mystrix
+Share your Mystrix with others and tell them how awesome Project Mystrix is!
+
+As a community tradition, share a #Mystrix pics with your Mystrix on your fridge!
+
+### Leave an Review
+
+You can leave an review at 203.io or at the platform your purchased from! 
+(We don't censor any negative reviews at 203.io since it helps us improve! We will try our best to make things right for you!)
+
+### Feature Request & Bug Report
+You can submit feature requests and bug report at [MatrixOS Github Repo] 
+
+
+#### Share Your Cool Things
+
+
 
 ## Expectation
 

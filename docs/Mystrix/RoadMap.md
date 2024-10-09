@@ -34,6 +34,8 @@ We do want to make more cool hardwares, but making hardwares are very very expan
 - Mystrix Ultra(?) - Better touchbar, Premium RGBW LEDs, battery included, maybe even MPE keypad.
 - 4x4, 4x8, 10x10, 8x16 Mystrix (?)
 
+## Third Party
+- Ableton Live integration 
 
 
 
