@@ -9,7 +9,7 @@ We have some roadmap and a lot of ideas for Mystrix & Matrix OS.
 We want to be open with our plan and we welcome community pitching their supports for each idea and pilot which we should be working on first.
 
 ## Matrix OS
-- Customizeable Keymap via edit.203.io **(Slated for OS 2.6)**
+- Customizable Keymap via edit.203.io **(Slated for OS 2.6)**
 - Note APP Arpeggiator, Chord Mode, and Transpose Control Bar. **(Slated for OS 2.6)**
 - Dynamic application system - Loading external application via Python or WASM.
 - Dynamic USB System - Allow user application to reconfigure what Matrix OS device emulate as
@@ -23,13 +23,13 @@ We want to be open with our plan and we welcome community pitching their support
 
 ## Mystrix
 
-We do want to make more cool hardwares, but making hardwares are very very expansive and hard, especially for something small volume and at the engineering, polishment, and value level we want. So those are mostly just ideas that we can do, given the demands and financially viability of them.
+We do want to make more cool hardwares, but making hardwares are very very expansive and hard, especially for something small volume and at the engineering, polish, and value level we want. So those are mostly just ideas that we can do, given the demands and financially viability of them.
 
 - Internal Battery Module - Allow Mystrix to be true standalone (The capability is designed in for all Mystrix and the battery is fully internal, no sizing changing for the device!)
 - Better MIDI Adapter dongle - Bidirectional, maybe even CV dongle
 - USB Wireless Adapter - Allow Mystrix to wireless connect to any device via a dongle connect to host device's USB port.
 - Wireless MIDI Satellite - Connect external device's MIDI port to the satellite device. Mystrix will be able to wireless connect to it and send MIDI or receive MIDI from it.
-- Professional IO & Synthesizer Module - A dock for Mystrix to connect on via the pogo port and magnet on the bottom of Mystrix. Contains a synthesiser and it's audio in & out, MIDI TRS ports, CV port, and power jack.
+- Professional IO & Synthesizer Module - A dock for Mystrix to connect on via the pogo port and magnet on the bottom of Mystrix. Contains a synthesizer and it's audio in & out, MIDI TRS ports, CV port, and power jack.
 - Power Chord (?)
 - Mystrix Ultra(?) - Better touchbar, Premium RGBW LEDs, battery included, maybe even MPE keypad.
 - 4x4, 4x8, 10x10, 8x16 Mystrix (?)

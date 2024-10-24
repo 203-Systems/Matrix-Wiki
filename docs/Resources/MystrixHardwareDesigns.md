@@ -8,7 +8,7 @@ sidebar_position: 1
 
 ## License
 
-The designs are licensed under the CERN Open Hardware Licence v2 - Permissive. See the LICENSE file for details.
+The designs are licensed under the CERN Open Hardware License v2 - Permissive. See the LICENSE file for details.
 
 The designs are provided as-is, and 203 Systems is not responsible for any damage or injury that may be caused by the use of these designs.
 
