@@ -8,4 +8,4 @@ Customizable keypad allow you to bring your set up on the go without any configu
 
 This feature is slated for Matrix OS 2.6, but you can try out the best version of the editor at https://edit.203.io
 
-For now, try out BitFocus Companion integration for similar use cases (but host software required) - [BitFocus Companion](/docs/Mystrix/UsageExamples/ComputerControl/BitFocusCompanion)
+For now, try out BitFocus Companion integration for similar use cases (but host software required) - [BitFocus Companion](/docs/Mystrix/UsageExamples/CustomizableControls/BitFocusCompanion)
