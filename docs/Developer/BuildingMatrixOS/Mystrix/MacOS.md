@@ -137,3 +137,8 @@ Here are some useful build commands you can use in Matrix OS:
 - `fullclean` - Cleans the build more thoroughly. Use this if you encounter undefined references or missing files.
 - `build` - Builds Matrix OS based on the default config (OS/parameter.h).
 - `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see [Debug Matrix OS](/docs/Developer/DebugMatrixOS)).
+
+You can chain commands together like:
+```bash
+make DEVICE=Mystrix clean build uf2-upload
+```
