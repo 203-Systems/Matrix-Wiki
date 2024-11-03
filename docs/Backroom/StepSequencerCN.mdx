@@ -1,17 +1,16 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
-
 import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
 
-# Step Sequencer
+# 步进音序器 APP
 
 export function SequencerMain() {
 
     const uiElements = [
     {
-        "name": "Page Selector",
-        "desc": "Select the page of the sequencer. Hold down to disable page or adjust length",
+        "name": "页面选择器",
+        "desc": "选择音序器的页面。长按以禁用页面或调整长度",
         "elements": [
             {
                 "pos": [0, 0],
@@ -25,8 +24,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes.",
+        "name": "音序",
+        "desc": "音序器的音序。长按微调步进音符。",
         "elements": [
             {
                 "pos": [0, 1],
@@ -52,8 +51,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Note Pad",
-        "desc": "Note Pad for entering notes",
+        "name": "音符板",
+        "desc": "用于输入音符的音符板",
         "elements": [
             {
                 "pos": [0, 3],
@@ -73,8 +72,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Play",
-        "desc": "Play the sequence",
+        "name": "播放",
+        "desc": "播放音序",
         "elements": [
             {
                 "pos": [7, 7],
@@ -83,8 +82,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Record",
-        "desc": "Record the Sequence",
+        "name": "录制",
+        "desc": "录制音序",
         "elements": [
             {
                 "pos": [6, 7],
@@ -93,8 +92,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Octave Down",
-        "desc": "Movw the octave down (With Shift, it will nudge the sequence left)",
+        "name": "降八度",
+        "desc": "降低一个八度（按住 Shift 时，将音序向左移动）",
         "elements": [
             {
                 "pos": [0, 7],
@@ -103,8 +102,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Octave Up",
-        "desc": "Move the octave up (With Shift, it will nudge the sequence right)",
+        "name": "升八度",
+        "desc": "提高一个八度（按住 Shift 时，将音序向右移动）",
         "elements": [
             {
                 "pos": [1, 7],
@@ -113,8 +112,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Shift",
-        "desc": "Shift the sequence",
+        "name": "移位",
+        "desc": "移动音序",
         "elements": [
             {
                 "pos": [2, 7],
@@ -123,8 +122,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Duplicate",
-        "desc": "Duplicate the section or note",
+        "name": "复制",
+        "desc": "复制部分或音符",
         "elements": [
             {
                 "pos": [3, 7],
@@ -133,8 +132,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Clear",
-        "desc": "Clear the sequence or Step",
+        "name": "清除",
+        "desc": "清除音序或步进",
         "elements": [
             {
                 "pos": [4, 7],
@@ -143,8 +142,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Undo?",
-        "desc": "Undo the last action. Not sure if I can implement this. Might be some other function",
+        "name": "撤销？",
+        "desc": "撤销上一步操作。不确定是否能实现，可能是其他功能",
         "elements": [
             {
                 "pos": [5, 7],
@@ -153,8 +152,8 @@ export function SequencerMain() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -164,8 +163,8 @@ export function SequencerMain() {
 ];
 
 
-    const uiName = "Sequencer Main"
-    const uiDescription = "Main UI for the Step Sequencer"
+    const uiName = "音序器主界面"
+    const uiDescription = "步进音序器的主界面"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -179,8 +178,8 @@ export function SequencerStepView() {
 
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "name": "音序",
+        "desc": "音序器的音序。长按微调步进音符。白色表示当前选中配置",
         "elements": [
             {
                 "pos": [0, 1],
@@ -206,8 +205,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作", 
         "elements": [
             {
                 "pos": [0, 0],
@@ -233,8 +232,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Note Pad",
-        "desc": "Note Pad for entering notes",
+        "name": "音符板",
+        "desc": "用于输入音符的音符板",
         "elements": [
             {
                 "pos": [0, 3],
@@ -266,8 +265,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Play",
-        "desc": "Play the sequence",
+        "name": "播放",
+        "desc": "播放音序",
         "elements": [
             {
                 "pos": [7, 7],
@@ -276,8 +275,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Record",
-        "desc": "Record the Sequence",
+        "name": "录制",
+        "desc": "录制音序",
         "elements": [
             {
                 "pos": [6, 7],
@@ -286,8 +285,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Octave Down",
-        "desc": "Movw the octave down (With Shift, it will nudge the sequence left)",
+        "name": "降八度",
+        "desc": "降低一个八度（按住 Shift 时，将音序向左移动）",
         "elements": [
             {
                 "pos": [0, 7],
@@ -296,8 +295,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Octave Up",
-        "desc": "Move the octave up (With Shift, it will nudge the sequence right)",
+        "name": "升八度",
+        "desc": "提高一个八度（按住 Shift 时，将音序向右移动）",
         "elements": [
             {
                 "pos": [1, 7],
@@ -306,8 +305,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Shift",
-        "desc": "Shift the sequence",
+        "name": "移位",
+        "desc": "移动音序",
         "elements": [
             {
                 "pos": [2, 7],
@@ -316,8 +315,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Duplicate",
-        "desc": "Duplicate the section or note",
+        "name": "复制",
+        "desc": "复制部分或音符",
         "elements": [
             {
                 "pos": [3, 7],
@@ -326,8 +325,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Clear",
-        "desc": "Clear the sequence or Step",
+        "name": "清除",
+        "desc": "清除音序或步进",
         "elements": [
             {
                 "pos": [4, 7],
@@ -336,8 +335,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Undo?",
-        "desc": "Undo the last action. Not sure if I can implement this. Might be some other function",
+        "name": "撤销？",
+        "desc": "撤销上一步操作。不确定是否能实现，可能是其他功能",
         "elements": [
             {
                 "pos": [5, 7],
@@ -346,8 +345,8 @@ export function SequencerStepView() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -357,8 +356,8 @@ export function SequencerStepView() {
 ];
 
 
-    const uiName = "Sequencer Step View"
-    const uiDescription = "Hold each step to add notes or actions. Or you can hold down a note and add into steps. You can also click the free slots on the step (the four gray pad on top right to manually add an action)"
+    const uiName = "音序器步进视图"
+    const uiDescription = "按住每一步可添加音符或动作，或按住一个音符添加到步进。也可以点击步进上的空槽（右上角的四个灰色区域）手动添加动作。"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -372,8 +371,8 @@ export function SequencerStepAddAction() {
 
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration. There will be more actions than the listed, those are just here to give an idea on how the UI will be.",
+        "name": "音序",
+        "desc": "音序器的音序。长按微调步进音符。白色表示当前选中配置。将会有更多动作，这里仅列出一些以展示UI效果。",
         "elements": [
             {
                 "pos": [0, 1],
@@ -399,8 +398,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作", 
         "elements": [
             {
                 "pos": [0, 0],
@@ -430,8 +429,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Note Action",
-        "desc": "Add a note action to the step",
+        "name": "音符动作",
+        "desc": "添加音符动作到步进",
         "elements": [
             {
                 "pos": [0, 3],
@@ -440,8 +439,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "CC Action",
-        "desc": "Add a CC action to the step",
+        "name": "控制变化动作",
+        "desc": "添加CC动作到步进",
         "elements": [
             {
                 "pos": [1, 3],
@@ -450,8 +449,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "PC Action",
-        "desc": "Add a PC action to the step",
+        "name": "程序变化动作",
+        "desc": "添加PC动作到步进",
         "elements": [
             {
                 "pos": [2, 3],
@@ -460,8 +459,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Pitchband Action",
-        "desc": "Add a Pichband action to the step",
+        "name": "音高弯曲动作",
+        "desc": "添加音高弯曲动作到步进",
         "elements": [
             {
                 "pos": [2, 3],
@@ -470,8 +469,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Change BPM",
-        "desc": "Add a Change BPM action to the step. (Affects the entire sequenser)",
+        "name": "更改BPM",
+        "desc": "添加BPM更改动作到步进。（影响整个音序器）",
         "elements": [
             {
                 "pos": [0, 4],
@@ -480,8 +479,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Change Swing",
-        "desc": "Add a Change Swing action to the step. (Affects the entire sequenser)",
+        "name": "更改摇摆",
+        "desc": "添加摇摆更改动作到步进。（影响整个音序器）",
         "elements": [
             {
                 "pos": [1, 4],
@@ -490,8 +489,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Mute/Unmute Track",
-        "desc": "Add a Mute/Unmute Track action to the step.",
+        "name": "静音/取消静音轨道",
+        "desc": "添加静音/取消静音轨道的动作到步进。",
         "elements": [
             {
                 "pos": [2, 4],
@@ -500,8 +499,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Solo/Unsolo Track",
-        "desc": "Add a Solo/Unsolo Track action to the step.",
+        "name": "独奏/取消独奏轨道",
+        "desc": "添加独奏/取消独奏轨道的动作到步进。",
         "elements": [
             {
                 "pos": [3, 4],
@@ -510,8 +509,8 @@ export function SequencerStepAddAction() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -521,8 +520,8 @@ export function SequencerStepAddAction() {
 ];
 
 
-    const uiName = "Sequencer Step Add Action"
-    const uiDescription = "The next free slot will start flashing and you can add actions into it. (Press empty pad or the slot to cancel)"
+    const uiName = "音序器步进添加动作"
+    const uiDescription = "下一个空槽将开始闪烁，可以向其中添加动作。（按下空板或槽位以取消）"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -536,8 +535,8 @@ export function SequencerStepSettingNoteNote() {
 
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "name": "音序",
+        "desc": "音序器的音符音序。长按微调步进音符。白色表示当前选中配置",
         "elements": [
             {
                 "pos": [0, 1],
@@ -563,8 +562,8 @@ export function SequencerStepSettingNoteNote() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作",
         "elements": [
             {
                 "pos": [0, 0],
@@ -590,72 +589,68 @@ export function SequencerStepSettingNoteNote() {
         ]
     },
     {
-        "name": "Property - Note",
-        "desc": "Select which note to trigger.",
+        "name": "属性 - 音符",
+        "desc": "选择触发哪个音符。",
         "elements": [
             {
                 "pos": [0, 3],
                 "color": "#00FF00"
             }
-            
         ]
     },
     {
-        "name": "Property - Gate",
-        "desc": "Select how long the note is triggered.",
+        "name": "属性 - 闸门",
+        "desc": "选择音符触发时长。",
         "elements": [
             {
                 "pos": [1, 3],
                 "color": "#00A0C0"
             }
-            
         ]
     },
-        {
-        "name": "Property - Velocity",
-        "desc": "Select how hard the note is triggered. (Initial Value)",
+    {
+        "name": "属性 - 速度",
+        "desc": "选择音符触发力度（初始值）。",
         "elements": [
             {
                 "pos": [2, 3],
                 "color": "#C0C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Substep",
-        "desc": "Select which substep to trigger.",
+        "name": "属性 - 子步",
+        "desc": "选择触发哪个子步。",
         "elements": [
             {
                 "pos": [3, 3],
                 "color": "#C08000"
             }
-            
         ]
     },
     {
-        "name": "Property - Change Rate",
-        "desc": "Select if the value changes over time and how fast.",
+        "name": "属性 - 变化速率",
+        "desc": "选择值是否随时间变化及变化速度。",
         "elements": [
             {
                 "pos": [4, 3],
                 "color": "#C000C0"
-            }   
+            }
         ]
     },
     {
-        "name": "Property - Probability",
-        "desc": "Select how likely the event is triggered.",
+        "name": "属性 - 触发概率",
+        "desc": "选择事件触发的可能性。",
         "elements": [
             {
                 "pos": [5, 3],
                 "color": "#00C080"
-            }   
+            }
         ]
     },
     {
-        "name": "Note Pad",
-        "desc": "Note Pad for select note",
+        "name": "音符板",
+        "desc": "用于选择音符的音符板",
         "elements": [
             {
                 "pos": [0, 4],
@@ -679,12 +674,12 @@ export function SequencerStepSettingNoteNote() {
             {
                 "pos": [0, 5],
                 "color": "#FFFFFF"
-            },
+            }
         ]
     },
     {
-        "name": "Octave Seletor",
-        "desc": "Select the octave of the note",
+        "name": "八度选择器",
+        "desc": "选择音符的八度",
         "elements": [
             {
                 "pos": [0, 7],
@@ -698,8 +693,8 @@ export function SequencerStepSettingNoteNote() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -709,8 +704,8 @@ export function SequencerStepSettingNoteNote() {
 ];
 
 
-    const uiName = "Sequencer Step Setting - Note Action - Note"
-    const uiDescription = "Configure the Note of the Note Action"
+    const uiName = "音序器步进设置 - 音符动作 - 音符"
+    const uiDescription = "配置音符动作的音符"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -723,8 +718,8 @@ export function SequencerStepSettingNoteNote() {
 export function SequencerStepSettingNoteGate() {
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "name": "音序",
+        "desc": "音序器的音符音序。长按微调步进音符。白色表示当前选中配置",
         "elements": [
             {
                 "pos": [0, 1],
@@ -750,8 +745,8 @@ export function SequencerStepSettingNoteGate() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作", 
         "elements": [
             {
                 "pos": [0, 0],
@@ -777,72 +772,68 @@ export function SequencerStepSettingNoteGate() {
         ]
     },
     {
-        "name": "Property - Note",
-        "desc": "Select which note to trigger.",
+        "name": "属性 - 音符",
+        "desc": "选择触发哪个音符。",
         "elements": [
             {
                 "pos": [0, 3],
                 "color": "#00C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Gate",
-        "desc": "Select how long the note is triggered.",
+        "name": "属性 - 闸门",
+        "desc": "选择音符触发时长。",
         "elements": [
             {
                 "pos": [1, 3],
                 "color": "#00D0FF"
             }
-            
         ]
     },
-        {
-        "name": "Property - Velocity",
-        "desc": "Select how hard the note is triggered. (Initial Value)",
+    {
+        "name": "属性 - 速度",
+        "desc": "选择音符触发力度（初始值）。",
         "elements": [
             {
                 "pos": [2, 3],
                 "color": "#C0C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Substep",
-        "desc": "Select which substep to trigger.",
+        "name": "属性 - 子步",
+        "desc": "选择触发哪个子步。",
         "elements": [
             {
                 "pos": [3, 3],
                 "color": "#C08000"
             }
-            
         ]
     },
     {
-        "name": "Property - Change Rate",
-        "desc": "Select if the value changes over time and how fast.",
+        "name": "属性 - 变化速率",
+        "desc": "选择值是否随时间变化及变化速度。",
         "elements": [
             {
                 "pos": [4, 3],
                 "color": "#C000C0"
-            }   
+            }
         ]
     },
     {
-        "name": "Property - Probability",
-        "desc": "Select how likely the event is triggered.",
+        "name": "属性 - 触发概率",
+        "desc": "选择事件触发的可能性。",
         "elements": [
             {
                 "pos": [5, 3],
                 "color": "#00C080"
-            }   
+            }
         ]
     },
     {
-        "name": "Gate Length",
-        "desc": "Gate length up to 16, highest note can be trimmed to 1/6 by tapping it.",
+        "name": "闸门长度",
+        "desc": "闸门长度可达16，最高音符可通过点击裁剪到1/6。",
         "elements": [
             {
                 "pos": [0, 4],
@@ -861,9 +852,10 @@ export function SequencerStepSettingNoteGate() {
         ]
     },
     {
-        "name": "Infinite Gate",
-        "desc": "Make the gate infinite untill the next note.",
-        "elements": [
+        "name": "无限闸门",
+        "desc": "使闸门保持到下一个音符。",
+        "elements":
+[
             {
                 "pos": [0, 7],
                 "color": "#C0C0C0"
@@ -871,8 +863,8 @@ export function SequencerStepSettingNoteGate() {
         ]
     },
     {
-        "name": "Zero Gate",
-        "desc": "Make the gate zero length. (Used to stop the note)",
+        "name": "零闸门",
+        "desc": "将闸门设置为零长度。（用于停止音符）",
         "elements": [
             {
                 "pos": [1, 7],
@@ -881,8 +873,8 @@ export function SequencerStepSettingNoteGate() {
         ]
     },
     {
-        "name": "Soft Trigger",
-        "desc": "Send the note as aftertouch instead of note on",
+        "name": "柔和触发",
+        "desc": "将音符作为触后（aftertouch）发送，而不是音符启动（note on）",
         "elements": [
             {
                 "pos": [7, 7],
@@ -891,8 +883,8 @@ export function SequencerStepSettingNoteGate() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -902,8 +894,8 @@ export function SequencerStepSettingNoteGate() {
 ];
 
 
-    const uiName = "Sequencer Step Setting - Note Action - Gate"
-    const uiDescription = "Configure the gate of the note action"
+    const uiName = "音序器步进设置 - 音符动作 - 闸门"
+    const uiDescription = "配置音符动作的闸门"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -917,8 +909,8 @@ export function SequencerStepSettingNoteGate() {
 export function SequencerStepSettingNoteVelocity() {
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "name": "音序",
+        "desc": "音序器的音符音序。长按微调步进音符。白色表示当前选中配置",
         "elements": [
             {
                 "pos": [0, 1],
@@ -944,8 +936,8 @@ export function SequencerStepSettingNoteVelocity() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作", 
         "elements": [
             {
                 "pos": [0, 0],
@@ -971,72 +963,68 @@ export function SequencerStepSettingNoteVelocity() {
         ]
     },
     {
-        "name": "Property - Note",
-        "desc": "Select which note to trigger.",
+        "name": "属性 - 音符",
+        "desc": "选择触发哪个音符。",
         "elements": [
             {
                 "pos": [0, 3],
                 "color": "#00C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Gate",
-        "desc": "Select how long the note is triggered.",
+        "name": "属性 - 闸门",
+        "desc": "选择音符触发时长。",
         "elements": [
             {
                 "pos": [1, 3],
                 "color": "#0080C0"
             }
-            
         ]
     },
-        {
-        "name": "Property - Velocity",
-        "desc": "Select how hard the note is triggered. (Initial Value)",
+    {
+        "name": "属性 - 速度",
+        "desc": "选择音符触发力度（初始值）。",
         "elements": [
             {
                 "pos": [2, 3],
                 "color": "#FFFF00"
             }
-            
         ]
     },
     {
-        "name": "Property - Substep",
-        "desc": "Select which substep to trigger.",
+        "name": "属性 - 子步",
+        "desc": "选择触发哪个子步。",
         "elements": [
             {
                 "pos": [3, 3],
                 "color": "#C08000"
             }
-            
         ]
     },
     {
-        "name": "Property - Change Rate",
-        "desc": "Select if the value changes over time and how fast.",
+        "name": "属性 - 变化速率",
+        "desc": "选择值是否随时间变化及变化速度。",
         "elements": [
             {
                 "pos": [4, 3],
                 "color": "#C000C0"
-            }   
+            }
         ]
     },
     {
-        "name": "Property - Probability",
-        "desc": "Select how likely the event is triggered.",
+        "name": "属性 - 触发概率",
+        "desc": "选择事件触发的可能性。",
         "elements": [
             {
                 "pos": [5, 3],
                 "color": "#00C080"
-            }   
+            }
         ]
     },
     {
-        "name": "Velocity Length",
-        "desc": "Select up to 32 velocity levels. (Need 0 velocity? Use zero gate instead)",
+        "name": "速度长度",
+        "desc": "选择最多32级的速度值。（需要0速度？请使用零闸门）",
         "elements": [
             {
                 "pos": [0, 4],
@@ -1056,8 +1044,8 @@ export function SequencerStepSettingNoteVelocity() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -1067,8 +1055,8 @@ export function SequencerStepSettingNoteVelocity() {
 ];
 
 
-    const uiName = "Sequencer Step Setting - Note Action - Velocity"
-    const uiDescription = "Configure the velocity of the note action"
+    const uiName = "音序器步进设置 - 音符动作 - 速度"
+    const uiDescription = "配置音符动作的速度"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1078,12 +1066,11 @@ export function SequencerStepSettingNoteVelocity() {
 
 <SequencerStepSettingNoteVelocity/>
 
-
 export function SequencerStepSettingNoteMicrostep() {
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "name": "音序",
+        "desc": "音序器的音符音序。长按微调步进音符。白色表示当前选中配置",
         "elements": [
             {
                 "pos": [0, 1],
@@ -1109,8 +1096,8 @@ export function SequencerStepSettingNoteMicrostep() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作", 
         "elements": [
             {
                 "pos": [0, 0],
@@ -1136,72 +1123,68 @@ export function SequencerStepSettingNoteMicrostep() {
         ]
     },
     {
-        "name": "Property - Note",
-        "desc": "Select which note to trigger.",
+        "name": "属性 - 音符",
+        "desc": "选择触发哪个音符。",
         "elements": [
             {
                 "pos": [0, 3],
                 "color": "#00C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Gate",
-        "desc": "Select how long the note is triggered.",
+        "name": "属性 - 闸门",
+        "desc": "选择音符触发时长。",
         "elements": [
             {
                 "pos": [1, 3],
                 "color": "#0080C0"
             }
-            
         ]
     },
-        {
-        "name": "Property - Velocity",
-        "desc": "Select how hard the note is triggered. (Initial Value)",
+    {
+        "name": "属性 - 速度",
+        "desc": "选择音符触发力度（初始值）。",
         "elements": [
             {
                 "pos": [2, 3],
                 "color": "#C0C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Substep",
-        "desc": "Select which substep to trigger.",
+        "name": "属性 - 子步",
+        "desc": "选择触发哪个子步。",
         "elements": [
             {
                 "pos": [3, 3],
                 "color": "#FFC000"
             }
-            
         ]
     },
     {
-        "name": "Property - Change Rate",
-        "desc": "Select if the value changes over time and how fast.",
+        "name": "属性 - 变化速率",
+        "desc": "选择值是否随时间变化及变化速度。",
         "elements": [
             {
                 "pos": [4, 3],
                 "color": "#C000C0"
-            }   
+            }
         ]
     },
     {
-        "name": "Property - Probability",
-        "desc": "Select how likely the event is triggered.",
+        "name": "属性 - 触发概率",
+        "desc": "选择事件触发的可能性。",
         "elements": [
             {
                 "pos": [5, 3],
                 "color": "#00C080"
-            }   
+            }
         ]
     },
     {
-        "name": "Microstep Selector",
-        "desc": "Select one of the 6 microsteps to trigger the note",
+        "name": "微步选择器",
+        "desc": "选择其中一个6个微步触发音符",
         "elements": [
             {
                 "pos": [0, 4],
@@ -1215,8 +1198,8 @@ export function SequencerStepSettingNoteMicrostep() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -1226,8 +1209,8 @@ export function SequencerStepSettingNoteMicrostep() {
 ];
 
 
-    const uiName = "Sequencer Step Setting - Note Action - Microstep"
-    const uiDescription = "Configure the Microstep of the note action"
+    const uiName = "音序器步进设置 - 音符动作 - 微步"
+    const uiDescription = "配置音符动作的微步"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1240,8 +1223,8 @@ export function SequencerStepSettingNoteMicrostep() {
 export function SequencerStepSettingNoteChangeRate() {
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "name": "音序",
+        "desc": "音序器的音符音序。长按微调步进音符。白色表示当前选中配置",
         "elements": [
             {
                 "pos": [0, 1],
@@ -1267,8 +1250,8 @@ export function SequencerStepSettingNoteChangeRate() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作", 
         "elements": [
             {
                 "pos": [0, 0],
@@ -1294,72 +1277,68 @@ export function SequencerStepSettingNoteChangeRate() {
         ]
     },
     {
-        "name": "Property - Note",
-        "desc": "Select which note to trigger.",
+        "name": "属性 - 音符",
+        "desc": "选择触发哪个音符。",
         "elements": [
             {
                 "pos": [0, 3],
                 "color": "#00C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Gate",
-        "desc": "Select how long the note is triggered.",
+        "name": "属性 - 闸门",
+        "desc": "选择音符触发时长。",
         "elements": [
             {
                 "pos": [1, 3],
                 "color": "#0080C0"
             }
-            
         ]
     },
-        {
-        "name": "Property - Velocity",
-        "desc": "Select how hard the note is triggered. (Initial Value)",
+    {
+        "name": "属性 - 速度",
+        "desc": "选择音符触发力度（初始值）。",
         "elements": [
             {
                 "pos": [2, 3],
                 "color": "#C0C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Substep",
-        "desc": "Select which substep to trigger.",
+        "name": "属性 - 子步",
+        "desc": "选择触发哪个子步。",
         "elements": [
             {
                 "pos": [3, 3],
                 "color": "#C08000"
             }
-            
         ]
     },
     {
-        "name": "Property - Change Rate",
-        "desc": "Select if the value changes over time and how fast.",
+        "name": "属性 - 变化速率",
+        "desc": "选择值是否随时间变化及变化速度。",
         "elements": [
             {
                 "pos": [4, 3],
                 "color": "#FF00FF"
-            }   
+            }
         ]
     },
     {
-        "name": "Property - Probability",
-        "desc": "Select how likely the event is triggered.",
+        "name": "属性 - 触发概率",
+        "desc": "选择事件触发的可能性。",
         "elements": [
             {
                 "pos": [5, 3],
                 "color": "#00C080"
-            }   
+            }
         ]
     },
     {
-        "name": "Change Rate Selector",
-        "desc": "Select the change rate of the value. Top note has 4 sub steps, each big step is 16, each sub step is 4. This is how much value that will change on each quarter note.",
+        "name": "变化速率选择器",
+        "desc": "选择值的变化速率。顶级音符有4个子步，每个大步为16，每个子步为4。此值表示每四分音符的变化量。",
         "elements": [
             {
                 "pos": [0, 4],
@@ -1374,38 +1353,38 @@ export function SequencerStepSettingNoteChangeRate() {
         ]
     },
     {
-        "name": "No Rate of Change",
-        "desc": "Do not change value over time",
+        "name": "无变化速率",
+        "desc": "不随时间变化",
         "elements": [
             {
                 "pos": [0, 7],
                 "color": "#C0C0C0"
-            }   
+            }
         ]
     },
     {
-        "name": "Increate",
-        "desc": "Increate the value over time",
+        "name": "增加",
+        "desc": "随时间增加值",
         "elements": [
             {
                 "pos": [1, 7],
                 "color": "#00FF00"
-            }   
+            }
         ]
     },
     {
-        "name": "Decrease",
-        "desc": "Decrease the value over time",
+        "name": "减少",
+        "desc": "随时间减少值",
         "elements": [
             {
                 "pos": [2, 7],
                 "color": "#C00000"
-            }   
+            }
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -1415,8 +1394,8 @@ export function SequencerStepSettingNoteChangeRate() {
 ];
 
 
-    const uiName = "Sequencer Step Setting - Note Action - Change Rate"
-    const uiDescription = "Configure the value change rate of the action"
+    const uiName = "音序器步进设置 - 音符动作 - 变化速率"
+    const uiDescription = "配置音符动作的变化速率"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1429,8 +1408,8 @@ export function SequencerStepSettingNoteChangeRate() {
 export function SequencerStepSettingNoteProbability() {
     const uiElements = [
     {
-        "name": "Sequence",
-        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "name": "音序",
+        "desc": "音序器的音符音序。长按微调步进音符。白色表示当前选中配置",
         "elements": [
             {
                 "pos": [0, 1],
@@ -1456,8 +1435,8 @@ export function SequencerStepSettingNoteProbability() {
         ]
     },
     {
-        "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "name": "音符选择器",
+        "desc": "每一步最多可以有8个动作，包括音符、CC、BPM变化等。颜色表示当前功能。完全亮起表示当前选中配置。点击暗白色创建新动作", 
         "elements": [
             {
                 "pos": [0, 0],
@@ -1483,72 +1462,68 @@ export function SequencerStepSettingNoteProbability() {
         ]
     },
     {
-        "name": "Property - Note",
-        "desc": "Select which note to trigger.",
+        "name": "属性 - 音符",
+        "desc": "选择触发哪个音符。",
         "elements": [
             {
                 "pos": [0, 3],
                 "color": "#00C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Gate",
-        "desc": "Select how long the note is triggered.",
+        "name": "属性 - 闸门",
+        "desc": "选择音符触发时长。",
         "elements": [
             {
                 "pos": [1, 3],
                 "color": "#0080C0"
             }
-            
         ]
     },
-        {
-        "name": "Property - Velocity",
-        "desc": "Select how hard the note is triggered. (Initial Value)",
+    {
+        "name": "属性 - 速度",
+        "desc": "选择音符触发力度（初始值）。",
         "elements": [
             {
                 "pos": [2, 3],
                 "color": "#C0C000"
             }
-            
         ]
     },
     {
-        "name": "Property - Substep",
-        "desc": "Select which substep to trigger.",
+        "name": "属性 - 子步",
+        "desc": "选择触发哪个子步。",
         "elements": [
             {
                 "pos": [3, 3],
                 "color": "#C08000"
             }
-            
         ]
     },
     {
-        "name": "Property - Change Rate",
-        "desc": "Select if the value changes over time and how fast.",
+        "name": "属性 - 变化速率",
+        "desc": "选择值是否随时间变化及变化速度。",
         "elements": [
             {
                 "pos": [4, 3],
                 "color": "#C000C0"
-            }   
+            }
         ]
     },
     {
-        "name": "Property - Probability",
-        "desc": "Select how likely the event is triggered.",
+        "name": "属性 - 触发概率",
+        "desc": "选择事件触发的可能性。",
         "elements": [
             {
                 "pos": [5, 3],
                 "color": "#00C080"
-            }   
+            }
         ]
     },
     {
-        "name": "Probability Selector",
-        "desc": "Select the cProbability of Triggering this action. (Each step is 12.5%)",
+        "name": "概率选择器",
+        "desc": "选择触发此动作的概率。（每步为12.5％）",
         "elements": [
             {
                 "pos": [0, 4],
@@ -1563,8 +1538,8 @@ export function SequencerStepSettingNoteProbability() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap to enter the action menu",
+        "name": "操作菜单",
+        "desc": "点击进入操作菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -1574,8 +1549,8 @@ export function SequencerStepSettingNoteProbability() {
 ];
 
 
-    const uiName = "Sequencer Step Setting - Note Action - Change Rate"
-    const uiDescription = "Configure the value change rate of the action"
+    const uiName = "音序器步进设置 - 音符动作 - 概率"
+    const uiDescription = "配置音符动作的触发概率"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1588,8 +1563,8 @@ export function SequencerStepSettingNoteProbability() {
 export function SequencerActionMenu() {
     const uiElements = [
     {
-        "name": "Save",
-        "desc": "Save the current sequence",
+        "name": "保存",
+        "desc": "保存当前音序",
         "elements": [
             {
                 "pos": [3, 2],
@@ -1599,8 +1574,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Rotate Device Left",
-        "desc": "Rotate the device so that the top of the device is on the left side.",
+        "name": "设备向左旋转",
+        "desc": "将设备旋转，使设备顶部位于左侧。",
         "link": "/docs/MatrixOS/SystemSettings#device-rotation",
         "elements": [
             {
@@ -1611,8 +1586,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Rotate Device Down",
-        "desc": "Rotate the device so that the top of the device is on the bottom side.",
+        "name": "设备向下旋转",
+        "desc": "将设备旋转，使设备顶部位于底部。",
         "link": "/docs/MatrixOS/SystemSettings#device-rotation",
         "elements": [
             {
@@ -1623,8 +1598,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Rotate Device Right",
-        "desc": "Rotate the device so that the top of the device is on the right side.",
+        "name": "设备向右旋转",
+        "desc": "将设备旋转，使设备顶部位于右侧。",
         "link": "/docs/MatrixOS/SystemSettings#device-rotation",
         "elements": [
             {
@@ -1635,8 +1610,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Brightness Control",
-        "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+        "name": "亮度控制",
+        "desc": "点击循环亮度级别。长按进入亮度控制菜单。",
         "link": "/docs/MatrixOS/SystemSettings#brightness-control",
         "elements": [
             {
@@ -1647,8 +1622,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Track Selection",
-        "desc": "Select the track to edit",
+        "name": "轨道选择",
+        "desc": "选择要编辑的轨道",
         "elements": [
             {
                 "pos": [0, 0],
@@ -1685,8 +1660,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "BPM & Swing",
-        "desc": "Change the BPM and Swing of the sequence",
+        "name": "BPM 和 摇摆",
+        "desc": "更改音序的BPM和摇摆",
         "elements": [
             {
                 "pos": [0, 2],
@@ -1695,8 +1670,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Undermained feature",
-        "desc": "I will find something to add here",
+        "name": "未定义功能",
+        "desc": "将添加其他功能",
         "elements": [
             {
                 "pos": [0, 3],
@@ -1705,8 +1680,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Sequenser Setting",
-        "desc": "Enter the Sequencer Setting",
+        "name": "音序器设置",
+        "desc": "进入音序器设置",
         "elements": [
             {
                 "pos": [0, 4],
@@ -1715,8 +1690,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "System Setting",
-        "desc": "Enter the System Setting",
+        "name": "系统设置",
+        "desc": "进入系统设置",
         "link": "/docs/MatrixOS/SystemSettings",
         "elements": [
             {
@@ -1726,8 +1701,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Note Pad Mode",
-        "desc": "Change the Note Pad Mode. Cycle through Scaled, Chromatic, isomorphic, drum",
+        "name": "音符板模式",
+        "desc": "更改音符板模式。循环选择缩放、半音、等音排列、鼓",
         "elements": [
             {
                 "pos": [7, 2],
@@ -1736,8 +1711,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Scale",
-        "desc": "Change the Scale of the sequence",
+        "name": "音阶",
+        "desc": "更改音序的音阶",
         "elements": [
             {
                 "pos": [7, 3],
@@ -1746,8 +1721,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Force Sensitivity",
-        "desc": "Toggle Force Sensitivity",
+        "name": "力度感应",
+        "desc": "切换力度感应",
         "elements": [
             {
                 "pos": [7, 4],
@@ -1756,8 +1731,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "MIDI Port & Channel",
-        "desc": "Change the MIDI Port and Channel",
+        "name": "MIDI 端口和通道",
+        "desc": "更改MIDI端口和通道",
         "elements": [
             {
                 "pos": [7, 5],
@@ -1766,8 +1741,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Track Color",
-        "desc": "Change the color of the track",
+        "name": "轨道颜色",
+        "desc": "更改轨道的颜色",
         "elements": [
             {
                 "pos": [7, 7],
@@ -1776,8 +1751,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Timeline View",
-        "desc": "Enter the Timeline View",
+        "name": "时间轴视图",
+        "desc": "进入时间轴视图",
         "elements": [
             {
                 "pos": [0, 7],
@@ -1785,20 +1760,9 @@ export function SequencerActionMenu() {
             }
         ]
     },
-    // {
-    //     "name": "System Setting",
-    //     "desc": "Enter the System Setting",
-    //     "link": "/docs/MatrixOS/SystemSettings",	
-    //     "elements": [
-    //         {
-    //             "pos": [7, 7],
-    //             "color": "#FFFFFF"
-    //         }
-    //     ]
-    // },
     {
-        "name": "Track Enabled",
-        "desc": "Enable or disable track. (Hold this key down and you can tap other tracks to enable or disable them)",
+        "name": "启用轨道",
+        "desc": "启用或禁用轨道（按住此键后可点击其他轨道启用或禁用它们）",
         "elements": [
             {
                 "pos": [2, 7],
@@ -1807,8 +1771,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Track Solo",
-        "desc": "Enable or disable track solo (Hold this key down and you can tap other tracks to solo them)",
+        "name": "独奏轨道",
+        "desc": "启用或禁用轨道独奏（按住此键后可点击其他轨道独奏）",
         "elements": [
             {
                 "pos": [3, 7],
@@ -1817,8 +1781,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Track Recoding",
-        "desc": "Enable or disable track recording (Hold this key down and you can tap other tracks to record them)",
+        "name": "轨道录制",
+        "desc": "启用或禁用轨道录制（按住此键后可点击其他轨道录制）",
         "elements": [
             {
                 "pos": [4, 7],
@@ -1827,8 +1791,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Play",
-        "desc": "Play the sequence",
+        "name": "播放",
+        "desc": "播放音序",
         "elements": [
             {
                 "pos": [5, 7],
@@ -1837,8 +1801,8 @@ export function SequencerActionMenu() {
         ]
     },
     {
-        "name": "Go to Sequense View or Exit App",
-        "desc": "Tap to go back to the Sequense View. Hold to exit the app.",
+        "name": "前往音序视图或退出应用",
+        "desc": "点击返回音序视图。长按退出应用。",
         "elements": [
             {
                 "pos": ["c"]
@@ -1848,8 +1812,8 @@ export function SequencerActionMenu() {
 ];
 
 
-    const uiName = "Sequencer Action Menu"
-    const uiDescription = "Menu for the Sequencer"
+    const uiName = "音序器操作菜单"
+    const uiDescription = "音序器的菜单"
     return <MystrixVisualizer 
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1858,4 +1822,3 @@ export function SequencerActionMenu() {
 }
 
 <SequencerActionMenu/>
-
