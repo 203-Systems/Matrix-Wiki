@@ -1,0 +1,167 @@
+---
+sidebar_position: 4
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# USB API
+
+## Overview
+
+The USB API provides functions for interacting with USB devices. The API includes functions for checking if a USB device is connected, sending and receiving data over USB CDC, and more.
+
+*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/USB/"/>.*
+
+## Namespace: `USB`
+The `USB` namespace contains general USB functions.
+
+---
+
+### `MatrixOS::USB::Connected`
+```cpp
+bool USB::Connected(void);
+```
+
+Checks if a USB device is connected.
+
+**Returns:**
+- `bool`: `true` if a USB device is connected; `false` otherwise.
+
+---
+
+## `CDC`
+
+The `USB::CDC` namespace provides functions for communication over USB as a virtual serial port (CDC).
+In the future this will likely migrate into a MatrixOS::Serial namespace with cross port support between USB, UART, BLE, etc.
+
+---
+
+### `MatrixOS::USB::CDC::Connected`
+```cpp
+bool USB::CDC::Connected(void);
+```
+
+Checks if the USB CDC is connected.
+
+**Returns:**
+- `bool`: `true` if the USB CDC is connected; `false` otherwise.
+
+---
+
+### `MatrixOS::USB::CDC::Available`
+```cpp
+uint32_t USB::CDC::Available(void);
+```
+
+Returns the number of bytes available for reading.
+
+**Returns:**
+- `uint32_t`: Number of bytes available.
+
+---
+
+### `MatrixOS::USB::CDC::Poll`
+```cpp
+void USB::CDC::Poll(void);
+```
+
+Processes incoming and outgoing USB CDC data. This function should be called periodically.
+
+---
+
+### `MatrixOS::USB::CDC::Print`
+```cpp
+void USB::CDC::Print(string str);
+```
+
+Sends a string over USB CDC without a newline.
+
+**Parameters:**
+- `str` (`string`): The string to send.
+
+---
+
+### `MatrixOS::USB::CDC::Println`
+```cpp
+void USB::CDC::Println(string str);
+```
+
+Sends a string over USB CDC with a newline appended.
+
+**Parameters:**
+- `str` (`string`): The string to send.
+
+---
+
+### `MatrixOS::USB::CDC::Printf`
+```cpp
+void USB::CDC::Printf(string format, ...);
+```
+
+Sends a formatted string over USB CDC.
+
+**Parameters:**
+- `format` (`string`): The format string.
+- `...`: Additional arguments for formatting.
+
+---
+
+### `MatrixOS::USB::CDC::VPrintf`
+```cpp
+void USB::CDC::VPrintf(string format, va_list valst);
+```
+
+Sends a formatted string over USB CDC using a `va_list`.
+
+**Parameters:**
+- `format` (`string`): The format string.
+- `valst` (`va_list`): A list of arguments for formatting.
+
+---
+
+### `MatrixOS::USB::CDC::Flush`
+```cpp
+void USB::CDC::Flush(void);
+```
+
+Flushes the USB CDC output buffer.
+
+---
+
+### `MatrixOS::USB::CDC::Read`
+```cpp
+int8_t USB::CDC::Read(void);
+```
+
+Reads a single byte from the USB CDC input buffer.
+
+**Returns:**
+- `int8_t`: The byte read, or a negative value if no data is available.
+
+---
+
+### `MatrixOS::USB::CDC::ReadBytes`
+```cpp
+uint32_t USB::CDC::ReadBytes(void* buffer, uint32_t length);
+```
+
+Reads multiple bytes from the USB CDC input buffer into the provided buffer.
+
+**Parameters:**
+- `buffer` (`void*`): The buffer to store the read data.
+- `length` (`uint32_t`): The maximum number of bytes to read.
+
+**Returns:**
+- `uint32_t`: The number of bytes actually read.
+
+---
+
+### `MatrixOS::USB::CDC::ReadString`
+```cpp
+string USB::CDC::ReadString(void);
+```
+
+Reads a string from the USB CDC input buffer.
+
+**Returns:**
+- `string`: The string read from the buffer.
+```

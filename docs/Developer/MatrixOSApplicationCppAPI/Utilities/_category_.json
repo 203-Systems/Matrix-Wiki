@@ -1,6 +1,6 @@
 {
-  "label": "Debug Matrix OS",
-  "position": 5,
+  "label": "Utilities", 
+  "position": -99,
   "link": {
     "type": "generated-index"
   }

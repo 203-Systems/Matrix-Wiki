@@ -1,0 +1,108 @@
+---
+title: Timer
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Class: `Timer`
+
+The `Timer` class provides utilities for tracking time intervals and managing event-driven timing mechanisms.
+
+Note: This is a millisecond accuracy software timer. For more precise timing with interrupt, concidering using FreeRTOS timers or device-specific hardware timers.
+
+*The header file for this utility is located in <GithubLink path="os/framework/Timer.h"/> and the implementation is in <GithubLink path="os/framework/Timer.cpp"/>.*
+
+---
+
+## Member Variables
+
+### `previous`
+```cpp
+uint32_t previous = 0;
+```
+
+Stores the timestamp of the last recorded event.
+
+---
+
+## Constructors
+
+### Default Constructor
+```cpp
+Timer();
+```
+
+Initializes a `Timer` instance with a starting timestamp of `0`.
+
+---
+
+## Member Functions
+
+### `Tick`
+```cpp
+bool Tick(uint32_t ms, bool continuous_mode = false);
+```
+
+Checks if the specified time interval has passed since the last tick. Optionally supports continuous mode for repeated checks.
+
+**Parameters:**
+- `ms` (`uint32_t`): The time interval in milliseconds.
+Here’s an improved explanation for the `continuous_mode` parameter:
+
+- `continuous_mode` (`bool`, optional): If `true`, the timer will reset based on `lastTime + interval` instead of the current time when the interval elapses. This ensures that the timer maintains a consistent time frame, even if there are delays due to code execution or processing. For example, if the interval is set to 1000ms and the code takes some time to execute or is late to process the tick, the next tick will still align with the original schedule, ignoring the delay caused by late processing. Defaults to `false`.
+**Returns:**
+- `bool`: `true` if the specified time interval has passed, otherwise `false`.
+
+---
+
+### `IsLonger`
+```cpp
+bool IsLonger(uint32_t ms);
+```
+
+Checks if the time elapsed since the last recorded event is longer than the specified duration. This does not reset the timer.
+
+**Parameters:**
+- `ms` (`uint32_t`): The duration in milliseconds to compare against.
+
+**Returns:**
+- `bool`: `true` if the elapsed time is longer than the specified duration, otherwise `false`.
+
+---
+
+### `SinceLastTick`
+```cpp
+uint32_t SinceLastTick();
+```
+
+Calculates the time elapsed since the last tick. This does not reset the timer.
+
+**Returns:**
+- `uint32_t`: The time elapsed in milliseconds since the last tick.
+
+---
+
+### `RecordCurrent`
+```cpp
+void RecordCurrent();
+```
+
+Records the current timestamp as the last tick or event time.
+
+---
+
+## Example Usage
+
+```cpp
+Timer myTimer;
+
+while (true) {
+    // Check if 1000ms has passed
+    if (myTimer.Tick(1000)) {
+        // Perform some periodic task
+
+
+        // Check elapsed time since last tick (time take to perform the task)
+        uint32_t elapsed = myTimer.SinceLastTick();
+    }
+}
+``` 
