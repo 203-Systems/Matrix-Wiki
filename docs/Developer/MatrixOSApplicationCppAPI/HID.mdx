@@ -438,21 +438,12 @@ Releases all pressed system control keys.
 
 ## `RawHID`
 
-### `MatrixOS::HID::RawHID::Init`
-```cpp
-void Init();
-```
-
-Initializes the Raw HID subsystem.
-
----
-
 ### `MatrixOS::HID::RawHID::Get`
 ```cpp
 size_t Get(uint8_t** report, uint32_t timeout_ms = 0);
 ```
 
-Retrieves a Raw HID report.
+Retrieves a 16 byte HID report from report ID 255.
 
 **Parameters:**
 - `report` (`uint8_t**`): Pointer to store the retrieved report.
@@ -468,7 +459,7 @@ Retrieves a Raw HID report.
 bool Send(const vector<uint8_t>& report);
 ```
 
-Sends a Raw HID report.
+Sends a Raw HID report from report ID 255. The max report size is 16 bytes (extra bytes will be padded with zeros).
 
 **Parameters:**
 - `report` (`const vector<uint8_t>&`): The report to send.
