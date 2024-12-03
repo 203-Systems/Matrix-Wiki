@@ -105,5 +105,5 @@ Converts a key ID to its corresponding position.
 - `keyID` (`uint16_t`): The ID of the key.
 
 **Returns:**
-- [`Point`](./Types/Point/): The position of the key. Returns `Point(INT16_MIN, INT16_MIN)` if no position is found for the given ID.
+- [`Point`](./Types/Point/): The position of the key. Returns `Point::Invalid()` if no position is found for the given ID. You can then do bool(Point) to check if the point is valid.
 ```
