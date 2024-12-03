@@ -18,7 +18,7 @@ See the [MIDI Packet](./Types/MidiPacket/) and [MIDI Port](./Utilities/MidiPort/
 
 ## `MatrixOS::MIDI::Get`
 ```cpp
-bool Get([`MidiPacket`](./Types/MidiPacket/)* midiPacketDest, uint16_t timeout_ms = 0);
+bool Get(MidiPacket* midiPacketDest, uint16_t timeout_ms = 0);
 ```
 
 Retrieves the next available MIDI packet. If no packet is available, the function waits for the specified timeout.
@@ -26,7 +26,7 @@ Retrieves the next available MIDI packet. If no packet is available, the functio
 The source of the MIDI packet is in the `port` field of the packet.
 
 **Parameters:**
-- `midiPacketDest` ([`MidiPacket`](./Types/MidiPacket/)*): Pointer to store the retrieved MIDI packet.
+- `midiPacketDest` ([`MidiPacket*`](./Types/MidiPacket/)): Pointer to store the retrieved MIDI packet.
 - `timeout_ms` (`uint16_t`, optional): Maximum time to wait for a MIDI packet in milliseconds. Defaults to `0`.
 
 **Returns:**

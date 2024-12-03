@@ -79,14 +79,14 @@ Rotates the interface or a specific component in the given direction.
 
 ## `MatrixOS::SYS::ExecuteAPP`
 ```cpp
-void ExecuteAPP(author, app_name);
+void ExecuteAPP(string author, string app_name);
 ```
 
 Launches the specified application.
 
 **Parameters:**
-- `author`: The author of the application.
-- `app_name`: The name of the application.
+- `author` (string): The author of the application.
+- `app_name` (string): The name of the application.
 
 ---
 
@@ -101,11 +101,11 @@ Exits the currently running application and returns to the application launcher.
 
 ## `MatrixOS::SYS::ErrorHandler`
 ```cpp
-void ErrorHandler(error = "");
+void ErrorHandler(string error = "");
 ```
 
 Handles errors and logs the specified error message.
 
 **Parameters:**
-- `error` (optional): The error message to handle. Defaults to an empty string.
+- `error` (string, optional): The error message to handle. Defaults to an empty string.
 ```
