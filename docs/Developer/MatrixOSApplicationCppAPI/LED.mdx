@@ -13,7 +13,7 @@ For some LED API, you can specific an layer ID. If you don't specify a layer ID,
 
 After making changes on the layer, it will only take effect and render onto the device by using the Update() 
 
-However, you can make your changes take effect immeadiately by write to layer 0, which is the active buffer. Your changes will be rendered to the device immeadiately. (Unless you pause the update with `PauseUpdate(true)`)
+However, you can make your changes take effect immediately by write to layer 0, which is the active buffer. Your changes will be rendered to the device immediately. (Unless you pause the update with `PauseUpdate(true)`)
 This is great for real time rendering for like light show, but it might cause flickering and tearing. Also it will not be able to persevere if you create a new layer unless you copy the layer 0 to a layer first.
 
 *The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/LED.cpp"/>.*

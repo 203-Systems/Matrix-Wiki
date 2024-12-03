@@ -13,7 +13,7 @@ The Non-Volatile Storage (NVS) API provides a mechanism for storing and retrievi
 ## Saved Variables
 The NVS API is rather complex requiring the use of a hash to identify variables. In most case you will want to use the [SavedVar Macro](./Utilities/SavedVarible)  to create saved variables instead of using the NVS API directly.
 
-You will want to use the NVS API directly if you need to store a large amount of data like save the full configuration for Note layout after user is done configurating instead saving after every small changes with large numbers of saved variables.
+You will want to use the NVS API directly if you need to store a large amount of data like save the full configuration for Note layout after user is done configuring instead saving after every small changes with large numbers of saved variables.
 
 ## Hashing 
 Need a way to hash the key to a unique value? Check out the [Hash Utility](./Utilities/Hash) for more information.
@@ -49,7 +49,7 @@ Retrieves the content of the variable associated with the given hash as a `vecto
 - `hash` (`uint32_t`): The hash identifying the variable.
 
 **Returns:**
-- `vector<char>`: The content of the variable. If the variable does not exist, the returned vector will be zero lengthed.
+- `vector<char>`: The content of the variable. If the variable does not exist, the returned vector will be zero length.
 
 ---
 
