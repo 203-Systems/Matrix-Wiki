@@ -11,7 +11,7 @@ The Non-Volatile Storage (NVS) API provides a mechanism for storing and retrievi
 *The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/NVS.cpp"/>.*
 
 ## Saved Variables
-The NVS API is rather complex requiring the use of a hash to identify variables. In most case you will want to use the [SavedVar Macro](./Utilities/SavedVarible)  to create saved variables instead of using the NVS API directly.
+The NVS API is rather complex requiring the use of a hash to identify variables. In most case you will want to use the [SavedVar Macro](./Utilities/SavedVariable)  to create saved variables instead of using the NVS API directly.
 
 You will want to use the NVS API directly if you need to store a large amount of data like save the full configuration for Note layout after user is done configuring instead saving after every small changes with large numbers of saved variables.
 

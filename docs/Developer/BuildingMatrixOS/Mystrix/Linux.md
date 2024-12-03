@@ -120,7 +120,7 @@ Here are some useful build commands you can use in Matrix OS:
 - `clean` - Cleans the build.
 - `fullclean` - Cleans the build more thoroughly. Use this if you encounter undefined references or missing files.
 - `build` - Builds Matrix OS based on the default config (OS/parameter.h).
-- `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see [Debug Matrix OS](/docs/Developer/DebugMatrixOS)).
+- `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see [Debug Matrix OS](/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp)).
 
 You can chain commands together like:
 ```bash
