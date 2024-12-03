@@ -3,6 +3,7 @@ sidebar_position: 1
 ---
 
 import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import PaletteVisualizer from '@site/src/components/PaletteVisualizer/PaletteVisualizer';
 
 # Performance App
 
@@ -205,11 +206,70 @@ There are two built in color palettes, and 4 custom color palettes.
 You can edit the custom color palettes in the action menu.
 
 ### Built in palette 1
+<PaletteVisualizer 
+    palette = {[
+    "#000000", "#3C0000", "#7D0000", "#BE0000",
+    "#FF7D7D", "#FF0000", "#3C0C00", "#7D1C00",
+    "#BE2C00", "#FF9D7D", "#FF3C00", "#3C1C00",
+    "#7D3C00", "#BE5D00", "#FFBE7D", "#FF7D00",
+    "#3C2C00", "#7D5D00", "#BE8D00", "#FFDE7D",
+    "#FFBE00", "#3C3C00", "#7D7D00", "#BEBE00",
+    "#FFFF7D", "#FFFF00", "#2C3C00", "#5D7D00",
+    "#8DBE00", "#DEFF7D", "#BEFF00", "#1C3C00",
+    "#3C7D00", "#5DBE00", "#BEFF7D", "#7DFF00",
+    "#0C3C00", "#1C7D00", "#2CBE00", "#9DFF7D",
+    "#3CFF00", "#003C00", "#007D00", "#00BE00",
+    "#7DFF7D", "#00FF00", "#003C0C", "#007D1C",
+    "#00BE2C", "#7DFF9D", "#00FF3C", "#003C1C",
+    "#007D3C", "#00BE5D", "#7DFFBE", "#00FF7D",
+    "#003C2C", "#007D5D", "#00BE8D", "#7DFFDE",
+    "#00FFBE", "#003C3C", "#007D7D", "#00BEBE",
+    "#7DFFFF", "#00FFFF", "#002C3C", "#005D7D",
+    "#008DBE", "#7DDEFF", "#00BEFF", "#001C3C",
+    "#003C7D", "#005DBE", "#7DBEFF", "#007DFF",
+    "#000C3C", "#001C7D", "#002CBE", "#7D9DFF",
+    "#003CFF", "#00003C", "#00007D", "#0000BE",
+    "#7D7DFF", "#0000FF", "#0C003C", "#1C007D",
+    "#2C00BE", "#9D7DFF", "#3C00FF", "#1C003C",
+    "#3C007D", "#5D00BE", "#BE7DFF", "#7D00FF",
+    "#2C003C", "#5D007D", "#8D00BE", "#DE7DFF",
+    "#BE00FF", "#3C003C", "#7D007D", "#BE00BE",
+    "#FF7DFF", "#FF00FF", "#3C002C", "#7D005D",
+    "#BE008D", "#FF7DDE", "#FF00BE", "#3C001C",
+    "#7D003C", "#BE005D", "#FF7DBE", "#FF007D",
+    "#3C000C", "#7D001C", "#BE002C", "#FF7D9D",
+    "#FF003C", "#242424", "#484848", "#6D6D6D",
+    "#919191", "#B6B6B6", "#DADADA", "#FFFFFF"
+]}/>
 
-### Built in palette 2 - Classical Palette
+
+### Built in palette 2 - Legacy Palette
+
+<PaletteVisualizer 
+    palette = {[
+  "#000000", "#3f3f3f", "#7f7f7f", "#ffffff", "#ff3f3f", "#ff0000", "#7f0000", "#3f0000",
+  "#ffbf6f", "#ff3f00", "#7f1f00", "#3f0f00", "#ffaf2f", "#ffff00", "#7f7f00", "#3f3f00",
+  "#7fff2f", "#4fff00", "#2f7f00", "#173f00", "#4fff3f", "#00ff00", "#007f00", "#003f00",
+  "#4fff4f", "#00ff1f", "#007f0f", "#003f07", "#4fff5f", "#00ff5f", "#007f2f", "#003f17",
+  "#4fffbf", "#00ff9f", "#007f4f", "#003f27", "#4fbfff", "#00afff", "#00577f", "#002f3f",
+  "#4f7fff", "#0057ff", "#002f7f", "#00173f", "#2f1fff", "#0000ff", "#00007f", "#00003f",
+  "#5f3fff", "#2f00ff", "#17007f", "#0f003f", "#ff3fff", "#ff00ff", "#7f007f", "#3f003f",
+  "#ff3f6f", "#ff004f", "#7f002f", "#3f001f", "#ff0f00", "#9f3f00", "#7f4f00", "#2f2f00",
+  "#003f00", "#003f1f", "#001f6f", "#0000ff", "#003f3f", "#1f00bf", "#5f3f4f", "#1f0f17",
+  "#ff0000", "#bfff2f", "#afef00", "#5fff00", "#0f7f00", "#00ff5f", "#009fff", "#002fff",
+  "#1f00ff", "#5f00ef", "#af1f7f", "#2f0f00", "#ff2f00", "#7fdf00", "#6fff1f", "#00ff00",
+  "#3fff2f", "#5fef6f", "#3fffcf", "#5f8fff", "#2f4fcf", "#6f4fdf", "#df1fff", "#ff005f",
+  "#ff4f00", "#bfaf00", "#8fff00", "#7f5f00", "#3f2f00", "#00470f", "#0f4f1f", "#17172f",
+  "#171f5f", "#5f3717", "#7f0000", "#df3f2f", "#df470f", "#ffbf1f", "#9fdf2f", "#6faf0f",
+  "#17172f", "#dfdf6f", "#7fef8f", "#9f9fff", "#8f6fff", "#3f3f3f", "#6f6f6f", "#dfffff",
+  "#9f0000", "#370000", "#17cf00", "#003f00", "#bfaf00", "#3f2f00", "#af4f00", "#4f0f00"
+]}/>
 
 ### Upload Custom Palette
 
+Communlity Member Dovitate has made a custom palette uploader Max Patch for the Performance App. You can find it at [203 Systems Discord - Communlity Release](https://discord.com/channels/503413248704380930/1266490246770462770)
+
+You can find the more custom palette from [Kaskobi's website](https://www.kaskobi.com/palettes)
 
 ## Sysex API
 
