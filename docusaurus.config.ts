@@ -37,7 +37,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/203-Systems/Matrix-Wiki/tree/main/',
+            'https://github.com/203-Systems/Matrix-Wiki/tree/master/',
           versions: {
               current: {
                 label: 'Canary 🚧',
