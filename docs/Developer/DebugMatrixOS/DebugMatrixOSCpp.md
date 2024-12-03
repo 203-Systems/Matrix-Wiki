@@ -13,6 +13,6 @@ In the Matrix OS source folder run
 
 Then logging will be enabled on both USB and hardware UART on the device. 
 
-## Send out Debug Logs
+## Send Debug Logs
 
-You can use MLOGx macros for sending out debug logs in your code. See [Logging API](/docs/Developer/MatrixOSApplicationCppAPI/Logging)
+You can use MLOG* macros or MatrixOS::Logging:Log* functions for sending out debug logs from your code. See [Logging API](/docs/Developer/MatrixOSApplicationCppAPI/Logging)

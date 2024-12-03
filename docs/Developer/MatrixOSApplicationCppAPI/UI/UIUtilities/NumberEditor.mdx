@@ -1,0 +1,31 @@
+---
+title: Number Editor
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# `NumberEditor` UI Utility
+
+:::warning[Might be Replaced soon]
+I think this the API and the design is not consistent with rest of the code. I will probably rework this API soon. Ideally you should create your own interface using UI framework instead.
+:::
+
+The `NumberEditor` UI utility allows you to display a number editor on the screen with a specified color, name, and value range.
+
+*The source file for this UI utility is located in <GithubLink path="os/ui/UIUtilities.h"/> and it's implemented in <GithubLink path="os/ui/Utlities/TextScroll.cpp"/>.*
+---
+
+## Method
+```cpp
+int32_t NumberSelector8x8(int32_t value, Color color, string name, int32_t lower_limit, int32_t upper_limit, int32_t* custom_modifier)
+
+```
+
+Displays a number editor on the screen with the specified color, name, value range, and custom modifier.
+
+**Parameters:**
+- `value` (`int32_t`): The initial value of the number editor.
+- `color` ([`Color`](../../Types/Color/)): The color of the number editor.
+- `name` (`string`): The name of the number editor.
+- `lower_limit` (`int32_t`): The lower limit of the number editor.
+- `upper_limit` (`int32_t`): The upper limit of the number editor.
+- `custom_modifier` (`int32_t*`, optional): A pointer to a int32_t[8] array custom modifier. It will be used to adjust the value of the number editor. Defaults to `nullptr`.

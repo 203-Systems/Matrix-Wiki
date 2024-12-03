@@ -1,0 +1,114 @@
+---
+title: UI4pxNumber
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Class: `UI4pxNumber`
+
+The `UI4pxNumber` class represents a compact numeric display component for UI systems. It renders numbers in a 4-pixel-hight format with configurable color, digit count, and spacing.
+
+:::info[Things to note]
+Each digit takes up 3 pixels in width. With zero gap it will take up 9 pixels. Usually this means it doesn't fit in 8 width grid. However, digit 1 takes up 1 pixel and digit 2 takes up 2 pixels. So technically you can fit 0 to 299 in 8 width grid.
+
+Also since the number is hard to read in a 0 gap setting, that's why the alternative color is used to make them easier to separate and read.
+:::
+
+:::warning[Negative Numbers]
+Currently, the component does not support rendering negative numbers. This functionality may be added in the future. 
+
+However there's a work around. See <GithubLink path="applications\Mystrix\ForceCalibration\ForceCalibration.cpp"/> 's minusSign implementation in the SetOffset function.
+:::
+
+*The source file for this class is located in <GithubLink path="os/ui/UIComponents/UI4pxNumber.h"/>.*
+
+---
+
+## Constructor
+
+### `UI4pxNumber`
+```cpp
+UI4pxNumber(Color color, uint8_t digits, int32_t* value, Color alternative_color = Color(0xFFFFFF), uint8_t spacing = 0);
+```
+
+Creates a new 4-pixel number display component.
+
+**Parameters:**
+- `color` ([`Color`](../../Types/Color/)): The primary color for the digits.
+- `digits` (`uint8_t`): The total number of digits to display.
+- `value` (`int32_t*`): Pointer to the integer value to be displayed.
+- `alternative_color` ([`Color`](../../Types/Color/), optional): Secondary color for alternating digit styling. Defaults to white (`0xFFFFFF`).
+- `spacing` (`uint8_t`, optional): Horizontal spacing between digits. Defaults to `0`.
+
+---
+
+## Methods
+
+### `GetSize`
+```cpp
+virtual Dimension GetSize();
+```
+Calculates the dimensions of the number display based on the number of digits and spacing.
+
+**Returns:**
+- [[`Dimension`](../../Types/Dimension/)](../../Types/Dimension/): The dimensions (`width` and `height`) of the component.
+
+---
+
+### `GetColor`
+```cpp
+virtual Color GetColor();
+```
+Retrieves the primary color of the component.
+
+**Returns:**
+- [`Color`](../../Types/Color/): The primary color.
+
+---
+
+### `GetAlternativeColor`
+```cpp
+virtual Color GetAlternativeColor();
+```
+Retrieves the alternative color used for alternating digit styling. If no alternative color is set, the primary color is returned.
+
+**Returns:**
+- [`Color`](../../Types/Color/): The alternative color.
+
+---
+
+### `Render4pxNumber`
+```cpp
+void Render4pxNumber(Point origin, Color color, uint8_t value);
+```
+Renders a single 4-pixel digit at the specified position.
+
+**Parameters:**
+- `origin` ([`Point`](../../Types/Point/)): The top-left corner where the digit will be rendered.
+- `color` ([`Color`](../../Types/Color/)): The color to use for the digit.
+- `value` (`uint8_t`): The digit value to render (`0-9`, or `10` for blank).
+
+---
+
+### `Render`
+```cpp
+virtual bool Render(Point origin);
+```
+Renders the entire number at the specified position, handling digit placement, color alternation, and spacing.
+
+**Parameters:**
+- `origin` ([`Point`](../../Types/Point/)): The top-left corner where the number will be rendered.
+
+**Returns:**
+- `bool`: `true` if rendering was successful.
+
+---
+
+## Notes
+- The component dynamically calculates significant figures for the number.
+- The `Render` method alternates digit colors between `color` and `alternative_color` if specified.
+- Currently, the component does not support rendering negative numbers. This functionality may be added in the future.
+
+--- 
+
+This documentation provides a concise yet comprehensive overview of the `UI4pxNumber` class, including its constructor, methods, and usage details.
+``` 

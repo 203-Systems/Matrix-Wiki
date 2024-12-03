@@ -4,7 +4,4 @@ sidebar_position: 1
 
 # Note APP
 
-
-:::warning[Content Under Construction]
-This part of content is under construction. If you need any help regrading those contents, please reach out to us or leave a comment. [Connect With Us](/docs/Support/ConnectWithUs)
-:::
+See Matrix OS [Note APP](/docs/MatrixOS/Applications/Note) On how to use the Mystrix as a customizable musical controller.
