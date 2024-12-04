@@ -189,6 +189,12 @@ Performance App will send out a cc signal when the action menu is entered. (chan
 
 ## Note Layout
 
+Note that the Mystrix only have two touchbars on the left and right. But the device can be rotated to have the touchbars on the top and bottom.
+
+In that case. The right touchbar will be mapped to the top touchbar, and the left touchbar will be mapped to the bottom touchbar. However, the LED MiDI in note is seperated for the two touchbars MiDI out note.
+
+![Performance App Keymap](PerformanceKeymap.svg)
+
 ### Touch Combo Keys
 Touch Combo Key is an alternative way use the Myatrix's touch bar.
 
@@ -267,10 +273,78 @@ You can edit the custom color palettes in the action menu.
 
 ### Upload Custom Palette
 
+You can upload 4 custom palettes to the app for channel 3, 4, 5, and 6. You can edit the custom palettes in the action menu or upload custom palettes.
+
 Community Member Dovitate has made a custom palette uploader Max Patch for the Performance App. You can find it at [203 Systems Discord - Community Release](https://discord.com/channels/503413248704380930/1266490246770462770)
 
 You can find the more custom palette from [Kaskobi's website](https://www.kaskobi.com/palettes)
 
-## Sysex API
+## SysEx API
 
 Sysex API provided more advanced control over the canvas than regular MIDI signals. Including real RGB LED color and faster LED fill. 
+
+The Mystrix SysEx header is
+
+> 0xF0 0x00 0x02 0x03 0x4D 0x58
+ 
+### RGB LED Color - 0x5E
+
+The RGB LED color command is used to set the color of the LED on the canvas.
+
+The command is
+> `Header` 0x5E `POS` `R` `G` `B` [`POS2` `R` `G` `B`] [`POS3` `R` `G` `B`] ... 0xF7
+
+- `POS` is the position of the LED on the canvas. It's Y * 10 + X. The (1, 1) is the lower corner of the grid and (8, 8) is the top right corner. You can access the underglow by using X Y 0 or 8. In additionally you can do a global fill by using pos 0, row fill by 100 + Y, and column fill by 110 + X.
+- `R`, `G`, `B` is the red, green, and blue value of the LED. The value is 0-63.
+
+You can repeat the `POS R G B` (for a reasonable amount of times) to set multiple LEDs at once.
+
+### RGB LED Color Batch Fill - 0x5F
+
+The RGB LED color batch fill command is used to set the color of the LED on the canvas in a faster way.
+
+The command is
+> `Header` 0x5F `R` `G` `B` `POS` [`POS2`] [`POS3`] [`POS4`] ... 0xF7
+
+- `R`, `G`, `B` is the red, green, and blue value of the LED. The value is 0-63.
+- `POS` is the position of the LED on the canvas. It's Y * 10 + X. The (1, 1) is the lower corner of the grid and (8, 8) is the top right corner. You can access the underglow by using X Y 0 or 8. In additionally you can do a global fill by using pos 0, row fill by 100 + Y, and column fill by 110 + X.
+
+You can repeat the `POS` (for a reasonable amount of times) to set multiple LEDs at once.
+
+
+### Upload Custom Palette - 0x41
+
+The Upload Custom Palette command is used to customize LED color palettes. The process includes three subcommands (`0x7B`, `0x3D`, and `0x7D`), allowing for initialization, data upload, and finalization. The command structure is as follows:
+
+The command is
+
+> `Header` 0x41 SubCommand Data ... 0xF7
+
+
+- **SubCommand**: Specifies the stage of the upload process:
+  - `0x7B`: Uploading Start
+  - `0x3D`: Uploading Write
+  - `0x7D`: Uploading End
+
+
+#### **Uploading Start (0x7B)**
+
+Marks the beginning of the palette upload process.
+
+> `Header` 0x41 0x7B 0xF7
+
+#### **Uploading Write (0x3D)**
+Writes color data to the specified palette.
+
+> `Header` 0x41 0x3D `PaletteID` `Index` `R` `G` `B`  [`PaletteID2` `Index2` `R` `G` `B` ] ... 0xF7
+
+- `PaletteID`: Specifies the target palette. (0-3)
+- `Index`: The slot in the palette to update. (0-127)
+- `R, G, B`: The red, green, and blue components of the color. (0-63)
+
+The RGB values are remapped from 6-bit to 8-bit resolution internally for enhanced color precision.
+
+#### **Uploading End (0x7D)**
+Completes the palette upload process and saves the changes to non-volatile storage.
+
+> `Header` 0x41 0x7D 0xF7 
