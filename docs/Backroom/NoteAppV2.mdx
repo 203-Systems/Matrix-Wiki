@@ -1,0 +1,980 @@
+---
+sidebar_position: 4
+---
+import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+# Note App V2
+
+Note app V2 will comes with new feature of include Control bar, Arpeggiator, Chord, Semitone color, and X offset,
+
+The offset is mostly added to support Poly Plaground like note layouts.
+
+:::note
+This is a work in progress and the design is subject to change. All the color of UI elements are just for reference (I didn't spent time tweaking the visual design, just functional stuffs for now)]
+
+I might also decided to tweak stuffs during implentmentation.
+:::
+
+## Control bar
+
+export function PlayViewWithControlBar() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Tap to play a note.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 7],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 7],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave, Layout Swap, and Shift Keys",
+        "desc": "Tap left or right to change the octave, tap both at the same time to swap the layout, and hold any of them to enable shift feature. (The LED will dim and saturate based on the octave) (Color is the active map root key color)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend up",
+        "desc": "Use aftertouch to pitchbend up. (With shift combo, it will send a song start midi message)",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "size": [1, 1],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend down",
+        "desc": "Use aftertouch to pitchbend down. (With shift combo, it will send a song stop midi message)",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "size": [1, 1],
+                "color": "#FF0000"
+            },
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Tap to enable note latch. Keys will be latched until you play another note. (Wuth shift combo, it will change the note latch mode of the secondary layout)",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [1, 1],
+                "color": "#FFFF00"
+            },
+        ]
+    },
+    {
+        "name": "Key Selector",
+        "desc": "Change the key of the pad on the fly. (With shift combo, it will change the key of the secondary layout)",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "size": [1, 1],
+                "color": "#FF0090"
+            },
+        ]
+    },
+        {
+        "name": "Arpeggiator",
+        "desc": "Change the settings of the arpeggiator. (With shift combo, it will change the settings of the secondary layout)",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [1, 1],
+                "color": "#FF5900"
+            },
+        ]
+    },
+        {
+        "name": "Chord",
+        "desc": "Change the settings of the chord.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Play View with Control Bar"
+    const uiDescription = "This is the play view with new optional ontrol bar"
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<PlayViewWithControlBar/>
+
+## Arpeggiator
+
+export function PlayViewWithArpeggiator() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Tap to play a note.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 6],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 6],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 6],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave, Layout Swap, and Shift Keys",
+        "desc": "Tap left or right to change the octave, tap both at the same time to swap the layout, and hold any of them to enable shift feature. (The LED will dim and saturate based on the octave) (Color is the active map root key color)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend up",
+        "desc": "Use aftertouch to pitchbend up. (With shift combo, it will send a song start midi message)",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "size": [1, 1],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend down",
+        "desc": "Use aftertouch to pitchbend down. (With shift combo, it will send a song stop midi message)",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "size": [1, 1],
+                "color": "#FF0000"
+            },
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Tap to enable note latch. Keys will be latched until you play another note. (Wuth shift combo, it will change the note latch mode of the secondary layout)",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [1, 1],
+                "color": "#FFFF00"
+            },
+        ]
+    },
+    {
+        "name": "Key Selector",
+        "desc": "Change the key of the pad on the fly. (With shift combo, it will change the key of the secondary layout)",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "size": [1, 1],
+                "color": "#FF0090"
+            },
+        ]
+    },
+        {
+        "name": "Arpeggiator",
+        "desc": "Change the settings of the arpeggiator. (With shift combo, it will change the settings of the secondary layout)",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [1, 1],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+        {
+        "name": "Chord",
+        "desc": "Change the settings of the chord.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Arpeggiator Settings",
+        "desc": "Select the rate of the arpeggiator. Left most is off, and the right most is the fastest. (Something like Off, 1/4, 1/6, 1/8, 1/12, 1/16, 1/24, 1/32)",
+        "elements": [
+                {
+                "pos": [0, 6],
+                "size": [1, 1],
+                "color": "#FF5900"
+            },
+            {
+                "pos": [1, 6],
+                "size": [7, 1],
+                "color": "#802C00"
+            },
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    },
+];
+
+    const uiName = "Play View with Arpeggiator Control"
+    const uiDescription = "This is the play view with arpeggiator control."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<PlayViewWithArpeggiator/>
+
+export function PlayViewWithChord() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Tap to play a note.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 6],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 6],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 6],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave, Layout Swap, and Shift Keys",
+        "desc": "Tap left or right to change the octave, tap both at the same time to swap the layout, and hold any of them to enable shift feature. (The LED will dim and saturate based on the octave) (Color is the active map root key color)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend up",
+        "desc": "Use aftertouch to pitchbend up. (With shift combo, it will send a song start midi message)",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "size": [1, 1],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend down",
+        "desc": "Use aftertouch to pitchbend down. (With shift combo, it will send a song stop midi message)",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "size": [1, 1],
+                "color": "#FF0000"
+            },
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Tap to enable note latch. Keys will be latched until you play another note. (Wuth shift combo, it will change the note latch mode of the secondary layout)",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [1, 1],
+                "color": "#FFFF00"
+            },
+        ]
+    },
+    {
+        "name": "Key Selector",
+        "desc": "Change the key of the pad on the fly. (With shift combo, it will change the key of the secondary layout)",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "size": [1, 1],
+                "color": "#FF0090"
+            },
+        ]
+    },
+        {
+        "name": "Arpeggiator",
+        "desc": "Change the settings of the arpeggiator. (With shift combo, it will change the settings of the secondary layout)",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [1, 1],
+                "color": "#FF5900"
+            },
+        ]
+    },
+        {
+        "name": "Chord",
+        "desc": "Change the settings of the chord.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "size": [1, 1],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Chord Settings",
+        "desc": "Select a chord to play. (Specific chord are TBD)",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 5],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    },
+];
+
+    const uiName = "Play View with Chord Control"
+    const uiDescription = "This is the play view with chord control (Note that you will be able to use chord and arpeggiator at the same time. Chorded notes will be arpeggiated)"
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<PlayViewWithChord/>
+
+export function PlayViewWithKeySelector() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Tap to play a note.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 5],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 5],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave, Layout Swap, and Shift Keys",
+        "desc": "Tap left or right to change the octave, tap both at the same time to swap the layout, and hold any of them to enable shift feature. (The LED will dim and saturate based on the octave) (Color is the active map root key color)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend up",
+        "desc": "Use aftertouch to pitchbend up. (With shift combo, it will send a song start midi message)",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "size": [1, 1],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "Pitchbend down",
+        "desc": "Use aftertouch to pitchbend down. (With shift combo, it will send a song stop midi message)",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "size": [1, 1],
+                "color": "#FF0000"
+            },
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Tap to enable note latch. Keys will be latched until you play another note. (Wuth shift combo, it will change the note latch mode of the secondary layout)",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [1, 1],
+                "color": "#FFFF00"
+            },
+        ]
+    },
+    {
+        "name": "Key Selector",
+        "desc": "Change the key of the pad on the fly. (With shift combo, it will change the key of the secondary layout)",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "size": [1, 1],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+        {
+        "name": "Arpeggiator",
+        "desc": "Change the settings of the arpeggiator. (With shift combo, it will change the settings of the secondary layout)",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [1, 1],
+                "color": "#FF5900"
+            },
+        ]
+    },
+        {
+        "name": "Chord",
+        "desc": "Change the settings of the chord.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Scale Visualizer & Root Key Selector",
+        "desc": "Select the scale and root key of the active note pad layout.",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "size": [6, 1],
+                "color": "#800080"
+            },
+            {
+                "pos": [1, 5],
+                "size": [2, 1],
+                "color": "#800080"
+            },
+            {
+                "pos": [4, 5],
+                "size": [3, 1],
+                "color": "#800080"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [1, 6],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 6],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 5],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    },
+];
+
+    const uiName = "Play View with Key Selector"
+    const uiDescription = "This is the play view with key selector."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<PlayViewWithKeySelector/>
+
+
+## Arpeggiator Setting
+
+You will be able to change the folowing settings of the arpeggiator:
+
+- BPM: Set a BPM or sync to the external clock. (You can also send out a clock)
+- Swing Amount: Set the swing amount of the arpeggiator. (-80% to 80%)
+- Gate Time: Set the gate time of the arpeggiator. (0% to 100%)
+- Direction: Set the direction of the arpeggiator. (Up, Down, Up/Down, Up/Down End Key Repeated, Random, Order, Chord)
+
+- Step: Set the octave step of the arpeggiator. (1 to 8)
+- Step Offset: Sets the offset for each step (-24 to 24)
+
+- Follow Scale: Enable to follow the scale of the note pad layout. (Boolean)
+
+
+export function ArpeggiatorSetting() {
+
+    const uiElements = [
+    {
+        "name": "Setting Selector",
+        "desc": "Select the setting you want to change.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#FF0000"
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 1],
+                "color": "#FF8000"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [3, 0],
+                "size": [1, 1],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [1, 1],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Display",
+        "desc": "Displays the Information of the Settings (BPM, Swing Amount, Gate Time, Direction, Step, Octave Range, not just numbers)",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [5, 1],
+                "size": [3, 1],
+                "color": "#FF5900"
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 1],
+                "color": "#FF5900"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#FF5900"
+            },
+            {
+                "pos": [5, 4],
+                "size": [3, 1],
+                "color": "#FF5900"
+            }
+        ]
+    },
+    {
+        "name": "Controller",
+        "desc": "Control the setting of the arpeggiator. (Control will change based on the selected setting)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": "#802C00"
+            },
+            {
+                "pos": [3, 7],
+                "color": "#FF5900"
+            }
+
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Arpeggiator Setting"
+    const uiDescription = "This is the arpeggiator setting."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpeggiatorSetting/>
+
+## New Offset Selector
+The Offset selector replaces the old overlap selector.
+
+Instead of setting overlap for each row. The new selector selects much semitone offset of x and y axis is.
+
+export function OffsetSelector() {
+
+    const uiElements = [
+    {
+        "name": "Offset Display",
+        "desc": "Displays the offset of the active note pad layout.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 1],
+                "size": [2, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 2],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [5, 3],
+                "size": [3, 1],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "X Offset Selector",
+        "desc": "Selects how much each row above overlaps with the row below it.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "size": [7, 1],
+                "color": "#C0C000"
+            },
+            {
+                "pos": [3, 7],
+                "color": "#FFFF00"
+            }
+
+        ]
+    },
+    {
+        "name": "Y Offset Selector",
+        "desc": "Selects how much each row above overlaps with the row below it.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 7],
+                "color": "#C0C000"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#FFFF00"
+            }
+
+        ]
+    },
+    {
+        "name": "Y offset one octave",
+        "desc": "Tap to set the Y offset to one octave instead of semitone.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FFFFFF"  
+            },
+
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Offset Selector"
+    const uiDescription = "The Offset Selector allows you to customize the layout of the note pad."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<OffsetSelector/>
+
+
+## New Color settings
+
+export function NotePadColorSelector() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad Preview",
+        "desc": "Preview of the active note pad layout with the selected color combination.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 4],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 4],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [3, 0],
+                "size": [1, 4],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 4],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [1, 4],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 4],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#FF1D00"
+            }
+        ]
+    },
+    {
+        "name": "Color Mode - Root Key",
+        "desc": "Select the color mode to two tone with root key accent.",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [1, 1],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Color Mode - Per Semitone",
+        "desc": "Select the color mode to per semitone.",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [1, 1],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Semitone Color Selector",
+        "desc": "Select the color of each semitone.",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "size": [1, 1],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [3, 5],
+                "size": [1, 1],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [4, 5],
+                "size": [1, 1],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [5, 5],
+                "size": [1, 1],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [1, 1],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 1],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [2, 6],
+                "size": [1, 1],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [3, 6],
+                "size": [1, 1],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [4, 6],
+                "size": [1, 1],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [5, 6],
+                "size": [1, 1],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [6, 6],
+                "size": [1, 1],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [7, 6],
+                "size": [1, 1],
+                "color": "#FF1D00"
+            }
+        ]
+    },
+    {
+        "name": "Go Back to Config Menu",
+        "desc": "Tap to go back to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Note Pad Color Selector"
+    const uiDescription = "The Note Pad Color Selector allows you to customize the color combination of the active note pad layout."
+    return <MystrixVisualizer 
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<NotePadColorSelector/>

@@ -166,6 +166,14 @@ const config: Config = {
             {
               label: 'Resources',
               to: 'docs/Resources/MystrixHardwareDesigns'
+            },
+            {
+              label: 'Support',
+              to: 'docs/Support/ConnectWithUs'
+            },
+            {
+              label: 'Backroom',
+              to: 'docs/Backroom'
             }
           ],
         },
