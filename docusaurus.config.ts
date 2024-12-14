@@ -25,7 +25,7 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'zh-Hans'],
+    locales: ['en']//, 'zh-Hans'],
   },
 
   presets: [
@@ -227,10 +227,10 @@ const config: Config = {
       },
       copyright: `Copyright © ${new Date().getFullYear()} 203 Systems`,
     },
-    announcementBar: {
-      id: 'under-development',
-      content: `<b>🚧 Project Matrix Wiki is currently in development. Contents may be incorrect, incomplete, or outdated. 🚧</b>`,
-    },
+    // announcementBar: {
+    //   id: 'under-development',
+    //   content: `<b>🚧 Project Matrix Wiki is currently in development. Contents may be incorrect, incomplete, or outdated. 🚧</b>`,
+    // },
     image: 'img/social-card.jpg',
     algolia: {
       // The application ID provided by Algolia
