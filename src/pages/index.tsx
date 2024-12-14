@@ -23,7 +23,12 @@ export default function Home(): JSX.Element {
       description="Wiki and Documentations of everything 203 Systems">
       <main>
       <div className={styles.background_container}>
-      <div className={styles.background}></div>
+      <div className={styles.background}>
+        <img
+          className={styles.background_image}
+          src="/img/gradient.png"
+        />
+      </div>
   </div>
       <div className={styles.main_container}>
         <Heading as="h1" className={styles.hero_title}>

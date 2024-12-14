@@ -92,43 +92,57 @@
 .background_container {
   position: relative;
   height: 0vh;
+  z-index: -1; /* Ensure background is behind content */
+  filter: blur(clamp(30px, 5vw, 5vw));
 }
 
 .background {
   position: absolute;
-  top: 5%;
-  left: 5%;
-  width: 90%;
-  height: calc(100vh - var(--ifm-navbar-height));
+  top: 5vw;
+  left: 5vw;
+  width: 90vw;
+  height: calc(100vh - 10vw - var(--ifm-navbar-height));
   z-index: -1; /* Ensure background is behind content */
   background-color: #050405;
-  background-image: 
-      radial-gradient(circle at 52% 73%, hsla(310, 85%, 67%, 1) 0px, transparent 50%),
-      radial-gradient(circle at 0% 30%, hsla(197, 90%, 76%, 1) 0px, transparent 50%),
-      radial-gradient(circle at 41% 26%, hsla(234, 79%, 69%, 1) 0px, transparent 50%),
-      radial-gradient(circle at 41% 51%, hsla(41, 70%, 63%, 1) 0px, transparent 50%),
-      radial-gradient(circle at 41% 88%, hsla(36, 83%, 61%, 1) 0px, transparent 50%),
-      radial-gradient(circle at 76% 73%, hsla(346, 69%, 70%, 1) 0px, transparent 50%),
-      radial-gradient(circle at 29% 37%, hsla(272, 96%, 64%, 1) 0px, transparent 50%);
-  background-size: 150% 150%;
-  filter: blur(80px);
-  animation: animateBackground 10s infinite alternate ease-in-out;
+  /* background-image: url('/img/gradient.png'); */
+  overflow: hidden;
+  
+  img
+  {
+    width: 100%;
+    height: 100%;
+    scale: 2;
+    transform: translate(0%, 0%);
+    animation: animateBackground 10s infinite alternate ease-in-out;
+  }
 }
+
 
 @keyframes animateBackground {
   0% {
-    background-position: 0% 0%;
+    transform: translate(-25%, -25%);
   }
   25% {
-    background-position: 50% 50%;
+    transform: translate(0%, 0%);
   }
   50% {
-    background-position: 100% 100%;
+    transform: translate(25%, 25%);
   }
   75% {
-    background-position: 50% 0%;
+    transform: translate(0%, -25%);
   }
   100% {
-    background-position: 0% 0%;
+    transform: translate(-25%, -25%);
   }
+}
+
+@media screen and (max-width: 996px) {
+  .main_container
+  {
+    height: calc(90vh - var(--ifm-navbar-height));
+  }
+  .background {
+    height: calc(90vh - 10vw - var(--ifm-navbar-height));
+  }
+  
 }
