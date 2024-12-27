@@ -247,7 +247,11 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                                     }}
                                 onMouseEnter={(e) => { selectHighlightFunction(keypadFunctions[y * 8 + x], keyColor);}}
                                 onClick={(e) => { lockSelectedFunction(keypadFunctions[y * 8 + x], keyColor);  e.stopPropagation()}}
-                            />
+                                // i would try to make it so that when you hover over a key it selects the thing so that you can go to details page faster instead of wondeing why it disappears (just a qol thing)
+                                //or alternatively make it so that button presses have more feedback so that you know you pressed it cause you kinda don't see it rn
+
+                                //TODO: Fix a bug where you can click on a touchbar and select top row of the grid (seen in device settings)
+                                />
                         );
                     })}
                     </div>

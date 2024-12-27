@@ -4,11 +4,14 @@ sidebar_position: 999
 
 # Road Map
 
-We have some roadmap and a lot of ideas for Mystrix & Matrix OS.
+We have an extensive roadmap and numerous ideas for Mystrix and Matrix OS.
 
-We want to be open with our plan and we welcome community pitching their supports for each idea and pilot which we should be working on first.
+We aim to be transparent with our plans and welcome community input on prioritizing and supporting these ideas. Your feedback is valuable in helping us determine which projects to prioritize and focus on first.
 
 ## Matrix OS
+
+<!--  -->
+
 - Customizable Keymap via edit.203.io **(Under Feature Preview for OS 2.6 Nightly)**
 - Note APP Arpeggiator, Chord Mode, and Transpose Control Bar. **(Slated for OS 2.6)**
 - Dynamic application system - Loading external application via Python or WASM.
@@ -19,7 +22,7 @@ We want to be open with our plan and we welcome community pitching their support
 - Wifi capabilities - Matrix OS WiFi API. Allowing the device to send RESTful API and open WebSockets.
 - RTP MIDI via Wifi
 - Open Sound Control capabilities
-...
+  ...
 
 ## Mystrix
 
@@ -35,9 +38,5 @@ We do want to make more cool hardwares, but making hardwares are very very expan
 - 4x4, 4x8, 10x10, 8x16 Mystrix (?)
 
 ## Third Party
-- Ableton Live integration 
 
-
-
-
-
+- Ableton Live integration

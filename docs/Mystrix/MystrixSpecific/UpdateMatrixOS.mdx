@@ -2,24 +2,73 @@
 sidebar_position: 1
 ---
 
-# Update Matrix OS 
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Update Matrix OS
 
 ## Enter OS Update Mode
+
 Mystrix can enter OS update mode in two ways:
 
-1. Use the red button on the bottom left of the setting menu.
-2. Hold down the function key while plug in Mystrix. (If you can't boot into the OS, this is your back up)
+1. Use the red button on the bottom left of the [settings menu](/docs/MatrixOS/SystemSettings).
+2. Hold down the function key (middle button) while plugging in Mystrix. (If you can't boot into the OS, this is your backup method)
 
-You should see an arrow on the Mystrix. If the arrow is red, it means that the device is  not connected via USB. If the arrow is green, it means that the device is connected via USB and is ready to receive a new OS.
+You should see an arrow on the Mystrix.
+
+If the arrow is **red**, it means that the device is not connected via USB.
+
+If the arrow is **green**, it means that the device is connected via USB and is ready to receive a new OS.
+
+<!-- this has to be there and not at the top cause than it breaks spaces in the navigation -->
+
+export function ArrowGreen() {
+const uiElements = [
+    {
+        "name": "Arrow",
+        "desc": "If the arrow is green, it means that the device is connected via USB and is ready to receive a new OS, if the arrow is red, it means that the device is not connected via USB.",
+        "elements": [
+            {
+                "pos": [3, 2],
+                "size": [2, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 4],
+                "size": [4, 1],
+                "color": "#00FF00"
+            }
+        ]
+    }
+];
+
+    const uiName = "Connected";
+    const uiDescription = "The animation that shows up when Mystrix is in OS update mode and has connected via USB.";
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ArrowGreen />
 
 ## Upload New OS
 
-You will also need a new firmware file to update your Mystrix. You can find them in the [release section of the Matrix OS Github](https://github.com/203-Systems/MatrixOS/releases).
+You will need a new firmware file to update your Mystrix. You can find them in the [release section of the Matrix OS GitHub](https://github.com/203-Systems/MatrixOS/releases).
 
-Mystrix will show up as a USB mass storage drive in your host device. Simply copy the UF2 file of your desired OS into this drive.
+Mystrix will show up as a USB mass storage drive on your host device. Simply copy the UF2 file of your desired OS into this drive.
 
-Your Mystrix should start showing a blue arrow animation. Once the updated is completed,mystrix will auto reboot into the new OS.
+![Disk](MatrixDisk.png)
 
-:::warning[Downgrade Matrix OS]
-While you can downgrade Matrix OS, this is not recommended and the downgraded OS might clear all user data. If you downgrade the OS to a version that is not compatible your device, you might not be able to boot into the OS.
+Your Mystrix should start showing a blue arrow animation. Once the update is completed, Mystrix will automatically reboot into the new OS.
+
+:::info[Note]
+If you're on a Mac, you might get a warning that Mystrix was ejected improperly. You can ignore this warning.
+:::
+
+## Downgrade Matrix OS
+
+:::danger[Downgrade Matrix OS]
+While you can downgrade Matrix OS, this is not recommended as the downgraded OS might clear all user data. If you downgrade the OS to a version that is not compatible with your device, you might not be able to boot into the OS.
 :::

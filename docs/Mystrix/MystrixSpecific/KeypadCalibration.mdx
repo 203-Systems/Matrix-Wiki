@@ -2,29 +2,29 @@
 sidebar_position: 3
 ---
 
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Keypad Calibration
 
 :::danger
-This feature is only for power user and not recommended for general user. 
+This feature is intended for advanced users and is not recommended for general users.
 
-If the keypad is incorrectly calibrated, your device will not work as expected. In the worst case, you may need to reflash the OS and wipe all the data to recover the device.
+Incorrect calibration of the keypad may result in unexpected device behavior. In the worst case, you may need to reflash the OS and wipe all data to recover the device.
 :::
 
 :::info
-This feature is only available for Mystrix with force sensitive keypad, for example, Mystrix Pro.
+This feature is only available for Mystrix devices with a force-sensitive keypad, such as the Mystrix Pro.
 :::
 
-Keypad Calibration APP is specific to Mystrix with force sensitive keypad. The app is used to calibrate the keypad to the user's preference. You can adjust the minimal trigger force and the maximal trigger force of the keypad.
+This app allows users to calibrate the keypad according to their preferences by adjusting the minimal and maximal trigger forces.
 
+## Keypad Calibration UI
 
-# Keypad Calibration UI
 export function KeypadCalibrationMenu() {
     const uiElements = [
         {
             "name": "Max Force Offset",
-            "desc": "Global Offset the max force threshold of the keypad",
+            "desc": "Globally offset the maximum force threshold of the keypad.",
             "link": "#offset-editor",
             "elements": [
                 {
@@ -36,19 +36,19 @@ export function KeypadCalibrationMenu() {
         },
         {
             "name": "Max Force Calibration",
-            "desc": "Manually calibrate the max force threshold of the every key on the keypad (if calibrated, the pad will be lit up as green)",
+            "desc": "Manually calibrate the maximum force threshold for each key on the keypad. If calibrated, the pad will be lit up as green.",
             "link": "#max-force-calibration",
             "elements": [
                 {
                     "pos": [2, 0],
                     "size": [4, 2],
-                    "color": "#FF0000"
+                    "color": "#00FF00"
                 }
             ]
         },
         {
             "name": "Clear Max Force Calibration",
-            "desc": "Clear the max force calibration of the keypad",
+            "desc": "Clear the maximum force calibration of the keypad.",
             "elements": [
                 {
                     "pos": [7, 0],
@@ -59,7 +59,7 @@ export function KeypadCalibrationMenu() {
         },
         {
             "name": "Min Force Offset",
-            "desc": "Global Offset the minimal force threshold of the keypad",
+            "desc": "Globally offset the minimal force threshold of the keypad.",
             "link": "#offset-editor",
             "elements": [
                 {
@@ -71,7 +71,7 @@ export function KeypadCalibrationMenu() {
         },
         {
             "name": "Min Force Calibration",
-            "desc": "Auto calibrate the minimal force threshold of the every key on the keypad (if calibrated, the pad will be lit up as green)",
+            "desc": "Automatically calibrate the minimal force threshold for each key on the keypad. If calibrated, the pad will be lit up as green.",
             "link": "#minimal-force-calibration",
             "elements": [
                 {
@@ -82,8 +82,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Clear min Force Calibration",
-            "desc": "Clear the minimal force calibration of the keypad",
+            "name": "Clear Min Force Calibration",
+            "desc": "Clear the minimal force calibration of the keypad.",
             "elements": [
                 {
                     "pos": [7, 6],
@@ -94,7 +94,7 @@ export function KeypadCalibrationMenu() {
         },
         {
             "name": "Keypad Tester",
-            "desc": "Test the force sensitivity of the keypad",
+            "desc": "Test the force sensitivity of the keypad.",
             "link": "#keypad-tester",
             "elements": [
                 {
@@ -106,7 +106,7 @@ export function KeypadCalibrationMenu() {
         },
         {
             "name": "Exit Keypad Calibration",
-            "desc": "Return to the application launcher",
+            "desc": "Return to the application launcher.",
             "link": "/docs/MatrixOS/ApplicationLauncher",
             "elements": [
                 {
@@ -116,18 +116,29 @@ export function KeypadCalibrationMenu() {
         }
     ];
 
-    const uiName = "Device Settings"
-    const uiDescription = "Device Settings contains all the settings for the specific for Mystrix."
-    return <MystrixVisualizer 
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
-    />
+    const uiName = "Device Settings";
+    const uiDescription = "Device Settings contains all the settings specific to Mystrix.";
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />;
+
 }
 
 <KeypadCalibrationMenu />
 
+##
+
+<!-- me when empty space -->
+
+:::warning[Content Under Construction]
+This content is currently under construction. If you need any assistance, please [reach out to us](/docs/Support/ConnectWithUs) or leave a comment.
+:::
+
 ## Max Force Calibration
+
+<!-- i would suggest having different colors for max and min so that you know which one is which (even though you already have up and down kinda telling you that, but still, others might be confused) -->
 
 ## Minimal Force Calibration
 

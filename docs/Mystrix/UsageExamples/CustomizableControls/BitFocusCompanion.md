@@ -4,6 +4,6 @@ sidebar_position: 1
 
 # BitFocus Companion
 
-:::warning 
-This section is under construction. If you need out about this area, feel free to reach out [Connect with Us](/docs/Support/ConnectWithUs)
+:::warning[Content Under Construction]
+This content is currently under construction. If you need any assistance, please [reach out to us](/docs/Support/ConnectWithUs) or leave a comment.
 :::
