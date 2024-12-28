@@ -2,14 +2,13 @@
 sidebar_position: 3
 ---
 
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # System Settings
 
-The System setting controls things that are system wide like brightness, rotation, device specific features, and more.
+The System Settings control various system-wide features such as brightness, rotation, device-specific features, and more.
 
 export function SystemSettings() {
-
     const uiElements = [
         {
             "name": "Device Settings",
@@ -48,7 +47,7 @@ export function SystemSettings() {
         },
         {
             "name": "Rotate Device Left",
-            "desc": "Rotate the device so that the top of the device is on the left side.",
+            "desc": "Rotate the device so that the top of the device is oriented to the left.",
             "link": "#device-rotation",
             "elements": [
                 {
@@ -60,7 +59,7 @@ export function SystemSettings() {
         },
         {
             "name": "Rotate Device Down",
-            "desc": "Rotate the device so that the top of the device is on the bottom side.",
+            "desc": "Rotate the device so that the top of the device is oriented to the bottom.",
             "link": "#device-rotation",
             "elements": [
                 {
@@ -72,7 +71,7 @@ export function SystemSettings() {
         },
         {
             "name": "Rotate Device Right",
-            "desc": "Rotate the device so that the top of the device is on the right side.",
+            "desc": "Rotate the device so that the top of the device is oriented to the right.",
             "link": "#device-rotation",
             "elements": [
                 {
@@ -95,7 +94,7 @@ export function SystemSettings() {
         },
         {
             "name": "Enter Device Update Mode",
-            "desc": "Reboot the device into the device update mode.",
+            "desc": "Reboot the device into update mode.",
             "link": "/docs/Mystrix/MystrixSpecific/UpdateMatrixOS",
             "elements": [
                 {
@@ -136,7 +135,7 @@ export function SystemSettings() {
         },
         {
             "name": "Device ID",
-            "desc": "Assign a device ID to the device.",
+            "desc": "Assign an ID to the device.",
             "link": "#device-id",
             "elements": [
                 {
@@ -147,37 +146,42 @@ export function SystemSettings() {
         }
     ];
 
-
     const uiName = "System Settings"
-    const uiDescription = "The system settings include system wide settings, configurations, device info, etc for the Matrix OS. There's also device setting page inside for device specific settings."
-    return <MystrixVisualizer 
+    const uiDescription = "The System Settings include system-wide configurations, device information, and more for Matrix OS. There is also a dedicated Device Settings page for device-specific configurations."
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
 <SystemSettings />
 
 ## Rotate Device
-Rotates the device so that the top of the device is on the specified side.
 
-Some device control are asymmetrical, some controls might not work or function differently when the device in different rotation. 
+Rotates the device so that the top of the device is oriented to the specified side.
 
-(eg. in performance app with Mystrix. The touchbar will be mapped differently when the device is rotated, since there are only two touchbars on the device.)
+:::note
+Some device controls are asymmetrical, and certain controls might not work or may function differently when the device is in a different orientation.
+
+For example, in the Performance App with Mystrix, the touchbar will be mapped differently when the device is rotated, as there are only two touchbars on the device.
+:::
 
 ## Brightness Control
-You can tap the brightness control pad to cycle through brightness levels. In addition, you can hold the brightness control pad to enter the brightness control menu.
+
+You can tap the brightness control pad to cycle through brightness levels. Additionally, you can hold the brightness control pad to enter the brightness control menu.
 
 ### Brightness Control Menu
-Brightness control menu allows you to fine tune the brightness of the device and set brightness multiplier for different led sections (if device supports it).
+
+The brightness control menu allows you to fine-tune the brightness of the device and set brightness multipliers for different LED sections (if the device supports it).
 
 export function BrightnessControlMenu() {
 
     const uiElements = [
     {
         "name": "Brightness Level Display",
-        "desc": "Shows the current brightness level as a percentage.",
+        "desc": "Displays the current brightness level as a percentage.",
         "elements": [
             {
                 "pos": [0, 0],
@@ -213,7 +217,7 @@ export function BrightnessControlMenu() {
     },
     {
         "name": "Global Brightness",
-        "desc": "Controls the System Wide Brightness level. (Only shows if device has multiple led sections)",
+        "desc": "Controls the System Wide brightness level. (Only visible if the device has multiple LED sections)",
         "elements": [
             {
                 "pos": [0, 5],
@@ -223,7 +227,7 @@ export function BrightnessControlMenu() {
     },
     {
         "name": "LED Sections Brightness Multiplier",
-        "desc": "Adjust the brightness multiplier for different led sections. (Only shows if device has multiple led sections) (For Mystrix Pro it's the underglow)",
+        "desc": "Adjusts the brightness multiplier for different LED sections. (Only visible if the device has multiple LED sections. For Mystrix Pro, this applies to the underglow)",
         "elements": [
             {
                 "pos": [1, 5],
@@ -233,7 +237,7 @@ export function BrightnessControlMenu() {
     },
     {
         "name": "Brightness Selector",
-        "desc": "Adjust the brightness(If LED section is selected, the selector will be the multiplier for that section)",
+        "desc": "Adjusts the brightness. If an LED section is selected, the selector will adjust the multiplier for that section.",
         "elements": [
             {
                 "pos": [0, 6],
@@ -244,7 +248,7 @@ export function BrightnessControlMenu() {
     },
     {
         "name": "Brightness Selector (Overdrive)",
-        "desc": "LED Brightness beyond safety limits. Use with caution! (Mostly unsafe for your eyes)",
+        "desc": "Adjusts LED brightness beyond safety limits. Use with caution as it may be unsafe for your eyes.",
         "elements": [
             {
                 "pos": [4, 7],
@@ -255,37 +259,40 @@ export function BrightnessControlMenu() {
     },
     {
         "name": "Go Back",
-        "desc": "Tap to go back to the previous screen.",
+        "desc": "Tap to return to the previous screen.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "Brightness Control Menu"
-    const uiDescription = "The brightness control menu allows you to fine tune the brightness of the device and set brightness multiplier for different led sections (if device supports it)."
-    return <MystrixVisualizer 
+    const uiDescription = "The brightness control menu allows you to fine-tune the brightness of the device and set brightness multipliers for different LED sections (if the device supports it)."
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<BrightnessControlMenu/>
+<BrightnessControlMenu />
 
 ## Factory Reset
-Factory resets the device.
 
-You will have to confirm the factory reset by clicking on the green pad to proceed.
+Resets the device to its factory settings.
+
+You will need to confirm the factory reset by clicking on the green pad to proceed.
 
 export function FactoryResetConfirmMenu() {
 
     const uiElements = [
     {
         "name": "Clear",
-        "desc": "Shows that you are about to factory reset the device.",
+        "desc": "Indicates that you are about to perform a factory reset on the device.",
         "elements": [
             {
                 "pos": [0, 0],
@@ -332,7 +339,7 @@ export function FactoryResetConfirmMenu() {
     },
     {
         "name": "Cancel",
-        "desc": "Tap to cancel the factory reset.",
+        "desc": "Tap to cancel the factory reset process.",
         "elements": [
             {
                 "pos": [1, 5],
@@ -343,7 +350,7 @@ export function FactoryResetConfirmMenu() {
     },
     {
         "name": "Confirm",
-        "desc": "Tap to confirm the factory reset.",
+        "desc": "Tap to confirm the factory reset process.",
         "elements": [
             {
                 "pos": [5, 5],
@@ -354,28 +361,31 @@ export function FactoryResetConfirmMenu() {
     },
     {
         "name": "Go Back",
-        "desc": "Tap to go back to the previous screen.",
+        "desc": "Tap to return to the previous screen.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "Factory Reset Confirm Menu"
     const uiDescription = "The factory reset confirm menu allows you to confirm the factory reset of the device."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<FactoryResetConfirmMenu/>
+<FactoryResetConfirmMenu />
 
 ## Device ID
-Assign a device ID to the device. The ID will show up on host after the device's name. This is useful for identifying the device with you have multiple devices connected to the same host.
+
+Assign an ID to the device. The ID will show up on the host after the device's name. This is useful for identifying the device when you have multiple devices connected to the same host.
 
 If set to zero, the device ID will not show up on the host.
 
@@ -383,8 +393,8 @@ export function DeviceIDSelector() {
 
     const uiElements = [
     {
-        "name": "Clear",
-        "desc": "Shows that you are about to factory reset the device.",
+        "name": "Device ID Display",
+        "desc": "Displays the current device ID number.",
         "elements": [
             {
                 "pos": [0, 0],
@@ -485,22 +495,24 @@ export function DeviceIDSelector() {
     },
     {
         "name": "Go Back",
-        "desc": "Tap to go back to the previous screen.",
+        "desc": "Tap to return to the previous screen.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "Device ID Selector"
-    const uiDescription = "The device ID selector allows you to assign a device ID to the device."
-    return <MystrixVisualizer 
+    const uiDescription = "The device ID selector allows you to assign an ID to the device."
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<DeviceIDSelector/>
+<DeviceIDSelector />

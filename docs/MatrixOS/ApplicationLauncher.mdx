@@ -2,13 +2,17 @@
 sidebar_position: 2
 ---
 
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Application Launcher
 
-Application Launcher is the main menu of the OS. It allows user to select an application to use.
+The Application Launcher is the main menu of Matrix OS. It allows users to select an application to use.
 
-Top section of the app launcher are applications available. The bottom section are the control bars hosting application class / page selection and system setting.
+The top section of the Application Launcher shows the available applications. The bottom section features the app catalog selection on the left and [system settings](/docs/MatrixOS/SystemSettings) on the right.
+
+:::note
+Currently, the stock application catalog is the only one available. In the future, more application catalogs will be added to the bottom left corner.
+:::
 
 export function ApplicationLauncher() {
 
@@ -111,20 +115,17 @@ export function ApplicationLauncher() {
             }
         ]
     }
+
 ];
 
-
     const uiName = "Application Launcher"
-    const uiDescription = "Application Launcher is the main menu of the OS. It allows user to select an application to use."
-    return <MystrixVisualizer 
+    const uiDescription = "The Application Launcher is the main menu of Matrix OS. It allows users to select an application to use."
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
 <ApplicationLauncher />
-
-Application Launcher is the main menu of the OS. It allows user to select an application to use.
-
-Top section of the app launcher are applications available. The bottom section are the control bars hosting application class / page selection and system setting.
