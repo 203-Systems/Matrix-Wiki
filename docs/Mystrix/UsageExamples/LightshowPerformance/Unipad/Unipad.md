@@ -6,7 +6,7 @@ sidebar_position: 4
 
 [Unipad](https://play.google.com/store/apps/details?id=com.kimjisub.launchpad&hl=en_US&pli=1) is an Android app developed by kimjisub.
 
-Unipad 4.0 supports Mystrix natively. Simply connect Mystrix to your Android device and enter the [Performance APP](/docs/MatrixOS/Applications/Performance).
+Unipad 4.0 supports Mystrix natively. Simply connect Mystrix to your Android device and enter the [Performance App](/docs/MatrixOS/Applications/Performance).
 
 ![Unipad](Unipad.png)
 

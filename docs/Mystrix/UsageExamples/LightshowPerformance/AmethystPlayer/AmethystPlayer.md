@@ -15,7 +15,7 @@ Currently, it supports playing Unipad Projects (Unipack) online. You can connect
 ## How to Use
 
 1. Open the website.
-2. Connect your Mystrix and enter the [Performance APP](/docs/MatrixOS/Applications/Performance).
+2. Connect your Mystrix and enter the [Performance App](/docs/MatrixOS/Applications/Performance).
 3. Check and configure the device via the USB icon at the bottom of the screen or the bottom of the sidebar.
 
 ![USB Icon](USB.png)

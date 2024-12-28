@@ -10,10 +10,8 @@ We aim to be transparent with our plans and welcome community input on prioritiz
 
 ## Matrix OS
 
-<!--  -->
-
 - Customizable Keymap via edit.203.io **(Under Feature Preview for OS 2.6 Nightly)**
-- Note APP Arpeggiator, Chord Mode, and Transpose Control Bar. **(Slated for OS 2.6)**
+- Note App Arpeggiator, Chord Mode, and Transpose Control Bar. **(Slated for OS 2.6)**
 - Dynamic application system - Loading external application via Python or WASM.
 - Dynamic USB System - Allow user application to reconfigure what Matrix OS device emulate as
 - USB Host System - Allow user to connect other USB device to Matrix OS.

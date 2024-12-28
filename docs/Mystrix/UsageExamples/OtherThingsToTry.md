@@ -6,7 +6,7 @@ sidebar_position: 4
 
 ## Aura
 
-<!-- proper image showcasing what it does -->
+<!-- idea: proper image showcasing what it does -->
 
 [Aura](https://aura.town) is an innovative web platform that allows you to experiment with music in an intuitive and enjoyable way.
 

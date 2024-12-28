@@ -6,19 +6,19 @@ sidebar_position: 1
 
 Mystrix is a multipurpose grid controller, designed to be community-centric, highly customizable, and fully open-sourced.
 
-<!-- very cool intro/hero image here -->
+<!-- idea: very cool intro/hero image here -->
 
 ## Getting Started
 
 ### Install the Anti-Slip Pad
 
-<!-- video here would be perfect -->
+<!-- idea: video here would be perfect -->
 
 The first thing you should do is apply the included silicon anti-slip pad from the packaging to your Mystrix.
 
 We are unable to install it in the factory due to regulatory reasons, as we need to conceal the metal device information label under the pad to keep it clean and prevent wear and scratches.
 
-<!-- image of the label -->
+<!-- idea: image of the label -->
 
 Some magnets under the device might have come loose during shipping. You can glue them back on or just place them in and then apply the anti-slip pad.
 
@@ -34,7 +34,7 @@ See [Update Matrix OS](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS) for instruc
 
 See the Usage Examples section to see what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
 
-<!-- gif showcasing possibilities -->
+<!-- idea: gif showcasing possibilities -->
 
 ### Join the Community
 
@@ -46,7 +46,7 @@ You can join the community in various ways:
 - Reddit - r/Mystrix (Currently banned because u/203Null was hacked, working on restoring that!)
 - GitHub - [Discussion](https://github.com/203-Systems/MatrixOS/discussions)
 - If you have other platform suggestions, leave a comment under this post or [Connect with Us](/docs/Support/ConnectWithUs)
-<!-- icons? -->
+<!-- idea: icons? -->
 
 ### Share Your Mystrix
 
@@ -54,7 +54,7 @@ Share your Mystrix with others and tell them how awesome Project Mystrix is!
 
 As a community tradition, share a [#Mystrix](https://discord.com/channels/503413248704380930/789564329916891237) pic with your Mystrix on your fridge!
 
-<!-- compilation of images of mystrix provided by the community -->
+<!-- idea: compilation of images of mystrix provided by the community -->
 
 ### Leave a Review
 
@@ -68,7 +68,7 @@ You can submit feature requests and bug reports at the [MatrixOS GitHub Repo](ht
 
 ## Expectations
 
-<!-- idk how to rewrite this in a better way lmao -->
+<!-- idea: idk how to rewrite this in a better way lmao -->
 
 There are a lot of things Mystrix can do and is capable of, but it's important to set the correct expectations.
 

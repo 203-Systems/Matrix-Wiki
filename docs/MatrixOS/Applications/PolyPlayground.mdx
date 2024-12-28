@@ -1,16 +1,16 @@
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Poly Playground App
 
-Poly Playground is a simple app that's inspired by the Poly Playground APP by Mike Gao [App Store](https://apps.apple.com/us/app/polyplayground/id511514938)8
+Poly Playground is a simple app that's inspired by the Poly Playground App by Mike Gao [App Store](https://apps.apple.com/us/app/polyplayground/id511514938)8
 
 :::note
-This app is only available in the Matrix OS 2.6 beta version. It will be merged into Note APP v2 in the future update - See [Note App V2](/docs/Backroom/NoteAppV2.mdx)
+This app is only available in the Matrix OS 2.6 beta version. It will be merged into Note App v2 in the future update - See [Note App V2](/docs/Backroom/NoteAppV2.mdx)
 :::
 
 ## Note Map
 
-The note pad is chromatic, which means every note is a semitone apart. On the X axis, each key is spaced by 3 semitones, and on the Y axis, each key is spaced by 4 semitones. 
+The note pad is chromatic, which means every note is a semitone apart. On the X axis, each key is spaced by 3 semitones, and on the Y axis, each key is spaced by 4 semitones.
 
 For pad with the same color, they are using the semitone (but migth be different octave).
 
@@ -144,15 +144,17 @@ export function ConfigMenu() {
             }
         ]
     }
+
 ];
 
     const uiName = "Config Menu"
     const uiDescription = "The config menu allows you to modify note pad layout and other customization options."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ConfigMenu/>
+<ConfigMenu />
