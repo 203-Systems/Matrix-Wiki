@@ -2,12 +2,12 @@
 sidebar_position: 2
 ---
 
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Step Sequencer
 
-:::note
-This is a work in progress and the design is subject to change. All the color of UI elements are just for reference (I didn't spent time tweaking the visual design, just functional stuffs for now)
+:::info
+Please note that this is a work in progress, and the design is subject to change. The current colors of the UI elements are for reference only, as our primary focus has been on functionality rather than visual design at this stage.
 :::
 
 export function SequencerMain() {
@@ -165,19 +165,20 @@ export function SequencerMain() {
             }
         ]
     }
-];
 
+];
 
     const uiName = "Sequencer Main"
     const uiDescription = "Main UI for the Step Sequencer"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerMain/>
+<SequencerMain />
 
 export function SequencerStepView() {
 
@@ -211,7 +212,7 @@ export function SequencerStepView() {
     },
     {
         "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action",
         "elements": [
             {
                 "pos": [0, 0],
@@ -358,19 +359,20 @@ export function SequencerStepView() {
             }
         ]
     }
-];
 
+];
 
     const uiName = "Sequencer Step View"
     const uiDescription = "Hold each step to add notes or actions. Or you can hold down a note and add into steps. You can also click the free slots on the step (the four gray pad on top right to manually add an action)"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepView/>
+<SequencerStepView />
 
 export function SequencerStepAddAction() {
 
@@ -404,7 +406,7 @@ export function SequencerStepAddAction() {
     },
     {
         "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action",
         "elements": [
             {
                 "pos": [0, 0],
@@ -522,19 +524,20 @@ export function SequencerStepAddAction() {
             }
         ]
     }
-];
 
+];
 
     const uiName = "Sequencer Step Add Action"
     const uiDescription = "The next free slot will start flashing and you can add actions into it. (Press empty pad or the slot to cancel)"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepAddAction/>
+<SequencerStepAddAction />
 
 export function SequencerStepSettingNoteNote() {
 
@@ -568,7 +571,7 @@ export function SequencerStepSettingNoteNote() {
     },
     {
         "name": "Note Selector",
-        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action",
         "elements": [
             {
                 "pos": [0, 0],
@@ -601,7 +604,7 @@ export function SequencerStepSettingNoteNote() {
                 "pos": [0, 3],
                 "color": "#00FF00"
             }
-            
+
         ]
     },
     {
@@ -612,7 +615,7 @@ export function SequencerStepSettingNoteNote() {
                 "pos": [1, 3],
                 "color": "#00A0C0"
             }
-            
+
         ]
     },
         {
@@ -623,7 +626,7 @@ export function SequencerStepSettingNoteNote() {
                 "pos": [2, 3],
                 "color": "#C0C000"
             }
-            
+
         ]
     },
     {
@@ -634,7 +637,7 @@ export function SequencerStepSettingNoteNote() {
                 "pos": [3, 3],
                 "color": "#C08000"
             }
-            
+
         ]
     },
     {
@@ -644,7 +647,7 @@ export function SequencerStepSettingNoteNote() {
             {
                 "pos": [4, 3],
                 "color": "#C000C0"
-            }   
+            }
         ]
     },
     {
@@ -654,7 +657,7 @@ export function SequencerStepSettingNoteNote() {
             {
                 "pos": [5, 3],
                 "color": "#00C080"
-            }   
+            }
         ]
     },
     {
@@ -710,19 +713,20 @@ export function SequencerStepSettingNoteNote() {
             }
         ]
     }
-];
 
+];
 
     const uiName = "Sequencer Step Setting - Note Action - Note"
     const uiDescription = "Configure the Note of the Note Action"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepSettingNoteNote/>
+<SequencerStepSettingNoteNote />
 
 export function SequencerStepSettingNoteGate() {
     const uiElements = [
@@ -905,18 +909,17 @@ export function SequencerStepSettingNoteGate() {
     }
 ];
 
-
     const uiName = "Sequencer Step Setting - Note Action - Gate"
     const uiDescription = "Configure the gate of the note action"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepSettingNoteGate/>
-
+<SequencerStepSettingNoteGate />
 
 export function SequencerStepSettingNoteVelocity() {
     const uiElements = [
@@ -1070,18 +1073,17 @@ export function SequencerStepSettingNoteVelocity() {
     }
 ];
 
-
     const uiName = "Sequencer Step Setting - Note Action - Velocity"
     const uiDescription = "Configure the velocity of the note action"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepSettingNoteVelocity/>
-
+<SequencerStepSettingNoteVelocity />
 
 export function SequencerStepSettingNoteMicrostep() {
     const uiElements = [
@@ -1229,17 +1231,17 @@ export function SequencerStepSettingNoteMicrostep() {
     }
 ];
 
-
     const uiName = "Sequencer Step Setting - Note Action - Microstep"
     const uiDescription = "Configure the Microstep of the note action"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepSettingNoteMicrostep/>
+<SequencerStepSettingNoteMicrostep />
 
 export function SequencerStepSettingNoteChangeRate() {
     const uiElements = [
@@ -1418,17 +1420,17 @@ export function SequencerStepSettingNoteChangeRate() {
     }
 ];
 
-
     const uiName = "Sequencer Step Setting - Note Action - Change Rate"
     const uiDescription = "Configure the value change rate of the action"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepSettingNoteChangeRate/>
+<SequencerStepSettingNoteChangeRate />
 
 export function SequencerStepSettingNoteProbability() {
     const uiElements = [
@@ -1577,17 +1579,17 @@ export function SequencerStepSettingNoteProbability() {
     }
 ];
 
-
     const uiName = "Sequencer Step Setting - Note Action - Change Rate"
     const uiDescription = "Configure the value change rate of the action"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerStepSettingNoteProbability/>
+<SequencerStepSettingNoteProbability />
 
 export function SequencerActionMenu() {
     const uiElements = [
@@ -1851,15 +1853,14 @@ export function SequencerActionMenu() {
     }
 ];
 
-
     const uiName = "Sequencer Action Menu"
     const uiDescription = "Menu for the Sequencer"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<SequencerActionMenu/>
-
+<SequencerActionMenu />
