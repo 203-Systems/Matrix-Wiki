@@ -2,22 +2,24 @@
 sidebar_position: 6
 ---
 
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Gamepad App
 
-Gamepad App is a simple app demoing the up coming customizable keypad feature of Matrix OS. It will be replaced by customizable keymap app in the future release.
+The Gamepad App is a simple demonstration of the upcoming customizable keypad feature of Matrix OS. It will be replaced by the customizable keymap app in a future release.
 
-Currently we just have a fixed layout of the control view, but you will be able to build your own layout soon via the [Matrix OS Keymap Editor](https://edit.203.io).
+:::tip
+Currently, we have a fixed layout for the control view, but you will soon be able to build your own layout via the [Matrix OS Keymap Editor](https://edit.203.io).
+:::
 
 ## Gamepad View
 
 export function GamepadView() {
 
-   const uiElements = [
-         {
+    const uiElements = [
+        {
             "name": "Keyboard S key",
-            "desc": "Simulate the Keyboard S key",
+            "desc": "Simulate the Keyboard S key.",
             "elements": [
                 {
                     "pos": [0, 1],
@@ -27,7 +29,7 @@ export function GamepadView() {
         },
         {
             "name": "Keyboard D key",
-            "desc": "Simulate the Keyboard D key",
+            "desc": "Simulate the Keyboard D key.",
             "elements": [
                 {
                     "pos": [1, 1],
@@ -37,7 +39,7 @@ export function GamepadView() {
         },
         {
             "name": "Keyboard F key",
-            "desc": "Simulate the Keyboard F key",
+            "desc": "Simulate the Keyboard F key.",
             "elements": [
                 {
                     "pos": [2, 1],
@@ -47,7 +49,7 @@ export function GamepadView() {
         },
         {
             "name": "Keyboard J key",
-            "desc": "Simulate the Keyboard J key",
+            "desc": "Simulate the Keyboard J key.",
             "elements": [
                 {
                     "pos": [5, 1],
@@ -57,7 +59,7 @@ export function GamepadView() {
         },
         {
             "name": "Keyboard K key",
-            "desc": "Simulate the Keyboard K key",
+            "desc": "Simulate the Keyboard K key.",
             "elements": [
                 {
                     "pos": [6, 1],
@@ -67,7 +69,7 @@ export function GamepadView() {
         },
         {
             "name": "Keyboard L key",
-            "desc": "Simulate the Keyboard L key",
+            "desc": "Simulate the Keyboard L key.",
             "elements": [
                 {
                     "pos": [7, 1],
@@ -77,7 +79,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad Left Bumper",
-            "desc": "Simulate the Gamepad Left Bumper key",
+            "desc": "Simulate the Gamepad Left Bumper key.",
             "elements": [
                 {
                     "pos": [0, 3],
@@ -87,7 +89,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad Left Trigger",
-            "desc": "Simulate the Gamepad Left Trigger (On pressure sensitive devices, the pressure is also simulated)",
+            "desc": "Simulate the Gamepad Left Trigger. (On pressure-sensitive devices, the pressure is also simulated.)",
             "elements": [
                 {
                     "pos": [1, 3],
@@ -97,7 +99,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad Right Bumper",
-            "desc": "Simulate the Gamepad Right Bumper key",
+            "desc": "Simulate the Gamepad Right Bumper key.",
             "elements": [
                 {
                     "pos": [7, 3],
@@ -107,7 +109,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad Right Trigger",
-            "desc": "Simulate the Gamepad Right Trigger (On pressure sensitive devices, the pressure is also simulated)",
+            "desc": "Simulate the Gamepad Right Trigger. (On pressure-sensitive devices, the pressure is also simulated.)",
             "elements": [
                 {
                     "pos": [6, 3],
@@ -117,7 +119,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad A key",
-            "desc": "Simulate the Gamepad A key",
+            "desc": "Simulate the Gamepad A key.",
             "elements": [
                 {
                     "pos": [6, 6],
@@ -127,7 +129,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad B key",
-            "desc": "Simulate the Gamepad B key",
+            "desc": "Simulate the Gamepad B key.",
             "elements": [
                 {
                     "pos": [7, 5],
@@ -137,7 +139,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad X key",
-            "desc": "Simulate the Gamepad X key",
+            "desc": "Simulate the Gamepad X key.",
             "elements": [
                 {
                     "pos": [5, 5],
@@ -147,7 +149,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad Y key",
-            "desc": "Simulate the Gamepad Y key",
+            "desc": "Simulate the Gamepad Y key.",
             "elements": [
                 {
                     "pos": [6, 4],
@@ -157,7 +159,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad D Pad",
-            "desc": "Simulate the Gamepad D Pad",
+            "desc": "Simulate the Gamepad D Pad.",
             "elements": [
                 {
                     "pos": [0, 4],
@@ -170,9 +172,9 @@ export function GamepadView() {
                 }
             ]
         },
-                {
+        {
             "name": "Gamepad Select Key",
-            "desc": "Simulate the Gamepad Select key",
+            "desc": "Simulate the Gamepad Select key.",
             "elements": [
                 {
                     "pos": [3, 7],
@@ -182,7 +184,7 @@ export function GamepadView() {
         },
         {
             "name": "Gamepad Start Key",
-            "desc": "Simulate the Gamepad Start key",
+            "desc": "Simulate the Gamepad Start key.",
             "elements": [
                 {
                     "pos": [4, 7],
@@ -191,125 +193,125 @@ export function GamepadView() {
             ]
         },
         {
-        "name": "Config Menu",
-        "desc": "Tap to enter the config menu.",
-        "link": "#config-menu",
-        "elements": [
-            {
-                "pos": ["c"]
-            }
-        ]
-    }
-        
+            "name": "Config Menu",
+            "desc": "Tap to enter the config menu.",
+            "link": "#config-menu",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
     ];
 
     const uiName = "Gamepad View"
-    const uiDescription = "Emulate gamepad and keyboard keys controls."
-    return <MystrixVisualizer 
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
+    const uiDescription = "Emulate gamepad and keyboard key controls."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
     />
+
 }
 
-<GamepadView/>
+<GamepadView />
 
 ## Config Menu
 
 export function ConfigMenu() {
 
     const uiElements = [
-    {
-        "name": "Brightness Control",
-        "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
-        "link": "/docs/MatrixOS/SystemSettings#brightness-control",
-        "elements": [
-            {
-                "pos": [3, 3],
-                "size": [2, 2],
-                "color": "#FFFFFF"
-            }
-        ]
-    },
-    {
-        "name": "Rotate Device Up",
-        "desc": "This technically doesn't do anything.",
-        "link": "#device-rotation",
-        "elements": [
-            {
-                "pos": [3, 2],
-                "size": [2, 1],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "Rotate Device Left",
-        "desc": "Rotate the device so that the top of the device is on the left side.",
-        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-        "elements": [
-            {
-                "pos": [2, 3],
-                "size": [1, 2],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "Rotate Device Down",
-        "desc": "Rotate the device so that the top of the device is on the bottom side.",
-        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-        "elements": [
-            {
-                "pos": [3, 5],
-                "size": [2, 1],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "Rotate Device Right",
-        "desc": "Rotate the device so that the top of the device is on the right side.",
-        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-        "elements": [
-            {
-                "pos": [5, 3],
-                "size": [1, 2],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "System Settings",
-        "desc": "Enter the system settings",
-        "link": "/docs/MatrixOS/SystemSettings",
-        "elements": [
-            {
-                "pos": [7, 7],
-                "color": "#FFFFFF"
-            }
-        ]
-    },
-    {
-        "name": "Gamepad view or Exit App",
-        "desc": "Tap to go back to the gamepad view. Hold to exit the app.",
-        "link": "#gamepad-view",
-        "elements": [
-            {
-                "pos": ["c"]
-            }
-        ]
-    }
-];
-
+        {
+            "name": "Brightness Control",
+            "desc": "Tap to cycle through brightness levels. Hold to enter the brightness control menu.",
+            "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Up",
+            "desc": "This technically doesn't do anything.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 2],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Left",
+            "desc": "Rotate the device so that the top of the device is on the left side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [2, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Down",
+            "desc": "Rotate the device so that the top of the device is on the bottom side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 5],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Right",
+            "desc": "Rotate the device so that the top of the device is on the right side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [5, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "System Settings",
+            "desc": "Enter the system settings.",
+            "link": "/docs/MatrixOS/SystemSettings",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Gamepad View or Exit App",
+            "desc": "Tap to return to the gamepad view. Hold to exit the app.",
+            "link": "#gamepad-view",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
 
     const uiName = "Config Menu"
     const uiDescription = "The config menu allows you to modify settings of the app and the device."
-    return <MystrixVisualizer 
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
     />
+
 }
 
-<ConfigMenu/>
+<ConfigMenu />
