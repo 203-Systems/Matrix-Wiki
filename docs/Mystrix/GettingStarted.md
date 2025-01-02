@@ -11,7 +11,7 @@ Mystrix is a multipurpose grid controller, designed to be community centric, hig
 ### Install the Anti Slip Pad
 First thing you should do is to apply the included silicon anti slip pad in the packaging to your Mystrix.
 
-We can not apply it in the factory because we want to hide the metal device info label under the pad so it appear cleaner and pervert the label from wear and scratches.
+We can not apply it in the factory because we want to hide the metal device info label under the pad so it appear cleaner and prevent the label from wear and scratches.
 
 Some magnet under the device might have came loose during shipping, you can glue it back on or just place it in and then apply the anti slip pad. Make sure the side with glue is facing the device!
 
