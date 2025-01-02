@@ -16,15 +16,20 @@ Mystrix is a multipurpose grid controller, designed to be community-centric, hig
 
 The first thing you should do is apply the included silicon anti-slip pad from the packaging to your Mystrix.
 
-We are unable to install it in the factory due to regulatory reasons, as we need to conceal the metal device information label under the pad to keep it clean and prevent wear and scratches.
-
 <!-- idea: image of the label -->
 
-Some magnets under the device might have come loose during shipping. You can glue them back on or just place them in and then apply the anti-slip pad.
+We are unable to install it in the factory due to regulatory reasons, as we need to conceal the metal device information label under the pad to keep it clean and prevent wear and scratches.
+
+:::note
+If you have an alternate Function Key you want to install (like the one that came with the Kickstarter), make sure you install this prior to installing the anti-slip pad.
+:::
 
 :::warning
-Make sure the side with glue is facing the device!
+Some magnets under the device might have come loose during shipping. You can glue them back on or just place them in and then apply the anti-slip pad.
+However, make sure the polarity of the magnets are facing the same way. The side of the magnet with the dried glue should face the device and not the anti-slip pad.
 :::
+
+To install the anti-slip pad, turn the Mystrix face down and peel the clear protective sheet off the bottom. Align the anti-slip pad (making sure the curved edge is aligned with the pogo pins) and press firmly.
 
 ### Update to the Latest OS
 
@@ -32,7 +37,7 @@ See [Update Matrix OS](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS) for instruc
 
 ### Start Using Your Mystrix
 
-See the Usage Examples section to see what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
+See the [Usage Examples](/docs/category/usage-examples) section for  what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
 
 <!-- idea: gif showcasing possibilities -->
 
