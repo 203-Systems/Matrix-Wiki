@@ -2,9 +2,11 @@
 sidebar_position: 2
 ---
 
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Device Settings
+
+The Device Settings page allows you to configure various hardware aspects of your Mystrix device.
 
 export function DeviceSettings() {
 const uiElements = [
@@ -32,7 +34,7 @@ const uiElements = [
     {
         "name": "Keypad Calibration",
         "desc": "(Only on Mystrix Pro) Calibrate Mystrix Pro's keypad",
-        "link": "/docs/Mystrix/MystrixSpecific/CalibrateKeyPad",
+        "link": "/docs/Mystrix/MystrixSpecific/KeypadCalibration",
         "elements": [
             {
                 "pos": [7, 0],
@@ -52,16 +54,14 @@ const uiElements = [
     }
 ];
 
-
-
     const uiName = "Device Settings"
     const uiDescription = "Device Settings contains all the settings for the specific for Mystrix."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
 <DeviceSettings />
-

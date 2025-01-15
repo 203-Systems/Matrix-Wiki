@@ -2,23 +2,23 @@
 sidebar_position: 2
 ---
 
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Note App
 
-The Note APP is used as a MIDI note interface. It can be used to play MIDI notes with different layout, scale, and modes.
+The Note App serves as a MIDI note interface, allowing users to play MIDI notes with various layouts, scales, and modes.
 
-After launching, you will enter the [note pad](#note-pad), click the function key to enter the [config menu](#config-menu), click again to return to the [note pad](#note-pad).
+Upon launching, you will enter the [note pad](#note-pad). Click the function key to access the [config menu](#config-menu), and click again to return to the [note pad](#note-pad).
 
-To exit note app, enter [config menu](#config-menu) and hold down the function key in the [config menu](#config-menu). You will be brought back to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
+To exit the Note App, enter the [config menu](#config-menu) and hold down the function key. This will return you to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
 
 ## Note Pad
 
-Note pad is the main view of the note app. It shows the current note pad with the selected layout, scale, and mode. 
+The Note Pad is the main view of the Note App. It displays the current note pad with the selected layout, scale, and mode.
 
-The pad will differ based the customization options, see [Example Layouts](#example-layouts) for some idea of how the note pad will look with different settings.
+The appearance of the pad will vary depending on the customization options. Refer to [Example Layouts](#example-layouts) to see how the notepad looks with different settings.
 
-Clicking on the function key will bring you to the [config menu](#config-menu).
+Clicking the function key will bring you to the [config menu](#config-menu).
 
 ## Config Menu
 
@@ -27,7 +27,7 @@ export function ConfigMenu() {
     const uiElements = [
     {
         "name": "Brightness Control",
-        "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+        "desc": "Tap to cycle through brightness levels. Hold to enter the brightness control menu.",
         "link": "/docs/MatrixOS/SystemSettings#brightness-control",
         "elements": [
             {
@@ -87,7 +87,7 @@ export function ConfigMenu() {
     },
     {
         "name": "System Settings",
-        "desc": "Enter the system settings",
+        "desc": "Enter the system settings.",
         "link": "/docs/MatrixOS/SystemSettings",
         "elements": [
             {
@@ -98,7 +98,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Scale Selector",
-        "desc": "Select the Scale of the active note pad layout (Layout Config Independent)",
+        "desc": "Select the scale of the active note pad layout (Layout Config Independent).",
         "link": "#scale",
         "elements": [
             {
@@ -109,7 +109,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Enforce Scale",
-        "desc": "When on, only notes in the selected scale will be shown, when off, all notes will be shown but notes that are not in the selected scale will be dimmed. (Chromatic mode when off, scale mode when on) (Layout Config Independent)",
+        "desc": "When enabled, only notes in the selected scale will be shown. When disabled, all notes will be shown, but notes not in the selected scale will be dimmed. (Chromatic mode when off, scale mode when on) (Layout Config Independent).",
         "link": "#enforce-scale",
         "elements": [
             {
@@ -120,7 +120,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Overlap Selector",
-        "desc": "Selects how much each row above overlaps with the row below it. This is useful if you want to play chords with one hand. (Layout Config Independent)",
+        "desc": "Selects how much each row above overlaps with the row below it. This is useful for playing chords with one hand. (Layout Config Independent).",
         "link": "#overlap",
         "elements": [
             {
@@ -131,7 +131,7 @@ export function ConfigMenu() {
     },
     {
         "name": "MIDI Channel Selector",
-        "desc": "Select the MIDI out channel of the active note pad (Layout Config Independent)",
+        "desc": "Select the MIDI out channel of the active note pad (Layout Config Independent).",
         "link": "#midi-channel",
         "elements": [
             {
@@ -142,7 +142,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Layout 1",
-        "desc": "Use the note pad layout 1 (Color may change based on the layout config)",
+        "desc": "Use the note pad layout 1 (Color may change based on the layout config).",
         "link": "#note-pad",
         "elements": [
             {
@@ -153,7 +153,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Layout 2",
-        "desc": "Use the note pad layout 2 (Color may change based on the layout config)",
+        "desc": "Use the note pad layout 2 (Color may change based on the layout config).",
         "link": "#note-pad",
         "elements": [
             {
@@ -164,7 +164,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Color Selector",
-        "desc": "Change the color combination of the active note pad layout (Color may change based on the active note pad layout config)",
+        "desc": "Change the color combination of the active note pad layout (Color may change based on the active note pad layout config).",
         "link": "#note-pad-color",
         "elements": [
             {
@@ -174,9 +174,9 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Spilt Mode",
-        "desc": "Cycle though Spilt mode. (No spilt mode: Dim White, Vertical spilt mode: Cyan, Horizontal spilt mode: Purple)",
-        "link": "#spilt-mode",
+        "name": "Split Mode",
+        "desc": "Cycle through split modes. (No split mode: Dim White, Vertical split mode: Cyan, Horizontal split mode: Purple).",
+        "link": "#split-mode",
         "elements": [
             {
                 "pos": [1, 0],
@@ -186,7 +186,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Velocity Sensitivity",
-        "desc": "Enable or disable velocity sensitivity for the active note pad layout. (Device with Force Sensitive Keypad only) ",
+        "desc": "Enable or disable velocity sensitivity for the active note pad layout. (Device with Force Sensitive Keypad only).",
         "elements": [
             {
                 "pos": [6, 7],
@@ -196,7 +196,7 @@ export function ConfigMenu() {
     },
     {
         "name": "Octave Selector",
-        "desc": "Select the octave of the active note pad layout(Layout Config Independent & Color may change based on the layout config)",
+        "desc": "Select the octave of the active note pad layout (Layout Config Independent & Color may change based on the layout config).",
         "elements": [
             {
                 "pos": [0, 0],
@@ -210,31 +210,32 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Note pad or Exit App",
-        "desc": "Tap to go back to the note pad. Hold to exit the app.",
+        "name": "Note Pad or Exit App",
+        "desc": "Tap to return to the note pad. Hold to exit the app.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "Config Menu"
     const uiDescription = "The config menu allows you to modify note pad layout and other customization options."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ConfigMenu/>
+<ConfigMenu />
 
 ## Scale
 
-Highlight or constrain notes to a specific scale.
-This setting is layout config independent.
+Highlight or constrain notes to a specific scale. This setting is independent of the layout configuration.
 
 export function ScaleSelector() {
 
@@ -635,75 +636,77 @@ export function ScaleSelector() {
         ]
     },
     {
-        "name": "Go Back to Config Menu",
-        "desc": "Tap to go back to the config menu.",
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "Scale Selector"
     const uiDescription = "The Scale Selector allows you to select the scale and root key of the active note pad layout."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ScaleSelector/>
-
-
+<ScaleSelector />
 
 ### Scale Table
-| Index | Scale                     | C | C# | D | Eb | E | F | F# | G | Ab | A | Bb | B |
-|-------|---------------------------|---|----|---|----|---|---|----|---|----|---|----|---|
-| 1     | Natural Minor             | X |    | X | X  |   | X |    | X | X  |   | X  |   |
-| 2     | Major                     | X | X  | X |    | X |   |    | X |    | X |    |   |
-| 3     | Dorian                    | X |    | X | X  |   | X |    | X | X  |   | X  |   |
-| 4     | Phrygian                  | X |    | X | X  |   | X |    | X |    | X |    |   |
-| 5     | Mixolydian                | X |    | X |    | X |   |    | X |    | X |    |   |
-| 6     | Melodic Minor Ascending   | X | X  | X | X  |   | X |    | X | X  |   | X  |   |
-| 7     | Harmonic Minor            | X |    | X | X  |   | X |    | X |    | X |    |   |
-| 8     | Bebop Dorian              | X |    | X | X  |   | X | X  | X | X  |   | X  |   |
-| 9     | Blues                     | X |    |   |    | X |   | X  | X | X  |   |    |   |
-| 10    | Minor Pentatonic         | X |    | X | X  |   | X |    | X | X  |   |    |   |
-| 11    | Hungarian Minor           | X | X  | X |    | X |   |    | X | X  |   | X  |   |
-| 12    | Ukrainian Dorian          | X | X  | X |    | X |   |    | X | X  |   | X  |   |
-| 13    | Marva                     | X |    | X |    | X |   |    | X |    | X |    |   |
-| 14    | Todi                      | X |    |   |    | X |   |    | X | X  |   | X  |   |
-| 15    | Whole Tone                | X |    | X |    | X | X |    | X | X  |   |    |   |
-| 16    | Chromatic                 | X | X  | X | X  | X | X | X  | X | X  | X | X  | X |
-| 17    | Lydian                    | X |    | X |    | X |   | X  | X | X  |   | X  |   |
-| 18    | Locrian                   | X |    |   | X  | X |   | X  | X |    | X |    |   |
-| 19    | Major Pentatonic         | X |    | X |    | X |   |    | X | X  |   |    |   |
-| 20    | Phrygian Dominate         | X | X  | X |    | X |   |    | X | X  |   | X  |   |
-| 21    | Half Whole Diminished     | X | X  | X | X  | X | X | X  | X | X  | X | X  | X |
-| 22    | Mixolydian Bebop          | X |    | X |    | X |   | X  | X | X  |   | X  |   |
-| 23    | Super Locrian             | X |    | X |    | X |   | X  | X |    | X |    |   |
-| 24    | Hirajoshi                 | X |    |   |    |   | X |    | X | X  |   |    |   |
-| 25    | In Sen                    | X |    |   | X  |   |   | X  | X |    |   |    |   |
-| 26    | Yo Scale                  | X |    |   |    | X |   | X  | X |    |   |    |   |
-| 27    | Iwato                     | X |    |   | X  |   |   | X  | X |    |   |    |   |
-| 28    | Whole Half                | X |    | X |    | X | X |    | X |    | X |    |   |
-| 29    | Bebop Minor               | X | X  | X | X  | X |   | X  | X |    | X |    |   |
-| 30    | Major Blues               | X |    | X |    | X |   | X  | X |    |   | X  |   |
-| 31    | Kumoi                     | X |    |   |    |   | X |    | X |    | X |    |   |
-| 32    | Bebop Major               | X | X  | X |    | X |   | X  | X | X  |   | X  |   |
+
+| Index | Scale                   | C   | C#  | D   | Eb  | E   | F   | F#  | G   | Ab  | A   | Bb  | B   |
+| ----- | ----------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1     | Natural Minor           | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 2     | Major                   | X   | X   | X   |     | X   |     |     | X   |     | X   |     |     |
+| 3     | Dorian                  | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 4     | Phrygian                | X   |     | X   | X   |     | X   |     | X   |     | X   |     |     |
+| 5     | Mixolydian              | X   |     | X   |     | X   |     |     | X   |     | X   |     |     |
+| 6     | Melodic Minor Ascending | X   | X   | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 7     | Harmonic Minor          | X   |     | X   | X   |     | X   |     | X   |     | X   |     |     |
+| 8     | Bebop Dorian            | X   |     | X   | X   |     | X   | X   | X   | X   |     | X   |     |
+| 9     | Blues                   | X   |     |     |     | X   |     | X   | X   | X   |     |     |     |
+| 10    | Minor Pentatonic        | X   |     | X   | X   |     | X   |     | X   | X   |     |     |     |
+| 11    | Hungarian Minor         | X   | X   | X   |     | X   |     |     | X   | X   |     | X   |     |
+| 12    | Ukrainian Dorian        | X   | X   | X   |     | X   |     |     | X   | X   |     | X   |     |
+| 13    | Marva                   | X   |     | X   |     | X   |     |     | X   |     | X   |     |     |
+| 14    | Todi                    | X   |     |     |     | X   |     |     | X   | X   |     | X   |     |
+| 15    | Whole Tone              | X   |     | X   |     | X   | X   |     | X   | X   |     |     |     |
+| 16    | Chromatic               | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   |
+| 17    | Lydian                  | X   |     | X   |     | X   |     | X   | X   | X   |     | X   |     |
+| 18    | Locrian                 | X   |     |     | X   | X   |     | X   | X   |     | X   |     |     |
+| 19    | Major Pentatonic        | X   |     | X   |     | X   |     |     | X   | X   |     |     |     |
+| 20    | Phrygian Dominate       | X   | X   | X   |     | X   |     |     | X   | X   |     | X   |     |
+| 21    | Half Whole Diminished   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   |
+| 22    | Mixolydian Bebop        | X   |     | X   |     | X   |     | X   | X   | X   |     | X   |     |
+| 23    | Super Locrian           | X   |     | X   |     | X   |     | X   | X   |     | X   |     |     |
+| 24    | Hirajoshi               | X   |     |     |     |     | X   |     | X   | X   |     |     |     |
+| 25    | In Sen                  | X   |     |     | X   |     |     | X   | X   |     |     |     |     |
+| 26    | Yo Scale                | X   |     |     |     | X   |     | X   | X   |     |     |     |     |
+| 27    | Iwato                   | X   |     |     | X   |     |     | X   | X   |     |     |     |     |
+| 28    | Whole Half              | X   |     | X   |     | X   | X   |     | X   |     | X   |     |     |
+| 29    | Bebop Minor             | X   | X   | X   | X   | X   |     | X   | X   |     | X   |     |     |
+| 30    | Major Blues             | X   |     | X   |     | X   |     | X   | X   |     |     | X   |     |
+| 31    | Kumoi                   | X   |     |     |     |     | X   |     | X   |     | X   |     |     |
+| 32    | Bebop Major             | X   | X   | X   |     | X   |     | X   | X   | X   |     | X   |     |
 
 ### Enforce Scale
-When Enforce Scale is on, only notes in the selected scale will be shown, when off, all notes will be shown but notes that are not in the selected scale will be dimmed.
 
+When Enforce Scale is enabled, only notes in the selected scale will be shown. When disabled, all notes will be shown, but notes that are not in the selected scale will be dimmed.
 
 ## Overlap
-The Overlap Selector selects how much each row above overlaps with the row below it. This is useful if you want to play chords with one hand.
 
-There is also an align root toggle inside this menu. When on the next row above after the entire scale is completed will realign with root note.
+The Overlap Selector determines how much each row above overlaps with the row below it. This is useful for playing chords with one hand.
 
-This setting is layout config independent.
+There is also an `Align Root` toggle within this menu. When enabled, the next row above, after the entire scale is completed, will realign with the root note.
+
+This setting is independent of the layout configuration.
 
 export function OverlapSelector() {
 
@@ -767,36 +770,36 @@ export function OverlapSelector() {
         ]
     },
     {
-        "name": "Go Back to Config Menu",
-        "desc": "Tap to go back to the config menu.",
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "Overlap Selector"
     const uiDescription = "The Overlap Selector allows you to select how much each row above overlaps with the row below it and if root should be aligned."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<OverlapSelector/>
-
+<OverlapSelector />
 
 ### Align Root
-If align root is on, the next row above after the entire scale is completed will realign with root note. If align root is off, the layout will just continue from the note where the last row ended.
 
+If the align root option is enabled, the next row above will realign with the root note after completing the entire scale. If the align root option is disabled, the layout will continue from the note where the last row ended.
 
 ## MIDI Channel
 
 This setting is layout config independent.
-
 
 export function ChannelSelector() {
 
@@ -834,30 +837,32 @@ export function ChannelSelector() {
         ]
     },
     {
-        "name": "Go Back to Config Menu",
-        "desc": "Tap to go back to the config menu.",
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "MIDI Channel Selector"
     const uiDescription = "The MIDI Channel Selector allows you to select the MIDI out channel of the active note pad layout."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ChannelSelector/>
+<ChannelSelector />
 
 ## Note Pad Color
-You can customize the color combination of the active note pad layout in the Note Pad Color Selector.
-This setting is layout config independent.
+
+You can customize the color combination of the active note pad layout using the Note Pad Color Selector. This setting is independent of the layout configuration.
 
 export function NotePadColorSelector() {
 
@@ -906,37 +911,38 @@ export function NotePadColorSelector() {
         ]
     },
     {
-        "name": "Go Back to Config Menu",
-        "desc": "Tap to go back to the config menu.",
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu.",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
+
 ];
 
     const uiName = "Note Pad Color Selector"
     const uiDescription = "The Note Pad Color Selector allows you to customize the color combination of the active note pad layout."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<NotePadColorSelector/>
+<NotePadColorSelector />
 
-## Spilt Mode
+## Split Mode
 
-The Spilt Mode Selector allows you to enable or disable spilt mode. Spilt mode can be no spilt, horizontal spilt, or vertical spilt.
+The Split Mode Selector allows you to enable or disable split mode. Split mode can be set to no split, horizontal split, or vertical split.
 
+The Split Mode Selector will display different colors based on the current split mode:
 
-The Spilt Mode Selector will show different color based on the current spilt mode.
-
-- No spilt mode: Dim White
-- Vertical spilt mode: Cyan
-- Horizontal spilt mode: Purple
+- No split mode: Dim White
+- Vertical split mode: Cyan
+- Horizontal split mode: Purple
 
 ## Example Layouts
 
@@ -975,25 +981,22 @@ export function ExampleLayout1() {
             }
         ]
     }
+
 ];
 
     const uiName = "Example Layout 1"
     const uiDescription = "Enforce Scale: On, Overlap: 0, Root Aligned: On"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ExampleLayout1/>
-
-- Enforce Scale: On
-- Overlap: 0
-- Root Aligned: On
+<ExampleLayout1 />
 
 ### Example Layout 2 - Isomorphic Layout
-
 
 export function ExampleLayout2() {
 
@@ -1058,25 +1061,22 @@ export function ExampleLayout2() {
             }
         ]
     }
+
 ];
 
     const uiName = "Example Layout 2"
     const uiDescription = "Enforce Scale: On, Overlap: 3, Root Aligned: Off"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ExampleLayout2/>
-
-- Enforce Scale: On
-- Overlap: 3
-- Root Aligned: Off
+<ExampleLayout2 />
 
 ### Example Layout 3 - Chromatic Layout
-
 
 export function ExampleLayout3() {
 
@@ -1155,7 +1155,7 @@ export function ExampleLayout3() {
                 "pos": [1, 0],
                 "color": "#00FF00"
             },
-            
+
         ]
     },
     {
@@ -1167,19 +1167,17 @@ export function ExampleLayout3() {
             }
         ]
     }
+
 ];
 
     const uiName = "Example Layout 3"
     const uiDescription = "Enforce Scale: On, Overlap: 0, Root Aligned: Off"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ExampleLayout3/>
-
-- Enforce Scale: Off
-- Overlap: 0
-- Root Aligned: On
+<ExampleLayout3 />

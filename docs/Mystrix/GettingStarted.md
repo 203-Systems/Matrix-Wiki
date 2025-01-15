@@ -2,61 +2,81 @@
 sidebar_position: 1
 ---
 
-# Welcome to your new Mystrix
+# Welcome to Mystrix
 
-Mystrix is a multipurpose grid controller, designed to be community centric, highly customizable, and fully open sourced. 
+Mystrix is a multipurpose grid controller, designed to be community-centric, highly customizable, and fully open-sourced.
+
+<!-- idea: very cool intro/hero image here -->
 
 ## Getting Started
 
-### Install the Anti Slip Pad
-First thing you should do is to apply the included silicon anti slip pad in the packaging to your Mystrix.
+### Install the Anti-Slip Pad
 
-We can not apply it in the factory because we want to hide the metal device info label under the pad so it appear cleaner and pervert the label from wear and scratches.
+<!-- idea: video here would be perfect -->
 
-Some magnet under the device might have came loose during shipping, you can glue it back on or just place it in and then apply the anti slip pad. Make sure the side with glue is facing the device!
+The first thing you should do is apply the included silicon anti-slip pad from the packaging to your Mystrix.
 
-### Update to the latest OS
-See [Update Matrix OS](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS) on how to update your Mystrix to the latest OS. Since Matrix OS is constantly updated, make sure you are on the latest OS and latest documentation is the key to start using your Mystrix!
+<!-- idea: image of the label -->
 
-### Start using your Mystrix
-See the Usage Examples section to see what others are using Mystrix for and how to get started with them or deep dive into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
+We are unable to install it in the factory due to regulatory reasons, as we need to conceal the metal device information label under the pad to keep it clean and prevent wear and scratches.
 
-### Join the Community 
-We want to build a vibrant community of Mystrix users and we need your help!
+:::note
+If you have an alternate Function Key you want to install (like the one that came with the Kickstarter), make sure you install this prior to installing the anti-slip pad.
+:::
 
-You can join the community in various ways
+:::warning
+Some magnets under the device might have come loose during shipping. You can glue them back on or just place them in and then apply the anti-slip pad.
+However, make sure the polarity of the magnets are facing the same way. The side of the magnet with the dried glue should face the device and not the anti-slip pad.
+:::
+
+To install the anti-slip pad, turn the Mystrix face down and peel the clear protective sheet off the bottom. Align the anti-slip pad (making sure the curved edge is aligned with the pogo pins) and press firmly.
+
+### Update to the Latest OS
+
+See [Update Matrix OS](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS) for instructions on how to update your Mystrix to the latest OS. Since Matrix OS is constantly updated, make sure you are on the latest OS and have the latest documentation to start using your Mystrix!
+
+### Start Using Your Mystrix
+
+See the [Usage Examples](/docs/category/usage-examples) section for  what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
+
+<!-- idea: gif showcasing possibilities -->
+
+### Join the Community
+
+We want to build a vibrant community of Mystrix users, and we need your help!
+
+You can join the community in various ways:
 
 - Discord - [203 System](https://discord.gg/rRVCBHHPfw)
 - Reddit - r/Mystrix (Currently banned because u/203Null was hacked, working on restoring that!)
-- Github - [Discussion](https://github.com/203-Systems/MatrixOS/discussions)
-- If you have other platform suggestion, leave a comment under [Connect with Us](/docs/Support/ConnectWithUs)
+- GitHub - [Discussion](https://github.com/203-Systems/MatrixOS/discussions)
+- If you have other platform suggestions, leave a comment under this post or [Connect with Us](/docs/Support/ConnectWithUs)
+<!-- idea: icons? -->
 
-### Share your Mystrix
+### Share Your Mystrix
+
 Share your Mystrix with others and tell them how awesome Project Mystrix is!
 
-As a community tradition, share a #Mystrix pics with your Mystrix on your fridge!
+As a community tradition, share a [#Mystrix](https://discord.com/channels/503413248704380930/789564329916891237) pic with your Mystrix on your fridge!
 
-### Leave an Review
+<!-- idea: compilation of images of mystrix provided by the community -->
 
-You can leave an review at 203.io or at the platform your purchased from! 
-(We don't censor any negative reviews at 203.io since it helps us improve! We will try our best to make things right for you!)
+### Leave a Review
 
-### Feature Request & Bug Report
-You can submit feature requests and bug report at [MatrixOS Github Repo] 
+You can leave a review at [203.io](https://203.io) or on the platform you purchased from!
 
+> We don't censor any negative reviews at 203.io since it helps us improve! We will try our best to make things right for you!
 
-#### Share Your Cool Things
+### Feature Requests & Bug Reports
 
+You can submit feature requests and bug reports at the [MatrixOS GitHub Repo](https://github.com/203-Systems/MatrixOS/issues/new).
 
+## Expectations
 
-## Expectation
+<!-- idea: idk how to rewrite this in a better way lmao -->
 
-There are a lot of things Mystrix can do and is capable of, but it's important to set an correct expectation.
+There are a lot of things Mystrix can do and is capable of, but it's important to set the correct expectations.
 
-- There are indeed a lot of things Mystrix & Matrix OS is capable of.
-
-- No, you don't need programming skill to use or even tinkering with Mystrix.
-
-- Yes, a lot of things are going to be irrelevant to you are want or might be doing. They are not trying to make the device more "professional oriented" or the opposite. Having options is a good thing!
-
-- Yes, Project Mystrix is an on going process, there are a lot of stuffs we want to be working on, there are still rough edges on the project, it will be more mature with your help! We are here to heard and improve from your feedbacks!
+- No, you don't need programming skills to use or even tinker with Mystrix.
+- Yes, some features might not be relevant to your specific needs. We are not trying to appeal to a specific group of people, but rather making Mystrix versatile so it can be used by anyone for whatever needs they have. Having options is a good thing!
+- Yes, Project Mystrix is an ongoing process. There are many things we want to improve, and there are still some rough edges. With your help, it will continue to evolve! We are here to listen and improve based on your feedback!

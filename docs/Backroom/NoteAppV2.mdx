@@ -1,18 +1,17 @@
 ---
 sidebar_position: 4
 ---
-import MystrixVisualizer from '@site/src/components/MystrixVisualizer/MystrixVisualizer';
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Note App V2
 
-Note app V2 will comes with new feature of include Control bar, Arpeggiator, Chord, Semitone color, and X offset,
+Note App V2 introduces new features including a control bar, arpeggiator, chord functionality, semitone color, and X offset.
 
-The offset is mostly added to support Poly Plaground like note layouts.
+The offset feature is primarily added to support Poly Playground-like note layouts.
 
-:::note
-This is a work in progress and the design is subject to change. All the color of UI elements are just for reference (I didn't spent time tweaking the visual design, just functional stuffs for now)]
-
-I might also decided to tweak stuffs during implentmentation.
+:::info
+Please note that this is a work in progress, and the design is subject to change. The current colors of the UI elements are for reference only, as our primary focus has been on functionality rather than visual design at this stage.
 :::
 
 ## Control bar
@@ -127,18 +126,20 @@ export function PlayViewWithControlBar() {
             }
         ]
     }
+
 ];
 
     const uiName = "Play View with Control Bar"
     const uiDescription = "This is the play view with new optional ontrol bar"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<PlayViewWithControlBar/>
+<PlayViewWithControlBar />
 
 ## Arpeggiator
 
@@ -268,18 +269,20 @@ export function PlayViewWithArpeggiator() {
             }
         ]
     },
+
 ];
 
     const uiName = "Play View with Arpeggiator Control"
     const uiDescription = "This is the play view with arpeggiator control."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<PlayViewWithArpeggiator/>
+<PlayViewWithArpeggiator />
 
 export function PlayViewWithChord() {
 
@@ -407,18 +410,20 @@ export function PlayViewWithChord() {
             }
         ]
     },
+
 ];
 
     const uiName = "Play View with Chord Control"
     const uiDescription = "This is the play view with chord control (Note that you will be able to use chord and arpeggiator at the same time. Chorded notes will be arpeggiated)"
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<PlayViewWithChord/>
+<PlayViewWithChord />
 
 export function PlayViewWithKeySelector() {
 
@@ -573,19 +578,20 @@ export function PlayViewWithKeySelector() {
             }
         ]
     },
+
 ];
 
     const uiName = "Play View with Key Selector"
     const uiDescription = "This is the play view with key selector."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<PlayViewWithKeySelector/>
-
+<PlayViewWithKeySelector />
 
 ## Arpeggiator Setting
 
@@ -600,7 +606,6 @@ You will be able to change the folowing settings of the arpeggiator:
 - Step Offset: Sets the offset for each step (-24 to 24)
 
 - Follow Scale: Enable to follow the scale of the note pad layout. (Boolean)
-
 
 export function ArpeggiatorSetting() {
 
@@ -701,20 +706,23 @@ export function ArpeggiatorSetting() {
             }
         ]
     }
+
 ];
 
     const uiName = "Arpeggiator Setting"
     const uiDescription = "This is the arpeggiator setting."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<ArpeggiatorSetting/>
+<ArpeggiatorSetting />
 
 ## New Offset Selector
+
 The Offset selector replaces the old overlap selector.
 
 Instead of setting overlap for each row. The new selector selects much semitone offset of x and y axis is.
@@ -790,7 +798,7 @@ export function OffsetSelector() {
         "elements": [
             {
                 "pos": [0, 7],
-                "color": "#FFFFFF"  
+                "color": "#FFFFFF"
             },
 
         ]
@@ -804,19 +812,20 @@ export function OffsetSelector() {
             }
         ]
     }
+
 ];
 
     const uiName = "Offset Selector"
     const uiDescription = "The Offset Selector allows you to customize the layout of the note pad."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<OffsetSelector/>
-
+<OffsetSelector />
 
 ## New Color settings
 
@@ -966,15 +975,17 @@ export function NotePadColorSelector() {
             }
         ]
     }
+
 ];
 
     const uiName = "Note Pad Color Selector"
     const uiDescription = "The Note Pad Color Selector allows you to customize the color combination of the active note pad layout."
-    return <MystrixVisualizer 
+    return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
+
 }
 
-<NotePadColorSelector/>
+<NotePadColorSelector />

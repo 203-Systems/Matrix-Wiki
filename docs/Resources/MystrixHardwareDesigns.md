@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Mystrix Hardware Designs
 
-### Mystrix Hardware designs (Matrix Block 6): https://github.com/203-Systems/Matrix-Block6-Hardware
+- **[Mystrix (Matrix Block 6)](https://github.com/203-Systems/Matrix-Block6-Hardware)**: Includes PCB designs, mechanical designs, and Blender files for 3D renders.
 
 ## License
 

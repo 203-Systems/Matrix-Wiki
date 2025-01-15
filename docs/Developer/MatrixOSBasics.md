@@ -4,21 +4,24 @@ sidebar_position: 0
 
 # Matrix OS Basics
 
-Matrix OS is a cross platform, real time, extensible, smart OS designed for controllers. 
+Matrix OS is a cross-platform, real-time, extensible, smart operating system designed for controllers.
 
-Matrix OS is also community centric, that means it is fully open sourced and you can make it what you want or work with the community to improving it.
+Matrix OS is community-centric, meaning it is fully open-sourced, allowing you to customize it to your needs or collaborate with the community to enhance it.
 
+## Ways to Develop for Matrix OS
 
+- **Create Matrix OS Applications**: Develop applications that run natively on Matrix OS.
 
-## Ways to Developing for Matrix OS
-- Make Matrix OS Applications - Applications that runs natively on Matrix OS
+<!-- idea: show what can be done -->
 
-- Creating Matrix OS Remote Applications - Applications that runs on more powerful devices that connects to Matrix OS device and it's applications. 
+- **Develop Matrix OS Remote Applications**: Build applications that run on more powerful devices and connect to Matrix OS devices and their applications.
 
-- Improving Matrix OS Kernel - Adding features to the OS, writing new library, improving frameworks.
+<!-- idea: show examples -->
 
-- Porting Matrix OS to different Device or Platform - Making Your Own Matrix OS device, porting Matrix OS to third party controller, or adding new SOC supports to Matrix OS.
+- **Enhance the Matrix OS Kernel**: Add features to the OS, write new libraries, and improve frameworks.
 
+<!-- idea: link to examples -->
 
+- **Port Matrix OS to Different Devices or Platforms**: Create your own Matrix OS device, port Matrix OS to third-party controllers, or add support for new SOCs.
 
-## 
+<!-- idea: show examples, if not, POC -->
