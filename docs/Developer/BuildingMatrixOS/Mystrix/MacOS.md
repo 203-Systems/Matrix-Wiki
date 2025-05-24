@@ -55,7 +55,7 @@ python3 $HOME/esp/esp-idf/tools/idf_tools.py install riscv32-esp-elf
    source ~/esp/esp-idf/export.sh
    ```
 
-   In the long run, you will want to automate this. You could add this line to your shell's configuration file (e.g., `.zshrc` or `.bash_profile`) or if you are using VS Code, you can modify the MatrixOS.code-workspace file and adapt it to run it on new terminal. I use `.zshrc` and add `alias get_idf='. $HOME/esp/esp-idf/export.sh'`. When I want to do Matrix OS development I run `get_idf`
+   In the long run, you will want to automate this. You could add this line to your shell's configuration file (e.g., `.zshrc` or `.bash_profile`) or if you are using VS Code, you can modify the MatrixOS.code-workspace file and adapt it to run it on new terminal. You can also use `.zshrc` and add `alias get_idf='. $HOME/esp/esp-idf/export.sh'`. Then you can run `get_idf` to get esp idf in your environment.
 
 2. Go to the root folder of Matrix OS if your terminal isn’t already there.
 3. Run this command to build Matrix OS:
