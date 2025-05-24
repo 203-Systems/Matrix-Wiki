@@ -43,7 +43,7 @@ Run the following to set up the ESP IDF
 ```bash
 mkdir -p ~/esp
 cd ~/esp
-git clone -b v5.4.1 --recursive https://github.com/espressif/esp-idf.git
+git clone -b v5.3.1 --recursive https://github.com/espressif/esp-idf.git
 cd ~/esp/esp-idf
 ./install.sh esp32
 python3 $HOME/esp/esp-idf/tools/idf_tools.py install riscv32-esp-elf
