@@ -62,6 +62,7 @@ python3 $HOME/esp/esp-idf/tools/idf_tools.py install riscv32-esp-elf
    ```bash
    make DEVICE=Mystrix build
    ```
+   If you run into any undefined references, make sure to check the `fullclean` command in the "Build Commands" section below
 4. Prepare to upload to your Mystrix device. Make sure your Mystrix is in [upload mode](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode) already.
 5. Upload the compiled Matrix OS to Mystrix:
    ```bash
