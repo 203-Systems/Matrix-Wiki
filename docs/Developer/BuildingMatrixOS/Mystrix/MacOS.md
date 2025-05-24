@@ -38,7 +38,7 @@ pip3 install psutil
    git submodule update --init
    ```
 
-## Install ESP IDF v5.4.1
+## Install ESP IDF v5.3.1
 Run the following to set up the ESP IDF
 ```bash
 mkdir -p ~/esp
