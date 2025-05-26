@@ -40,7 +40,7 @@ const config: Config = {
             'https://github.com/203-Systems/Matrix-Wiki/tree/master/',
           versions: {
               current: {
-                label: 'Canary 🚧',
+                label: 'Latest 🚧',
               },
             },
         },
@@ -53,7 +53,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/203-Systems/Matrix-Wiki/tree/main/',
+            'https://github.com/203-Systems/Matrix-Wiki/tree/master/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -227,10 +227,10 @@ const config: Config = {
       },
       copyright: `Copyright © ${new Date().getFullYear()} 203 Systems`,
     },
-    // announcementBar: {
-    //   id: 'under-development',
-    //   content: `<b>🚧 Project Matrix Wiki is currently in development. Contents may be incorrect, incomplete, or outdated. 🚧</b>`,
-    // },
+    announcementBar: {
+      id: 'mystrix-sales-paused-2025-5',
+      content:`Sales of Mystrix have ended. Thank you for supporting Project Matrix! ❤️`,
+    },
     image: 'img/social-card.jpg',
     algolia: {
       // The application ID provided by Algolia

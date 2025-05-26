@@ -70,11 +70,18 @@
 }
 
 div[class^='announcementBar_'] {
-  padding: 0.5rem;
+  padding: 0.6rem;
+  min-height: 40px;
   font-size: 20px;
-  background: linear-gradient(125deg, rgba(152, 12, 169, 1), rgba(239, 27, 227, 1) 24%, rgba(255, 0, 56, 1) 100%);
-  
-  animation: gradient-animation 1s infinite;
+  font-weight: 600;
+  background: #FFFFFF;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark']
+div[class^='announcementBar_'] {
+  background: linear-gradient(90deg, rgba(236, 115, 201, 0.7), #e77ccb, rgba(236, 115, 201, 0.7));
+  box-shadow: 0;
 }
 
 
