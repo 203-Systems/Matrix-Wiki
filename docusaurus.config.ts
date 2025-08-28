@@ -232,10 +232,10 @@ const config: Config = {
       },
       copyright: `Copyright © ${new Date().getFullYear()} 203 Systems`,
     },
-    announcementBar: {
-      id: 'mystrix-sales-paused-2025-5',
-      content:`Sales of Mystrix have ended. Thank you for supporting Project Matrix! ❤️`,
-    },
+    // announcementBar: {
+    //   id: 'mystrix-sales-paused-2025-5',
+    //   content:`Sales of Mystrix have ended. Thank you for supporting Project Matrix! ❤️`,
+    // },
     image: 'img/social-card.jpg',
     algolia: {
       // The application ID provided by Algolia
