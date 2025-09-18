@@ -1,0 +1,109 @@
+---
+sidebar_position: 1
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Color Picker
+
+The Color Picker is a user interface for selecting a color. It is part of the shared UIs used in various applications.
+
+The Color Picker is divided into two parts: Hue Selection and Shade Selection. First, you select the hue of the color you want to use, then you select the shade of the color.
+
+If the function key is pressed inside the picker, the color picker will abort and return to the previous screen without changing the color.
+
+## Hue Selection
+
+export function HueSelector() {
+
+    const uiElements = [
+        {
+            "name": "Select Hue",
+            "desc": "Tap on the color you want to use.",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "size": [8, 8],
+                    "color": [
+                        "hsl(315, 100%, 50%)", "hsl(320.625, 100%, 50%)", "hsl(326.25, 100%, 50%)", "hsl(331.875, 100%, 50%)", "hsl(337.5, 100%, 50%)", "hsl(343.125, 100%, 50%)", "hsl(348.75, 100%, 50%)", "hsl(354.375, 100%, 50%)",
+                        "hsl(270, 100%, 50%)", "hsl(275.625, 100%, 50%)", "hsl(281.25, 100%, 50%)", "hsl(286.875, 100%, 50%)", "hsl(292.5, 100%, 50%)", "hsl(298.125, 100%, 50%)", "hsl(303.75, 100%, 50%)", "hsl(309.375, 100%, 50%)",
+                        "hsl(225, 100%, 50%)", "hsl(230.625, 100%, 50%)", "hsl(236.25, 100%, 50%)", "hsl(241.875, 100%, 50%)", "hsl(247.5, 100%, 50%)", "hsl(253.125, 100%, 50%)", "hsl(258.75, 100%, 50%)", "hsl(264.375, 100%, 50%)",
+                        "hsl(180, 100%, 50%)", "hsl(185.625, 100%, 50%)", "hsl(191.25, 100%, 50%)", "hsl(196.875, 100%, 50%)", "hsl(202.5, 100%, 50%)", "hsl(208.125, 100%, 50%)", "hsl(213.75, 100%, 50%)", "hsl(219.375, 100%, 50%)",
+                        "hsl(135, 100%, 50%)", "hsl(140.625, 100%, 50%)", "hsl(146.25, 100%, 50%)", "hsl(151.875, 100%, 50%)", "hsl(157.5, 100%, 50%)", "hsl(163.125, 100%, 50%)", "hsl(168.75, 100%, 50%)", "hsl(174.375, 100%, 50%)",
+                        "hsl(90, 100%, 50%)", "hsl(95.625, 100%, 50%)", "hsl(101.25, 100%, 50%)", "hsl(106.875, 100%, 50%)", "hsl(112.5, 100%, 50%)", "hsl(118.125, 100%, 50%)", "hsl(123.75, 100%, 50%)", "hsl(129.375, 100%, 50%)",
+                        "hsl(45, 100%, 50%)", "hsl(50.625, 100%, 50%)", "hsl(56.25, 100%, 50%)", "hsl(61.875, 100%, 50%)", "hsl(67.5, 100%, 50%)", "hsl(73.125, 100%, 50%)", "hsl(78.75, 100%, 50%)", "hsl(84.375, 100%, 50%)",
+                        "hsl(0, 100%, 50%)", "hsl(5.625, 100%, 50%)", "hsl(11.25, 100%, 50%)", "hsl(16.875, 100%, 50%)", "hsl(22.5, 100%, 50%)", "hsl(28.125, 100%, 50%)", "hsl(33.75, 100%, 50%)", "hsl(39.375, 100%, 50%)"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Abort and Go Back",
+            "desc": "Tap to abort the color selection and return to the previous screen.",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ]
+
+    const uiName = "Hue Selector"
+    const uiDescription = "Select the hue of the color you want to use."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<HueSelector />
+
+## Shade Selection
+
+export function ShadeSelector() {
+
+    const uiElements = [
+        {
+            "name": "Select Shade",
+            "desc": "Tap on the shade of the color you want to use.",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "size": [8, 8],
+                    "color": [
+                        '#ffdede', '#ffbfbf', '#ff9f9f', '#ff7f7f', '#ff5f5f', '#ff3f3f', '#ff1f1f', '#ff0000',
+                        '#dfb3b3', '#df9999', '#df8080', '#df6666', '#df4d4d', '#df3333', '#df1a1a', '#df0000',
+                        '#bf9d9d', '#bf8787', '#bf7070', '#bf5a5a', '#bf4343', '#bf2d2d', '#bf1616', '#bf0000',
+                        '#9f7e7e', '#9f6c6c', '#9f5a5a', '#9f4848', '#9f3636', '#9f2424', '#9f1212', '#9f0000',
+                        '#7f5959', '#7f4d4d', '#7f4040', '#7f3333', '#7f2626', '#7f1a1a', '#7f0d0d', '#7f0000',
+                        '#5f3f3f', '#5f3636', '#5f2d2d', '#5f2424', '#5f1b1b', '#5f1212', '#5f0909', '#5f0000',
+                        '#3f2d2d', '#3f2727', '#3f2020', '#3f1a1a', '#3f1313', '#3f0d0d', '#3f0606', '#3f0000',
+                        '#1f1818', '#1f1515', '#1f1212', '#1f0f0f', '#1f0c0c', '#1f0909', '#1f0303', '#1f0000'
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Abort and Go Back",
+            "desc": "Tap to abort the color selection and return to the previous screen.",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ]
+
+    const uiName = "Shade Selector"
+    const uiDescription = "Select the shade of the color you want to use."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<ShadeSelector />

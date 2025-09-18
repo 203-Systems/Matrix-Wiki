@@ -1,0 +1,163 @@
+---
+title: Point
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Class: `Point`
+
+The `Point` class represents a 2D point with `x` and `y` coordinates. It provides various utility functions for mathematical operations and transformations, including rotations.
+
+*The source file for this class is located in <GithubLink path="os/framework/Point.h"/>*
+
+---
+
+## Members
+
+### `x`
+- Type: `int16_t`
+- Description: The x-coordinate of the point.
+
+### `y`
+- Type: `int16_t`
+- Description: The y-coordinate of the point.
+
+---
+
+## Constructors
+
+### Default Constructor
+```cpp
+Point();
+```
+Initializes the point with both `x` and `y` set to `INT16_MIN`, indicating an invalid point.
+
+---
+
+### From X and Y Coordinates
+```cpp
+Point(int16_t x, int16_t y);
+```
+Initializes the point with the specified `x` and `y` coordinates.
+
+**Parameters:**
+- `x` (`int16_t`): The x-coordinate.
+- `y` (`int16_t`): The y-coordinate.
+
+---
+
+### From `uint32_t`
+```cpp
+Point(uint32_t rawByte);
+```
+Constructs a point from a 32-bit integer, where the higher 16 bits represent the `x` coordinate and the lower 16 bits represent the `y` coordinate.
+
+**Parameters:**
+- `rawByte` (`uint32_t`): A packed representation of the point.
+
+---
+
+## Operators
+
+### Addition
+```cpp
+Point operator+(const Point& cp) const;
+```
+Adds the coordinates of two points and returns a new point.
+
+---
+
+### Subtraction
+```cpp
+Point operator-(const Point& cp) const;
+```
+Subtracts the coordinates of one point from another and returns a new point.
+
+---
+
+### Equality
+```cpp
+bool operator==(const Point& cp) const;
+```
+Checks if two points are equal.
+
+---
+
+### Inequality
+```cpp
+bool operator!=(const Point& cp) const;
+```
+Checks if two points are not equal.
+
+---
+
+### Less Than
+```cpp
+bool operator<(const Point& cp) const;
+```
+Compares two points lexicographically, first by `x` then by `y`.
+
+```cpp	
+bool operator<(const Point& cp) const { return x < cp.x || (x == cp.x && y < cp.y); }
+```
+
+---
+
+### Multiplication
+```cpp
+Point operator*(const int val) const;
+```
+Multiplies both coordinates by a scalar value and returns a new point.
+
+---
+
+### Division
+```cpp
+Point operator/(const int val) const;
+```
+Divides both coordinates by a scalar value and returns a new point.
+
+---
+
+### Conversion to `bool`
+```cpp
+operator bool();
+```
+Checks if the point is valid (both `x` and `y` are not `INT16_MIN`).
+
+---
+
+### Conversion to `uint32_t`
+```cpp
+operator uint32_t();
+```
+Converts the point to a packed 32-bit integer representation.
+
+---
+
+## Static Methods
+
+### `Invalid`
+```cpp
+static Point Invalid();
+```
+Returns a point with `x` and `y` set to `INT16_MIN`, representing an invalid state.
+
+---
+
+## Methods
+
+### `Rotate`
+```cpp
+Point Rotate(EDirection rotation, Point dimension, bool reverse = false);
+```
+Rotates the point within a bounded dimension based on the specified direction.
+
+**Parameters:**
+- `rotation` ([`EDirection`](./EDirection/)): The direction to rotate.
+- `dimension` ([`Point`](./Point/)): The bounding dimensions.
+- `reverse` (`bool`, optional): If `true`, reverses the rotation direction. Defaults to `false`.
+
+**Returns:**
+- `Point`: A new point after rotation.
+
+---

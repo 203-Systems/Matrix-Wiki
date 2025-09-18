@@ -38,9 +38,14 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/203-Systems/Matrix-Wiki/tree/master/',
+          lastVersion: '2.6.0',
           versions: {
               current: {
                 label: 'Latest 🚧',
+              },
+              '2.6.0': {
+                label: '2.6.0',
+                banner: 'none',
               },
             },
         },
