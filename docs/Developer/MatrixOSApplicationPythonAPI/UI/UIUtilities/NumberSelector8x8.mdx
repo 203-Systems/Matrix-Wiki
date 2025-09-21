@@ -1,0 +1,345 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# NumberSelector8x8
+
+## Overview
+
+The `NumberSelector8x8` utility provides a full-screen number selection interface that utilizes the entire 8x8 LED grid. It allows users to select numeric values within a specified range with visual feedback.
+
+*The NumberSelector8x8 utility is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>.*
+
+---
+
+## `NumberSelector8x8`
+```python
+def NumberSelector8x8(value: int, color: Color, name: str, lower_limit: int, upper_limit: int) -> int
+```
+
+Displays a full-screen number selector interface and returns the selected value.
+
+**Parameters:**
+- `value` (`int`): Initial/current value to display
+- `color` (`Color`): Color theme for the selector
+- `name` (`str`): Name/title displayed with the selector
+- `lower_limit` (`int`): Minimum selectable value
+- `upper_limit` (`int`): Maximum selectable value
+
+**Returns:**
+- `int`: Selected value chosen by the user
+
+**Example:**
+```python
+# Select a brightness value
+brightness = MatrixOS.UIUtility.NumberSelector8x8(128, Color(255, 255, 0), "Brightness", 0, 255)
+print(f"Selected brightness: {brightness}")
+
+# Select a tempo value
+tempo = MatrixOS.UIUtility.NumberSelector8x8(120, Color(0, 255, 0), "BPM", 60, 200)
+print(f"Selected tempo: {tempo} BPM")
+```
+
+---
+
+## Usage Examples
+
+### Settings Configuration
+```python
+def configure_system_settings():
+    """Configure various system settings using number selectors"""
+
+    # LED brightness setting
+    current_brightness = 128  # Get from saved settings
+    new_brightness = MatrixOS.UIUtility.NumberSelector8x8(
+        current_brightness,
+        Color(255, 255, 0),  # Yellow for brightness
+        "LED Brightness",
+        0, 255
+    )
+
+    # Volume setting
+    current_volume = 75
+    new_volume = MatrixOS.UIUtility.NumberSelector8x8(
+        current_volume,
+        Color(0, 255, 255),  # Cyan for volume
+        "Audio Volume",
+        0, 100
+    )
+
+    # Sensitivity setting
+    current_sensitivity = 50
+    new_sensitivity = MatrixOS.UIUtility.NumberSelector8x8(
+        current_sensitivity,
+        Color(255, 0, 255),  # Magenta for sensitivity
+        "Key Sensitivity",
+        1, 100
+    )
+
+    print(f"New settings - Brightness: {new_brightness}, Volume: {new_volume}, Sensitivity: {new_sensitivity}")
+    return {
+        "brightness": new_brightness,
+        "volume": new_volume,
+        "sensitivity": new_sensitivity
+    }
+
+settings = configure_system_settings()
+```
+
+### Musical Parameter Selection
+```python
+def setup_music_parameters():
+    """Configure musical parameters"""
+
+    # BPM selection
+    current_bpm = 120
+    bpm = MatrixOS.UIUtility.NumberSelector8x8(
+        current_bpm,
+        Color(0, 255, 0),   # Green for tempo
+        "Tempo (BPM)",
+        60, 200
+    )
+
+    # Key signature (MIDI note number)
+    current_key = 60  # Middle C
+    key_note = MatrixOS.UIUtility.NumberSelector8x8(
+        current_key,
+        Color(255, 0, 0),   # Red for key
+        "Key Note",
+        48, 84  # C3 to C6
+    )
+
+    # Scale length
+    current_scale = 8
+    scale_length = MatrixOS.UIUtility.NumberSelector8x8(
+        current_scale,
+        Color(0, 0, 255),   # Blue for scale
+        "Scale Length",
+        5, 16
+    )
+
+    # Channel selection
+    current_channel = 1
+    midi_channel = MatrixOS.UIUtility.NumberSelector8x8(
+        current_channel,
+        Color(255, 255, 0), # Yellow for channel
+        "MIDI Channel",
+        1, 16
+    )
+
+    return {
+        "bpm": bpm,
+        "key": key_note,
+        "scale_length": scale_length,
+        "channel": midi_channel
+    }
+
+music_params = setup_music_parameters()
+print(f"Music setup: {music_params}")
+```
+
+### Game Configuration
+```python
+def configure_game_settings():
+    """Configure game parameters"""
+
+    # Difficulty level
+    difficulty = MatrixOS.UIUtility.NumberSelector8x8(
+        3,                  # Default medium difficulty
+        Color(255, 100, 0), # Orange for difficulty
+        "Difficulty",
+        1, 10
+    )
+
+    # Player lives
+    lives = MatrixOS.UIUtility.NumberSelector8x8(
+        3,                  # Default 3 lives
+        Color(255, 0, 0),   # Red for lives
+        "Lives",
+        1, 9
+    )
+
+    # Game speed
+    speed = MatrixOS.UIUtility.NumberSelector8x8(
+        5,                  # Default medium speed
+        Color(0, 255, 255), # Cyan for speed
+        "Game Speed",
+        1, 10
+    )
+
+    # Number of rounds
+    rounds = MatrixOS.UIUtility.NumberSelector8x8(
+        5,                  # Default 5 rounds
+        Color(0, 255, 0),   # Green for rounds
+        "Rounds",
+        1, 20
+    )
+
+    return {
+        "difficulty": difficulty,
+        "lives": lives,
+        "speed": speed,
+        "rounds": rounds
+    }
+
+game_config = configure_game_settings()
+```
+
+### Color Parameter Selection
+```python
+def select_color_components():
+    """Select RGB color components individually"""
+
+    # Red component
+    red = MatrixOS.UIUtility.NumberSelector8x8(
+        255,
+        Color(255, 0, 0),   # Red preview
+        "Red Component",
+        0, 255
+    )
+
+    # Green component
+    green = MatrixOS.UIUtility.NumberSelector8x8(
+        255,
+        Color(0, 255, 0),   # Green preview
+        "Green Component",
+        0, 255
+    )
+
+    # Blue component
+    blue = MatrixOS.UIUtility.NumberSelector8x8(
+        255,
+        Color(0, 0, 255),   # Blue preview
+        "Blue Component",
+        0, 255
+    )
+
+    # Show final color
+    final_color = Color(red, green, blue)
+    MatrixOS.LED.Fill(final_color, 255)
+    MatrixOS.LED.Update(255)
+    MatrixOS.SYS.DelayMs(2000)  # Show for 2 seconds
+
+    return final_color
+
+selected_color = select_color_components()
+print(f"Selected color: RGB({selected_color.r}, {selected_color.g}, {selected_color.b})")
+```
+
+---
+
+## Value Range Strategies
+
+### Logical Groupings
+```python
+def get_appropriate_ranges():
+    """Define appropriate ranges for different parameter types"""
+
+    ranges = {
+        # Audio parameters
+        "volume": (0, 100),
+        "bass": (-10, 10),
+        "treble": (-10, 10),
+
+        # Visual parameters
+        "brightness": (0, 255),
+        "contrast": (0, 100),
+        "saturation": (0, 200),
+
+        # Timing parameters
+        "bpm": (60, 200),
+        "delay_ms": (0, 1000),
+        "fade_time": (100, 5000),
+
+        # Game parameters
+        "difficulty": (1, 10),
+        "lives": (1, 9),
+        "level": (1, 99),
+
+        # MIDI parameters
+        "channel": (1, 16),
+        "velocity": (1, 127),
+        "note": (0, 127),
+        "cc_value": (0, 127)
+    }
+
+    return ranges
+
+def select_parameter(param_type, current_value, param_name):
+    """Generic parameter selector with appropriate ranges"""
+    ranges = get_appropriate_ranges()
+
+    if param_type in ranges:
+        min_val, max_val = ranges[param_type]
+    else:
+        min_val, max_val = 0, 100  # Default range
+
+    # Choose color based on parameter type
+    color_map = {
+        "volume": Color(0, 255, 255),     # Cyan for audio
+        "brightness": Color(255, 255, 0), # Yellow for visual
+        "bpm": Color(0, 255, 0),          # Green for timing
+        "difficulty": Color(255, 100, 0), # Orange for game
+        "channel": Color(255, 0, 255)     # Magenta for MIDI
+    }
+
+    color = color_map.get(param_type, Color(255, 255, 255))  # White default
+
+    return MatrixOS.UIUtility.NumberSelector8x8(
+        current_value, color, param_name, min_val, max_val
+    )
+
+# Usage examples
+new_volume = select_parameter("volume", 75, "Master Volume")
+new_bpm = select_parameter("bpm", 120, "Song Tempo")
+new_difficulty = select_parameter("difficulty", 5, "Game Difficulty")
+```
+
+### Multi-Parameter Wizards
+```python
+def setup_wizard():
+    """Multi-step parameter setup wizard"""
+
+    print("Setup Wizard Started")
+
+    # Step 1: Basic settings
+    print("Step 1: Basic Settings")
+    brightness = MatrixOS.UIUtility.NumberSelector8x8(128, Color(255, 255, 0), "Brightness", 0, 255)
+
+    # Step 2: Audio settings
+    print("Step 2: Audio Settings")
+    volume = MatrixOS.UIUtility.NumberSelector8x8(75, Color(0, 255, 255), "Volume", 0, 100)
+
+    # Step 3: Performance settings
+    print("Step 3: Performance Settings")
+    fps = MatrixOS.UIUtility.NumberSelector8x8(30, Color(0, 255, 0), "Frame Rate", 15, 60)
+
+    # Step 4: Advanced settings
+    print("Step 4: Advanced Settings")
+    sensitivity = MatrixOS.UIUtility.NumberSelector8x8(50, Color(255, 0, 255), "Sensitivity", 1, 100)
+
+    config = {
+        "brightness": brightness,
+        "volume": volume,
+        "fps": fps,
+        "sensitivity": sensitivity
+    }
+
+    print("Setup Complete!")
+    return config
+
+final_config = setup_wizard()
+```
+
+---
+
+## Best Practices
+
+1. **Range Selection**: Choose logical min/max values appropriate for the parameter
+2. **Color Coding**: Use consistent colors for similar parameter types
+3. **Naming**: Use clear, descriptive names that fit the display
+4. **Initial Values**: Set sensible default values based on current settings
+5. **Validation**: Ensure the returned value is within your expected range
+6. **User Flow**: Group related parameters together in configuration sequences
+7. **Feedback**: Provide visual or text feedback after selection when appropriate

@@ -1,0 +1,417 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# CDC API
+
+## Overview
+
+The USB CDC (Communication Device Class) API provides serial communication functionality over USB. It allows the device to appear as a virtual COM port on the host computer, enabling bidirectional text communication.
+
+*The Python USB CDC API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_USB_CDC.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_USB_CDC.pyi"/>.*
+
+---
+
+## Connection Management
+
+### `MatrixOS.USB.CDC.Connected`
+```python
+def Connected() -> bool
+```
+
+Checks if the CDC interface is connected and ready for communication.
+
+**Returns:**
+- `bool`: True if CDC connection is active
+
+**Example:**
+```python
+if MatrixOS.USB.CDC.Connected():
+    print("CDC interface ready for communication")
+```
+
+---
+
+### `MatrixOS.USB.CDC.Available`
+```python
+def Available() -> int
+```
+
+Returns the number of bytes available to read from the CDC interface.
+
+**Returns:**
+- `int`: Number of bytes available in the input buffer
+
+**Example:**
+```python
+bytes_available = MatrixOS.USB.CDC.Available()
+if bytes_available > 0:
+    print(f"{bytes_available} bytes waiting to be read")
+```
+
+---
+
+### `MatrixOS.USB.CDC.Poll`
+```python
+def Poll() -> None
+```
+
+Polls the CDC interface for incoming data and processes any pending operations.
+
+**Example:**
+```python
+# Poll for incoming data
+MatrixOS.USB.CDC.Poll()
+```
+
+---
+
+## Output Functions
+
+### `MatrixOS.USB.CDC.Print`
+```python
+def Print(text: str, end: str) -> None
+```
+
+Prints text to the CDC interface with customizable line ending.
+
+**Parameters:**
+- `text` (`str`): Text to send
+- `end` (`str`): Line ending character(s)
+
+**Example:**
+```python
+MatrixOS.USB.CDC.Print("Hello World", "\n")
+MatrixOS.USB.CDC.Print("Same line", "")
+```
+
+---
+
+### `MatrixOS.USB.CDC.Flush`
+```python
+def Flush() -> None
+```
+
+Flushes the output buffer, ensuring all data is transmitted immediately.
+
+**Example:**
+```python
+MatrixOS.USB.CDC.Print("Immediate message", "\n")
+MatrixOS.USB.CDC.Flush()  # Ensure it's sent right away
+```
+
+---
+
+## Input Functions
+
+### `MatrixOS.USB.CDC.Read`
+```python
+def Read() -> int
+```
+
+Reads a single byte from the CDC interface.
+
+**Returns:**
+- `int`: The byte value read, or -1 if no data available
+
+**Example:**
+```python
+byte = MatrixOS.USB.CDC.Read()
+if byte != -1:
+    print(f"Received byte: {byte}")
+```
+
+---
+
+### `MatrixOS.USB.CDC.ReadBytes`
+```python
+def ReadBytes(max_length: int) -> bytes
+```
+
+Reads multiple bytes from the CDC interface.
+
+**Parameters:**
+- `max_length` (`int`): Maximum number of bytes to read
+
+**Returns:**
+- `bytes`: Byte array containing the read data
+
+**Example:**
+```python
+data = MatrixOS.USB.CDC.ReadBytes(64)
+if len(data) > 0:
+    print(f"Received {len(data)} bytes")
+```
+
+---
+
+### `MatrixOS.USB.CDC.ReadString`
+```python
+def ReadString() -> str
+```
+
+Reads a string from the CDC interface.
+
+**Returns:**
+- `str`: The received string
+
+**Example:**
+```python
+message = MatrixOS.USB.CDC.ReadString()
+if message:
+    print(f"Received: {message}")
+```
+
+---
+
+## Usage Examples
+
+### Basic Serial Communication
+```python
+def serial_echo():
+    """Simple echo server over USB CDC"""
+
+    print("CDC Echo Server Started")
+
+    while True:
+        if MatrixOS.USB.CDC.Connected():
+            # Check for incoming data
+            if MatrixOS.USB.CDC.Available() > 0:
+                # Read the incoming message
+                message = MatrixOS.USB.CDC.ReadString()
+
+                # Echo it back
+                MatrixOS.USB.CDC.Print(f"Echo: {message}", "\n")
+                MatrixOS.USB.CDC.Flush()
+
+        MatrixOS.SYS.DelayMs(100)
+
+serial_echo()
+```
+
+### Command Interface
+```python
+def command_interface():
+    """Simple command interface over CDC"""
+
+    MatrixOS.USB.CDC.Print("MatrixOS Command Interface\n", "")
+    MatrixOS.USB.CDC.Print("Commands: led, status, help\n", "")
+    MatrixOS.USB.CDC.Flush()
+
+    while True:
+        if MatrixOS.USB.CDC.Connected() and MatrixOS.USB.CDC.Available() > 0:
+            command = MatrixOS.USB.CDC.ReadString().strip().lower()
+
+            if command == "led":
+                # Toggle LED example
+                MatrixOS.LED.Fill(Color(255, 0, 0), 255)
+                MatrixOS.LED.Update(255)
+                MatrixOS.USB.CDC.Print("LED turned red\n", "")
+
+            elif command == "status":
+                uptime = MatrixOS.SYS.Millis() // 1000
+                MatrixOS.USB.CDC.Print(f"Uptime: {uptime}s\n", "")
+
+            elif command == "help":
+                MatrixOS.USB.CDC.Print("Available commands:\n", "")
+                MatrixOS.USB.CDC.Print("  led    - Turn LED red\n", "")
+                MatrixOS.USB.CDC.Print("  status - Show system status\n", "")
+                MatrixOS.USB.CDC.Print("  help   - Show this help\n", "")
+
+            else:
+                MatrixOS.USB.CDC.Print(f"Unknown command: {command}\n", "")
+
+            MatrixOS.USB.CDC.Flush()
+
+        MatrixOS.SYS.DelayMs(50)
+
+command_interface()
+```
+
+### Data Logging
+```python
+def sensor_logger():
+    """Log sensor data over CDC interface"""
+
+    import random  # Simulate sensor data
+
+    MatrixOS.USB.CDC.Print("Sensor Data Logger Started\n", "")
+    MatrixOS.USB.CDC.Flush()
+
+    sample_count = 0
+
+    while True:
+        if MatrixOS.USB.CDC.Connected():
+            # Simulate sensor readings
+            temperature = 20 + random.randint(0, 10)
+            humidity = 40 + random.randint(0, 30)
+
+            # Format and send data
+            timestamp = MatrixOS.SYS.Millis()
+            log_line = f"{timestamp},{temperature},{humidity}\n"
+
+            MatrixOS.USB.CDC.Print(log_line, "")
+            MatrixOS.USB.CDC.Flush()
+
+            sample_count += 1
+
+            if sample_count % 10 == 0:
+                MatrixOS.USB.CDC.Print(f"# Logged {sample_count} samples\n", "")
+
+        MatrixOS.SYS.DelayMs(1000)  # Log every second
+
+sensor_logger()
+```
+
+### Interactive Configuration
+```python
+def device_config():
+    """Interactive device configuration via CDC"""
+
+    config = {
+        "brightness": 128,
+        "color": {"r": 255, "g": 0, "b": 0},
+        "mode": "normal"
+    }
+
+    def show_menu():
+        MatrixOS.USB.CDC.Print("\n=== Device Configuration ===\n", "")
+        MatrixOS.USB.CDC.Print("1. Set brightness\n", "")
+        MatrixOS.USB.CDC.Print("2. Set color\n", "")
+        MatrixOS.USB.CDC.Print("3. Set mode\n", "")
+        MatrixOS.USB.CDC.Print("4. Show current config\n", "")
+        MatrixOS.USB.CDC.Print("5. Exit\n", "")
+        MatrixOS.USB.CDC.Print("Choice: ", "")
+        MatrixOS.USB.CDC.Flush()
+
+    def show_config():
+        MatrixOS.USB.CDC.Print(f"Brightness: {config['brightness']}\n", "")
+        MatrixOS.USB.CDC.Print(f"Color: R{config['color']['r']} G{config['color']['g']} B{config['color']['b']}\n", "")
+        MatrixOS.USB.CDC.Print(f"Mode: {config['mode']}\n", "")
+
+    MatrixOS.USB.CDC.Print("Device Configuration Interface\n", "")
+
+    while True:
+        if MatrixOS.USB.CDC.Connected():
+            show_menu()
+
+            # Wait for input
+            while MatrixOS.USB.CDC.Available() == 0:
+                MatrixOS.SYS.DelayMs(10)
+
+            choice = MatrixOS.USB.CDC.ReadString().strip()
+
+            if choice == "1":
+                MatrixOS.USB.CDC.Print("Enter brightness (0-255): ", "")
+                MatrixOS.USB.CDC.Flush()
+
+                while MatrixOS.USB.CDC.Available() == 0:
+                    MatrixOS.SYS.DelayMs(10)
+
+                try:
+                    brightness = int(MatrixOS.USB.CDC.ReadString().strip())
+                    if 0 <= brightness <= 255:
+                        config["brightness"] = brightness
+                        MatrixOS.USB.CDC.Print(f"Brightness set to {brightness}\n", "")
+                    else:
+                        MatrixOS.USB.CDC.Print("Invalid range (0-255)\n", "")
+                except:
+                    MatrixOS.USB.CDC.Print("Invalid number\n", "")
+
+            elif choice == "4":
+                show_config()
+
+            elif choice == "5":
+                MatrixOS.USB.CDC.Print("Exiting configuration\n", "")
+                break
+
+            else:
+                MatrixOS.USB.CDC.Print("Invalid choice\n", "")
+
+        MatrixOS.SYS.DelayMs(100)
+
+device_config()
+```
+
+---
+
+## Best Practices
+
+1. **Connection Checking**: Always verify `Connected()` before CDC operations
+2. **Buffer Management**: Use `Available()` to check for data before reading
+3. **Flow Control**: Use `Flush()` for time-sensitive communications
+4. **Error Handling**: Handle cases where CDC connection is lost
+5. **Performance**: Poll regularly but don't overwhelm the interface
+6. **Line Endings**: Be consistent with line ending conventions (\n, \r\n)
+7. **Buffer Limits**: Be aware of buffer size limitations for large data transfers
+
+---
+
+## Integration Examples
+
+### CDC with KeyPad Input
+```python
+def keypad_to_cdc():
+    """Send keypad events over CDC"""
+
+    MatrixOS.USB.CDC.Print("KeyPad to CDC Bridge Active\n", "")
+
+    while True:
+        if MatrixOS.USB.CDC.Connected():
+            key_event = MatrixOS.KeyPad.Get(100)
+
+            if key_event is not None:
+                key_id = MatrixOS.KeyPad.XY2ID(key_event.xy)
+                state_text = "pressed" if key_event.state == 1 else "released"
+
+                message = f"Key {key_id} {state_text} at ({key_event.xy.x},{key_event.xy.y})\n"
+                MatrixOS.USB.CDC.Print(message, "")
+                MatrixOS.USB.CDC.Flush()
+
+keypad_to_cdc()
+```
+
+### CDC Control of LED Matrix
+```python
+def cdc_led_control():
+    """Control LED matrix via CDC commands"""
+
+    MatrixOS.USB.CDC.Print("LED Control via CDC\n", "")
+    MatrixOS.USB.CDC.Print("Commands: fill r,g,b | clear | pixel x,y,r,g,b\n", "")
+
+    while True:
+        if MatrixOS.USB.CDC.Connected() and MatrixOS.USB.CDC.Available() > 0:
+            command = MatrixOS.USB.CDC.ReadString().strip()
+            parts = command.split()
+
+            try:
+                if parts[0] == "fill" and len(parts) == 2:
+                    r, g, b = map(int, parts[1].split(','))
+                    MatrixOS.LED.Fill(Color(r, g, b), 255)
+                    MatrixOS.LED.Update(255)
+                    MatrixOS.USB.CDC.Print("LED filled\n", "")
+
+                elif parts[0] == "clear":
+                    MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+                    MatrixOS.LED.Update(0)
+                    MatrixOS.USB.CDC.Print("LED cleared\n", "")
+
+                elif parts[0] == "pixel" and len(parts) == 2:
+                    coords, colors = parts[1].split(',', 2)
+                    x, y = map(int, coords.split(',')[:2])
+                    r, g, b = map(int, colors.split(','))
+                    MatrixOS.LED.SetColor(Point(x, y), Color(r, g, b), 255)
+                    MatrixOS.LED.Update(255)
+                    MatrixOS.USB.CDC.Print(f"Pixel set at ({x},{y})\n", "")
+
+                else:
+                    MatrixOS.USB.CDC.Print("Invalid command\n", "")
+
+            except Exception as e:
+                MatrixOS.USB.CDC.Print("Command error\n", "")
+
+            MatrixOS.USB.CDC.Flush()
+
+cdc_led_control()
+```

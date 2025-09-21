@@ -1,0 +1,354 @@
+---
+sidebar_position: 3
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# ColorPicker
+
+## Overview
+
+The `ColorPicker` utility provides an interactive color selection interface on the LED matrix. Users can select colors using the keypad interface with visual feedback.
+
+*The ColorPicker utility is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>.*
+
+---
+
+## `ColorPicker`
+```python
+def ColorPicker() -> any
+```
+
+Displays an interactive color picker interface and returns the selected color.
+
+**Returns:**
+- `Color`: Selected color chosen by the user, or `None` if cancelled
+
+**Example:**
+```python
+# Open color picker
+selected_color = MatrixOS.UIUtility.ColorPicker()
+
+if selected_color is not None:
+    print("User selected a color")
+    # Use the selected color
+    MatrixOS.LED.Fill(selected_color, 255)
+    MatrixOS.LED.Update(255)
+else:
+    print("Color selection was cancelled")
+```
+
+---
+
+## Usage Examples
+
+### Basic Color Selection
+```python
+def choose_theme_color():
+    """Let user choose a theme color for the application"""
+
+    print("Please select your preferred theme color...")
+
+    theme_color = MatrixOS.UIUtility.ColorPicker()
+
+    if theme_color is not None:
+        print("Theme color selected!")
+
+        # Show the selected color across the grid
+        MatrixOS.LED.Fill(theme_color, 255)
+        MatrixOS.LED.Update(255)
+        MatrixOS.SYS.DelayMs(2000)
+
+        return theme_color
+    else:
+        print("Using default theme color")
+        return Color(0, 255, 255)  # Default cyan
+
+app_theme = choose_theme_color()
+```
+
+### Multi-Color Palette Creation
+```python
+def create_color_palette():
+    """Create a custom color palette"""
+
+    palette = []
+    max_colors = 4
+
+    print(f"Creating color palette with {max_colors} colors...")
+
+    for i in range(max_colors):
+        print(f"Select color {i + 1} of {max_colors}")
+
+        color = MatrixOS.UIUtility.ColorPicker()
+
+        if color is not None:
+            palette.append(color)
+            print(f"Color {i + 1} added to palette")
+
+            # Brief preview of current palette
+            for j, preview_color in enumerate(palette):
+                MatrixOS.LED.SetColor(Point(j * 2, 0), preview_color, 255)
+                MatrixOS.LED.SetColor(Point(j * 2 + 1, 0), preview_color, 255)
+
+            MatrixOS.LED.Update(255)
+            MatrixOS.SYS.DelayMs(1000)
+        else:
+            print(f"Color {i + 1} selection cancelled, stopping palette creation")
+            break
+
+    print(f"Palette created with {len(palette)} colors")
+    return palette
+
+user_palette = create_color_palette()
+
+# Display the final palette
+if user_palette:
+    print("Final palette:")
+    for i, color in enumerate(user_palette):
+        print(f"Color {i + 1}: RGB({color.r}, {color.g}, {color.b})")
+```
+
+### Interactive LED Painting
+```python
+def led_painting_mode():
+    """Interactive LED painting with color picker"""
+
+    current_color = Color(255, 255, 255)  # Start with white
+    painting_mode = True
+
+    print("LED Painting Mode")
+    print("Press any key to paint, hold a key to change color")
+
+    while painting_mode:
+        key_event = MatrixOS.KeyPad.Get(100)
+
+        if key_event is not None:
+            if key_event.state == 1:  # Key pressed
+                # Short press = paint with current color
+                MatrixOS.LED.SetColor(key_event.xy, current_color, 255)
+                MatrixOS.LED.Update(255)
+
+            elif key_event.state == 3:  # Key held
+                # Long press = change color
+                print("Changing brush color...")
+                new_color = MatrixOS.UIUtility.ColorPicker()
+
+                if new_color is not None:
+                    current_color = new_color
+                    print("Brush color changed!")
+
+                    # Show new brush color in corner
+                    MatrixOS.LED.SetColor(Point(7, 7), current_color, 255)
+                    MatrixOS.LED.Update(255)
+
+        # Check for exit condition (e.g., specific key combination)
+        # This would depend on your specific exit mechanism
+
+led_painting_mode()
+```
+
+### Layer Color Assignment
+```python
+def assign_layer_colors():
+    """Assign colors to different layers"""
+
+    layer_names = ["Bass", "Drums", "Melody", "Harmony"]
+    layer_colors = {}
+
+    print("Assigning colors to layers...")
+
+    for layer_name in layer_names:
+        print(f"Select color for {layer_name} layer")
+
+        color = MatrixOS.UIUtility.ColorPicker()
+
+        if color is not None:
+            layer_colors[layer_name] = color
+            print(f"{layer_name} layer color assigned")
+
+            # Show layer indicator
+            layer_index = layer_names.index(layer_name)
+            for x in range(8):
+                MatrixOS.LED.SetColor(Point(x, layer_index), color, 255)
+
+            MatrixOS.LED.Update(255)
+            MatrixOS.SYS.DelayMs(1000)
+        else:
+            print(f"Skipping {layer_name} layer")
+
+    print("Layer color assignment complete")
+    return layer_colors
+
+layer_colors = assign_layer_colors()
+
+# Use the assigned colors
+for layer, color in layer_colors.items():
+    print(f"{layer}: RGB({color.r}, {color.g}, {color.b})")
+```
+
+### Settings with Color Customization
+```python
+def customize_app_colors():
+    """Customize application color scheme"""
+
+    color_settings = {
+        "background": Color(0, 0, 0),      # Default black
+        "text": Color(255, 255, 255),      # Default white
+        "accent": Color(0, 255, 255),      # Default cyan
+        "warning": Color(255, 255, 0),     # Default yellow
+        "error": Color(255, 0, 0)          # Default red
+    }
+
+    setting_names = {
+        "background": "Background",
+        "text": "Text Color",
+        "accent": "Accent Color",
+        "warning": "Warning Color",
+        "error": "Error Color"
+    }
+
+    print("Customize application colors")
+    print("Select 'Next' to keep current color, or choose a new one")
+
+    for setting_key, default_color in color_settings.items():
+        display_name = setting_names[setting_key]
+
+        # Show current color
+        print(f"Current {display_name.lower()}")
+        MatrixOS.LED.Fill(default_color, 255)
+        MatrixOS.LED.Update(255)
+        MatrixOS.SYS.DelayMs(1500)
+
+        print(f"Select new {display_name.lower()} (or cancel to keep current)")
+        new_color = MatrixOS.UIUtility.ColorPicker()
+
+        if new_color is not None:
+            color_settings[setting_key] = new_color
+            print(f"{display_name} updated")
+        else:
+            print(f"Keeping current {display_name.lower()}")
+
+    print("Color customization complete!")
+    return color_settings
+
+app_colors = customize_app_colors()
+
+# Apply the color scheme
+def apply_color_scheme(colors):
+    """Apply the selected color scheme"""
+    print("Applying color scheme...")
+
+    # Example: Show each color briefly
+    for setting_name, color in colors.items():
+        print(f"Applying {setting_name} color")
+        MatrixOS.LED.Fill(color, 255)
+        MatrixOS.LED.Update(255)
+        MatrixOS.SYS.DelayMs(800)
+
+apply_color_scheme(app_colors)
+```
+
+---
+
+## Color Picker Integration Patterns
+
+### Conditional Color Selection
+```python
+def smart_color_picker(context="general"):
+    """Context-aware color picker with smart defaults"""
+
+    print(f"Color picker for {context}")
+
+    # Show context-appropriate preview
+    if context == "warning":
+        MatrixOS.LED.Fill(Color(255, 255, 0), 255)  # Yellow preview
+    elif context == "error":
+        MatrixOS.LED.Fill(Color(255, 0, 0), 255)    # Red preview
+    elif context == "success":
+        MatrixOS.LED.Fill(Color(0, 255, 0), 255)    # Green preview
+    else:
+        MatrixOS.LED.Fill(Color(255, 255, 255), 255) # White preview
+
+    MatrixOS.LED.Update(255)
+    MatrixOS.SYS.DelayMs(1000)
+
+    selected_color = MatrixOS.UIUtility.ColorPicker()
+
+    if selected_color is None:
+        # Return context-appropriate default if cancelled
+        defaults = {
+            "warning": Color(255, 255, 0),
+            "error": Color(255, 0, 0),
+            "success": Color(0, 255, 0),
+            "general": Color(255, 255, 255)
+        }
+        selected_color = defaults.get(context, Color(255, 255, 255))
+
+    return selected_color
+
+# Usage
+warning_color = smart_color_picker("warning")
+error_color = smart_color_picker("error")
+success_color = smart_color_picker("success")
+```
+
+### Color Validation and Feedback
+```python
+def validate_color_choice(color, min_brightness=50):
+    """Validate color choice and provide feedback"""
+
+    if color is None:
+        return False, "No color selected"
+
+    # Calculate approximate brightness
+    brightness = (color.r + color.g + color.b) / 3
+
+    if brightness < min_brightness:
+        return False, f"Color too dark (brightness: {brightness:.0f})"
+
+    return True, "Color acceptable"
+
+def guided_color_selection(purpose="general"):
+    """Guided color selection with validation"""
+
+    max_attempts = 3
+    attempts = 0
+
+    while attempts < max_attempts:
+        print(f"Select color for {purpose} (attempt {attempts + 1}/{max_attempts})")
+
+        color = MatrixOS.UIUtility.ColorPicker()
+
+        if color is None:
+            print("Selection cancelled")
+            return None
+
+        is_valid, message = validate_color_choice(color)
+
+        if is_valid:
+            print(f"Color accepted: {message}")
+            return color
+        else:
+            print(f"Color rejected: {message}")
+            attempts += 1
+
+            if attempts < max_attempts:
+                print("Please try again with a brighter color")
+
+    print("Maximum attempts reached, using default")
+    return Color(255, 255, 255)  # Default white
+
+final_color = guided_color_selection("button highlight")
+```
+
+---
+
+## Best Practices
+
+1. **User Feedback**: Always provide clear instructions before opening the color picker
+2. **Default Handling**: Handle cancelled selections gracefully with appropriate defaults
+3. **Context Awareness**: Consider the purpose when validating color choices
+4. **Visual Preview**: Show color previews when possible to confirm selection
+5. **Accessibility**: Consider brightness and contrast requirements for your use case
+6. **User Flow**: Integrate color picking smoothly into your application workflow
+7. **Validation**: Implement appropriate color validation based on your needs

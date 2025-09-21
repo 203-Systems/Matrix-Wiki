@@ -1,0 +1,350 @@
+---
+sidebar_position: 6
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# NVS API
+
+## Overview
+
+The NVS (Non-Volatile Storage) API in MatrixOS provides persistent storage for application data that survives device reboots. Data is stored using hash-based keys and can store arbitrary binary data. The NVS API is available as `MatrixOS.NVS` and is imported by default.
+
+*The Python NVS API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_NVS.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_NVS.pyi"/>.*
+
+---
+
+## `MatrixOS.NVS.GetSize`
+```python
+def GetSize(hash: int) -> int
+```
+
+Gets the size of stored data for a given hash key.
+
+**Parameters:**
+- `hash` (`int`): Hash key identifying the stored data
+
+**Returns:**
+- `int`: Size of stored data in bytes, or 0 if not found
+
+**Example:**
+```python
+data_size = MatrixOS.NVS.GetSize(0xDEADBEAF)
+if data_size > 0:
+    print(f"Data size: {data_size} bytes")
+else:
+    print("No data found for this key")
+```
+
+---
+
+## `MatrixOS.NVS.GetVariable`
+```python
+def GetVariable(hash: int) -> bytes
+```
+
+Retrieves stored data for a given hash key.
+
+**Parameters:**
+- `hash` (`int`): Hash key identifying the stored data
+
+**Returns:**
+- `bytes`: Stored data as bytes object, or empty bytes if not found
+
+**Example:**
+```python
+data = MatrixOS.NVS.GetVariable(0xDEADBEAF)
+if data:
+    print(f"Retrieved data: {data}")
+else:
+    print("No data found")
+```
+
+---
+
+## `MatrixOS.NVS.SetVariable`
+```python
+def SetVariable(hash: int, data: bytes, length: int) -> bool
+```
+
+Stores data with a given hash key.
+
+**Parameters:**
+- `hash` (`int`): Hash key to identify the data
+- `data` (`bytes`): Data to store
+- `length` (`int`): Length of data to store
+
+**Returns:**
+- `bool`: True if successful, False on error
+
+**Example:**
+```python
+data_to_store = b"Hello, persistent world!"
+success = MatrixOS.NVS.SetVariable(0xDEADBEAF, data_to_store, len(data_to_store))
+if success:
+    print("Data stored successfully")
+else:
+    print("Failed to store data")
+```
+
+---
+
+## `MatrixOS.NVS.DeleteVariable`
+```python
+def DeleteVariable(hash: int) -> bool
+```
+
+Deletes stored data for a given hash key.
+
+**Parameters:**
+- `hash` (`int`): Hash key identifying the data to delete
+
+**Returns:**
+- `bool`: True if successful, False if key not found or error
+
+**Example:**
+```python
+success = MatrixOS.NVS.DeleteVariable(0xDEADBEAF)
+if success:
+    print("Data deleted successfully")
+else:
+    print("Failed to delete data or key not found")
+```
+
+---
+
+## Practical Examples
+
+### Simple Key-Value Storage
+```python
+def simple_storage_example():
+    """Demonstrate basic NVS operations"""
+
+    # Store some configuration
+    config_key = 0xDEADBEAF
+    config_data = b"brightness:128,volume:75"
+
+    # Store the data
+    if MatrixOS.NVS.SetVariable(config_key, config_data, len(config_data)):
+        print("Configuration saved")
+
+        # Retrieve the data
+        retrieved = MatrixOS.NVS.GetVariable(config_key)
+        if retrieved:
+            print(f"Retrieved config: {retrieved.decode()}")
+
+        # Check size
+        size = MatrixOS.NVS.GetSize(config_key)
+        print(f"Config size: {size} bytes")
+
+        # Clean up
+        MatrixOS.NVS.DeleteVariable(config_key)
+        print("Configuration deleted")
+
+simple_storage_example()
+```
+
+### Settings Manager
+```python
+class SettingsManager:
+    """Simple settings manager using NVS"""
+
+    def __init__(self, base_key=2000):
+        self.base_key = base_key
+        self.key_counter = 0
+
+    def _get_key(self, name):
+        """Generate hash key from setting name"""
+        # Simple hash - in production, use a proper hash function
+        return self.base_key + hash(name) % 10000
+
+    def save_setting(self, name, value):
+        """Save a setting as JSON-like string"""
+        key = self._get_key(name)
+        data = f"{name}:{value}".encode()
+
+        success = MatrixOS.NVS.SetVariable(key, data, len(data))
+        return success
+
+    def load_setting(self, name, default=None):
+        """Load a setting, return default if not found"""
+        key = self._get_key(name)
+        data = MatrixOS.NVS.GetVariable(key)
+
+        if data:
+            try:
+                # Parse simple name:value format
+                decoded = data.decode()
+                if ':' in decoded:
+                    _, value = decoded.split(':', 1)
+                    return value
+            except:
+                pass
+
+        return default
+
+    def delete_setting(self, name):
+        """Delete a setting"""
+        key = self._get_key(name)
+        return MatrixOS.NVS.DeleteVariable(key)
+
+    def setting_exists(self, name):
+        """Check if a setting exists"""
+        key = self._get_key(name)
+        return MatrixOS.NVS.GetSize(key) > 0
+
+# Usage example
+settings = SettingsManager()
+
+# Save settings
+settings.save_setting("brightness", "128")
+settings.save_setting("last_app", "Performance")
+settings.save_setting("user_name", "MatrixUser")
+
+# Load settings
+brightness = settings.load_setting("brightness", "100")
+last_app = settings.load_setting("last_app", "Default")
+user_name = settings.load_setting("user_name", "Anonymous")
+
+print(f"Brightness: {brightness}")
+print(f"Last app: {last_app}")
+print(f"User: {user_name}")
+
+# Check existence
+if settings.setting_exists("brightness"):
+    print("Brightness setting exists")
+
+# Clean up
+settings.delete_setting("brightness")
+```
+
+### Binary Data Storage
+```python
+def binary_storage_example():
+    """Store and retrieve binary data"""
+
+    # Create some binary data (e.g., color palette)
+    color_palette = bytes([
+        255, 0, 0,    # Red
+        0, 255, 0,    # Green
+        0, 0, 255,    # Blue
+        255, 255, 0,  # Yellow
+    ])
+
+    palette_key = 0xDEADBEAF
+
+    # Store the palette
+    if MatrixOS.NVS.SetVariable(palette_key, color_palette, len(color_palette)):
+        print("Color palette saved")
+
+        # Retrieve and verify
+        retrieved_palette = MatrixOS.NVS.GetVariable(palette_key)
+        if retrieved_palette == color_palette:
+            print("✓ Palette retrieved correctly")
+
+            # Parse colors
+            for i in range(0, len(retrieved_palette), 3):
+                r, g, b = retrieved_palette[i:i+3]
+                print(f"Color {i//3}: RGB({r}, {g}, {b})")
+        else:
+            print("✗ Palette corruption detected")
+
+binary_storage_example()
+```
+
+### Application State Persistence
+```python
+class AppState:
+    """Persistent application state"""
+
+    def __init__(self, app_name):
+        self.app_name = app_name
+        self.base_key = hash(app_name) % 50000
+
+    def save_state(self, state_dict):
+        """Save application state dictionary"""
+        # Convert dict to simple string format
+        state_str = ""
+        for key, value in state_dict.items():
+            state_str += f"{key}={value};"
+
+        data = state_str.encode()
+        key = self.base_key + 1  # State key
+
+        return MatrixOS.NVS.SetVariable(key, data, len(data))
+
+    def load_state(self):
+        """Load application state dictionary"""
+        key = self.base_key + 1
+        data = MatrixOS.NVS.GetVariable(key)
+
+        if not data:
+            return {}
+
+        try:
+            state_str = data.decode()
+            state_dict = {}
+
+            for pair in state_str.split(';'):
+                if '=' in pair:
+                    k, v = pair.split('=', 1)
+                    state_dict[k] = v
+
+            return state_dict
+        except:
+            return {}
+
+    def clear_state(self):
+        """Clear saved state"""
+        key = self.base_key + 1
+        return MatrixOS.NVS.DeleteVariable(key)
+
+# Usage example
+app_state = AppState("MyPythonApp")
+
+# Save state
+current_state = {
+    "level": "5",
+    "score": "1250",
+    "mode": "advanced"
+}
+app_state.save_state(current_state)
+
+# Later... load state
+loaded_state = app_state.load_state()
+print(f"Loaded state: {loaded_state}")
+
+# Get specific values with defaults
+level = loaded_state.get("level", "1")
+score = loaded_state.get("score", "0")
+print(f"Level: {level}, Score: {score}")
+```
+
+---
+
+## Best Practices
+
+1. **Key Management**: Use consistent hash key generation schemes
+2. **Data Validation**: Always validate retrieved data before use
+3. **Error Handling**: Check return values for storage operations
+4. **Size Limits**: Be aware of NVS storage limits on the device
+5. **Data Format**: Use consistent data encoding/decoding
+6. **Cleanup**: Delete unused data to free storage space
+7. **Backup**: Consider data backup strategies for important settings
+
+---
+
+## Hash Key Guidelines
+
+1. **Uniqueness**: Ensure hash keys don't collide between applications
+2. **Consistency**: Use the same key generation method throughout your app
+3. **Namespacing**: Consider using base offsets for different data types
+4. **Documentation**: Document your key allocation scheme
+
+---
+
+## Storage Considerations
+
+- **Persistence**: Data survives reboots and power cycles
+- **Wear Leveling**: NVS handles flash wear leveling automatically
+- **Size Limits**: Check device specifications for NVS capacity
+- **Performance**: NVS operations may have latency, avoid in time-critical code

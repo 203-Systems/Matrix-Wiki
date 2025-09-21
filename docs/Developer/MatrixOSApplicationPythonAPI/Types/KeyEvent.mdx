@@ -1,0 +1,313 @@
+---
+sidebar_position: 4
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# KeyEvent
+
+## Overview
+
+The `KeyEvent` class represents an event triggered by input interaction, containing information about the key ID and its associated details.
+
+*The Python KeyEvent class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_KeyEvent.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_KeyEvent.pyi"/>.*
+
+---
+
+## Constructor
+
+### `KeyEvent(id, info)`
+```python
+def __init__(self, id: int, info: KeyInfo) -> None
+```
+
+Creates a new KeyEvent instance.
+
+**Parameters:**
+- `id` (`int`): Unique identifier for the key event
+- `info` (`KeyInfo`): KeyInfo object containing additional key details
+
+---
+
+## Methods
+
+### `ID`
+```python
+def ID(self) -> int
+```
+
+Gets the unique identifier for this key event.
+
+**Returns:**
+- `int`: The key ID
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_id = key_event.ID()
+    print(f"Key ID: {key_id}")
+```
+
+---
+
+### `KeyInfo`
+```python
+def KeyInfo(self) -> KeyInfo
+```
+
+Gets the KeyInfo object containing additional key details.
+
+**Returns:**
+- `KeyInfo`: Object with key state, velocity, and timing information
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    if key_info.Active():
+        print(f"Key {key_event.ID()} is active")
+        print(f"Velocity: {key_info.Velocity()}")
+```
+
+---
+
+## Usage Examples
+
+### Basic Key Event Handling
+```python
+def handle_key_events():
+    """Basic key event processing"""
+
+    print("Key event handler started...")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(100)  # 100ms timeout
+
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+
+            print(f"Key {key_id} event:")
+            print(f"  State: {key_info.State()}")
+            print(f"  Velocity: {key_info.Velocity():.2f}")
+            print(f"  Active: {key_info.Active()}")
+
+            if key_info.Hold():
+                print(f"  Hold time: {key_info.HoldTime()}ms")
+
+handle_key_events()
+```
+
+### Key Event Classification
+```python
+def classify_key_events():
+    """Classify and respond to different types of key events"""
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(50)
+
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+
+            # Convert to XY coordinates for display
+            xy = MatrixOS.KeyPad.ID2XY(key_id)
+
+            if key_info.Active():
+                # Key is currently pressed
+                velocity = key_info.Velocity()
+
+                if velocity > 0.8:
+                    print(f"Hard press at ({xy.x},{xy.y})")
+                    MatrixOS.LED.SetColor(xy, Color(255, 0, 0), 255)
+                elif velocity > 0.4:
+                    print(f"Medium press at ({xy.x},{xy.y})")
+                    MatrixOS.LED.SetColor(xy, Color(255, 255, 0), 255)
+                else:
+                    print(f"Soft press at ({xy.x},{xy.y})")
+                    MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 255)
+
+                if key_info.Hold():
+                    hold_time = key_info.HoldTime()
+                    if hold_time > 1000:  # Held for more than 1 second
+                        print(f"Long hold detected: {hold_time}ms")
+                        MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+            else:
+                # Key was released
+                print(f"Key released at ({xy.x},{xy.y})")
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+
+            MatrixOS.LED.Update(255)
+
+classify_key_events()
+```
+
+### Event-Driven Application
+```python
+def event_driven_app():
+    """Event-driven application using KeyEvent objects"""
+
+    app_state = {
+        "mode": "normal",
+        "selected_key": None,
+        "last_event_time": 0
+    }
+
+    def handle_normal_mode(key_event):
+        """Handle events in normal mode"""
+        key_id = key_event.ID()
+        key_info = key_event.KeyInfo()
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+
+        if key_info.Active():
+            app_state["selected_key"] = key_id
+            MatrixOS.LED.SetColor(xy, Color(0, 255, 255), 255)
+
+            # Check for mode switch (long press)
+            if key_info.Hold() and key_info.HoldTime() > 2000:
+                app_state["mode"] = "config"
+                MatrixOS.LED.Fill(Color(255, 0, 255), 100)
+                print("Switched to config mode")
+        else:
+            MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+
+    def handle_config_mode(key_event):
+        """Handle events in configuration mode"""
+        key_id = key_event.ID()
+        key_info = key_event.KeyInfo()
+
+        if key_info.Active():
+            if key_id == 0:  # Top-left corner to exit
+                app_state["mode"] = "normal"
+                MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+                print("Switched to normal mode")
+            else:
+                # Configuration actions
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                MatrixOS.LED.SetColor(xy, Color(255, 255, 0), 255)
+                print(f"Config action: key {key_id}")
+
+    print("Event-driven app started")
+    print("Long press any key for config mode")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(100)
+
+        if key_event is not None:
+            app_state["last_event_time"] = MatrixOS.SYS.Millis()
+
+            if app_state["mode"] == "normal":
+                handle_normal_mode(key_event)
+            elif app_state["mode"] == "config":
+                handle_config_mode(key_event)
+
+            MatrixOS.LED.Update(255)
+
+        # Auto-return to normal mode if no activity
+        if (app_state["mode"] == "config" and
+            MatrixOS.SYS.Millis() - app_state["last_event_time"] > 10000):
+            app_state["mode"] = "normal"
+            MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+            MatrixOS.LED.Update(0)
+            print("Auto-returned to normal mode")
+
+event_driven_app()
+```
+
+### Multi-Key Gesture Detection
+```python
+def gesture_detector():
+    """Detect multi-key gestures using KeyEvent timing"""
+
+    active_keys = {}
+    gesture_threshold = 200  # ms
+
+    def detect_gesture(active_keys):
+        """Analyze active keys for gesture patterns"""
+        key_ids = list(active_keys.keys())
+
+        if len(key_ids) == 2:
+            # Two-key gestures
+            key1_xy = MatrixOS.KeyPad.ID2XY(key_ids[0])
+            key2_xy = MatrixOS.KeyPad.ID2XY(key_ids[1])
+
+            # Horizontal swipe
+            if key1_xy.y == key2_xy.y and abs(key1_xy.x - key2_xy.x) == 1:
+                return "horizontal_swipe"
+            # Vertical swipe
+            elif key1_xy.x == key2_xy.x and abs(key1_xy.y - key2_xy.y) == 1:
+                return "vertical_swipe"
+            # Corner tap
+            elif (key1_xy.x == 0 and key1_xy.y == 0) or (key1_xy.x == 7 and key1_xy.y == 7):
+                return "corner_combo"
+
+        elif len(key_ids) == 4:
+            # Four corners
+            corners = [(0,0), (0,7), (7,0), (7,7)]
+            key_positions = [(MatrixOS.KeyPad.ID2XY(kid).x, MatrixOS.KeyPad.ID2XY(kid).y) for kid in key_ids]
+            if all(pos in corners for pos in key_positions):
+                return "four_corners"
+
+        return None
+
+    print("Gesture detector active")
+    print("Try: two adjacent keys, four corners, etc.")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(50)
+
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+            current_time = MatrixOS.SYS.Millis()
+
+            if key_info.Active():
+                active_keys[key_id] = {
+                    "start_time": current_time,
+                    "info": key_info
+                }
+
+                # Light up active keys
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 255)
+
+            else:
+                # Key released
+                if key_id in active_keys:
+                    del active_keys[key_id]
+
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+
+            # Check for gestures when multiple keys are active
+            if len(active_keys) >= 2:
+                gesture = detect_gesture(active_keys)
+                if gesture:
+                    print(f"Gesture detected: {gesture}")
+
+                    # Visual feedback
+                    MatrixOS.LED.Fill(Color(255, 255, 255), 255)
+                    MatrixOS.LED.Update(255)
+                    MatrixOS.SYS.DelayMs(200)
+
+                    # Clear gesture state
+                    active_keys.clear()
+                    MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+
+            MatrixOS.LED.Update(255)
+
+gesture_detector()
+```
+
+---
+
+## Best Practices
+
+1. **Event Processing**: Always check if KeyEvent is not None before accessing its properties
+2. **Memory Management**: KeyEvent objects are managed automatically in Python
+3. **Performance**: Process KeyEvent data quickly to maintain responsiveness
+4. **State Tracking**: Use KeyInfo methods to track key states accurately
+5. **Timing**: Use KeyInfo timing methods for gesture detection and hold detection
+6. **Coordinate Conversion**: Use MatrixOS.KeyPad.ID2XY() to convert key IDs to coordinates
+7. **Error Handling**: Handle cases where KeyEvent might be None (no events available)

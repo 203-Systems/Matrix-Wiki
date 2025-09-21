@@ -24,73 +24,17 @@ export function ConfigMenu() {
 
     const uiElements = [
         {
-            "name": "Brightness Control",
-            "desc": "Tap to cycle through brightness levels. Hold to enter the brightness control menu.",
-            "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+            "name": "Octave Selector",
+            "desc": "Select the octave of the note pad layout.",
             "elements": [
                 {
-                    "pos": [3, 3],
-                    "size": [2, 2],
-                    "color": "#FFFFFF"
-                }
-            ]
-        },
-        {
-            "name": "Rotate Device Up",
-            "desc": "This technically doesn't do anything.",
-            "link": "#device-rotation",
-            "elements": [
+                    "pos": [0, 0],
+                    "size": [1, 8],
+                    "color": "#8000FF"
+                },
                 {
-                    "pos": [3, 2],
-                    "size": [2, 1],
-                    "color": "#00FF00"
-                }
-            ]
-        },
-        {
-            "name": "Rotate Device Left",
-            "desc": "Rotate the device so that the top of the device is on the left side.",
-            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-            "elements": [
-                {
-                    "pos": [2, 3],
-                    "size": [1, 2],
-                    "color": "#00FF00"
-                }
-            ]
-        },
-        {
-            "name": "Rotate Device Down",
-            "desc": "Rotate the device so that the top of the device is on the bottom side.",
-            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-            "elements": [
-                {
-                    "pos": [3, 5],
-                    "size": [2, 1],
-                    "color": "#00FF00"
-                }
-            ]
-        },
-        {
-            "name": "Rotate Device Right",
-            "desc": "Rotate the device so that the top of the device is on the right side.",
-            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-            "elements": [
-                {
-                    "pos": [5, 3],
-                    "size": [1, 2],
-                    "color": "#00FF00"
-                }
-            ]
-        },
-        {
-            "name": "System Settings",
-            "desc": "Enter the system settings.",
-            "link": "/docs/MatrixOS/SystemSettings",
-            "elements": [
-                {
-                    "pos": [7, 7],
-                    "color": "#FFFFFF"
+                    "pos": [0, 4],
+                    "color": "#FF00FF"
                 }
             ]
         },
@@ -107,16 +51,17 @@ export function ConfigMenu() {
         {
             "name": "MIDI Channel Selector",
             "desc": "Select the MIDI out channel of the note pad.",
+            "link": "#midi-channel",
             "elements": [
                 {
-                    "pos": [7, 5],
+                    "pos": [7, 4],
                     "color": "#60FF00"
                 }
             ]
         },
         {
             "name": "Velocity Sensitivity",
-            "desc": "Enable or disable velocity sensitivity for the active note pad layout. (Device with Force Sensitive Keypad only)",
+            "desc": "Enable or disable velocity sensitivity for the note pad. (Device with Force Sensitive Keypad only)",
             "elements": [
                 {
                     "pos": [6, 7],
@@ -125,17 +70,13 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Octave Selector",
-            "desc": "Select the octave of the active note pad layout (Layout Config Independent & color may change based on the layout config).",
+            "name": "System Settings",
+            "desc": "Enter the system settings.",
+            "link": "/docs/MatrixOS/SystemSettings",
             "elements": [
                 {
-                    "pos": [0, 0],
-                    "size": [1, 8],
-                    "color": "#8000FF"
-                },
-                {
-                    "pos": [0, 4],
-                    "color": "#FF00FF"
+                    "pos": [7, 7],
+                    "color": "#FFFFFF"
                 }
             ]
         },
@@ -161,3 +102,66 @@ export function ConfigMenu() {
 }
 
 <ConfigMenu />
+
+## MIDI Channel
+
+This setting allows you to select the MIDI output channel (1-16) for the note pad.
+
+export function ChannelSelector() {
+
+    const uiElements = [
+    {
+        "name": "MIDI Channel Display",
+        "desc": "Displays the MIDI out channel of the active note pad layout.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Channel Selector",
+        "desc": "Selects the MIDI out channel of the active note pad.",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#48C000"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#60FF00"
+            }
+
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "MIDI Channel Selector"
+    const uiDescription = "The MIDI Channel Selector allows you to select the MIDI out channel of the active note pad layout."
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ChannelSelector />

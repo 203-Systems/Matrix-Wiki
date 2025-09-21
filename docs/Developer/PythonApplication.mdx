@@ -1,0 +1,55 @@
+---
+sidebar_position: 4
+---
+
+# Code your application (Python)
+
+## Writing Python Apps
+
+There are two ways to write Python applications for MatrixOS:
+
+### Method 1: Python REPL
+Use the Python app in the application launcher to access a Python REPL through USB serial. This is great for testing and rapid prototyping.
+
+### Method 2: Standalone Application
+Create a standalone Python application by placing your files in the device storage.
+
+## Creating a Standalone Application
+
+### File Structure
+Place your application files in the device storage:
+```
+/MatrixOS/Applications/<appname>/
+```
+
+Your application folder must contain:
+- Your Python script files (`.py`)
+- An `AppInfo.json` configuration file
+
+### AppInfo.json
+
+The `AppInfo.json` file defines your application's metadata:
+
+```json
+{
+  "name": "Hello World",
+  "author": "203 System",
+  "color": [255, 0, 0],
+  "version": 1,
+  "osMinimalVer": [3, 0, 0],
+  "appMainFile": "HelloWorld.py"
+}
+```
+
+**Required fields:**
+- `name`: Your application's display name
+- `author`: Your name or organization
+- `color`: RGB color array [R, G, B] for the app icon (0-255)
+- `version`: Application version number
+- `osMinimalVer`: Minimum MatrixOS version required [major, minor, patch]
+- `appMainFile`: The main Python file to execute
+
+### Example Applications
+
+For App examples, see:
+[https://github.com/203Systems/Matrix-OS-Python-App-Examples](https://github.com/203Systems/Matrix-OS-Python-App-Examples)

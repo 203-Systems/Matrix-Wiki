@@ -1,0 +1,195 @@
+---
+sidebar_position: 3
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Dimension
+
+## Overview
+
+The `Dimension` class represents size information for UI components and layout operations. Dimensions specify width and height for UI elements.
+
+*The Dimension class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Dimension.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Dimension.pyi"/>.*
+
+---
+
+## `Dimension(width, height)`
+```python
+class Dimension:
+    def __init__(self, width: int, height: int) -> None
+```
+
+Creates a dimension with the specified width and height.
+
+**Parameters:**
+- `width` (`int`): Width in grid units
+- `height` (`int`): Height in grid units
+
+**Example:**
+```python
+# Create dimension for UI component
+button_size = Dimension(2, 1)  # 2 wide, 1 high
+panel_size = Dimension(4, 4)   # 4x4 square
+```
+
+---
+
+## Properties
+
+### `width`
+```python
+width: int
+```
+The width of the dimension.
+
+### `height`
+```python
+height: int
+```
+The height of the dimension.
+
+---
+
+## Usage Examples
+
+### UI Component Sizing
+```python
+# Use with UI components
+button = UIButton()
+button.SetSize(Dimension(2, 2))
+
+# Different component sizes
+small_button = Dimension(1, 1)
+wide_button = Dimension(3, 1)
+tall_button = Dimension(1, 3)
+large_panel = Dimension(4, 4)
+```
+
+### Layout Calculations
+```python
+def create_button_grid(rows, cols, button_size):
+    """Create a grid of button positions"""
+    positions = []
+    for row in range(rows):
+        for col in range(cols):
+            x = col * (button_size.width + 1)  # +1 for spacing
+            y = row * (button_size.height + 1)
+            positions.append(Point(x, y))
+    return positions
+
+def center_component(component_size, grid_size=Dimension(8, 8)):
+    """Calculate centered position for a component"""
+    x = (grid_size.width - component_size.width) // 2
+    y = (grid_size.height - component_size.height) // 2
+    return Point(x, y)
+
+# Layout examples
+button_size = Dimension(2, 2)
+button_positions = create_button_grid(2, 2, button_size)
+
+center_pos = center_component(Dimension(4, 4))
+print(f"Centered 4x4 component at: ({center_pos.x}, {center_pos.y})")
+```
+
+### Size Validation
+```python
+def is_valid_size(dimension, max_size=Dimension(8, 8)):
+    """Check if dimension fits within maximum size"""
+    return (dimension.width <= max_size.width and
+            dimension.height <= max_size.height and
+            dimension.width > 0 and dimension.height > 0)
+
+def clamp_size(dimension, max_size=Dimension(8, 8)):
+    """Clamp dimension to maximum size"""
+    width = max(1, min(max_size.width, dimension.width))
+    height = max(1, min(max_size.height, dimension.height))
+    return Dimension(width, height)
+
+# Example usage
+test_size = Dimension(10, 3)
+if not is_valid_size(test_size):
+    test_size = clamp_size(test_size)
+    print(f"Clamped to: {test_size.width}x{test_size.height}")
+```
+
+---
+
+## Common Sizes
+
+### Standard UI Component Sizes
+```python
+# Button sizes
+SMALL_BUTTON = Dimension(1, 1)
+MEDIUM_BUTTON = Dimension(2, 1)
+LARGE_BUTTON = Dimension(3, 2)
+
+# Panel sizes
+QUARTER_PANEL = Dimension(4, 4)
+HALF_PANEL = Dimension(4, 8)
+FULL_PANEL = Dimension(8, 8)
+
+# Selector sizes
+HORIZONTAL_SELECTOR = Dimension(8, 1)
+VERTICAL_SELECTOR = Dimension(1, 8)
+SQUARE_SELECTOR = Dimension(4, 4)
+```
+
+### Grid Layout Helpers
+```python
+def calculate_grid_layout(item_size, spacing=1, grid_size=Dimension(8, 8)):
+    """Calculate how many items fit in a grid"""
+    items_x = grid_size.width // (item_size.width + spacing)
+    items_y = grid_size.height // (item_size.height + spacing)
+    return Dimension(items_x, items_y)
+
+def get_remaining_space(used_size, total_size=Dimension(8, 8)):
+    """Calculate remaining space after placing an item"""
+    remaining_width = total_size.width - used_size.width
+    remaining_height = total_size.height - used_size.height
+    return Dimension(remaining_width, remaining_height)
+
+# Example
+item_size = Dimension(2, 2)
+grid_capacity = calculate_grid_layout(item_size)
+print(f"Can fit {grid_capacity.width}x{grid_capacity.height} items")
+
+remaining = get_remaining_space(Dimension(6, 4))
+print(f"Remaining space: {remaining.width}x{remaining.height}")
+```
+
+---
+
+## Area Calculations
+
+### Size Operations
+```python
+def get_area(dimension):
+    """Calculate area of dimension"""
+    return dimension.width * dimension.height
+
+def fits_within(inner, outer):
+    """Check if inner dimension fits within outer"""
+    return (inner.width <= outer.width and
+            inner.height <= outer.height)
+
+def scale_dimension(dimension, scale_factor):
+    """Scale dimension by a factor"""
+    new_width = int(dimension.width * scale_factor)
+    new_height = int(dimension.height * scale_factor)
+    return Dimension(max(1, new_width), max(1, new_height))
+
+# Usage examples
+button_area = get_area(Dimension(2, 3))  # Result: 6
+can_fit = fits_within(Dimension(3, 2), Dimension(4, 4))  # Result: True
+scaled = scale_dimension(Dimension(4, 4), 0.5)  # Result: Dimension(2, 2)
+```
+
+---
+
+## Best Practices
+
+1. **Size Validation**: Always validate dimensions are positive and within device bounds
+2. **Layout Planning**: Consider spacing between components when calculating layouts
+3. **Responsive Design**: Use relative sizing when possible for different screen configurations
+4. **Performance**: Cache frequently used Dimension objects
+5. **Grid Constraints**: Remember the 8x8 grid limitation when designing UI layouts

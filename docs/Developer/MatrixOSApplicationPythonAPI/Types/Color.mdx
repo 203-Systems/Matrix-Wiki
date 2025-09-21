@@ -1,0 +1,348 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Color
+
+## Overview
+
+The `Color` class represents RGB color values for LED control. Colors can be created using individual RGB values or hexadecimal notation.
+
+*The Color class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Color.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Color.pyi"/>.*
+
+---
+
+## `Color(r, g, b)` or `Color(hex_value)`
+```python
+class Color:
+    def __init__(self, r: int, g: int = None, b: int = None) -> None
+```
+
+Creates a color using RGB values or a hexadecimal value.
+
+**Parameters:**
+- `r` (`int`): Red component (0-255) or hexadecimal color value
+- `g` (`int`, optional): Green component (0-255)
+- `b` (`int`, optional): Blue component (0-255)
+
+**Examples:**
+```python
+# Create colors using RGB values
+red = Color(255, 0, 0)
+green = Color(0, 255, 0)
+blue = Color(0, 0, 255)
+
+# Create color using hex value
+purple = Color(0xFF00FF)
+yellow = Color(0xFFFF00)
+
+# White and black
+white = Color(255, 255, 255)
+black = Color(0, 0, 0)
+```
+
+---
+
+## Properties
+
+### RGB Components
+```python
+# Access color components (implementation dependent)
+# color.r, color.g, color.b may be available
+```
+
+---
+
+## Methods
+
+### `SetR`
+```python
+def SetR(self, r: int) -> None
+```
+
+Sets the red component of the color.
+
+**Parameters:**
+- `r` (`int`): Red component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetR(255)  # Color is now (255, 150, 200)
+```
+
+### `SetG`
+```python
+def SetG(self, g: int) -> None
+```
+
+Sets the green component of the color.
+
+**Parameters:**
+- `g` (`int`): Green component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetG(255)  # Color is now (100, 255, 200)
+```
+
+### `SetB`
+```python
+def SetB(self, b: int) -> None
+```
+
+Sets the blue component of the color.
+
+**Parameters:**
+- `b` (`int`): Blue component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetB(255)  # Color is now (100, 150, 255)
+```
+
+### `SetW`
+```python
+def SetW(self, w: int) -> None
+```
+
+Sets the white component of the color (for RGBW LEDs).
+
+**Parameters:**
+- `w` (`int`): White component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetW(128)  # Adds white component for RGBW LEDs
+```
+
+---
+
+## Predefined Colors
+
+### Basic Colors
+```python
+# Primary colors
+red = Color(255, 0, 0)
+green = Color(0, 255, 0)
+blue = Color(0, 0, 255)
+
+# Secondary colors
+cyan = Color(0, 255, 255)
+magenta = Color(255, 0, 255)
+yellow = Color(255, 255, 0)
+
+# Grayscale
+white = Color(255, 255, 255)
+gray = Color(128, 128, 128)
+black = Color(0, 0, 0)
+```
+
+### Color Palette Examples
+```python
+# Rainbow colors for effects
+rainbow_colors = [
+    Color(255, 0, 0),    # Red
+    Color(255, 127, 0),  # Orange
+    Color(255, 255, 0),  # Yellow
+    Color(0, 255, 0),    # Green
+    Color(0, 0, 255),    # Blue
+    Color(75, 0, 130),   # Indigo
+    Color(148, 0, 211),  # Violet
+]
+
+# Use colors with LED API
+for i, color in enumerate(rainbow_colors):
+    point = Point(i, 0)
+    MatrixOS.LED.SetColor(point, color, 255)
+
+MatrixOS.LED.Update(255)
+```
+
+---
+
+## Color Utilities
+
+### HSV to RGB Conversion
+```python
+def hsv_to_color(h, s, v):
+    """Convert HSV to RGB Color (simplified)"""
+    # Simplified HSV to RGB conversion
+    h = h % 360
+    s = max(0, min(1, s))
+    v = max(0, min(1, v))
+
+    c = v * s
+    x = c * (1 - abs((h / 60) % 2 - 1))
+    m = v - c
+
+    if h < 60:
+        r, g, b = c, x, 0
+    elif h < 120:
+        r, g, b = x, c, 0
+    elif h < 180:
+        r, g, b = 0, c, x
+    elif h < 240:
+        r, g, b = 0, x, c
+    elif h < 300:
+        r, g, b = x, 0, c
+    else:
+        r, g, b = c, 0, x
+
+    r = int((r + m) * 255)
+    g = int((g + m) * 255)
+    b = int((b + m) * 255)
+
+    return Color(r, g, b)
+
+# Create rainbow using HSV
+def create_rainbow_strip(length):
+    """Create a rainbow color strip"""
+    colors = []
+    for i in range(length):
+        hue = (i * 360) // length
+        colors.append(hsv_to_color(hue, 1.0, 1.0))
+    return colors
+
+rainbow = create_rainbow_strip(8)
+for i, color in enumerate(rainbow):
+    MatrixOS.LED.SetColor(Point(i, 0), color, 255)
+```
+
+### Color Manipulation
+```python
+def dim_color(color, factor):
+    """Dim a color by a factor (0.0 to 1.0)"""
+    # Note: This is a conceptual example
+    # Actual Color class may not support direct manipulation
+    r = int(color.r * factor) if hasattr(color, 'r') else 0
+    g = int(color.g * factor) if hasattr(color, 'g') else 0
+    b = int(color.b * factor) if hasattr(color, 'b') else 0
+    return Color(r, g, b)
+
+def blend_colors(color1, color2, ratio):
+    """Blend two colors with given ratio (0.0 = color1, 1.0 = color2)"""
+    # Conceptual implementation
+    # Actual implementation depends on Color class interface
+    pass
+
+def create_gradient(start_color, end_color, steps):
+    """Create color gradient between two colors"""
+    gradient = []
+    for i in range(steps):
+        ratio = i / (steps - 1) if steps > 1 else 0
+        # Simplified interpolation
+        r = int(start_color.r * (1 - ratio) + end_color.r * ratio)
+        g = int(start_color.g * (1 - ratio) + end_color.g * ratio)
+        b = int(start_color.b * (1 - ratio) + end_color.b * ratio)
+        gradient.append(Color(r, g, b))
+    return gradient
+```
+
+---
+
+## Usage Examples
+
+### LED Grid Effects
+```python
+def fill_with_color(color):
+    """Fill entire grid with a color"""
+    MatrixOS.LED.Fill(color, 255)
+    MatrixOS.LED.Update(255)
+
+def checkerboard_pattern(color1, color2):
+    """Create checkerboard pattern"""
+    for y in range(8):
+        for x in range(8):
+            if (x + y) % 2 == 0:
+                color = color1
+            else:
+                color = color2
+            MatrixOS.LED.SetColor(Point(x, y), color, 255)
+    MatrixOS.LED.Update(255)
+
+def rainbow_spiral():
+    """Create rainbow spiral effect"""
+    colors = create_rainbow_strip(64)
+
+    # Spiral pattern coordinates
+    spiral_coords = []  # Implementation would create spiral coordinates
+
+    for i, coord in enumerate(spiral_coords):
+        if i < len(colors):
+            MatrixOS.LED.SetColor(coord, colors[i], 255)
+
+    MatrixOS.LED.Update(255)
+
+# Usage
+fill_with_color(Color(0, 100, 200))
+checkerboard_pattern(Color(255, 0, 0), Color(0, 0, 255))
+```
+
+### Dynamic Color Generation
+```python
+def generate_random_color():
+    """Generate a random color"""
+    import random
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    return Color(r, g, b)
+
+def temperature_to_color(temp):
+    """Convert temperature to color (blue=cold, red=hot)"""
+    # Normalize temperature to 0-1 range
+    normalized = max(0, min(1, temp))
+
+    if normalized < 0.5:
+        # Blue to cyan
+        r = 0
+        g = int(normalized * 2 * 255)
+        b = 255
+    else:
+        # Cyan to red
+        r = int((normalized - 0.5) * 2 * 255)
+        g = int((1 - normalized) * 2 * 255)
+        b = 0
+
+    return Color(r, g, b)
+
+# Usage
+random_color = generate_random_color()
+hot_color = temperature_to_color(0.8)  # Hot = reddish
+cold_color = temperature_to_color(0.2)  # Cold = bluish
+```
+
+---
+
+## Color Theory
+
+### RGB Color Space
+- **Red (R)**: 0-255, controls red intensity
+- **Green (G)**: 0-255, controls green intensity
+- **Blue (B)**: 0-255, controls blue intensity
+- **Combined**: RGB(255,255,255) = white, RGB(0,0,0) = black
+
+### Hexadecimal Notation
+```python
+# Format: 0xRRGGBB
+red = Color(0xFF0000)     # Pure red
+green = Color(0x00FF00)   # Pure green
+blue = Color(0x0000FF)    # Pure blue
+white = Color(0xFFFFFF)   # White
+black = Color(0x000000)   # Black
+```
+
+---
+
+## Best Practices
+
+1. **Color Values**: Ensure RGB values are in valid range (0-255)
+2. **Performance**: Cache frequently used Color objects to avoid repeated allocations
+3. **Brightness**: Consider device brightness settings when choosing colors
+4. **Accessibility**: Use sufficient contrast for important visual elements
+5. **Battery Life**: Bright colors (especially white) consume more power on LED displays

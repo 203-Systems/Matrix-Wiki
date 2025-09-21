@@ -31,19 +31,51 @@ export function ActionMenu() {
         "elements": [
             {
                 "pos": [0, 0],
-                "color": "#A0FF00"
+                "color": "#AAFF00"
             }
         ]
     },
     {
-        "name": "Custom Palettes",
-        "desc": "View and edit custom palettes. If a custom palette is loaded, the palette slot will be lit up as cyan.",
+        "name": "Custom Palette 1",
+        "desc": "View and edit custom palette 1. If a custom palette is loaded, the palette slot will be lit up as cyan.",
         "link": "#color-palette",
         "elements": [
             {
                 "pos": [2, 0],
-                "size": [4, 1],
-                "color": "#D0D0D0"
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Custom Palette 2",
+        "desc": "View and edit custom palette 2. If a custom palette is loaded, the palette slot will be lit up as cyan.",
+        "link": "#color-palette",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Custom Palette 3",
+        "desc": "View and edit custom palette 3. If a custom palette is loaded, the palette slot will be lit up as cyan.",
+        "link": "#color-palette",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Custom Palette 4",
+        "desc": "View and edit custom palette 4. If a custom palette is loaded, the palette slot will be lit up as cyan.",
+        "link": "#color-palette",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#00FFFF"
             }
         ]
     },
@@ -53,19 +85,39 @@ export function ActionMenu() {
         "elements": [
             {
                 "pos": [7, 0],
-                "color": "#FFFFFF"
+                "color": "#00FFFF"
             }
         ]
     },
     {
-        "name": "Brightness Control",
-        "desc": "Tap to cycle through brightness levels. Hold to enter the brightness control menu.",
-        "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+        "name": "Touch Combo Keys",
+        "desc": "Enable or disable the touch combo keys feature.",
+        "link": "#touchbar-combo-keys",
         "elements": [
             {
-                "pos": [3, 3],
-                "size": [2, 2],
-                "color": "#FFFFFF"
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Menu Lock",
+        "desc": "Enable or disable the menu lock feature.",
+        "link": "#menu-lock",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear Canvas",
+        "desc": "Clear the LEDs on the performance canvas.",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FF0000"
             }
         ]
     },
@@ -81,83 +133,13 @@ export function ActionMenu() {
         ]
     },
     {
-        "name": "Touch Combo Keys",
-        "desc": "Enable or disable the touch combo keys feature.",
-        "link": "#touchbar-combo-keys",
-        "elements": [
-            {
-                "pos": [0, 4],
-                "color": "#60FF00"
-            }
-        ]
-    },
-    {
-        "name": "Menu Lock",
-        "desc": "Enable or disable the menu lock feature.",
-        "link": "#Menu Lock",
-        "elements": [
-            {
-                "pos": [0, 5],
-                "color": "#FF0000"
-            }
-        ]
-    },
-    {
-        "name": "Clear Canvas",
-        "desc": "Clear the LEDs on the performance canvas.",
-        "elements": [
-            {
-                "pos": [3, 2],
-                "size": [2, 1],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "Rotate Device Left",
-        "desc": "Rotate the device so that the top of the device is oriented to the left.",
-        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-        "elements": [
-            {
-                "pos": [2, 3],
-                "size": [1, 2],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "Rotate Device Down",
-        "desc": "Rotate the device so that the top of the device is oriented to the bottom.",
-        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-        "elements": [
-            {
-                "pos": [3, 5],
-                "size": [2, 1],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "Rotate Device Right",
-        "desc": "Rotate the device so that the top of the device is oriented to the right.",
-        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
-        "elements": [
-            {
-                "pos": [5, 3],
-                "size": [1, 2],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
         "name": "MIDI Control Pad",
         "desc": "Extra MIDI control pad for customizable controls. They are mapped to the touchbar on the Mystrix, so they can be used as an alternative.",
-        "link": "#factory-reset",
         "elements": [
             {
                 "pos": [0, 6],
                 "size": [8, 2],
-                "color": "#ff00ff"
+                "color": "#FF00FF"
             }
         ]
     },
@@ -210,6 +192,10 @@ This means that holding down the touch key will act as a note shift for the two 
 ## Flicker Reduction
 
 Flicker Reduction is used when MIDI lightshows cause flickering or when the light speed exceeds the device's refresh rate. It is recommended to enable this feature only when Mystrix is used with Ableton Live.
+
+## Menu Lock
+
+Menu Lock prevents accidental entry into the action menu by requiring the function key to be held for a longer duration before the menu opens.
 
 ## Color Palette
 

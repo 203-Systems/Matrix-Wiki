@@ -5,7 +5,7 @@ sidebar_position: 1
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-# Native (C++) Application
+# Code your application (C++)
 
 ## Native Application System Overview
 
@@ -17,7 +17,6 @@ The application code will be similar to the Arduino, which you will have an user
 
 - Matrix OS C++ API - Matrix OS provided APIs, they are the easiest to use, provides the best portability, and memory safe (supposedly).
 - Device Layer API - Device layer provided API. Matrix OS API are largely a wrapper over those and you should be using them instead. There might be some non standard API for some special device features that have not been added into the Matrix OS API.
-- Core Layer API - Provided by the SoC SDK of the device, in the case of Mystrix, the [ESP-IDF SDK](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/index.html). They provides a lot of features that are not device specific but chip specific. You can for example, build an WiFi enabled Matrix OS application for Mystirx, even though the Matrix OS API isn't available yet. [See example](https://github.com/203Null/MatrixOS/tree/WiFi-Example)
 - FreeRTOS API - Matrix OS runs on FreeRTOS and you can use FreeRTOS API as well to create threads and cross thread communication. 
 - Any third party C/C++ library you wish to use - You should be able to include them inside your application folder and use them.
 

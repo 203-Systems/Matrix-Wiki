@@ -1,0 +1,520 @@
+---
+sidebar_position: 5
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# KeyInfo
+
+## Overview
+
+The `KeyInfo` class contains detailed information about a key's state, including timing data, velocity, and activity status. It provides methods to query key behavior and detect various input patterns.
+
+*The Python KeyInfo class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_KeyInfo.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_KeyInfo.pyi"/>.*
+
+---
+
+## Constructor
+
+### `KeyInfo()`
+```python
+def __init__(self) -> None
+```
+
+Creates a new KeyInfo instance with default values.
+
+---
+
+## State Methods
+
+### `State`
+```python
+def State(self) -> int
+```
+
+Gets the current key state value.
+
+**Returns:**
+- `int`: The key state (should correspond to KeyState enum values)
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    state = key_info.State()
+    print(f"Key state: {state}")
+```
+
+---
+
+### `Active`
+```python
+def Active(self) -> bool
+```
+
+Checks if the key is currently active (pressed).
+
+**Returns:**
+- `bool`: True if key is active/pressed, False otherwise
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    if key_info.Active():
+        print("Key is currently pressed")
+```
+
+---
+
+### `Hold`
+```python
+def Hold(self) -> bool
+```
+
+Checks if the key is being held down.
+
+**Returns:**
+- `bool`: True if key is being held, False otherwise
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    if key_info.Hold():
+        hold_time = key_info.HoldTime()
+        print(f"Key held for {hold_time}ms")
+```
+
+---
+
+## Timing Methods
+
+### `LastEventTime`
+```python
+def LastEventTime(self) -> int
+```
+
+Gets the timestamp of the last key event.
+
+**Returns:**
+- `int`: Timestamp in milliseconds of the last event
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    last_time = key_info.LastEventTime()
+    current_time = MatrixOS.SYS.Millis()
+    time_since = current_time - last_time
+    print(f"Last event was {time_since}ms ago")
+```
+
+---
+
+### `HoldTime`
+```python
+def HoldTime(self) -> int
+```
+
+Gets the duration the key has been held down.
+
+**Returns:**
+- `int`: Hold duration in milliseconds
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    if key_info.Hold():
+        duration = key_info.HoldTime()
+        if duration > 1000:
+            print("Long press detected!")
+```
+
+---
+
+## Pressure/Velocity Methods
+
+### `Velocity`
+```python
+def Velocity(self) -> float
+```
+
+Gets the key press velocity or pressure intensity.
+
+**Returns:**
+- `float`: Velocity/pressure value (typically 0.0 to 1.0)
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    velocity = key_info.Velocity()
+
+    if velocity > 0.8:
+        print("Hard press!")
+    elif velocity > 0.5:
+        print("Medium press")
+    else:
+        print("Soft press")
+```
+
+---
+
+## Boolean Conversion
+
+### `__bool__`
+```python
+def __bool__(self) -> bool
+```
+
+Allows KeyInfo to be used in boolean contexts.
+
+**Returns:**
+- `bool`: True if KeyInfo represents a valid key state
+
+**Example:**
+```python
+key_event = MatrixOS.KeyPad.Get()
+if key_event is not None:
+    key_info = key_event.KeyInfo()
+    if key_info:  # Uses __bool__ method
+        print("Valid key info")
+```
+
+---
+
+## Usage Examples
+
+### Velocity-Based Color Response
+```python
+def velocity_colors():
+    """Change LED colors based on key press velocity"""
+
+    print("Press keys with different pressures...")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(100)
+
+        if key_event is not None:
+            key_info = key_event.KeyInfo()
+            xy = MatrixOS.KeyPad.ID2XY(key_event.ID())
+
+            if key_info.Active():
+                velocity = key_info.Velocity()
+
+                # Map velocity to color intensity
+                if velocity > 0.8:
+                    # Hard press - bright red
+                    color = Color(255, 0, 0)
+                    brightness = 255
+                elif velocity > 0.6:
+                    # Firm press - orange
+                    color = Color(255, 128, 0)
+                    brightness = 200
+                elif velocity > 0.4:
+                    # Medium press - yellow
+                    color = Color(255, 255, 0)
+                    brightness = 150
+                elif velocity > 0.2:
+                    # Light press - green
+                    color = Color(0, 255, 0)
+                    brightness = 100
+                else:
+                    # Very light press - dim blue
+                    color = Color(0, 0, 255)
+                    brightness = 50
+
+                MatrixOS.LED.SetColor(xy, color, brightness)
+                print(f"Velocity: {velocity:.2f} at ({xy.x},{xy.y})")
+            else:
+                # Key released
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+
+            MatrixOS.LED.Update(255)
+
+velocity_colors()
+```
+
+### Hold Time Detection
+```python
+def hold_time_actions():
+    """Perform different actions based on hold time"""
+
+    active_keys = {}
+
+    def check_hold_actions(key_id, key_info):
+        """Check and execute hold-based actions"""
+        if key_info.Hold():
+            hold_time = key_info.HoldTime()
+            xy = MatrixOS.KeyPad.ID2XY(key_id)
+
+            if hold_time > 3000:
+                # Very long hold - white
+                MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+                if key_id not in active_keys or active_keys[key_id] != "very_long":
+                    print(f"Very long hold: {hold_time}ms")
+                    active_keys[key_id] = "very_long"
+
+            elif hold_time > 2000:
+                # Long hold - magenta
+                MatrixOS.LED.SetColor(xy, Color(255, 0, 255), 255)
+                if key_id not in active_keys or active_keys[key_id] != "long":
+                    print(f"Long hold: {hold_time}ms")
+                    active_keys[key_id] = "long"
+
+            elif hold_time > 1000:
+                # Medium hold - blue
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 255), 255)
+                if key_id not in active_keys or active_keys[key_id] != "medium":
+                    print(f"Medium hold: {hold_time}ms")
+                    active_keys[key_id] = "medium"
+
+            elif hold_time > 500:
+                # Short hold - cyan
+                MatrixOS.LED.SetColor(xy, Color(0, 255, 255), 255)
+                if key_id not in active_keys or active_keys[key_id] != "short":
+                    print(f"Short hold: {hold_time}ms")
+                    active_keys[key_id] = "short"
+
+    print("Hold time detector - hold keys for different durations")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(50)
+
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+            xy = MatrixOS.KeyPad.ID2XY(key_id)
+
+            if key_info.Active():
+                check_hold_actions(key_id, key_info)
+            else:
+                # Key released
+                if key_id in active_keys:
+                    del active_keys[key_id]
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+
+            MatrixOS.LED.Update(255)
+
+hold_time_actions()
+```
+
+### Key State Analysis
+```python
+def analyze_key_states():
+    """Detailed analysis of key state information"""
+
+    state_history = {}
+
+    def log_key_details(key_id, key_info):
+        """Log detailed key information"""
+        current_time = MatrixOS.SYS.Millis()
+
+        info = {
+            "time": current_time,
+            "state": key_info.State(),
+            "active": key_info.Active(),
+            "hold": key_info.Hold(),
+            "velocity": key_info.Velocity(),
+            "last_event": key_info.LastEventTime(),
+            "hold_time": key_info.HoldTime() if key_info.Hold() else 0
+        }
+
+        # Store in history
+        if key_id not in state_history:
+            state_history[key_id] = []
+
+        state_history[key_id].append(info)
+
+        # Keep only recent history
+        if len(state_history[key_id]) > 10:
+            state_history[key_id] = state_history[key_id][-10:]
+
+        # Print current state
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+        print(f"Key {key_id} at ({xy.x},{xy.y}):")
+        print(f"  State: {info['state']}")
+        print(f"  Active: {info['active']}")
+        print(f"  Velocity: {info['velocity']:.3f}")
+
+        if info['hold']:
+            print(f"  Hold time: {info['hold_time']}ms")
+
+        print(f"  Last event: {current_time - info['last_event']}ms ago")
+        print("---")
+
+    print("Key state analyzer - detailed key information")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(100)
+
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+
+            if key_info:  # Check if valid KeyInfo
+                log_key_details(key_id, key_info)
+
+                # Visual feedback based on state
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                if key_info.Active():
+                    # Color based on velocity
+                    v = key_info.Velocity()
+                    red = int(255 * v)
+                    green = int(255 * (1 - v))
+                    MatrixOS.LED.SetColor(xy, Color(red, green, 0), 255)
+                else:
+                    MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+
+                MatrixOS.LED.Update(255)
+
+analyze_key_states()
+```
+
+### Gesture Recognition with KeyInfo
+```python
+def advanced_gesture_recognition():
+    """Advanced gesture recognition using KeyInfo timing and velocity"""
+
+    gesture_data = {
+        "active_keys": {},
+        "gesture_start": None,
+        "min_velocity": 0.3,
+        "max_gesture_time": 1000
+    }
+
+    def analyze_gesture_pattern(active_keys):
+        """Analyze pattern of active keys for gesture recognition"""
+        if len(active_keys) < 2:
+            return None
+
+        # Get key positions and timing
+        key_data = []
+        for key_id, info in active_keys.items():
+            xy = MatrixOS.KeyPad.ID2XY(key_id)
+            key_data.append({
+                "id": key_id,
+                "x": xy.x,
+                "y": xy.y,
+                "velocity": info["velocity"],
+                "start_time": info["start_time"]
+            })
+
+        # Sort by press time
+        key_data.sort(key=lambda k: k["start_time"])
+
+        # Detect linear patterns
+        if len(key_data) >= 3:
+            # Check for straight line patterns
+            first, second, third = key_data[0], key_data[1], key_data[2]
+
+            # Horizontal line
+            if (first["y"] == second["y"] == third["y"] and
+                abs(first["x"] - second["x"]) == 1 and
+                abs(second["x"] - third["x"]) == 1):
+                return "horizontal_line"
+
+            # Vertical line
+            if (first["x"] == second["x"] == third["x"] and
+                abs(first["y"] - second["y"]) == 1 and
+                abs(second["y"] - third["y"]) == 1):
+                return "vertical_line"
+
+        # Detect simultaneous press (chord)
+        time_diff = max(k["start_time"] for k in key_data) - min(k["start_time"] for k in key_data)
+        if time_diff < 100:  # Within 100ms
+            if len(key_data) == 2:
+                return "chord_2"
+            elif len(key_data) == 3:
+                return "chord_3"
+            elif len(key_data) == 4:
+                return "chord_4"
+
+        return None
+
+    print("Advanced gesture recognition active")
+    print("Try: lines, chords, sequential patterns")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(50)
+
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+            current_time = MatrixOS.SYS.Millis()
+
+            if key_info.Active() and key_info.Velocity() >= gesture_data["min_velocity"]:
+                # Add to active keys
+                if key_id not in gesture_data["active_keys"]:
+                    gesture_data["active_keys"][key_id] = {
+                        "start_time": current_time,
+                        "velocity": key_info.Velocity(),
+                        "key_info": key_info
+                    }
+
+                    if gesture_data["gesture_start"] is None:
+                        gesture_data["gesture_start"] = current_time
+
+                # Update LED
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 255)
+
+            elif not key_info.Active() and key_id in gesture_data["active_keys"]:
+                # Remove from active keys
+                del gesture_data["active_keys"][key_id]
+
+                # Clear LED
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+
+            # Check for gesture completion
+            if (len(gesture_data["active_keys"]) == 0 and
+                gesture_data["gesture_start"] is not None):
+
+                gesture_duration = current_time - gesture_data["gesture_start"]
+                if gesture_duration <= gesture_data["max_gesture_time"]:
+                    # Analyze completed gesture (would need gesture history)
+                    print(f"Gesture completed in {gesture_duration}ms")
+
+                # Reset gesture tracking
+                gesture_data["gesture_start"] = None
+
+            # Check for ongoing gesture patterns
+            elif len(gesture_data["active_keys"]) >= 2:
+                gesture = analyze_gesture_pattern(gesture_data["active_keys"])
+                if gesture:
+                    print(f"Gesture detected: {gesture}")
+
+                    # Flash feedback
+                    MatrixOS.LED.Fill(Color(255, 255, 255), 255)
+                    MatrixOS.LED.Update(255)
+                    MatrixOS.SYS.DelayMs(100)
+
+                    # Reset
+                    gesture_data["active_keys"].clear()
+                    gesture_data["gesture_start"] = None
+                    MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+
+            MatrixOS.LED.Update(255)
+
+advanced_gesture_recognition()
+```
+
+---
+
+## Best Practices
+
+1. **State Checking**: Always verify KeyInfo validity using boolean conversion or Active() method
+2. **Timing Precision**: Use timing methods for accurate gesture and interaction detection
+3. **Velocity Sensitivity**: Adjust velocity thresholds based on your application's needs
+4. **Hold Detection**: Use Hold() and HoldTime() for long-press functionality
+5. **Performance**: Cache KeyInfo data when performing multiple queries
+6. **Error Handling**: Handle cases where KeyInfo methods might return unexpected values
+7. **User Experience**: Use velocity and timing data to create responsive, natural interactions

@@ -1,0 +1,329 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# System API
+
+## Overview
+
+The System API in MatrixOS provides core system functions including timing, application management, device control, and system utilities. The System API is available as `MatrixOS.SYS` and is imported by default.
+
+*The Python System API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_SYS.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_SYS.pyi"/>.*
+
+---
+
+## Version Information
+
+### `MatrixOS.SYS.GetVersion`
+```python
+def GetVersion() -> tuple[int, int, int]
+```
+
+Returns the current MatrixOS version as a tuple of major, minor, and patch version numbers.
+
+**Returns:**
+- `tuple[int, int, int]`: A tuple containing (major, minor, patch) version numbers
+
+**Example:**
+```python
+version = MatrixOS.SYS.GetVersion()
+major, minor, patch = version
+print(f"MatrixOS Version: {major}.{minor}.{patch}")
+
+# Check if version is at least 2.1.0
+if version >= (2, 1, 0):
+    print("Version 2.1.0 or newer detected")
+```
+
+---
+
+## Device Control
+
+### `MatrixOS.SYS.Reboot`
+```python
+def Reboot() -> None
+```
+
+Reboots the MatrixOS device. The device will restart and boot normally.
+
+**Example:**
+```python
+MatrixOS.SYS.Reboot()  # Device will restart
+```
+
+---
+
+### `MatrixOS.SYS.Bootloader`
+```python
+def Bootloader() -> None
+```
+
+Reboots the device into bootloader mode for firmware updates.
+
+**Example:**
+```python
+MatrixOS.SYS.Bootloader()  # Enter bootloader for firmware update
+```
+
+---
+
+## Timing Functions
+
+### `MatrixOS.SYS.DelayMs`
+```python
+def DelayMs(ms: int) -> None
+```
+
+Delays execution for the specified number of milliseconds.
+
+**Parameters:**
+- `ms` (`int`): Delay duration in milliseconds
+
+**Example:**
+```python
+MatrixOS.SYS.DelayMs(1000)  # Wait 1 second
+print("One second has passed")
+```
+
+---
+
+### `MatrixOS.SYS.Millis`
+```python
+def Millis() -> int64
+```
+
+Returns the number of milliseconds since the device started.
+
+**Returns:**
+- `int64`: Milliseconds since boot
+
+**Example:**
+```python
+start_time = MatrixOS.SYS.Millis()
+# ... do some work ...
+elapsed = MatrixOS.SYS.Millis() - start_time
+print(f"Operation took {elapsed} ms")
+```
+
+---
+
+### `MatrixOS.SYS.Micros`
+```python
+def Micros() -> int64
+```
+
+Returns the number of microseconds since the device started.
+
+**Returns:**
+- `int64`: Microseconds since boot
+
+**Example:**
+```python
+start_time = MatrixOS.SYS.Micros()
+# ... precise timing operation ...
+elapsed = MatrixOS.SYS.Micros() - start_time
+print(f"Precise timing: {elapsed} microseconds")
+```
+
+---
+
+## Application Management
+
+### `MatrixOS.SYS.OpenSetting`
+```python
+def OpenSetting() -> None
+```
+
+Opens the system settings application.
+
+**Example:**
+```python
+MatrixOS.SYS.OpenSetting()  # Launch settings app
+```
+
+---
+
+### `MatrixOS.SYS.ExecuteAPP`
+```python
+def ExecuteAPP(author: str, app_name: str, args: list = None) -> None
+```
+
+Launches an application by author and name with optional arguments.
+
+**Parameters:**
+- `author` (`str`): Application author name
+- `app_name` (`str`): Application name
+- `args` (`list`, optional): Arguments to pass to the application
+
+**Example:**
+```python
+# Launch a specific application
+MatrixOS.SYS.ExecuteAPP("203 Systems", "Performance")
+
+# Launch with arguments
+MatrixOS.SYS.ExecuteAPP("MyAuthor", "MyApp", ["demo_mode"])
+```
+
+---
+
+### `MatrixOS.SYS.ExecuteAPPByID`
+```python
+def ExecuteAPPByID(app_id: int, args: list = None) -> None
+```
+
+Launches an application by its ID with optional arguments.
+
+**Parameters:**
+- `app_id` (`int`): Application ID number
+- `args` (`list`, optional): Arguments to pass to the application
+
+**Example:**
+```python
+# Launch application ID 0xDEADBEED 
+MatrixOS.SYS.ExecuteAPPByID(0xDEADBEED)
+
+# Launch with arguments
+MatrixOS.SYS.ExecuteAPPByID(0xDEADBEED, ["parameter1", "parameter2"])
+```
+
+---
+
+## Timing and Performance Examples
+
+### Precise Timing Loop
+```python
+def precise_timing_demo():
+    """Demonstrate precise timing with microsecond accuracy"""
+    interval_us = 10000  # 10ms in microseconds
+    last_time = MatrixOS.SYS.Micros()
+
+    for i in range(100):
+        current_time = MatrixOS.SYS.Micros()
+
+        # Wait for precise interval
+        while (current_time - last_time) < interval_us:
+            current_time = MatrixOS.SYS.Micros()
+
+        print(f"Tick {i}: {current_time - last_time} us")
+        last_time = current_time
+
+precise_timing_demo()
+```
+
+### Performance Measurement
+```python
+def measure_performance(function, iterations=1000):
+    """Measure function execution time"""
+    start_time = MatrixOS.SYS.Micros()
+
+    for i in range(iterations):
+        function()
+
+    end_time = MatrixOS.SYS.Micros()
+    total_time = end_time - start_time
+    avg_time = total_time / iterations
+
+    print(f"Total time: {total_time} us")
+    print(f"Average time per call: {avg_time} us")
+    return avg_time
+
+# Example usage
+def test_function():
+    # Some operation to measure
+    pass
+
+measure_performance(test_function)
+```
+
+### Timeout Implementation
+```python
+def wait_with_timeout(condition_func, timeout_ms):
+    """Wait for a condition with timeout"""
+    start_time = MatrixOS.SYS.Millis()
+
+    while not condition_func():
+        if (MatrixOS.SYS.Millis() - start_time) > timeout_ms:
+            return False  # Timeout
+        MatrixOS.SYS.DelayMs(1)  # Small delay to prevent busy waiting
+
+    return True  # Condition met
+
+# Example usage
+def is_key_pressed():
+    # Check some condition
+    return False
+
+if wait_with_timeout(is_key_pressed, 5000):
+    print("Key was pressed within 5 seconds")
+else:
+    print("Timeout: No key press detected")
+```
+
+---
+
+## Application Launcher Example
+
+```python
+def application_launcher():
+    """Simple application launcher with menu"""
+    apps = [
+        {"author": "203 Systems", "name": "Performance", "id": 1},
+        {"author": "203 Systems", "name": "Setting", "id": 2},
+        {"author": "MyAuthor", "name": "CustomApp", "id": 10}
+    ]
+
+    print("Available Applications:")
+    for i, app in enumerate(apps):
+        print(f"{i}: {app['author']} - {app['name']}")
+
+    # In a real implementation, you'd get input from keypad
+    selection = 0  # Example selection
+
+    if 0 <= selection < len(apps):
+        app = apps[selection]
+        print(f"Launching {app['name']}...")
+
+        # Launch by name
+        MatrixOS.SYS.ExecuteAPP(app['author'], app['name'])
+
+        # Alternative: Launch by ID
+        # MatrixOS.SYS.ExecuteAPPByID(app['id'])
+
+application_launcher()
+```
+
+---
+
+## System Monitoring
+
+```python
+def system_monitor():
+    """Monitor system uptime and performance"""
+    start_time = MatrixOS.SYS.Millis()
+
+    while True:
+        current_time = MatrixOS.SYS.Millis()
+        uptime_ms = current_time
+        uptime_seconds = uptime_ms // 1000
+        uptime_minutes = uptime_seconds // 60
+        uptime_hours = uptime_minutes // 60
+
+        print(f"System Uptime: {uptime_hours:02d}:{uptime_minutes%60:02d}:{uptime_seconds%60:02d}")
+
+        MatrixOS.SYS.DelayMs(1000)  # Update every second
+
+# Run monitor for a short time
+system_monitor()
+```
+
+---
+
+## Best Practices
+
+1. **Timing Precision**: Use `Micros()` for high-precision timing, `Millis()` for general use
+2. **Delay Usage**: Use `DelayMs()` for simple delays, but avoid blocking in time-critical code
+3. **Application Management**: Check if target applications exist before launching
+4. **Resource Management**: Monitor system resources when running intensive operations
+5. **Error Handling**: Handle cases where application launches might fail
+6. **Timeout Patterns**: Always implement timeouts for operations that might hang

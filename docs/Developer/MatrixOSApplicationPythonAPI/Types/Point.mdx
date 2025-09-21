@@ -1,0 +1,216 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Point
+
+## Overview
+
+The `Point` class represents 2D coordinates for LED positions and UI layouts. Points are used throughout the MatrixOS API for specifying positions on the 8x8 grid.
+
+*The Point class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Point.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Point.pyi"/>.*
+
+---
+
+## `Point(x, y)`
+```python
+class Point:
+    def __init__(self, x: int, y: int) -> None
+```
+
+Creates a point at the specified coordinates.
+
+**Parameters:**
+- `x` (`int`): X coordinate (0-7 for 8x8 grid)
+- `y` (`int`): Y coordinate (0-7 for 8x8 grid)
+
+**Example:**
+```python
+# Create a point at coordinates (3, 4)
+point = Point(3, 4)
+print(f"Point: ({point.x}, {point.y})")
+```
+
+---
+
+## Properties
+
+### `x`
+```python
+x: int
+```
+The X coordinate of the point.
+
+### `y`
+```python
+y: int
+```
+The Y coordinate of the point.
+
+---
+
+## Methods
+
+### `SetX`
+```python
+def SetX(self, x: int) -> None
+```
+
+Sets the X coordinate of the point.
+
+**Parameters:**
+- `x` (`int`): New X coordinate value
+
+**Example:**
+```python
+point = Point(3, 4)
+point.SetX(5)  # Point is now (5, 4)
+```
+
+### `SetY`
+```python
+def SetY(self, y: int) -> None
+```
+
+Sets the Y coordinate of the point.
+
+**Parameters:**
+- `y` (`int`): New Y coordinate value
+
+**Example:**
+```python
+point = Point(3, 4)
+point.SetY(6)  # Point is now (3, 6)
+```
+
+---
+
+## Usage Examples
+
+### Basic Point Operations
+```python
+# Create points
+origin = Point(0, 0)
+center = Point(4, 4)
+corner = Point(7, 7)
+
+# Access coordinates
+x_coord = center.x
+y_coord = center.y
+
+# Points are commonly used with LED and KeyPad APIs
+MatrixOS.LED.SetColor(center, Color(255, 0, 0), 255)
+key_info = MatrixOS.KeyPad.GetKey(corner)
+```
+
+### Grid Coordinate Helpers
+```python
+def create_grid_points(width, height):
+    """Create all points in a grid"""
+    points = []
+    for y in range(height):
+        for x in range(width):
+            points.append(Point(x, y))
+    return points
+
+def get_border_points():
+    """Get border points of 8x8 grid"""
+    border_points = []
+
+    # Top and bottom rows
+    for x in range(8):
+        border_points.append(Point(x, 0))  # Top
+        border_points.append(Point(x, 7))  # Bottom
+
+    # Left and right columns (excluding corners)
+    for y in range(1, 7):
+        border_points.append(Point(0, y))  # Left
+        border_points.append(Point(7, y))  # Right
+
+    return border_points
+
+def get_center_points():
+    """Get center 4 points of 8x8 grid"""
+    return [
+        Point(3, 3), Point(4, 3),
+        Point(3, 4), Point(4, 4)
+    ]
+
+# Usage examples
+all_points = create_grid_points(8, 8)
+border_points = get_border_points()
+center_points = get_center_points()
+
+# Light up border in red
+for point in border_points:
+    MatrixOS.LED.SetColor(point, Color(255, 0, 0), 255)
+
+# Light up center in blue
+for point in center_points:
+    MatrixOS.LED.SetColor(point, Color(0, 0, 255), 255)
+
+MatrixOS.LED.Update(255)
+```
+
+---
+
+## Common Patterns
+
+### Grid Traversal
+```python
+# Row-major traversal
+for y in range(8):
+    for x in range(8):
+        point = Point(x, y)
+        # Process point...
+
+# Column-major traversal
+for x in range(8):
+    for y in range(8):
+        point = Point(x, y)
+        # Process point...
+
+# Diagonal traversal
+for i in range(8):
+    point = Point(i, i)  # Main diagonal
+    # Process point...
+```
+
+### Coordinate Validation
+```python
+def is_valid_point(point):
+    """Check if point is within 8x8 grid bounds"""
+    return 0 <= point.x <= 7 and 0 <= point.y <= 7
+
+def clamp_point(point):
+    """Clamp point to grid bounds"""
+    x = max(0, min(7, point.x))
+    y = max(0, min(7, point.y))
+    return Point(x, y)
+
+# Example usage
+test_point = Point(10, -2)
+if not is_valid_point(test_point):
+    test_point = clamp_point(test_point)
+    print(f"Clamped to: ({test_point.x}, {test_point.y})")
+```
+
+---
+
+## Coordinate System
+
+The MatrixOS coordinate system:
+- **Origin (0,0)**: Top-left corner
+- **X-axis**: Increases from left to right (0-7)
+- **Y-axis**: Increases from top to bottom (0-7)
+- **Valid range**: Both x and y coordinates should be 0-7 for the 8x8 grid
+
+---
+
+## Best Practices
+
+1. **Bounds Checking**: Always validate that Point coordinates are within device bounds (0-7 for 8x8 grid)
+2. **Coordinate Caching**: Cache frequently used Point objects to avoid repeated allocations
+3. **Validation**: Validate coordinates before using with LED/KeyPad APIs
+4. **Coordinate Mapping**: Use consistent coordinate transformation functions when needed

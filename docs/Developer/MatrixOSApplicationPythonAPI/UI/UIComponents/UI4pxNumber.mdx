@@ -1,0 +1,428 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# UI4pxNumber
+
+## Overview
+
+The `UI4pxNumber` component displays numbers using a 4-pixel high font on the LED matrix. It's ideal for showing numeric values, scores, timers, and other quantitative information in a compact format.
+
+*The UI4pxNumber component is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UI4pxNumber.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UI4pxNumber.pyi"/>.*
+
+---
+
+## Constructor
+
+### `MatrixOS.UI4pxNumber()`
+```python
+class UI4pxNumber(UIComponent):
+    def __init__(self) -> None
+```
+
+Creates a new 4-pixel number display component.
+
+**Example:**
+```python
+number_display = UI4pxNumber()
+```
+
+---
+
+## Configuration Methods
+
+### `SetName`
+```python
+def SetName(self, name: str) -> bool
+```
+
+Sets the name/label for the number display.
+
+**Parameters:**
+- `name` (`str`): Display name or label
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `SetColor`
+```python
+def SetColor(self, color: Color) -> bool
+```
+
+Sets the primary color for the number display.
+
+**Parameters:**
+- `color` (`Color`): Primary display color
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `SetAlternativeColor`
+```python
+def SetAlternativeColor(self, alternativeColor: Color) -> bool
+```
+
+Sets an alternative color for special states or highlighting.
+
+**Parameters:**
+- `alternativeColor` (`Color`): Alternative color
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `SetDigits`
+```python
+def SetDigits(self, digits: int) -> bool
+```
+
+Sets the number of digits to display.
+
+**Parameters:**
+- `digits` (`int`): Number of digits (1-4 typically)
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `SetSpacing`
+```python
+def SetSpacing(self, spacing: int) -> bool
+```
+
+Sets the spacing between digits.
+
+**Parameters:**
+- `spacing` (`int`): Pixel spacing between digits
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+## Value and Color Functions
+
+### `SetValueFunc`
+```python
+def SetValueFunc(self, getValueFunc: any) -> bool
+```
+
+Sets a function to dynamically get the current value to display.
+
+**Parameters:**
+- `getValueFunc` (`function`): Function that returns the current value
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `SetColorFunc`
+```python
+def SetColorFunc(self, colorFunc: any) -> bool
+```
+
+Sets a function to dynamically determine the display color.
+
+**Parameters:**
+- `colorFunc` (`function`): Function that returns the current color
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+## Usage Examples
+
+### Basic Score Display
+```python
+def create_score_display():
+    """Create a simple score display"""
+
+    score = 0
+    score_display = UI4pxNumber()
+
+    # Configure the display
+    score_display.SetName("Score")
+    score_display.SetColor(Color(0, 255, 0))  # Green
+    score_display.SetDigits(4)
+    score_display.SetSpacing(1)
+
+    # Set value function
+    def get_score():
+        return score
+
+    score_display.SetValueFunc(get_score)
+
+    # Add to UI
+    ui = UI()
+    ui.AddUIComponent(score_display, Point(2, 2))
+
+    return ui, score_display
+
+# Game loop example
+ui, score_display = create_score_display()
+score = 0
+
+while True:
+    # Game logic here
+    score += 10  # Example score increase
+
+    # UI will automatically update the display
+    MatrixOS.SYS.DelayMs(1000)
+```
+
+### Dynamic Color Timer
+```python
+def create_countdown_timer():
+    """Create a countdown timer with color-coded urgency"""
+
+    timer_seconds = 60
+    timer_display = UI4pxNumber()
+
+    timer_display.SetName("Timer")
+    timer_display.SetDigits(2)
+    timer_display.SetSpacing(1)
+
+    # Dynamic value function
+    def get_timer_value():
+        return max(0, timer_seconds)
+
+    # Dynamic color function
+    def get_timer_color():
+        if timer_seconds > 30:
+            return Color(0, 255, 0)    # Green - plenty of time
+        elif timer_seconds > 10:
+            return Color(255, 255, 0)  # Yellow - getting low
+        else:
+            return Color(255, 0, 0)    # Red - urgent
+
+    timer_display.SetValueFunc(get_timer_value)
+    timer_display.SetColorFunc(get_timer_color)
+
+    ui = UI()
+    ui.AddUIComponent(timer_display, Point(3, 2))
+
+    # Timer countdown loop
+    def run_timer():
+        nonlocal timer_seconds
+        while timer_seconds > 0:
+            MatrixOS.SYS.DelayMs(1000)
+            timer_seconds -= 1
+
+        print("Timer finished!")
+
+    return ui, run_timer
+
+ui, timer_func = create_countdown_timer()
+ui.Start()
+timer_func()
+```
+
+### Multi-Parameter Dashboard
+```python
+def create_system_dashboard():
+    """Create a dashboard with multiple numeric displays"""
+
+    # System values
+    system_values = {
+        "temperature": 25,
+        "battery": 85,
+        "memory": 67,
+        "cpu": 45
+    }
+
+    displays = {}
+    ui = UI()
+
+    # Temperature display (top-left)
+    temp_display = UI4pxNumber()
+    temp_display.SetName("Temp")
+    temp_display.SetDigits(2)
+    temp_display.SetValueFunc(lambda: system_values["temperature"])
+    temp_display.SetColorFunc(lambda: Color(255, 0, 0) if system_values["temperature"] > 30
+                                   else Color(0, 255, 0))
+    ui.AddUIComponent(temp_display, Point(0, 0))
+    displays["temperature"] = temp_display
+
+    # Battery display (top-right)
+    battery_display = UI4pxNumber()
+    battery_display.SetName("Batt")
+    battery_display.SetDigits(2)
+    battery_display.SetValueFunc(lambda: system_values["battery"])
+    battery_display.SetColorFunc(lambda: Color(255, 0, 0) if system_values["battery"] < 20
+                                      else Color(255, 255, 0) if system_values["battery"] < 50
+                                      else Color(0, 255, 0))
+    ui.AddUIComponent(battery_display, Point(4, 0))
+    displays["battery"] = battery_display
+
+    # Memory display (bottom-left)
+    memory_display = UI4pxNumber()
+    memory_display.SetName("Mem")
+    memory_display.SetDigits(2)
+    memory_display.SetColor(Color(0, 255, 255))
+    memory_display.SetValueFunc(lambda: system_values["memory"])
+    ui.AddUIComponent(memory_display, Point(0, 4))
+    displays["memory"] = memory_display
+
+    # CPU display (bottom-right)
+    cpu_display = UI4pxNumber()
+    cpu_display.SetName("CPU")
+    cpu_display.SetDigits(2)
+    cpu_display.SetColor(Color(255, 0, 255))
+    cpu_display.SetValueFunc(lambda: system_values["cpu"])
+    ui.AddUIComponent(cpu_display, Point(4, 4))
+    displays["cpu"] = cpu_display
+
+    return ui, system_values, displays
+
+# Simulation of changing values
+def simulate_system_monitoring():
+    ui, values, displays = create_system_dashboard()
+    ui.Start()
+
+    import random
+
+    for _ in range(100):  # Run for 100 cycles
+        # Simulate changing system values
+        values["temperature"] = random.randint(20, 35)
+        values["battery"] = max(0, values["battery"] - random.randint(0, 2))
+        values["memory"] = random.randint(50, 90)
+        values["cpu"] = random.randint(30, 80)
+
+        MatrixOS.SYS.DelayMs(2000)  # Update every 2 seconds
+
+simulate_system_monitoring()
+```
+
+### Music BPM Display
+```python
+def create_bpm_display():
+    """Create a BPM display for music applications"""
+
+    current_bpm = 120
+    bpm_display = UI4pxNumber()
+
+    bpm_display.SetName("BPM")
+    bpm_display.SetDigits(3)
+    bpm_display.SetSpacing(1)
+
+    # BPM value function
+    def get_bpm():
+        return current_bpm
+
+    # Color based on BPM range
+    def get_bpm_color():
+        if current_bpm < 80:
+            return Color(0, 0, 255)    # Blue - slow
+        elif current_bpm < 120:
+            return Color(0, 255, 0)    # Green - moderate
+        elif current_bpm < 160:
+            return Color(255, 255, 0)  # Yellow - fast
+        else:
+            return Color(255, 0, 0)    # Red - very fast
+
+    bpm_display.SetValueFunc(get_bpm)
+    bpm_display.SetColorFunc(get_bpm_color)
+
+    ui = UI()
+    ui.AddUIComponent(bpm_display, Point(2, 2))
+
+    # BPM control functions
+    def increase_bpm():
+        nonlocal current_bpm
+        current_bpm = min(200, current_bpm + 5)
+
+    def decrease_bpm():
+        nonlocal current_bpm
+        current_bpm = max(60, current_bpm - 5)
+
+    return ui, increase_bpm, decrease_bpm
+
+ui, inc_bpm, dec_bpm = create_bpm_display()
+```
+
+### Game Health/Lives Display
+```python
+def create_game_hud():
+    """Create a game HUD with health and lives"""
+
+    game_state = {
+        "health": 100,
+        "lives": 3,
+        "level": 1,
+        "score": 0
+    }
+
+    ui = UI()
+
+    # Health display
+    health_display = UI4pxNumber()
+    health_display.SetName("HP")
+    health_display.SetDigits(3)
+    health_display.SetValueFunc(lambda: game_state["health"])
+    health_display.SetColorFunc(lambda: Color(255, 0, 0) if game_state["health"] < 25
+                                     else Color(255, 255, 0) if game_state["health"] < 50
+                                     else Color(0, 255, 0))
+    ui.AddUIComponent(health_display, Point(0, 0))
+
+    # Lives display
+    lives_display = UI4pxNumber()
+    lives_display.SetName("Lives")
+    lives_display.SetDigits(1)
+    lives_display.SetColor(Color(255, 100, 0))
+    lives_display.SetValueFunc(lambda: game_state["lives"])
+    ui.AddUIComponent(lives_display, Point(6, 0))
+
+    # Level display
+    level_display = UI4pxNumber()
+    level_display.SetName("Lv")
+    level_display.SetDigits(2)
+    level_display.SetColor(Color(0, 255, 255))
+    level_display.SetValueFunc(lambda: game_state["level"])
+    ui.AddUIComponent(level_display, Point(0, 6))
+
+    # Score display
+    score_display = UI4pxNumber()
+    score_display.SetName("Score")
+    score_display.SetDigits(4)
+    score_display.SetColor(Color(255, 255, 255))
+    score_display.SetValueFunc(lambda: game_state["score"])
+    ui.AddUIComponent(score_display, Point(3, 6))
+
+    return ui, game_state
+
+ui, game_data = create_game_hud()
+ui.Start()
+
+# Game simulation
+while game_data["lives"] > 0:
+    # Game logic simulation
+    game_data["score"] += 50
+    game_data["health"] = max(0, game_data["health"] - 5)
+
+    if game_data["health"] == 0:
+        game_data["lives"] -= 1
+        game_data["health"] = 100
+
+    MatrixOS.SYS.DelayMs(1000)
+```
+
+---
+
+## Best Practices
+
+1. **Digit Planning**: Choose appropriate digit count for your value ranges
+2. **Color Coding**: Use colors to convey meaning (red=danger, green=good, etc.)
+3. **Dynamic Updates**: Use value functions for real-time data display
+4. **Spacing**: Adjust spacing based on available screen space
+5. **Context**: Provide clear names/labels for numeric displays
+6. **Performance**: Avoid overly frequent updates that might cause flicker
+7. **Layout**: Plan component positions to avoid overlaps in your UI layout
