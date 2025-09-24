@@ -1,0 +1,253 @@
+---
+sidebar_position: 7
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Reversi App
+
+Reversi is a strategy board game for two players, played on an 8x8 board. Players take turns placing disks on the board with their assigned color facing up. During a play, any disks of the opponent's color that are in a straight line and bounded by the disk just placed and another disk of the current player's color are turned over to the current player's color.
+
+Learn more about Reversi [here](https://en.wikipedia.org/wiki/Reversi).
+
+## Game View
+
+export function GameView() {
+
+    const uiElements = [
+        {
+            "name": "Player 1 Pieces",
+            "desc": "The game starts with 2 pieces for each player in the center of the board.",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "color": "#00FFFF"
+                },
+                {
+                    "pos": [4, 4],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "Player 2 Pieces",
+            "desc": "The game starts with 2 pieces for each player in the center of the board.",
+            "elements": [
+                {
+                    "pos": [3, 4],
+                    "color": "#FF00FF"
+                },
+                {
+                    "pos": [4, 3],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "Possible Placement",
+            "desc": "The possible placement of the next piece is shown.",
+            "elements": [
+                {
+                    "pos": [4, 2],
+                    "color": "#00c0c0"
+                },
+                {
+                    "pos": [5, 3],
+                    "color": "#00c0c0"
+                },
+                {
+                    "pos": [2, 4],
+                    "color": "#00c0c0"
+                },
+                {
+                    "pos": [3, 5],
+                    "color": "#00c0c0"
+                }
+            ]
+        },
+        {
+            "elements": [
+                {
+                    "pos": ["u", 0],
+                    "size": 32,
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "Config Menu",
+            "desc": "Tap to enter the config menu.",
+            "link": "#config-menu",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "Game View"
+    const uiDescription = "The game view allows you to play the Reversi game. The underglow shows the current player's color."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<GameView />
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+        {
+            "name": "Brightness Control",
+            "desc": "Tap to cycle through brightness levels. Hold to enter the brightness control menu.",
+            "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Up",
+            "desc": "This technically doesn't do anything.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 2],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Left",
+            "desc": "Rotate the device so that the top of the device is on the left side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [2, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Down",
+            "desc": "Rotate the device so that the top of the device is on the bottom side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 5],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Right",
+            "desc": "Rotate the device so that the top of the device is on the right side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [5, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Player 1 Color",
+            "desc": "Tap to select colors for Player 1.",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "size": [8, 1],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "Player 1 First Hand",
+            "desc": "Toggle if Player 1 goes first.",
+            "elements": [
+                {
+                    "pos": [7, 6],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Player 2 Color",
+            "desc": "Tap to select colors for Player 2.",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "size": [8, 1],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "Player 2 First Hand",
+            "desc": "Toggle if Player 2 goes first.",
+            "elements": [
+                {
+                    "pos": [0, 1],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "Reset Game",
+            "desc": "Reset the game to the initial state.",
+            "elements": [
+                {
+                    "pos": [7, 3],
+                    "size": [1, 2],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Placement Hint",
+            "desc": "Toggle the placement hint.",
+            "elements": [
+                {
+                    "pos": [0, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Go back or Exit App",
+            "desc": "Tap to return to the board. Hold to exit the app.",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify settings of the app and the device."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<ConfigMenu />

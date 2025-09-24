@@ -1,0 +1,268 @@
+---
+title: Fract16
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Class: `Fract16`
+
+The `Fract16` class represents a 16-bit fractional value, providing utilities for scaling and comparison, with built-in type conversions and operators.
+
+*The source file for this class is located in <GithubLink path="os/framework/Fract16.h"/>.*
+
+---
+
+## Constructors
+
+### Default Constructor
+```cpp
+Fract16(uint16_t value = 0);
+```
+
+Initializes the fractional value. Defaults to `0`.
+
+**Parameters:**
+- `value` (`uint16_t`, optional): The fractional value. Defaults to `0`.
+
+---
+
+### Constructor with Bit Scaling
+```cpp
+Fract16(uint16_t value, uint8_t bits);
+```
+
+Initializes the fractional value with bit scaling.
+
+**Parameters:**
+- `value` (`uint16_t`): The value to scale.
+- `bits` (`uint8_t`): The number of bits to scale from.
+
+---
+
+## Member Functions
+
+### `to8bits`
+```cpp
+uint8_t to8bits();
+```
+
+Converts the 16-bit value to 8 bits.
+
+**Returns:**
+- `uint8_t`: The 8-bit representation of the value.
+
+---
+
+### `to7bits`
+```cpp
+uint8_t to7bits();
+```
+
+Converts the 16-bit value to 7 bits.
+
+**Returns:**
+- `uint8_t`: The 7-bit representation of the value.
+
+---
+
+## Operators
+
+### Boolean Conversion
+```cpp
+operator bool();
+```
+
+Checks if the value is non-zero.
+
+**Returns:**
+- `bool`: `true` if the value is greater than `0`, otherwise `false`.
+
+---
+
+### Conversion to `uint8_t`
+```cpp
+operator uint8_t();
+```
+
+Converts the value to an 8-bit integer.
+
+**Returns:**
+- `uint8_t`: The 8-bit representation of the value.
+
+---
+
+### Conversion to `uint16_t`
+```cpp
+operator uint16_t();
+```
+
+Converts the value to a 16-bit integer.
+
+**Returns:**
+- `uint16_t`: The 16-bit value.
+
+---
+
+### Conversion to `uint32_t`
+```cpp
+operator uint32_t();
+```
+
+Converts the value to a 32-bit integer.
+
+**Returns:**
+- `uint32_t`: The 32-bit value.
+
+---
+
+### Conversion to `float`
+```cpp
+operator float();
+```
+
+Converts the value to a floating-point number between `0.0` and `1.0`.
+
+**Returns:**
+- `float`: The fractional value as a float.
+
+---
+
+### Conversion to `int`
+```cpp
+operator int();
+```
+
+Converts the value to an integer.
+
+**Returns:**
+- `int`: The value as an integer.
+
+---
+
+### Comparison Operators
+
+#### Less Than
+```cpp
+bool operator<(int value);
+bool operator<(Fract16 value);
+```
+
+Compares the fractional value to another value or a `Fract16` object.
+
+**Parameters:**
+- `value` (`int` or `Fract16`): The value to compare.
+
+**Returns:**
+- `bool`: `true` if the current value is less than `value`, otherwise `false`.
+
+---
+
+#### Less Than or Equal
+```cpp
+bool operator<=(int value);
+bool operator<=(Fract16 value);
+```
+
+Compares if the fractional value is less than or equal to another value or a `Fract16` object.
+
+**Parameters:**
+- `value` (`int` or `Fract16`): The value to compare.
+
+**Returns:**
+- `bool`: `true` if the current value is less than or equal to `value`, otherwise `false`.
+
+---
+
+#### Greater Than
+```cpp
+bool operator>(int value);
+bool operator>(Fract16 value);
+```
+
+Compares if the fractional value is greater than another value or a `Fract16` object.
+
+**Parameters:**
+- `value` (`int` or `Fract16`): The value to compare.
+
+**Returns:**
+- `bool`: `true` if the current value is greater than `value`, otherwise `false`.
+
+---
+
+#### Greater Than or Equal
+```cpp
+bool operator>=(int value);
+bool operator>=(Fract16 value);
+```
+
+Compares if the fractional value is greater than or equal to another value or a `Fract16` object.
+
+**Parameters:**
+- `value` (`int` or `Fract16`): The value to compare.
+
+**Returns:**
+- `bool`: `true` if the current value is greater than or equal to `value`, otherwise `false`.
+
+---
+
+#### Equality
+```cpp
+bool operator==(int value);
+bool operator==(Fract16 value);
+```
+
+Checks if the fractional value is equal to another value or a `Fract16` object.
+
+**Parameters:**
+- `value` (`int` or `Fract16`): The value to compare.
+
+**Returns:**
+- `bool`: `true` if the values are equal, otherwise `false`.
+
+---
+
+#### Inequality
+```cpp
+bool operator!=(int value);
+bool operator!=(Fract16 value);
+```
+
+Checks if the fractional value is not equal to another value or a `Fract16` object.
+
+**Parameters:**
+- `value` (`int` or `Fract16`): The value to compare.
+
+**Returns:**
+- `bool`: `true` if the values are not equal, otherwise `false`.
+
+---
+
+### Arithmetic Operators
+
+#### Addition
+```cpp
+Fract16 operator+(Fract16 value);
+```
+
+Adds the current fractional value to another `Fract16` object. Caps the result at `FRACT16_MAX`.
+
+**Parameters:**
+- `value` (`Fract16`): The value to add.
+
+**Returns:**
+- `Fract16`: The resulting fractional value.
+
+---
+
+#### Subtraction
+```cpp
+Fract16 operator-(Fract16 value);
+```
+
+Subtracts another `Fract16` object from the current fractional value. Caps the result at `0` if negative.
+
+**Parameters:**
+- `value` (`Fract16`): The value to subtract.
+
+**Returns:**
+- `Fract16`: The resulting fractional value.
+```

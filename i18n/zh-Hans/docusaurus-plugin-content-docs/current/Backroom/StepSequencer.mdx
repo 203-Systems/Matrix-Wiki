@@ -1,0 +1,1866 @@
+---
+sidebar_position: 2
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Step Sequencer
+
+:::info
+Please note that this is a work in progress, and the design is subject to change. The current colors of the UI elements are for reference only, as our primary focus has been on functionality rather than visual design at this stage.
+:::
+
+export function SequencerMain() {
+
+    const uiElements = [
+    {
+        "name": "Page Selector",
+        "desc": "Select the page of the sequencer. Hold down to disable page or adjust length",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note Pad for entering notes",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play the sequence",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Record the Sequence",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Octave Down",
+        "desc": "Movw the octave down (With Shift, it will nudge the sequence left)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave Up",
+        "desc": "Move the octave up (With Shift, it will nudge the sequence right)",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Shift",
+        "desc": "Shift the sequence",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FF0090"
+            }
+        ]
+    },
+    {
+        "name": "Duplicate",
+        "desc": "Duplicate the section or note",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#FF6000"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear the sequence or Step",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Undo?",
+        "desc": "Undo the last action. Not sure if I can implement this. Might be some other function",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00FF60"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Sequencer Main"
+    const uiDescription = "Main UI for the Step Sequencer"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerMain />
+
+export function SequencerStepView() {
+
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            }
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note Pad for entering notes",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 5],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [0, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play the sequence",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Record the Sequence",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Octave Down",
+        "desc": "Movw the octave down (With Shift, it will nudge the sequence left)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave Up",
+        "desc": "Move the octave up (With Shift, it will nudge the sequence right)",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Shift",
+        "desc": "Shift the sequence",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FF0090"
+            }
+        ]
+    },
+    {
+        "name": "Duplicate",
+        "desc": "Duplicate the section or note",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#FF6000"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear the sequence or Step",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Undo?",
+        "desc": "Undo the last action. Not sure if I can implement this. Might be some other function",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00FF60"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Sequencer Step View"
+    const uiDescription = "Hold each step to add notes or actions. Or you can hold down a note and add into steps. You can also click the free slots on the step (the four gray pad on top right to manually add an action)"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepView />
+
+export function SequencerStepAddAction() {
+
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration. There will be more actions than the listed, those are just here to give an idea on how the UI will be.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Note Action",
+        "desc": "Add a note action to the step",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "CC Action",
+        "desc": "Add a CC action to the step",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "color": "#FFC000"
+            }
+        ]
+    },
+    {
+        "name": "PC Action",
+        "desc": "Add a PC action to the step",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#CCFF00"
+            }
+        ]
+    },
+    {
+        "name": "Pitch bend Action",
+        "desc": "Add a Pitch bend action to the step",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#FF0090"
+            }
+        ]
+    },
+    {
+        "name": "Change BPM",
+        "desc": "Add a Change BPM action to the step. (Affects the entire sequencer)",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Change Swing",
+        "desc": "Add a Change Swing action to the step. (Affects the entire sequencer)",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#00C0FF"
+            }
+        ]
+    },
+    {
+        "name": "Mute/Unmute Track",
+        "desc": "Add a Mute/Unmute Track action to the step.",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Solo/Unsolo Track",
+        "desc": "Add a Solo/Unsolo Track action to the step.",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Sequencer Step Add Action"
+    const uiDescription = "The next free slot will start flashing and you can add actions into it. (Press empty pad or the slot to cancel)"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepAddAction />
+
+export function SequencerStepSettingNoteNote() {
+
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            }
+        ]
+    },
+    {
+        "name": "Property - Note",
+        "desc": "Select which note to trigger.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00FF00"
+            }
+
+        ]
+    },
+    {
+        "name": "Property - Gate",
+        "desc": "Select how long the note is triggered.",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "color": "#00A0C0"
+            }
+
+        ]
+    },
+        {
+        "name": "Property - Velocity",
+        "desc": "Select how hard the note is triggered. (Initial Value)",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#C0C000"
+            }
+
+        ]
+    },
+    {
+        "name": "Property - Substep",
+        "desc": "Select which substep to trigger.",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#C08000"
+            }
+
+        ]
+    },
+    {
+        "name": "Property - Change Rate",
+        "desc": "Select if the value changes over time and how fast.",
+        "elements": [
+            {
+                "pos": [4, 3],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Property - Probability",
+        "desc": "Select how likely the event is triggered.",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "color": "#00C080"
+            }
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note Pad for select note",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [1, 3],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 4],
+                "size": [6, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 4],
+                "size": [1, 3],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 6],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [0, 5],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Octave Selector",
+        "desc": "Select the octave of the note",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": "#00B000"
+            },
+            {
+                "pos": [3, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Sequencer Step Setting - Note Action - Note"
+    const uiDescription = "Configure the Note of the Note Action"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSettingNoteNote />
+
+export function SequencerStepSettingNoteGate() {
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            }
+        ]
+    },
+    {
+        "name": "Property - Note",
+        "desc": "Select which note to trigger.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Gate",
+        "desc": "Select how long the note is triggered.",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "color": "#00D0FF"
+            }
+            
+        ]
+    },
+        {
+        "name": "Property - Velocity",
+        "desc": "Select how hard the note is triggered. (Initial Value)",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#C0C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Substep",
+        "desc": "Select which substep to trigger.",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#C08000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Change Rate",
+        "desc": "Select if the value changes over time and how fast.",
+        "elements": [
+            {
+                "pos": [4, 3],
+                "color": "#C000C0"
+            }   
+        ]
+    },
+    {
+        "name": "Property - Probability",
+        "desc": "Select how likely the event is triggered.",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "color": "#00C080"
+            }   
+        ]
+    },
+    {
+        "name": "Gate Length",
+        "desc": "Gate length up to 16, highest note can be trimmed to 1/6 by tapping it.",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [8, 2],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [0, 4],
+                "size": [2, 1],
+                "color": "#00C0FF"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#00A0D8"
+            }
+        ]
+    },
+    {
+        "name": "Infinite Gate",
+        "desc": "Make the gate infinite until the next note.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Zero Gate",
+        "desc": "Make the gate zero length. (Used to stop the note)",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C00000"
+            }
+        ]
+    },
+    {
+        "name": "Soft Trigger",
+        "desc": "Send the note as aftertouch instead of note on",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#C08000"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer Step Setting - Note Action - Gate"
+    const uiDescription = "Configure the gate of the note action"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSettingNoteGate />
+
+export function SequencerStepSettingNoteVelocity() {
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            }
+        ]
+    },
+    {
+        "name": "Property - Note",
+        "desc": "Select which note to trigger.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Gate",
+        "desc": "Select how long the note is triggered.",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "color": "#0080C0"
+            }
+            
+        ]
+    },
+        {
+        "name": "Property - Velocity",
+        "desc": "Select how hard the note is triggered. (Initial Value)",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#FFFF00"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Substep",
+        "desc": "Select which substep to trigger.",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#C08000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Change Rate",
+        "desc": "Select if the value changes over time and how fast.",
+        "elements": [
+            {
+                "pos": [4, 3],
+                "color": "#C000C0"
+            }   
+        ]
+    },
+    {
+        "name": "Property - Probability",
+        "desc": "Select how likely the event is triggered.",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "color": "#00C080"
+            }   
+        ]
+    },
+    {
+        "name": "Velocity Length",
+        "desc": "Select up to 32 velocity levels. (Need 0 velocity? Use zero gate instead)",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [8, 4],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [0, 4],
+                "size": [8, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [0, 5],
+                "size": [4, 1],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer Step Setting - Note Action - Velocity"
+    const uiDescription = "Configure the velocity of the note action"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSettingNoteVelocity />
+
+export function SequencerStepSettingNoteMicrostep() {
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            }
+        ]
+    },
+    {
+        "name": "Property - Note",
+        "desc": "Select which note to trigger.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Gate",
+        "desc": "Select how long the note is triggered.",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "color": "#0080C0"
+            }
+            
+        ]
+    },
+        {
+        "name": "Property - Velocity",
+        "desc": "Select how hard the note is triggered. (Initial Value)",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#C0C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Substep",
+        "desc": "Select which substep to trigger.",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#FFC000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Change Rate",
+        "desc": "Select if the value changes over time and how fast.",
+        "elements": [
+            {
+                "pos": [4, 3],
+                "color": "#C000C0"
+            }   
+        ]
+    },
+    {
+        "name": "Property - Probability",
+        "desc": "Select how likely the event is triggered.",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "color": "#00C080"
+            }   
+        ]
+    },
+    {
+        "name": "Microstep Selector",
+        "desc": "Select one of the 6 microsteps to trigger the note",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [6, 1],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [0, 4],
+                "color": "#FFC000"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer Step Setting - Note Action - Microstep"
+    const uiDescription = "Configure the Microstep of the note action"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSettingNoteMicrostep />
+
+export function SequencerStepSettingNoteChangeRate() {
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            }
+        ]
+    },
+    {
+        "name": "Property - Note",
+        "desc": "Select which note to trigger.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Gate",
+        "desc": "Select how long the note is triggered.",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "color": "#0080C0"
+            }
+            
+        ]
+    },
+        {
+        "name": "Property - Velocity",
+        "desc": "Select how hard the note is triggered. (Initial Value)",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#C0C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Substep",
+        "desc": "Select which substep to trigger.",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#C08000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Change Rate",
+        "desc": "Select if the value changes over time and how fast.",
+        "elements": [
+            {
+                "pos": [4, 3],
+                "color": "#FF00FF"
+            }   
+        ]
+    },
+    {
+        "name": "Property - Probability",
+        "desc": "Select how likely the event is triggered.",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "color": "#00C080"
+            }   
+        ]
+    },
+    {
+        "name": "Change Rate Selector",
+        "desc": "Select the change rate of the value. Top note has 4 sub steps, each big step is 16, each sub step is 4. This is how much value that will change on each quarter note.",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [8, 2],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [0, 4],
+                "size": [4, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "No Rate of Change",
+        "desc": "Do not change value over time",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }   
+        ]
+    },
+    {
+        "name": "Increase",
+        "desc": "Increase the value over time",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }   
+        ]
+    },
+    {
+        "name": "Decrease",
+        "desc": "Decrease the value over time",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#C00000"
+            }   
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer Step Setting - Note Action - Change Rate"
+    const uiDescription = "Configure the value change rate of the action"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSettingNoteChangeRate />
+
+export function SequencerStepSettingNoteProbability() {
+    const uiElements = [
+    {
+        "name": "Sequence",
+        "desc": "Note sequence of the sequencer. Hold down to fine tune step notes. White means it is currently selected for configuration",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Selector",
+        "desc": "Each step can have up to 8 actions, including note, cc, bpm change, etc. Color means what's it's current function. Full bright means it is currently selected for configuration. Tap at dim white to create new action", 
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 1],
+                "color": "#B0B0B0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#B000B0"
+            }
+        ]
+    },
+    {
+        "name": "Property - Note",
+        "desc": "Select which note to trigger.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Gate",
+        "desc": "Select how long the note is triggered.",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "color": "#0080C0"
+            }
+            
+        ]
+    },
+        {
+        "name": "Property - Velocity",
+        "desc": "Select how hard the note is triggered. (Initial Value)",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "color": "#C0C000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Substep",
+        "desc": "Select which substep to trigger.",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#C08000"
+            }
+            
+        ]
+    },
+    {
+        "name": "Property - Change Rate",
+        "desc": "Select if the value changes over time and how fast.",
+        "elements": [
+            {
+                "pos": [4, 3],
+                "color": "#C000C0"
+            }   
+        ]
+    },
+    {
+        "name": "Property - Probability",
+        "desc": "Select how likely the event is triggered.",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "color": "#00C080"
+            }   
+        ]
+    },
+    {
+        "name": "Probability Selector",
+        "desc": "Select the cProbability of Triggering this action. (Each step is 12.5%)",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [8, 2],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [0, 4],
+                "size": [4, 1],
+                "color": "#00FFC0"
+            }
+        ]
+    },
+    {
+        "name": "Action Menu",
+        "desc": "Tap to enter the action menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer Step Setting - Note Action - Change Rate"
+    const uiDescription = "Configure the value change rate of the action"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSettingNoteProbability />
+
+export function SequencerActionMenu() {
+    const uiElements = [
+    {
+        "name": "Save",
+        "desc": "Save the current sequence",
+        "elements": [
+            {
+                "pos": [3, 2],
+                "size": [2, 1],
+                "color": "#00C0FF"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Left",
+        "desc": "Rotate the device so that the top of the device is on the left side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [2, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Down",
+        "desc": "Rotate the device so that the top of the device is on the bottom side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Rotate Device Right",
+        "desc": "Rotate the device so that the top of the device is on the right side.",
+        "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+        "elements": [
+            {
+                "pos": [5, 3],
+                "size": [1, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Brightness Control",
+        "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+        "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "size": [2, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Track Selection",
+        "desc": "Select the track to edit",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#B00000"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#B06000"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#50B000"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#00B000"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#00B0B0"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#0000B0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#7F00FF"
+            }
+        ]
+    },
+    {
+        "name": "BPM & Swing",
+        "desc": "Change the BPM and Swing of the sequence",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Undermained feature",
+        "desc": "I will find something to add here",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#00C0FF"
+            }
+        ]
+    },
+    {
+        "name": "sequencer Setting",
+        "desc": "Enter the Sequencer Setting",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "System Setting",
+        "desc": "Enter the System Setting",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Note Pad Mode",
+        "desc": "Change the Note Pad Mode. Cycle through Scaled, Chromatic, isomorphic, drum",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#FF5900"
+            }
+        ]
+    },
+    {
+        "name": "Scale",
+        "desc": "Change the Scale of the sequence",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FF0090"
+            }
+        ]
+    },
+    {
+        "name": "Force Sensitivity",
+        "desc": "Toggle Force Sensitivity",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Port & Channel",
+        "desc": "Change the MIDI Port and Channel",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "Track Color",
+        "desc": "Change the color of the track",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Timeline View",
+        "desc": "Enter the Timeline View",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    // {
+    //     "name": "System Setting",
+    //     "desc": "Enter the System Setting",
+    //     "link": "/docs/MatrixOS/SystemSettings",	
+    //     "elements": [
+    //         {
+    //             "pos": [7, 7],
+    //             "color": "#FFFFFF"
+    //         }
+    //     ]
+    // },
+    {
+        "name": "Track Enabled",
+        "desc": "Enable or disable track. (Hold this key down and you can tap other tracks to enable or disable them)",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFB000"
+            }
+        ]
+    },
+    {
+        "name": "Track Solo",
+        "desc": "Enable or disable track solo (Hold this key down and you can tap other tracks to solo them)",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00B0FF"
+            }
+        ]
+    },
+    {
+        "name": "Track Recoding",
+        "desc": "Enable or disable track recording (Hold this key down and you can tap other tracks to record them)",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play the sequence",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Go to sequencer View or Exit App",
+        "desc": "Tap to go back to the sequencer View. Hold to exit the app.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer Action Menu"
+    const uiDescription = "Menu for the Sequencer"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerActionMenu />

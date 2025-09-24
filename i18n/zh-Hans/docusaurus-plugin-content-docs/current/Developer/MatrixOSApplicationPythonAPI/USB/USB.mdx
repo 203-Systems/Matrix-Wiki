@@ -1,0 +1,141 @@
+---
+sidebar_position: 7
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# USB API
+
+## Overview
+
+The USB API in MatrixOS provides functions for managing USB connectivity and status. The USB API is available as `MatrixOS.USB` and is imported by default.
+
+*The Python USB API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_USB.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_USB.pyi"/>.*
+
+---
+
+## `USB.Connected`
+```python
+def Connected() -> bool
+```
+
+Checks if the device is connected to a USB host.
+
+**Returns:**
+- `bool`: True if USB is connected, False otherwise
+
+**Example:**
+```python
+if MatrixOS.USB.Connected():
+    print("Device is connected via USB")
+else:
+    print("Device is not connected to USB")
+```
+
+---
+
+## USB Status Monitoring
+
+### Basic Connection Check
+```python
+
+def monitor_usb_connection():
+    """Monitor USB connection status"""
+    last_status = None
+
+    while True:
+        current_status = MatrixOS.USB.Connected()
+
+        if current_status != last_status:
+            if current_status:
+                print("USB connected!")
+            else:
+                print("USB disconnected!")
+
+            last_status = current_status
+
+        MatrixOS.SYS.DelayMs(1000)  # Check every second
+
+monitor_usb_connection()
+```
+
+### USB-Dependent Functionality
+```python
+def usb_dependent_task():
+    """Example of functionality that requires USB connection"""
+
+    # Wait for USB connection
+    print("Waiting for USB connection...")
+    while not MatrixOS.USB.Connected():
+        MatrixOS.SYS.DelayMs(100)
+
+    print("USB connected! Starting USB-dependent operations...")
+
+    # Now we can safely use USB-dependent features
+    if MatrixOS.HID.Ready():
+        print("HID is available")
+        # Use HID functionality...
+
+    # Continue with other USB operations...
+
+usb_dependent_task()
+```
+
+---
+
+## Integration with Other Systems
+
+### USB and HID Integration
+```python
+def safe_hid_operations():
+    """Safely perform HID operations with USB checking"""
+
+    if not MatrixOS.USB.Connected():
+        print("USB not connected - HID operations unavailable")
+        return False
+
+    if not MatrixOS.HID.Ready():
+        print("HID not ready")
+        return False
+
+    # Safe to use HID
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_A)
+    return True
+
+safe_hid_operations()
+```
+
+### USB Status for Application Logic
+```python
+def adaptive_application():
+    """Application that adapts behavior based on USB status"""
+
+    while True:
+        if MatrixOS.USB.Connected():
+            # USB mode - can use HID, might have different behavior
+            print("Running in USB mode")
+            # ... USB-specific functionality
+
+        else:
+            # Standalone mode - different behavior
+            print("Running in standalone mode")
+            # ... standalone functionality
+
+        MatrixOS.SYS.DelayMs(5000)  # Check every 5 seconds
+
+adaptive_application()
+```
+
+
+---
+
+## USB Modes and Behavior
+
+The USB connection status affects various system behaviors:
+
+- **HID Functionality**: Requires active USB connection
+- **Power Management**: USB connection may affect sleep/power modes
+- **Data Transfer**: File transfer modes depend on USB connectivity
+- **Device Recognition**: Host OS recognition depends on USB enumeration
+- **CDC Communication**: Virtual serial port communication over USB
+
+Check the specific MatrixOS configuration and device capabilities for detailed USB mode support.

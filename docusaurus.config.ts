@@ -25,7 +25,15 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en']//, 'zh-Hans'],
+    locales: ['en', 'zh-Hans'],
+    localeConfigs: {
+      en: {
+        label: 'English',
+      },
+      'zh-Hans': {
+        label: '中文',
+      },
+    },
   },
 
   presets: [
@@ -137,11 +145,10 @@ const config: Config = {
           type: 'docsVersionDropdown',
           position: 'right',
         },
-        // Disable Chinese for now
-        // {
-        //   type: 'localeDropdown',
-        //   position: 'right',
-        // },
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
         {
           href: 'https://github.com/203-Systems',
           position: 'right',

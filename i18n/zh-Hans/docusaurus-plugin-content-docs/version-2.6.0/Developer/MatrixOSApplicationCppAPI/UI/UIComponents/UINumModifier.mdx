@@ -1,0 +1,92 @@
+---
+title: UINumberModifier
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Class: `UINumberModifier`
+
+The `UINumberModifier` class provides a UI component for modifying numerical values interactively. Each segment of the component corresponds to a modifier that adjusts the value by a specified amount, with visual feedback based on a gradient.
+
+*The source file for this class is located in <GithubLink path="os/ui/UIComponents/UINumberModifier.h"/>.*
+
+---
+
+## Constructor
+
+### `UINumberModifier`
+```cpp
+UINumberModifier(Color color, uint8_t length, int32_t* value, int32_t* modifiers, uint8_t* control_gradient,
+                 int32_t lower_limit = INT_MIN, int32_t upper_limit = INT_MAX);
+```
+
+Creates a new number modifier UI component.
+
+**Parameters:**
+- `color` [`Color`](../../Types/Color/): The color for the component.
+- `length` (`uint8_t`): The number of segments in the modifier.
+- `value` (`int32_t*`): Pointer to the integer value being modified.
+- `modifiers` (`int32_t*`): Array of modifier values for each segment.
+- `control_gradient` (`uint8_t*`): Array of gradient values (0–255) to scale the brightness of each segment.
+- `lower_limit` (`int32_t`, optional): The minimum value allowed. Defaults to `INT_MIN`.
+- `upper_limit` (`int32_t`, optional): The maximum value allowed. Defaults to `INT_MAX`.
+
+---
+
+## Methods
+
+### `GetSize`
+```cpp
+virtual Dimension GetSize();
+```
+Calculates the dimensions of the component.
+
+**Returns:**
+- [`Dimension`](../../Types/Dimension/): The dimensions (`width` and `height`) of the component, where `width` equals `length` and `height` is `1`.
+
+---
+
+### `GetColor`
+```cpp
+virtual Color GetColor();
+```
+Retrieves the color of the component. 
+
+**Returns:**
+- [`Color`](../../Types/Color/): The color of the component.
+
+---
+
+### `Render`
+```cpp
+virtual bool Render(Point origin);
+```
+Renders the component at the specified origin.
+
+**Parameters:**
+- `origin` ([`Point`](../../Types/Point/)): The top-left corner of the rendering area.
+
+**Returns:**
+- `bool`: `true` if rendering was successful.
+
+**Behavior:**
+- Each segment's brightness is scaled based on its corresponding gradient value.
+
+---
+
+### `KeyEvent`
+```cpp
+virtual bool KeyEvent(Point xy, KeyInfo* keyInfo);
+```
+Handles key events to adjust the value based on the selected modifier.
+
+**Parameters:**
+- `xy` ([`Point`](../../Types/Point/)): The position of the event relative to the component.
+- `keyInfo` ([`KeyInfo*`](../../Types/KeyInfo/)): Information about the key event.
+
+**Behavior:**
+- **Pressed**: Adjusts the value by the modifier at the selected position. Clamps the result within `lower_limit` and `upper_limit`.
+
+**Returns:**
+- `bool`: `true` to indicate the event was handled.
+
+---

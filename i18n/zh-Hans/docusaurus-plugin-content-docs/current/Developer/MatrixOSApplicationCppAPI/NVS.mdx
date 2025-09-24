@@ -1,0 +1,102 @@
+---
+sidebar_position: 7
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# NVS API
+
+## Overview
+The Non-Volatile Storage (NVS) API provides a mechanism for storing and retrieving variables in the device's non-volatile memory. This API is useful for saving and loading configuration settings, calibration data, and other persistent variables.
+
+*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/NVS.cpp"/>.*
+
+## Saved Variables
+The NVS API is rather complex requiring the use of a hash to identify variables. In most case you will want to use the [SavedVar Macro](./Utilities/SavedVariable)  to create saved variables instead of using the NVS API directly.
+
+You will want to use the NVS API directly if you need to store a large amount of data like save the full configuration for Note layout after user is done configuring instead saving after every small changes with large numbers of saved variables.
+
+## Hashing 
+Need a way to hash the key to a unique value? Check out the [Hash Utility](./Utilities/Hash) for more information.
+
+
+---
+
+## `MatrixOS::NVS::GetSize`
+```cpp
+size_t GetSize(uint32_t hash);
+```
+
+Retrieves the size of the variable associated with the given hash.
+
+**Parameters:**
+- `hash` (`uint32_t`): The hash identifying the variable.
+
+**Returns:**
+- `size_t`: The size of the variable in bytes. If the variable does not exist, the returned size will be -1.
+
+---
+
+## `MatrixOS::NVS::GetVariable` (Overloaded)
+
+### Version 1: Returns Variable Content
+```cpp
+vector<char> GetVariable(uint32_t hash);
+```
+
+Retrieves the content of the variable associated with the given hash as a `vector<char>`.
+
+**Parameters:**
+- `hash` (`uint32_t`): The hash identifying the variable.
+
+**Returns:**
+- `vector<char>`: The content of the variable. If the variable does not exist, the returned vector will be zero length.
+
+---
+
+### Version 2: Loads Variable into Pointer
+```cpp
+int8_t GetVariable(uint32_t hash, void* pointer, uint16_t length);
+```
+
+Loads the variable content into the provided pointer. If the variable is not defined, the function attempts to use the current value at the pointer to define the variable.
+
+**Parameters:**
+- `hash` (`uint32_t`): The hash identifying the variable.
+- `pointer` (`void*`): A pointer to the memory location where the variable's content will be loaded.
+- `length` (`uint16_t`): The size of the data to load.
+
+**Returns:**
+- `int8_t`: A status code indicating success or failure.
+
+---
+
+## `MatrixOS::NVS::SetVariable`
+```cpp
+bool SetVariable(uint32_t hash, void* pointer, uint16_t length);
+```
+
+Sets or updates the variable identified by the given hash with the content provided in the pointer.
+
+**Parameters:**
+- `hash` (`uint32_t`): The hash identifying the variable.
+- `pointer` (`void*`): A pointer to the memory location containing the data to store.
+- `length` (`uint16_t`): The size of the data to store.
+
+**Returns:**
+- `bool`: `true` if the operation was successful; `false` otherwise.
+
+---
+
+## `MatrixOS::NVS::DeleteVariable`
+```cpp
+bool DeleteVariable(uint32_t hash);
+```
+
+Deletes the variable associated with the given hash.
+
+**Parameters:**
+- `hash` (`uint32_t`): The hash identifying the variable.
+
+**Returns:**
+- `bool`: `true` if the variable was successfully deleted; `false` otherwise.
+```

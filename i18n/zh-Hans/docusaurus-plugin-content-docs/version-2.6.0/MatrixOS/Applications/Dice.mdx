@@ -1,0 +1,424 @@
+---
+sidebar_position: 5
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Dice App
+
+The Dice App is a simple app that allows you to roll a dice.
+
+The dice has two modes: dotted dice and number dice.
+
+You can customize the number of faces on the dice (2 to 9 for dot mode, 2 to 99 for number mode) and the color and effect of the animation.
+
+## Dice View
+
+### Dot Mode
+
+export function DotView() {
+
+    const uiElements = [
+        {
+            "name": "Dots",
+            "desc": "Display the dots of the dice.",
+            "elements": [
+                {
+                    "pos": [0, 1],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 1],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [6, 1],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [0, 5],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 5],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [6, 5],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Config Menu",
+            "desc": "Tap to enter the config menu.",
+            "link": "#config-menu",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "Dice View - Dot Mode"
+    const uiDescription = "Dot mode displays the dice dots on the screen. You can customize the number of faces from 2 to 9."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<DotView />
+
+### Number Mode
+
+export function NumberView() {
+
+    const uiElements = [
+        {
+            "name": "Number",
+            "desc": "Display the number of the dice.",
+            "elements": [
+                {
+                    "pos": [2, 2],
+                    "size": [1, 4],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 1],
+                    "size": [2, 1],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 3],
+                    "size": [2, 1],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 6],
+                    "size": [2, 1],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [5, 4],
+                    "size": [1, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Config Menu",
+            "desc": "Tap to enter the config menu.",
+            "link": "#config-menu",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "Dice View - Number Mode"
+    const uiDescription = "Number mode displays numerical values on the screen. You can customize the number of faces from 2 to 99."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<NumberView />
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+        {
+            "name": "Brightness Control",
+            "desc": "Tap to cycle through brightness levels. Hold to enter the brightness control menu.",
+            "link": "/docs/MatrixOS/SystemSettings#brightness-control",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Up",
+            "desc": "This technically doesn't do anything.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 2],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Left",
+            "desc": "Rotate the device so that the top of the device is on the left side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [2, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Down",
+            "desc": "Rotate the device so that the top of the device is on the bottom side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 5],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Right",
+            "desc": "Rotate the device so that the top of the device is on the right side.",
+            "link": "/docs/MatrixOS/SystemSettings#device-rotation",
+            "elements": [
+                {
+                    "pos": [5, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Dot Mode",
+            "desc": "Switch to Dot mode.",
+            "link": "#dot-mode",
+            "elements": [
+                {
+                    "pos": [3, 0],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "Number Mode",
+            "desc": "Switch to Number Mode.",
+            "link": "#number-mode",
+            "elements": [
+                {
+                    "pos": [4, 0],
+                    "color": "#cc4100"
+                }
+            ]
+        },
+        {
+            "name": "Rolling Rainbow Mode",
+            "desc": "Enable rainbow mode when rolling the dice.",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Rolling Color",
+            "desc": "Change the display color when the dice is rolling (it can be rainbow if rolling rainbow mode is on).",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [0, 2],
+                    "size": [1, 4],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Rolling Underglow Effect",
+            "desc": "Change the underglow effect when the dice is rolling (it can be rainbow if rolling rainbow mode is on) (Only available on Mystrix Pro).",
+            "link": "#underglow-effect",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Confirmed Rainbow Mode",
+            "desc": "Enable rainbow mode after the dice roll is confirmed.",
+            "elements": [
+                {
+                    "pos": [7, 0],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Confirmed Color",
+            "desc": "Change the display color after the dice roll is confirmed (it can be rainbow if confirmed rainbow mode is on).",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [7, 2],
+                    "size": [1, 4],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Confirmed Underglow Effect",
+            "desc": "Change the underglow effect after the dice roll is confirmed (it can be rainbow if confirmed rainbow mode is on) (Only available on Mystrix Pro).",
+            "link": "#underglow-effect",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Faces",
+            "desc": "Change the number of faces on the dice (config independent).",
+            "elements": [
+                {
+                    "pos": [2, 7],
+                    "size": [4, 1],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "Dice View or Exit App",
+            "desc": "Tap to return to the dice view. Hold to exit the app.",
+            "link": "#dice-view",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify customization options."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<ConfigMenu />
+
+## Underglow Effect
+
+Underglow can have different LED effects during dice roll or after dice roll. You can adjust the animation effect and speed of the effect or turn it off. Underglow Effect is only available on Mystrix Pro.
+
+export function UnderglowEffect() {
+
+    const uiElements = [
+        {
+            "name": "Enable Underglow",
+            "desc": "Enable or disable underglow effects.",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Effect: Static",
+            "desc": "Set the underglow effect to Static.",
+            "elements": [
+                {
+                    "pos": [2, 0],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Effect: Breath",
+            "desc": "Set the underglow effect to Breath.",
+            "elements": [
+                {
+                    "pos": [3, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "Effect: Strobe",
+            "desc": "Set the underglow effect to Strobe.",
+            "elements": [
+                {
+                    "pos": [4, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "Effect: Saw",
+            "desc": "Set the underglow effect to Saw.",
+            "elements": [
+                {
+                    "pos": [5, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "Speed Control",
+            "desc": "Change the speed of the underglow effect.",
+            "elements": [
+                {
+                    "pos": [0, 6],
+                    "size": [8, 2],
+                    "color": "#C0C0C0"
+                },
+                {
+                    "pos": [3, 6],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Go Back to Config Menu",
+            "desc": "Tap to return to the config menu.",
+            "link": "#config-menu",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "Underglow Effect Menu"
+    const uiDescription = "The Underglow Effect Menu allows you to modify underglow effect options."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<UnderglowEffect />

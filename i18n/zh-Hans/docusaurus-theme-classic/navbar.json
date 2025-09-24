@@ -1,0 +1,26 @@
+{
+  "logo.alt": {
+    "message": "203 Systems",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Mystrix": {
+    "message": "Mystrix",
+    "description": "Navbar item with label Mystrix"
+  },
+  "item.label.Matrix OS": {
+    "message": "Matrix OS",
+    "description": "Navbar item with label Matrix OS"
+  },
+  "item.label.Developer": {
+    "message": "Developer",
+    "description": "Navbar item with label Developer"
+  },
+  "item.label.Resources": {
+    "message": "Resources",
+    "description": "Navbar item with label Resources"
+  },
+  "item.label.Support": {
+    "message": "Support",
+    "description": "Navbar item with label Support"
+  }
+}

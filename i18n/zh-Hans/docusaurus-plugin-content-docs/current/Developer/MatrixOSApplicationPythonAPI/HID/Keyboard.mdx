@@ -1,0 +1,439 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Keyboard API
+
+## Overview
+
+The HID Keyboard interface allows the device to emulate a standard USB keyboard, sending key press and release events to connected hosts. This enables text input, keyboard shortcuts, and comprehensive keyboard functionality.
+
+*The Python HID Keyboard API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_Keyboard.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_Keyboard.pyi"/>.*
+
+---
+
+## Keyboard Functions
+
+### `Tap`
+```python
+def Tap(keycode: KeyboardKeycode, length_ms: int = 100) -> bool
+```
+
+Sends a complete keystroke (key press followed by key release) with configurable duration.
+
+**Parameters:**
+- `keycode` (`KeyboardKeycode`): Key to press and release
+- `length_ms` (`int`, optional): Duration to hold key in milliseconds (defaults to 100)
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+# Type the letter 'A' with default 100ms duration
+MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
+
+# Type a space with custom 50ms duration
+MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_SPACE, 50)
+```
+
+---
+
+### `Press`
+```python
+def Press(keycode: KeyboardKeycode) -> bool
+```
+
+Presses a key (key down event) without releasing it.
+
+**Parameters:**
+- `keycode` (`KeyboardKeycode`): Key to press
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+# Press and hold Ctrl key
+MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
+
+# Press Shift key
+MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_SHIFT)
+```
+
+---
+
+### `Release`
+```python
+def Release(keycode: KeyboardKeycode) -> bool
+```
+
+Releases a previously pressed key (key up event).
+
+**Parameters:**
+- `keycode` (`KeyboardKeycode`): Key to release
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+# Release Ctrl key
+MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
+
+# Release Shift key
+MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_SHIFT)
+```
+
+---
+
+### `ReleaseAll`
+```python
+def ReleaseAll() -> None
+```
+
+Releases all currently pressed keys.
+
+**Example:**
+```python
+# Ensure no keys are stuck
+MatrixOS.HID.Keyboard.ReleaseAll()
+```
+
+---
+
+## Keyboard Examples
+
+### Basic Text Input
+```python
+def type_text(text):
+    """Type text character by character"""
+
+    # Character to keycode mapping (simplified)
+    char_map = {
+        'a': KeyboardKeycode.KEY_A, 'b': KeyboardKeycode.KEY_B, 'c': KeyboardKeycode.KEY_C,
+        'd': KeyboardKeycode.KEY_D, 'e': KeyboardKeycode.KEY_E, 'f': KeyboardKeycode.KEY_F,
+        'g': KeyboardKeycode.KEY_G, 'h': KeyboardKeycode.KEY_H, 'i': KeyboardKeycode.KEY_I,
+        'j': KeyboardKeycode.KEY_J, 'k': KeyboardKeycode.KEY_K, 'l': KeyboardKeycode.KEY_L,
+        'm': KeyboardKeycode.KEY_M, 'n': KeyboardKeycode.KEY_N, 'o': KeyboardKeycode.KEY_O,
+        'p': KeyboardKeycode.KEY_P, 'q': KeyboardKeycode.KEY_Q, 'r': KeyboardKeycode.KEY_R,
+        's': KeyboardKeycode.KEY_S, 't': KeyboardKeycode.KEY_T, 'u': KeyboardKeycode.KEY_U,
+        'v': KeyboardKeycode.KEY_V, 'w': KeyboardKeycode.KEY_W, 'x': KeyboardKeycode.KEY_X,
+        'y': KeyboardKeycode.KEY_Y, 'z': KeyboardKeycode.KEY_Z,
+        '1': KeyboardKeycode.KEY_1, '2': KeyboardKeycode.KEY_2, '3': KeyboardKeycode.KEY_3,
+        '4': KeyboardKeycode.KEY_4, '5': KeyboardKeycode.KEY_5, '6': KeyboardKeycode.KEY_6,
+        '7': KeyboardKeycode.KEY_7, '8': KeyboardKeycode.KEY_8, '9': KeyboardKeycode.KEY_9,
+        '0': KeyboardKeycode.KEY_0, ' ': KeyboardKeycode.KEY_SPACE,
+        '\n': KeyboardKeycode.KEY_ENTER, '\t': KeyboardKeycode.KEY_TAB
+    }
+
+    for char in text.lower():
+        if char in char_map:
+            MatrixOS.HID.Keyboard.Write(char_map[char])
+            MatrixOS.SYS.DelayMs(50)  # Small delay between characters
+
+# Usage
+type_text("hello world\n")
+```
+
+### Keyboard Shortcuts
+```python
+def send_ctrl_c():
+    """Send Ctrl+C shortcut"""
+    MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
+    MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_C)
+    MatrixOS.SYS.DelayMs(10)
+    MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_C)
+    MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
+
+def send_ctrl_v():
+    """Send Ctrl+V shortcut"""
+    MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
+    MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_V)
+    MatrixOS.SYS.DelayMs(10)
+    MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_V)
+    MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
+
+def send_alt_tab():
+    """Send Alt+Tab shortcut"""
+    MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_ALT)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_TAB)
+    MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_ALT)
+
+# Usage
+send_ctrl_c()
+MatrixOS.SYS.DelayMs(100)
+send_ctrl_v()
+```
+
+### Function Keys and Special Keys
+```python
+def media_controls():
+    """Example media control functions"""
+
+    # Volume controls (if available)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_VOLUME_UP)
+    MatrixOS.SYS.DelayMs(100)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_VOLUME_DOWN)
+
+    # Function keys
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_F1)
+    MatrixOS.SYS.DelayMs(100)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_F12)
+
+def navigation_keys():
+    """Example navigation key usage"""
+
+    # Arrow keys
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_UP_ARROW)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_DOWN_ARROW)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_LEFT_ARROW)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_RIGHT_ARROW)
+
+    # Page navigation
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_PAGE_UP)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_PAGE_DOWN)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_HOME)
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_END)
+
+media_controls()
+navigation_keys()
+```
+
+### Advanced Macro System
+```python
+def keyboard_macro_pad():
+    """Turn device into a comprehensive keyboard macro pad"""
+
+    # Define macros for each key
+    macros = {
+        0: {"name": "Copy", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_C]},
+        1: {"name": "Paste", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_V]},
+        2: {"name": "Cut", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_X]},
+        3: {"name": "Undo", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_Z]},
+        4: {"name": "Redo", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_Y]},
+        5: {"name": "Select All", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_A]},
+        6: {"name": "Save", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_S]},
+        7: {"name": "Find", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_F]},
+
+        8: {"name": "New Tab", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_T]},
+        9: {"name": "Close Tab", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_W]},
+        10: {"name": "Refresh", "keys": [KeyboardKeycode.KEY_F5]},
+        11: {"name": "Dev Tools", "keys": [KeyboardKeycode.KEY_F12]},
+
+        16: {"name": "Vol Up", "keys": [KeyboardKeycode.KEY_VOLUME_UP]},
+        17: {"name": "Vol Down", "keys": [KeyboardKeycode.KEY_VOLUME_DOWN]},
+        18: {"name": "Mute", "keys": [KeyboardKeycode.KEY_MUTE]},
+
+        24: {"name": "Alt+Tab", "keys": [KeyboardKeycode.KEY_LEFT_ALT, KeyboardKeycode.KEY_TAB]},
+        25: {"name": "Win+D", "keys": [KeyboardKeycode.KEY_LEFT_GUI, KeyboardKeycode.KEY_D]},
+        26: {"name": "Win+L", "keys": [KeyboardKeycode.KEY_LEFT_GUI, KeyboardKeycode.KEY_L]},
+    }
+
+    def execute_macro(macro):
+        """Execute a keyboard macro"""
+        print(f"Executing: {macro['name']}")
+
+        # Press all keys
+        for key in macro['keys']:
+            MatrixOS.HID.Keyboard.Press(key)
+
+        MatrixOS.SYS.DelayMs(10)
+
+        # Release all keys in reverse order
+        for key in reversed(macro['keys']):
+            MatrixOS.HID.Keyboard.Release(key)
+
+    def update_display():
+        """Update LED display to show macro assignments"""
+        for key_id, macro in macros.items():
+            xy = MatrixOS.KeyPad.ID2XY(key_id)
+            # Color code different macro types
+            if "Vol" in macro['name'] or "Mute" in macro['name']:
+                color = Color(255, 0, 255)  # Purple for audio
+            elif "Win+" in macro['name'] or "Alt+" in macro['name']:
+                color = Color(0, 255, 255)  # Cyan for system
+            elif "Ctrl+" in macro['name']:
+                color = Color(0, 255, 0)    # Green for editing
+            else:
+                color = Color(255, 255, 0)  # Yellow for other
+
+            MatrixOS.LED.SetColor(xy, color, 100)
+
+        MatrixOS.LED.Update(255)
+
+    print("Keyboard Macro Pad Active")
+    print("Available macros:")
+    for key_id, macro in macros.items():
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+        print(f"  Key ({xy.x},{xy.y}): {macro['name']}")
+
+    update_display()
+
+    while True:
+        if not MatrixOS.HID.Ready():
+            print("HID not ready, retrying...")
+            MatrixOS.SYS.DelayMs(1000)
+            continue
+
+        key_event = MatrixOS.KeyPad.Get(100)
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+
+            if key_info.Active() and key_id in macros:
+                execute_macro(macros[key_id])
+
+                # Flash the key
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+                MatrixOS.LED.Update(255)
+                MatrixOS.SYS.DelayMs(100)
+                update_display()
+
+keyboard_macro_pad()
+```
+
+### Text Templates and Snippets
+```python
+def text_snippet_system():
+    """System for quickly inserting text snippets"""
+
+    snippets = {
+        0: "hello@example.com",
+        1: "Thank you for your email.",
+        2: "Best regards,\nJohn Smith",
+        3: "Please find attached",
+        4: "Looking forward to hearing from you.",
+        8: "https://github.com/",
+        9: "https://stackoverflow.com/",
+        10: "https://docs.python.org/",
+    }
+
+    def type_snippet(text):
+        """Type a text snippet with proper character mapping"""
+
+        char_map = {
+            'a': KeyboardKeycode.KEY_A, 'b': KeyboardKeycode.KEY_B, 'c': KeyboardKeycode.KEY_C,
+            'd': KeyboardKeycode.KEY_D, 'e': KeyboardKeycode.KEY_E, 'f': KeyboardKeycode.KEY_F,
+            'g': KeyboardKeycode.KEY_G, 'h': KeyboardKeycode.KEY_H, 'i': KeyboardKeycode.KEY_I,
+            'j': KeyboardKeycode.KEY_J, 'k': KeyboardKeycode.KEY_K, 'l': KeyboardKeycode.KEY_L,
+            'm': KeyboardKeycode.KEY_M, 'n': KeyboardKeycode.KEY_N, 'o': KeyboardKeycode.KEY_O,
+            'p': KeyboardKeycode.KEY_P, 'q': KeyboardKeycode.KEY_Q, 'r': KeyboardKeycode.KEY_R,
+            's': KeyboardKeycode.KEY_S, 't': KeyboardKeycode.KEY_T, 'u': KeyboardKeycode.KEY_U,
+            'v': KeyboardKeycode.KEY_V, 'w': KeyboardKeycode.KEY_W, 'x': KeyboardKeycode.KEY_X,
+            'y': KeyboardKeycode.KEY_Y, 'z': KeyboardKeycode.KEY_Z,
+            '1': KeyboardKeycode.KEY_1, '2': KeyboardKeycode.KEY_2, '3': KeyboardKeycode.KEY_3,
+            '4': KeyboardKeycode.KEY_4, '5': KeyboardKeycode.KEY_5, '6': KeyboardKeycode.KEY_6,
+            '7': KeyboardKeycode.KEY_7, '8': KeyboardKeycode.KEY_8, '9': KeyboardKeycode.KEY_9,
+            '0': KeyboardKeycode.KEY_0, ' ': KeyboardKeycode.KEY_SPACE,
+            '\n': KeyboardKeycode.KEY_ENTER, '\t': KeyboardKeycode.KEY_TAB,
+            '@': KeyboardKeycode.KEY_2,  # Shift+2 for @
+            '.': KeyboardKeycode.KEY_PERIOD, ',': KeyboardKeycode.KEY_COMMA,
+            ':': KeyboardKeycode.KEY_SEMICOLON,  # Shift+; for :
+            '/': KeyboardKeycode.KEY_SLASH, '-': KeyboardKeycode.KEY_MINUS
+        }
+
+        for char in text.lower():
+            if char == '@':
+                # Special handling for @ symbol (Shift+2)
+                MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_SHIFT)
+                MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_2)
+                MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_SHIFT)
+            elif char == ':':
+                # Special handling for : symbol (Shift+;)
+                MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_SHIFT)
+                MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_SEMICOLON)
+                MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_SHIFT)
+            elif char in char_map:
+                MatrixOS.HID.Keyboard.Write(char_map[char])
+
+            MatrixOS.SYS.DelayMs(30)  # Delay between characters
+
+    print("Text Snippet System Active")
+    print("Available snippets:")
+    for key_id, snippet in snippets.items():
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+        print(f"  Key ({xy.x},{xy.y}): {snippet[:30]}...")
+
+    # Display snippet keys
+    for key_id in snippets.keys():
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+        MatrixOS.LED.SetColor(xy, Color(0, 200, 255), 150)
+    MatrixOS.LED.Update(255)
+
+    while True:
+        if MatrixOS.HID.Ready():
+            key_event = MatrixOS.KeyPad.Get(100)
+            if key_event is not None:
+                key_id = key_event.ID()
+                key_info = key_event.KeyInfo()
+
+                if key_info.Active() and key_id in snippets:
+                    print(f"Typing snippet: {snippets[key_id][:30]}...")
+
+                    # Flash key
+                    xy = MatrixOS.KeyPad.ID2XY(key_id)
+                    MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+                    MatrixOS.LED.Update(255)
+
+                    # Type the snippet
+                    type_snippet(snippets[key_id])
+
+                    # Restore color
+                    MatrixOS.LED.SetColor(xy, Color(0, 200, 255), 150)
+                    MatrixOS.LED.Update(255)
+
+text_snippet_system()
+```
+
+---
+
+## Keyboard Keycodes Reference
+
+Common keyboard keycodes available in `KeyboardKeycode`:
+
+### Letters
+- `KEY_A` through `KEY_Z`: Letter keys
+
+### Numbers
+- `KEY_1` through `KEY_0`: Number row keys
+- `KEY_KEYPAD_1` through `KEY_KEYPAD_0`: Numpad keys
+
+### Modifiers
+- `KEY_LEFT_CTRL`, `KEY_RIGHT_CTRL`: Control keys
+- `KEY_LEFT_SHIFT`, `KEY_RIGHT_SHIFT`: Shift keys
+- `KEY_LEFT_ALT`, `KEY_RIGHT_ALT`: Alt keys
+- `KEY_LEFT_GUI`, `KEY_RIGHT_GUI`: Windows/Cmd keys
+
+### Special Keys
+- `KEY_ENTER`: Enter key
+- `KEY_ESCAPE`: Escape key
+- `KEY_BACKSPACE`: Backspace key
+- `KEY_TAB`: Tab key
+- `KEY_SPACE`: Space bar
+- `KEY_DELETE`: Delete key
+
+### Function Keys
+- `KEY_F1` through `KEY_F12`: Function keys
+
+### Arrow Keys
+- `KEY_RIGHT_ARROW`, `KEY_LEFT_ARROW`
+- `KEY_DOWN_ARROW`, `KEY_UP_ARROW`
+
+### Navigation Keys
+- `KEY_PAGE_UP`, `KEY_PAGE_DOWN`
+- `KEY_HOME`, `KEY_END`
+- `KEY_INSERT`
+
+### Media Keys (device dependent)
+- `KEY_VOLUME_UP`, `KEY_VOLUME_DOWN`
+- `KEY_MUTE`
+
+### Punctuation
+- `KEY_PERIOD`, `KEY_COMMA`
+- `KEY_SEMICOLON`, `KEY_APOSTROPHE`
+- `KEY_SLASH`, `KEY_BACKSLASH`
+- `KEY_MINUS`, `KEY_EQUAL`
+

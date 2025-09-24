@@ -1,0 +1,343 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# UI Framework
+
+:::warning Development Status
+The UI Framework in Python is not ready for the initial release. It might be unstable and subject to significant changes. Use with caution in production applications.
+:::
+
+## Overview
+
+The UI system in MatrixOS provides a framework for creating interactive user interfaces on the 8x8 LED grid. The UI class serves as a container for UI components and handles rendering, input events, and lifecycle management. The UI API is available as `MatrixOS.UI` and related components.
+
+*The Python UI API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UI.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UI.pyi"/>.*
+
+---
+
+## UI Class
+
+### `MatrixOS.UI()`
+```python
+class UI:
+    def __init__(self, *val) -> None
+```
+
+Creates a new UI instance for building interactive interfaces.
+
+**Example:**
+```python
+
+ui = UI()
+```
+
+---
+
+## UI Control Methods
+
+### `MatrixOS.UI.Start`
+```python
+def Start(self) -> bool
+```
+
+Starts the UI, making it active and visible on the device.
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+ui = UI()
+# Configure UI...
+ui.Start()  # Launch the UI
+```
+
+---
+
+### `MatrixOS.UI.SetName`
+```python
+def SetName(self, name: str) -> bool
+```
+
+Sets the name/title of the UI.
+
+**Parameters:**
+- `name` (`str`): UI name or title
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `MatrixOS.UI.SetColor`
+```python
+def SetColor(self, color: Color) -> bool
+```
+
+Sets the default color theme for the UI.
+
+**Parameters:**
+- `color` (`Color`): Default UI color
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `MatrixOS.UI.ShouldCreatenewLEDLayer`
+```python
+def ShouldCreatenewLEDLayer(self, create: bool) -> bool
+```
+
+Configures whether the UI should create its own LED layer.
+
+**Parameters:**
+- `create` (`bool`): True to create new layer, False to use existing
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+## Callback Configuration
+
+### `MatrixOS.UI.SetSetupFunc`
+```python
+def SetSetupFunc(self, setupFunc: any) -> bool
+```
+
+Sets the setup callback function, called once when UI starts.
+
+**Parameters:**
+- `setupFunc` (`function`): Setup callback function
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+def setup_callback():
+    print("UI setup complete")
+
+ui.SetSetupFunc(setup_callback)
+```
+
+---
+
+### `MatrixOS.UI.SetLoopFunc`
+```python
+def SetLoopFunc(self, loopFunc: any) -> bool
+```
+
+Sets the loop callback function, called repeatedly while UI is active.
+
+**Parameters:**
+- `loopFunc` (`function`): Loop callback function
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `MatrixOS.UI.SetEndFunc`
+```python
+def SetEndFunc(self, endFunc: any) -> bool
+```
+
+Sets the end callback function, called when UI exits.
+
+**Parameters:**
+- `endFunc` (`function`): End callback function
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `MatrixOS.UI.SetPreRenderFunc`
+```python
+def SetPreRenderFunc(self, pre_renderFunc: any) -> bool
+```
+
+Sets the pre-render callback, called before each frame render.
+
+**Parameters:**
+- `pre_renderFunc` (`function`): Pre-render callback function
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `MatrixOS.UI.SetPostRenderFunc`
+```python
+def SetPostRenderFunc(self, post_renderFunc: any) -> bool
+```
+
+Sets the post-render callback, called after each frame render.
+
+**Parameters:**
+- `post_renderFunc` (`function`): Post-render callback function
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `MatrixOS.UI.SetKeyEventHandler`
+```python
+def SetKeyEventHandler(self, key_event_handler: any) -> bool
+```
+
+Sets the key event handler for processing input events.
+
+**Parameters:**
+- `key_event_handler` (`function`): Key event handler function
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+def handle_key_event(key_event):
+    print(f"Key at ({key_event.xy.x}, {key_event.xy.y}) pressed")
+
+ui.SetKeyEventHandler(handle_key_event)
+```
+
+---
+
+## Component Management
+
+### `MatrixOS.UI.AddUIComponent`
+```python
+def AddUIComponent(self, uiComponent: UIComponent, xy: Point) -> bool
+```
+
+Adds a UI component to the interface at the specified position.
+
+**Parameters:**
+- `uiComponent` (`UIComponent`): Component to add
+- `xy` (`Point`): Position to place the component
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+
+button = UIButton()
+button.SetName("Test")
+ui.AddUIComponent(button, Point(2, 2))
+```
+
+---
+
+### `MatrixOS.UI.ClearUIComponents`
+```python
+def ClearUIComponents(self) -> bool
+```
+
+Removes all UI components from the interface.
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+## UI Configuration
+
+### `MatrixOS.UI.AllowExit`
+```python
+def AllowExit(self, allow: bool) -> bool
+```
+
+Configures whether the UI can be exited by the user.
+
+**Parameters:**
+- `allow` (`bool`): True to allow exit, False to prevent
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+### `MatrixOS.UI.SetFPS`
+```python
+def SetFPS(self, fps: int) -> bool
+```
+
+Sets the frame rate for UI updates.
+
+**Parameters:**
+- `fps` (`int`): Target frames per second
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+ui.SetFPS(30)  # Set to 30 FPS
+```
+
+---
+
+## Complete UI Example
+
+```python
+
+# Create UI instance
+ui = UI()
+ui.SetName("My Interface")
+ui.SetColor(Color(0, 255, 0))
+
+# Setup callback
+def setup():
+    print("UI initialized")
+
+# Loop callback
+def loop():
+    # UI update logic here
+    pass
+
+# Key event handler
+def handle_keys(key_event):
+    if key_event.state == 1:  # Key pressed
+        print(f"Button at ({key_event.xy.x}, {key_event.xy.y}) pressed")
+
+# Configure callbacks
+ui.SetSetupFunc(setup)
+ui.SetLoopFunc(loop)
+ui.SetKeyEventHandler(handle_keys)
+
+# Add a button component
+button = UIButton()
+button.SetName("Click Me")
+button.SetColor(Color(255, 0, 0))
+ui.AddUIComponent(button, Point(3, 3))
+
+# Configure and start UI
+ui.SetFPS(30)
+ui.AllowExit(True)
+ui.Start()
+```
+
+---
+
+## UI Components
+
+The UI system includes several pre-built components:
+
+### UIButton
+Interactive button with press and hold callbacks.
+
+### UISelector
+Value selector with multiple lighting modes and directions.
+
+### UI4pxNumber
+4-pixel number display component.
+
+See individual component documentation for detailed usage information.
+

@@ -1,0 +1,82 @@
+{
+  "version.label": {
+    "message": "最新版 🚧",
+    "description": "The label for version current"
+  },
+  "sidebar.mystrixSidebar.category.Use your Mystrix": {
+    "message": "Use your Mystrix",
+    "description": "The label for category Use your Mystrix in sidebar mystrixSidebar"
+  },
+  "sidebar.mystrixSidebar.category.Lightshow Performance": {
+    "message": "Lightshow Performance",
+    "description": "The label for category Lightshow Performance in sidebar mystrixSidebar"
+  },
+  "sidebar.mystrixSidebar.category.Customizable Controls": {
+    "message": "Customizable Controls",
+    "description": "The label for category Customizable Controls in sidebar mystrixSidebar"
+  },
+  "sidebar.mystrixSidebar.category.Music Production": {
+    "message": "Music Production",
+    "description": "The label for category Music Production in sidebar mystrixSidebar"
+  },
+  "sidebar.mystrixSidebar.category.DAW integrations": {
+    "message": "DAW integrations",
+    "description": "The label for category DAW integrations in sidebar mystrixSidebar"
+  },
+  "sidebar.matrixOSSidebar.category.Applications": {
+    "message": "Applications",
+    "description": "The label for category Applications in sidebar matrixOSSidebar"
+  },
+  "sidebar.matrixOSSidebar.category.Shared UI": {
+    "message": "Shared UI",
+    "description": "The label for category Shared UI in sidebar matrixOSSidebar"
+  },
+  "sidebar.developerSidebar.category.Building Matrix OS": {
+    "message": "Building Matrix OS",
+    "description": "The label for category Building Matrix OS in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.Building for Mystrix": {
+    "message": "Building for Mystrix",
+    "description": "The label for category Building for Mystrix in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.Matrix OS Application API (C++)": {
+    "message": "Matrix OS Application API (C++)",
+    "description": "The label for category Matrix OS Application API (C++) in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.Types": {
+    "message": "Types",
+    "description": "The label for category Types in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.Utilities": {
+    "message": "Utilities",
+    "description": "The label for category Utilities in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.UI": {
+    "message": "UI",
+    "description": "The label for category UI in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.UI Components": {
+    "message": "UI Components",
+    "description": "The label for category UI Components in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.UI Utilities": {
+    "message": "UI Utilities",
+    "description": "The label for category UI Utilities in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.Matrix OS Application API (Python)": {
+    "message": "Matrix OS Application API (Python)",
+    "description": "The label for category Matrix OS Application API (Python) in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.HID API": {
+    "message": "HID API",
+    "description": "The label for category HID API in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.Interfacing with Matrix OS": {
+    "message": "Interfacing with Matrix OS",
+    "description": "The label for category Interfacing with Matrix OS in sidebar developerSidebar"
+  },
+  "sidebar.developerSidebar.category.Porting Matrix OS": {
+    "message": "Porting Matrix OS",
+    "description": "The label for category Porting Matrix OS in sidebar developerSidebar"
+  }
+}
