@@ -217,8 +217,8 @@ def select_color_components():
 
     # Show final color
     final_color = Color(red, green, blue)
-    MatrixOS.LED.Fill(final_color, 255)
-    MatrixOS.LED.Update(255)
+    MatrixOS.LED.Fill(final_color)
+    MatrixOS.LED.Update()
     MatrixOS.SYS.DelayMs(2000)  # Show for 2 seconds
 
     return final_color
@@ -332,14 +332,3 @@ def setup_wizard():
 final_config = setup_wizard()
 ```
 
----
-
-## Best Practices
-
-1. **Range Selection**: Choose logical min/max values appropriate for the parameter
-2. **Color Coding**: Use consistent colors for similar parameter types
-3. **Naming**: Use clear, descriptive names that fit the display
-4. **Initial Values**: Set sensible default values based on current settings
-5. **Validation**: Ensure the returned value is within your expected range
-6. **User Flow**: Group related parameters together in configuration sequences
-7. **Feedback**: Provide visual or text feedback after selection when appropriate

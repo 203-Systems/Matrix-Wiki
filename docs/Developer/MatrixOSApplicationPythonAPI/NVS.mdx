@@ -63,7 +63,7 @@ else:
 
 ## `MatrixOS.NVS.SetVariable`
 ```python
-def SetVariable(hash: int, data: bytes, length: int) -> bool
+def SetVariable(hash: int, data: bytes) -> bool
 ```
 
 Stores data with a given hash key.
@@ -71,7 +71,6 @@ Stores data with a given hash key.
 **Parameters:**
 - `hash` (`int`): Hash key to identify the data
 - `data` (`bytes`): Data to store
-- `length` (`int`): Length of data to store
 
 **Returns:**
 - `bool`: True if successful, False on error
@@ -79,7 +78,7 @@ Stores data with a given hash key.
 **Example:**
 ```python
 data_to_store = b"Hello, persistent world!"
-success = MatrixOS.NVS.SetVariable(0xDEADBEAF, data_to_store, len(data_to_store))
+success = MatrixOS.NVS.SetVariable(0xDEADBEAF, data_to_store)
 if success:
     print("Data stored successfully")
 else:
@@ -124,7 +123,7 @@ def simple_storage_example():
     config_data = b"brightness:128,volume:75"
 
     # Store the data
-    if MatrixOS.NVS.SetVariable(config_key, config_data, len(config_data)):
+    if MatrixOS.NVS.SetVariable(config_key, config_data):
         print("Configuration saved")
 
         # Retrieve the data
@@ -162,7 +161,7 @@ class SettingsManager:
         key = self._get_key(name)
         data = f"{name}:{value}".encode()
 
-        success = MatrixOS.NVS.SetVariable(key, data, len(data))
+        success = MatrixOS.NVS.SetVariable(key, data)
         return success
 
     def load_setting(self, name, default=None):
@@ -233,7 +232,7 @@ def binary_storage_example():
     palette_key = 0xDEADBEAF
 
     # Store the palette
-    if MatrixOS.NVS.SetVariable(palette_key, color_palette, len(color_palette)):
+    if MatrixOS.NVS.SetVariable(palette_key, color_palette):
         print("Color palette saved")
 
         # Retrieve and verify
@@ -270,7 +269,7 @@ class AppState:
         data = state_str.encode()
         key = self.base_key + 1  # State key
 
-        return MatrixOS.NVS.SetVariable(key, data, len(data))
+        return MatrixOS.NVS.SetVariable(key, data)
 
     def load_state(self):
         """Load application state dictionary"""
@@ -318,18 +317,6 @@ level = loaded_state.get("level", "1")
 score = loaded_state.get("score", "0")
 print(f"Level: {level}, Score: {score}")
 ```
-
----
-
-## Best Practices
-
-1. **Key Management**: Use consistent hash key generation schemes
-2. **Data Validation**: Always validate retrieved data before use
-3. **Error Handling**: Check return values for storage operations
-4. **Size Limits**: Be aware of NVS storage limits on the device
-5. **Data Format**: Use consistent data encoding/decoding
-6. **Cleanup**: Delete unused data to free storage space
-7. **Backup**: Consider data backup strategies for important settings
 
 ---
 

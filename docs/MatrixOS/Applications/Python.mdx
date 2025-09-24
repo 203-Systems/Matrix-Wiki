@@ -2,81 +2,49 @@
 sidebar_position: 10
 ---
 
-import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
 # Python App
 
 The Python app provides an interactive Python REPL (Read-Eval-Print Loop) environment directly on your Mystrix device. This allows you to write and execute Python code in real-time, control LEDs, respond to keypresses, and access all MatrixOS APIs through the PikaPython interpreter.
 
+:::warning Emergency Exit
+To exit the Python app, hold down the Function Key (center key) for 3 seconds to return to the home screen. This emergency exit method works system-wide across all applications.
+:::
+
 ## Features
 
 - **Interactive Python REPL**: Write and execute Python code line by line
-- **Full MatrixOS API Access**: Control LEDs, read keypads, send MIDI, use HID functions
+- **MatrixOS API Access**: Control LEDs, read keypads, send MIDI, use HID functions
 - **Persistent Session**: Variables and functions remain in memory during your session
 - **Real-time Feedback**: See immediate results from your code on the device
 - **Educational Tool**: Perfect for learning Python and exploring MatrixOS capabilities
 
-## REPL Interface
-
-When you enter the Python app, you'll see the REPL interface ready for Python code input.
-
-export function REPLInterface() {
-
-    const uiElements = [
-    {
-        "name": "Code Display Area",
-        "desc": "Shows your Python code input and output results.",
-        "elements": [
-            {
-                "pos": [0, 0],
-                "size": [8, 6],
-                "color": "#00FF00"
-            }
-        ]
-    },
-    {
-        "name": "Status Indicator",
-        "desc": "Shows REPL status - ready, running, or error state.",
-        "elements": [
-            {
-                "pos": [0, 7],
-                "size": [8, 1],
-                "color": "#00FFFF"
-            }
-        ]
-    },
-    {
-        "name": "Exit REPL",
-        "desc": "Hold function key to exit the Python REPL.",
-        "elements": [
-            {
-                "pos": ["c"]
-            }
-        ]
-    }
-
-];
-
-    const uiName = "Python REPL Interface"
-    const uiDescription = "The Python REPL provides an interactive environment for executing Python code directly on your device."
-    return <MystrixVisualizer
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
-    />
-
-}
-
-<REPLInterface />
 
 ## Getting Started
 
+### Connecting via Serial Terminal
+
+To use the Python REPL, you'll need a serial terminal application:
+
+**Windows Users:**
+1. **Download PuTTY**: Get PuTTY from [https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+
+**macOS/Linux Users:**
+Use the built-in `screen` command or other terminal applications like `minicom`
+2. **Configure Connection**:
+   - Connection type: Serial
+   - Serial line: Your device's COM port (e.g., COM3)
+   - Speed: 115200
+3. **Important Terminal Settings**:
+   - Go to Terminal → check "Implicit CR in every LF" - **This is required for proper line endings**
+4. **Connect**: Click "Open" to establish the connection
+
 ### Basic Usage
 
-1. **Enter the Python App**: Select Python from the application launcher
-2. **Start Coding**: The REPL is ready to accept Python commands
-3. **Execute Code**: Enter Python statements and see immediate results
-4. **Exit**: Hold the function key to return to the application launcher
+1. **Enter the Python App**: Select Python from the application launcher on your device
+2. **Start Coding**: The REPL will appear in your PuTTY terminal, ready to accept Python commands
+3. **Execute Code**: Type Python statements and press Enter to see immediate results
+4. **Exit**: Use python function `exit()` to return to application launcher, or hold the center key for 3 seconds to force exit
 
 ### Quick Examples
 
@@ -97,249 +65,13 @@ MatrixOS.LED.Update(0)
 
 #### Keypad Input
 ```python
-# Wait for a key press (with 1 second timeout)
-key_event = MatrixOS.KeyPad.Get(1000)
-if key_event is not None:
-    print(f"Key pressed at ({key_event.xy.x}, {key_event.xy.y})")
+while True:
+    event = MatrixOS.KeyPad.Get()
+    if event != None and event.State() == MatrixOS.KeyState.PRESSED:
+        print(f"Key pressed at ({event.xy.x}, {event.xy.y})")
 ```
 
-#### Simple Animation
-```python
-# Create a moving dot animation
-for x in range(8):
-    MatrixOS.LED.Fill(Color(0, 0, 0), 0)
-    MatrixOS.LED.SetColor(Point(x, 3), Color(0, 255, 0), 255)
-    MatrixOS.LED.Update(255)
-    MatrixOS.SYS.DelayMs(100)
-```
 
 ## Available APIs
 
-The Python REPL has access to all MatrixOS APIs:
-
-### Core System APIs
-- **MatrixOS.SYS**: System functions (delays, time, info)
-- **MatrixOS.LED**: LED control and effects
-- **MatrixOS.KeyPad**: Key input handling
-- **MatrixOS.MIDI**: MIDI input/output
-- **MatrixOS.USB**: USB functions
-- **MatrixOS.HID**: Keyboard, mouse, gamepad emulation
-
-### Data Types
-- **Point(x, y)**: Coordinate representation
-- **Color(r, g, b)**: RGB color values
-- **KeyEvent**: Key press information
-- **MidiPacket**: MIDI message data
-
-## Interactive Examples
-
-### Rainbow Pattern
-```python
-# Create a rainbow pattern across the grid
-def rainbow_pattern():
-    for y in range(8):
-        for x in range(8):
-            hue = (x + y) * 20
-            if hue < 85:
-                color = Color(255 - hue * 3, hue * 3, 0)
-            elif hue < 170:
-                hue = hue - 85
-                color = Color(0, 255 - hue * 3, hue * 3)
-            else:
-                hue = hue - 170
-                color = Color(hue * 3, 0, 255 - hue * 3)
-            MatrixOS.LED.SetColor(Point(x, y), color, 255)
-    MatrixOS.LED.Update(255)
-
-rainbow_pattern()
-```
-
-### Interactive Piano
-```python
-# Turn your device into a simple piano
-def piano():
-    print("Piano Mode - Press keys to play notes")
-    while True:
-        key_event = MatrixOS.KeyPad.Get(100)
-        if key_event is not None:
-            if key_event.info.state == 1:  # Key pressed
-                # Calculate MIDI note (C4 = 60)
-                note = 60 + key_event.xy.y * 8 + key_event.xy.x
-
-                # Send MIDI note on
-                midi = MidiPacket()
-                midi.status = 0x90  # Note On, Channel 1
-                midi.data1 = note
-                midi.data2 = 100  # Velocity
-                MatrixOS.MIDI.Send(midi)
-
-                # Light up the key
-                MatrixOS.LED.SetColor(key_event.xy, Color(255, 255, 0), 255)
-                MatrixOS.LED.Update(255)
-
-            elif key_event.info.state == 2:  # Key released
-                # Calculate MIDI note
-                note = 60 + key_event.xy.y * 8 + key_event.xy.x
-
-                # Send MIDI note off
-                midi = MidiPacket()
-                midi.status = 0x80  # Note Off, Channel 1
-                midi.data1 = note
-                midi.data2 = 0
-                MatrixOS.MIDI.Send(midi)
-
-                # Turn off the key
-                MatrixOS.LED.SetColor(key_event.xy, Color(0, 0, 0), 0)
-                MatrixOS.LED.Update(0)
-
-piano()
-```
-
-### Reaction Game
-```python
-# Simple reaction time game
-import random
-
-def reaction_game():
-    print("Reaction Game - Hit the lit key as fast as you can!")
-    score = 0
-
-    for round in range(5):
-        # Clear display
-        MatrixOS.LED.Fill(Color(0, 0, 0), 0)
-        MatrixOS.LED.Update(0)
-
-        # Random delay
-        MatrixOS.SYS.DelayMs(random.randint(1000, 3000))
-
-        # Light up random key
-        target_x = random.randint(0, 7)
-        target_y = random.randint(0, 7)
-        MatrixOS.LED.SetColor(Point(target_x, target_y), Color(0, 255, 0), 255)
-        MatrixOS.LED.Update(255)
-
-        # Time the response
-        start_time = MatrixOS.SYS.Millis()
-
-        while True:
-            key_event = MatrixOS.KeyPad.Get(10)
-            if key_event is not None and key_event.info.state == 1:
-                reaction_time = MatrixOS.SYS.Millis() - start_time
-
-                if key_event.xy.x == target_x and key_event.xy.y == target_y:
-                    print(f"Hit! Reaction time: {reaction_time}ms")
-                    score += max(0, 1000 - reaction_time)
-                    break
-                else:
-                    print("Wrong key! Try again")
-
-        MatrixOS.SYS.DelayMs(500)
-
-    print(f"Game Over! Total Score: {score}")
-
-reaction_game()
-```
-
-## Tips and Tricks
-
-### Session Management
-- Variables and functions persist during your REPL session
-- Use `del variable_name` to free memory if needed
-- The session resets when you exit the Python app
-
-### Best Practices
-1. **Start Simple**: Test individual commands before building complex scripts
-2. **Use Print Statements**: Debug your code with print() for feedback
-3. **Handle Events**: Always check if key_event is not None before using it
-4. **Update LEDs**: Remember to call `MatrixOS.LED.Update()` after setting colors
-5. **Manage Delays**: Use `MatrixOS.SYS.DelayMs()` for timing control
-
-### Common Patterns
-
-#### LED Effects Loop
-```python
-# Basic effect loop pattern
-while True:
-    # Your effect code here
-    MatrixOS.LED.Update(255)
-    MatrixOS.SYS.DelayMs(50)  # Control speed
-
-    # Check for exit
-    key_event = MatrixOS.KeyPad.Get(1)
-    if key_event is not None:
-        break
-```
-
-#### State Machine
-```python
-# Simple state machine pattern
-state = "idle"
-
-while True:
-    if state == "idle":
-        # Idle behavior
-        pass
-    elif state == "active":
-        # Active behavior
-        pass
-
-    # State transitions based on input
-    key_event = MatrixOS.KeyPad.Get(100)
-    if key_event is not None:
-        # Change state based on input
-        pass
-```
-
-## Limitations
-
-- **Memory**: PikaPython has limited heap space - avoid creating large data structures
-- **Libraries**: Limited to built-in PikaPython libraries and MatrixOS APIs
-- **Performance**: Python runs slower than native C++ applications
-- **File Access**: No filesystem access from the REPL for security
-- **Threading**: Single-threaded execution only
-
-## Learning Resources
-
-The Python REPL is perfect for:
-- **Learning Python**: Practice Python syntax and concepts
-- **Exploring MatrixOS**: Discover device capabilities interactively
-- **Prototyping**: Test ideas before creating full applications
-- **Education**: Teaching programming with immediate visual feedback
-- **Debugging**: Test API calls and understand behavior
-
-## Quick Reference
-
-### Essential Commands
-```python
-# System
-MatrixOS.SYS.Millis()           # Get system uptime
-MatrixOS.SYS.DelayMs(ms)        # Delay in milliseconds
-
-# LED Control
-MatrixOS.LED.SetColor(point, color, layer)
-MatrixOS.LED.Fill(color, layer)
-MatrixOS.LED.Update(brightness)
-
-# Keypad
-MatrixOS.KeyPad.Get(timeout)    # Get key event
-MatrixOS.KeyPad.Clear()         # Clear key buffer
-
-# MIDI
-MatrixOS.MIDI.Send(packet)      # Send MIDI
-MatrixOS.MIDI.Get(timeout)      # Receive MIDI
-
-# USB
-MatrixOS.USB.Connected()        # Check USB connection
-
-# HID
-MatrixOS.HID.Keyboard.Write(keycode)
-```
-
-### Data Types
-```python
-# Create objects
-point = Point(x, y)
-color = Color(r, g, b)  # Values 0-255
-```
-
-The Python REPL provides a powerful and educational way to interact with your Mystrix device, perfect for learning, experimentation, and rapid prototyping of ideas!
+For detailed documentation on all available Python APIs, see [Python Application Development](/docs/category/matrix-os-application-api-python).

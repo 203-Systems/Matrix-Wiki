@@ -7,24 +7,9 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 ## Overview
 
-The `KeyEvent` class represents an event triggered by input interaction, containing information about the key ID and its associated details.
+The `KeyEvent` class represents an event triggered by key input interaction. KeyEvent objects are typically obtained from `MatrixOS.KeyPad.Get()` and provide direct access to key state, force, timing, and other input properties.
 
 *The Python KeyEvent class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_KeyEvent.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_KeyEvent.pyi"/>.*
-
----
-
-## Constructor
-
-### `KeyEvent(id, info)`
-```python
-def __init__(self, id: int, info: KeyInfo) -> None
-```
-
-Creates a new KeyEvent instance.
-
-**Parameters:**
-- `id` (`int`): Unique identifier for the key event
-- `info` (`KeyInfo`): KeyInfo object containing additional key details
 
 ---
 
@@ -42,32 +27,90 @@ Gets the unique identifier for this key event.
 
 **Example:**
 ```python
-key_event = MatrixOS.KeyPad.Get()
-if key_event is not None:
+key_event = MatrixOS.KeyPad.Get(50)
+if key_event:
     key_id = key_event.ID()
     print(f"Key ID: {key_id}")
 ```
 
----
-
-### `KeyInfo`
+### `State`
 ```python
-def KeyInfo(self) -> KeyInfo
+def State(self) -> int
 ```
 
-Gets the KeyInfo object containing additional key details.
+Gets the current state of the key.
 
 **Returns:**
-- `KeyInfo`: Object with key state, velocity, and timing information
+- `int`: Key state value
+
+### `Hold`
+```python
+def Hold(self) -> bool
+```
+
+Checks if the key is being held.
+
+**Returns:**
+- `bool`: True if key is held
+
+### `HoldTime`
+```python
+def HoldTime(self) -> int
+```
+
+Gets the time the key has been held in milliseconds.
+
+**Returns:**
+- `int`: Hold time in milliseconds
+
+### `Active`
+```python
+def Active(self) -> bool
+```
+
+Checks if the key is currently active (pressed).
+
+**Returns:**
+- `bool`: True if key is active
+
+### `Force`
+```python
+def Force(self) -> float
+```
+
+Gets the force/pressure applied to the key.
+
+**Returns:**
+- `float`: Force value (0.0 to 1.0)
+
+### `Value`
+```python
+def Value(self, index: int = 0) -> float
+```
+
+Gets a specific value from the key event.
+
+**Parameters:**
+- `index` (`int`, optional): Value index (default: 0)
+
+**Returns:**
+- `float`: Value at specified index
+
+### `__bool__`
+```python
+def __bool__(self) -> bool
+```
+
+Allows KeyEvent to be used in boolean context.
+
+**Returns:**
+- `bool`: True if event is valid
 
 **Example:**
 ```python
-key_event = MatrixOS.KeyPad.Get()
-if key_event is not None:
-    key_info = key_event.KeyInfo()
-    if key_info.Active():
-        print(f"Key {key_event.ID()} is active")
-        print(f"Velocity: {key_info.Velocity()}")
+key_event = MatrixOS.KeyPad.Get(50)
+if key_event:  # Uses __bool__
+    print("Valid key event received")
 ```
 
 ---
@@ -78,23 +121,21 @@ if key_event is not None:
 ```python
 def handle_key_events():
     """Basic key event processing"""
-
     print("Key event handler started...")
 
     while True:
-        key_event = MatrixOS.KeyPad.Get(100)  # 100ms timeout
+        key_event = MatrixOS.KeyPad.Get(50)  # 50ms timeout
 
-        if key_event is not None:
+        if key_event:
             key_id = key_event.ID()
-            key_info = key_event.KeyInfo()
 
             print(f"Key {key_id} event:")
-            print(f"  State: {key_info.State()}")
-            print(f"  Velocity: {key_info.Velocity():.2f}")
-            print(f"  Active: {key_info.Active()}")
+            print(f"  State: {key_event.State()}")
+            print(f"  Force: {key_event.Force():.2f}")
+            print(f"  Active: {key_event.Active()}")
 
-            if key_info.Hold():
-                print(f"  Hold time: {key_info.HoldTime()}ms")
+            if key_event.Hold():
+                print(f"  Hold time: {key_event.HoldTime()}ms")
 
 handle_key_events()
 ```
@@ -107,38 +148,37 @@ def classify_key_events():
     while True:
         key_event = MatrixOS.KeyPad.Get(50)
 
-        if key_event is not None:
+        if key_event:
             key_id = key_event.ID()
-            key_info = key_event.KeyInfo()
 
             # Convert to XY coordinates for display
             xy = MatrixOS.KeyPad.ID2XY(key_id)
 
-            if key_info.Active():
+            if key_event.Active():
                 # Key is currently pressed
-                velocity = key_info.Velocity()
+                force = key_event.Force()
 
-                if velocity > 0.8:
-                    print(f"Hard press at ({xy.x},{xy.y})")
-                    MatrixOS.LED.SetColor(xy, Color(255, 0, 0), 255)
-                elif velocity > 0.4:
-                    print(f"Medium press at ({xy.x},{xy.y})")
-                    MatrixOS.LED.SetColor(xy, Color(255, 255, 0), 255)
+                if force > 0.8:
+                    print(f"Hard press at ({xy.X()},{xy.Y()})")
+                    MatrixOS.LED.SetColor(xy, Color(255, 0, 0))
+                elif force > 0.4:
+                    print(f"Medium press at ({xy.X()},{xy.Y()})")
+                    MatrixOS.LED.SetColor(xy, Color(255, 255, 0))
                 else:
-                    print(f"Soft press at ({xy.x},{xy.y})")
-                    MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 255)
+                    print(f"Soft press at ({xy.X()},{xy.Y()})")
+                    MatrixOS.LED.SetColor(xy, Color(0, 255, 0))
 
-                if key_info.Hold():
-                    hold_time = key_info.HoldTime()
+                if key_event.Hold():
+                    hold_time = key_event.HoldTime()
                     if hold_time > 1000:  # Held for more than 1 second
                         print(f"Long hold detected: {hold_time}ms")
-                        MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+                        MatrixOS.LED.SetColor(xy, Color(255, 255, 255))
             else:
                 # Key was released
-                print(f"Key released at ({xy.x},{xy.y})")
-                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+                print(f"Key released at ({xy.X()},{xy.Y()})")
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0))
 
-            MatrixOS.LED.Update(255)
+            MatrixOS.LED.Update()
 
 classify_key_events()
 ```
@@ -157,44 +197,42 @@ def event_driven_app():
     def handle_normal_mode(key_event):
         """Handle events in normal mode"""
         key_id = key_event.ID()
-        key_info = key_event.KeyInfo()
         xy = MatrixOS.KeyPad.ID2XY(key_id)
 
-        if key_info.Active():
+        if key_event.Active():
             app_state["selected_key"] = key_id
-            MatrixOS.LED.SetColor(xy, Color(0, 255, 255), 255)
+            MatrixOS.LED.SetColor(xy, Color(0, 255, 255))
 
             # Check for mode switch (long press)
-            if key_info.Hold() and key_info.HoldTime() > 2000:
+            if key_event.Hold() and key_event.HoldTime() > 2000:
                 app_state["mode"] = "config"
-                MatrixOS.LED.Fill(Color(255, 0, 255), 100)
+                MatrixOS.LED.Fill(Color(255, 0, 255))
                 print("Switched to config mode")
         else:
-            MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+            MatrixOS.LED.SetColor(xy, Color(0, 0, 0))
 
     def handle_config_mode(key_event):
         """Handle events in configuration mode"""
         key_id = key_event.ID()
-        key_info = key_event.KeyInfo()
 
-        if key_info.Active():
+        if key_event.Active():
             if key_id == 0:  # Top-left corner to exit
                 app_state["mode"] = "normal"
-                MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+                MatrixOS.LED.Fill(Color(0, 0, 0))
                 print("Switched to normal mode")
             else:
                 # Configuration actions
                 xy = MatrixOS.KeyPad.ID2XY(key_id)
-                MatrixOS.LED.SetColor(xy, Color(255, 255, 0), 255)
+                MatrixOS.LED.SetColor(xy, Color(255, 255, 0))
                 print(f"Config action: key {key_id}")
 
     print("Event-driven app started")
     print("Long press any key for config mode")
 
     while True:
-        key_event = MatrixOS.KeyPad.Get(100)
+        key_event = MatrixOS.KeyPad.Get(50)
 
-        if key_event is not None:
+        if key_event:
             app_state["last_event_time"] = MatrixOS.SYS.Millis()
 
             if app_state["mode"] == "normal":
@@ -202,17 +240,57 @@ def event_driven_app():
             elif app_state["mode"] == "config":
                 handle_config_mode(key_event)
 
-            MatrixOS.LED.Update(255)
+            MatrixOS.LED.Update()
 
         # Auto-return to normal mode if no activity
         if (app_state["mode"] == "config" and
             MatrixOS.SYS.Millis() - app_state["last_event_time"] > 10000):
             app_state["mode"] = "normal"
-            MatrixOS.LED.Fill(Color(0, 0, 0), 0)
-            MatrixOS.LED.Update(0)
+            MatrixOS.LED.Fill(Color(0, 0, 0))
+            MatrixOS.LED.Update()
             print("Auto-returned to normal mode")
 
 event_driven_app()
+```
+
+### Force-Sensitive Drawing
+```python
+def force_drawing():
+    """Draw with different colors based on key force"""
+
+    print("Force-sensitive drawing active")
+    print("Press keys with different pressure levels")
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(50)
+
+        if key_event:
+            xy = MatrixOS.KeyPad.ID2XY(key_event.ID())
+
+            if key_event.Active():
+                force = key_event.Force()
+
+                # Map force to color intensity
+                if force > 0.9:
+                    color = Color(255, 255, 255)  # White for maximum force
+                elif force > 0.7:
+                    color = Color(255, 0, 0)      # Red for high force
+                elif force > 0.5:
+                    color = Color(255, 128, 0)    # Orange for medium force
+                elif force > 0.3:
+                    color = Color(255, 255, 0)    # Yellow for light force
+                else:
+                    color = Color(0, 255, 0)      # Green for minimal force
+
+                MatrixOS.LED.SetColor(xy, color)
+                print(f"Drawing at ({xy.X()},{xy.Y()}) with force {force:.2f}")
+            else:
+                # Keep the drawing when key is released
+                pass
+
+            MatrixOS.LED.Update()
+
+force_drawing()
 ```
 
 ### Multi-Key Gesture Detection
@@ -233,19 +311,19 @@ def gesture_detector():
             key2_xy = MatrixOS.KeyPad.ID2XY(key_ids[1])
 
             # Horizontal swipe
-            if key1_xy.y == key2_xy.y and abs(key1_xy.x - key2_xy.x) == 1:
+            if key1_xy.Y() == key2_xy.Y() and abs(key1_xy.X() - key2_xy.X()) == 1:
                 return "horizontal_swipe"
             # Vertical swipe
-            elif key1_xy.x == key2_xy.x and abs(key1_xy.y - key2_xy.y) == 1:
+            elif key1_xy.X() == key2_xy.X() and abs(key1_xy.Y() - key2_xy.Y()) == 1:
                 return "vertical_swipe"
             # Corner tap
-            elif (key1_xy.x == 0 and key1_xy.y == 0) or (key1_xy.x == 7 and key1_xy.y == 7):
+            elif (key1_xy.X() == 0 and key1_xy.Y() == 0) or (key1_xy.X() == 7 and key1_xy.Y() == 7):
                 return "corner_combo"
 
         elif len(key_ids) == 4:
             # Four corners
             corners = [(0,0), (0,7), (7,0), (7,7)]
-            key_positions = [(MatrixOS.KeyPad.ID2XY(kid).x, MatrixOS.KeyPad.ID2XY(kid).y) for kid in key_ids]
+            key_positions = [(MatrixOS.KeyPad.ID2XY(kid).X(), MatrixOS.KeyPad.ID2XY(kid).Y()) for kid in key_ids]
             if all(pos in corners for pos in key_positions):
                 return "four_corners"
 
@@ -257,20 +335,19 @@ def gesture_detector():
     while True:
         key_event = MatrixOS.KeyPad.Get(50)
 
-        if key_event is not None:
+        if key_event:
             key_id = key_event.ID()
-            key_info = key_event.KeyInfo()
             current_time = MatrixOS.SYS.Millis()
 
-            if key_info.Active():
+            if key_event.Active():
                 active_keys[key_id] = {
                     "start_time": current_time,
-                    "info": key_info
+                    "event": key_event
                 }
 
                 # Light up active keys
                 xy = MatrixOS.KeyPad.ID2XY(key_id)
-                MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 255)
+                MatrixOS.LED.SetColor(xy, Color(0, 255, 0))
 
             else:
                 # Key released
@@ -278,7 +355,7 @@ def gesture_detector():
                     del active_keys[key_id]
 
                 xy = MatrixOS.KeyPad.ID2XY(key_id)
-                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0))
 
             # Check for gestures when multiple keys are active
             if len(active_keys) >= 2:
@@ -287,27 +364,112 @@ def gesture_detector():
                     print(f"Gesture detected: {gesture}")
 
                     # Visual feedback
-                    MatrixOS.LED.Fill(Color(255, 255, 255), 255)
-                    MatrixOS.LED.Update(255)
+                    MatrixOS.LED.Fill(Color(255, 255, 255))
+                    MatrixOS.LED.Update()
                     MatrixOS.SYS.DelayMs(200)
 
                     # Clear gesture state
                     active_keys.clear()
-                    MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+                    MatrixOS.LED.Fill(Color(0, 0, 0))
 
-            MatrixOS.LED.Update(255)
+            MatrixOS.LED.Update()
 
 gesture_detector()
 ```
 
+### Performance Monitoring
+```python
+def key_performance_monitor():
+    """Monitor key performance and timing"""
+
+    key_stats = {}
+
+    while True:
+        key_event = MatrixOS.KeyPad.Get(50)
+
+        if key_event:
+            key_id = key_event.ID()
+
+            if key_id not in key_stats:
+                key_stats[key_id] = {
+                    "presses": 0,
+                    "total_force": 0.0,
+                    "max_force": 0.0,
+                    "total_hold_time": 0
+                }
+
+            stats = key_stats[key_id]
+
+            if key_event.Active():
+                force = key_event.Force()
+                stats["total_force"] += force
+                stats["max_force"] = max(stats["max_force"], force)
+
+                if key_event.Hold():
+                    hold_time = key_event.HoldTime()
+                    if hold_time > stats.get("last_hold_time", 0):
+                        stats["total_hold_time"] = hold_time
+                        stats["last_hold_time"] = hold_time
+
+            else:
+                # Key released
+                stats["presses"] += 1
+
+                # Print stats every 10 presses
+                if stats["presses"] % 10 == 0:
+                    avg_force = stats["total_force"] / stats["presses"]
+                    xy = MatrixOS.KeyPad.ID2XY(key_id)
+                    print(f"Key ({xy.X()},{xy.Y()}) - Presses: {stats['presses']}, "
+                          f"Avg Force: {avg_force:.2f}, Max Force: {stats['max_force']:.2f}")
+
+key_performance_monitor()
+```
+
 ---
 
-## Best Practices
+## Common Patterns
 
-1. **Event Processing**: Always check if KeyEvent is not None before accessing its properties
-2. **Memory Management**: KeyEvent objects are managed automatically in Python
-3. **Performance**: Process KeyEvent data quickly to maintain responsiveness
-4. **State Tracking**: Use KeyInfo methods to track key states accurately
-5. **Timing**: Use KeyInfo timing methods for gesture detection and hold detection
-6. **Coordinate Conversion**: Use MatrixOS.KeyPad.ID2XY() to convert key IDs to coordinates
-7. **Error Handling**: Handle cases where KeyEvent might be None (no events available)
+### Event Validation
+```python
+# Check if event is valid
+key_event = MatrixOS.KeyPad.Get(50)
+if key_event:  # Uses __bool__ method
+    # Process event
+    pass
+
+# Alternative explicit check
+if key_event is not None:
+    # Process event
+    pass
+```
+
+### Force-Based Actions
+```python
+def force_based_action(key_event):
+    """Perform different actions based on key force"""
+    force = key_event.Force()
+
+    if force > 0.8:
+        return "strong_action"
+    elif force > 0.5:
+        return "medium_action"
+    else:
+        return "light_action"
+```
+
+### Hold Detection
+```python
+def check_hold_duration(key_event):
+    """Check for different hold durations"""
+    if key_event.Hold():
+        hold_time = key_event.HoldTime()
+
+        if hold_time > 3000:
+            return "extra_long_hold"
+        elif hold_time > 1000:
+            return "long_hold"
+        elif hold_time > 500:
+            return "short_hold"
+
+    return "no_hold"
+```

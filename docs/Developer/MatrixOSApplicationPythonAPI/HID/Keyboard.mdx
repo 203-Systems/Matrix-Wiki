@@ -15,26 +15,27 @@ The HID Keyboard interface allows the device to emulate a standard USB keyboard,
 
 ## Keyboard Functions
 
-### `Write`
+### `Tap`
 ```python
-def Write(keycode: KeyboardKeycode) -> bool
+def Tap(keycode: KeyboardKeycode, length_ms: int = 100) -> bool
 ```
 
-Sends a complete keystroke (key press followed by key release).
+Sends a complete keystroke (key press followed by key release) with configurable duration.
 
 **Parameters:**
 - `keycode` (`KeyboardKeycode`): Key to press and release
+- `length_ms` (`int`, optional): Duration to hold key in milliseconds (defaults to 100)
 
 **Returns:**
 - `bool`: True if successful
 
 **Example:**
 ```python
-# Type the letter 'A'
-MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_A)
+# Type the letter 'A' with default 100ms duration
+MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
 
-# Type a space
-MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_SPACE)
+# Type a space with custom 50ms duration
+MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_SPACE, 50)
 ```
 
 ---
@@ -436,15 +437,3 @@ Common keyboard keycodes available in `KeyboardKeycode`:
 - `KEY_SLASH`, `KEY_BACKSLASH`
 - `KEY_MINUS`, `KEY_EQUAL`
 
----
-
-## Best Practices
-
-1. **HID Status Checking**: Always verify `MatrixOS.HID.Ready()` before using keyboard functions
-2. **Key Management**: Use `ReleaseAll()` to clean up stuck keys
-3. **Timing**: Add small delays between rapid key operations for reliability
-4. **Error Handling**: Handle cases where HID might not be available
-5. **Modifier Keys**: Remember to release modifier keys after use to avoid stuck modifiers
-6. **Cross-Platform**: Test keyboard behavior on different operating systems
-7. **State Tracking**: Keep track of pressed keys to avoid conflicts
-8. **User Feedback**: Provide visual or audio feedback for keyboard actions

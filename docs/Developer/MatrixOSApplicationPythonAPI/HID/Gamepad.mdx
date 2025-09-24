@@ -629,15 +629,3 @@ Available directions in `GamepadDPadDirection`:
 - `DOWN_LEFT`: D-pad down-left diagonal
 - `DOWN_RIGHT`: D-pad down-right diagonal
 
----
-
-## Best Practices
-
-1. **HID Status Checking**: Always verify `MatrixOS.HID.Ready()` before using gamepad functions
-2. **Button State Management**: Track pressed buttons to avoid conflicts
-3. **Analog Stick Centering**: Return analog sticks to center (0) when not in use
-4. **Dead Zone Implementation**: Implement dead zones for analog inputs to prevent drift
-5. **Value Clamping**: Ensure analog values stay within valid ranges (-32767 to 32767)
-6. **State Cleanup**: Use `ReleaseAll()` when switching modes or on errors
-7. **User Feedback**: Provide visual feedback for gamepad actions
-8. **Testing**: Test with different games and applications to ensure compatibility

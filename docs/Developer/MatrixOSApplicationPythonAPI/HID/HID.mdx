@@ -50,7 +50,7 @@ The keyboard HID interface allows sending keyboard input to connected devices. S
 ```python
 if MatrixOS.HID.Ready():
     # Type the letter 'A'
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_A)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
 
     # Send Ctrl+C shortcut
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
@@ -88,7 +88,7 @@ def check_hid_status():
 
         # Test keyboard availability
         try:
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_A)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
             print("✓ Keyboard HID working")
         except:
             print("✗ Keyboard HID not available")
@@ -163,7 +163,7 @@ def multi_modal_controller():
                     # Keyboard mode - map keys to letters
                     if key_id < 26:  # A-Z
                         keycode = getattr(KeyboardKeycode, f"KEY_{chr(65 + key_id)}")
-                        MatrixOS.HID.Keyboard.Write(keycode)
+                        MatrixOS.HID.Keyboard.Tap(keycode)
 
                 elif mode == "gamepad":
                     # Gamepad mode - map to gamepad buttons
@@ -195,35 +195,35 @@ def keyboard_macro_system():
 
         if action == "ctrl+c":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_C)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_C)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
         elif action == "ctrl+v":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_V)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_V)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
         elif action == "ctrl+z":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_Z)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_Z)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
         elif action == "ctrl+y":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_Y)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_Y)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
         elif action == "ctrl+a":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_A)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
         elif action == "ctrl+s":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_S)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_S)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
         elif action == "ctrl+f":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_F)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_F)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
         elif action == "alt+tab":
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_ALT)
-            MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_TAB)
+            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_TAB)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_ALT)
 
     print("Keyboard Macro System Active")
@@ -259,18 +259,6 @@ def keyboard_macro_system():
 
 keyboard_macro_system()
 ```
-
----
-
-## Best Practices
-
-1. **HID Status Checking**: Always verify `MatrixOS.HID.Ready()` before using HID functions
-2. **Interface Availability**: Check availability of specific HID interfaces before use
-3. **Error Handling**: Handle cases where HID might not be available or configured
-4. **Cross-Platform**: Test HID behavior on different operating systems
-5. **Timing**: Add appropriate delays between rapid HID operations
-6. **State Management**: Track and clean up HID states (release pressed keys, etc.)
-7. **User Experience**: Provide feedback for HID actions and status changes
 
 ---
 

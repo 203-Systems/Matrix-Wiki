@@ -29,28 +29,44 @@ Creates a point at the specified coordinates.
 ```python
 # Create a point at coordinates (3, 4)
 point = Point(3, 4)
-print(f"Point: ({point.x}, {point.y})")
+print(f"Point: ({point.X()}, {point.Y()})")
 ```
-
----
-
-## Properties
-
-### `x`
-```python
-x: int
-```
-The X coordinate of the point.
-
-### `y`
-```python
-y: int
-```
-The Y coordinate of the point.
 
 ---
 
 ## Methods
+
+### `X`
+```python
+def X() -> int
+```
+
+Gets the X coordinate of the point.
+
+**Returns:**
+- `int`: The X coordinate value
+
+**Example:**
+```python
+point = Point(3, 4)
+x_coord = point.X()  # Returns 3
+```
+
+### `Y`
+```python
+def Y() -> int
+```
+
+Gets the Y coordinate of the point.
+
+**Returns:**
+- `int`: The Y coordinate value
+
+**Example:**
+```python
+point = Point(3, 4)
+y_coord = point.Y()  # Returns 4
+```
 
 ### `SetX`
 ```python
@@ -96,12 +112,52 @@ center = Point(4, 4)
 corner = Point(7, 7)
 
 # Access coordinates
-x_coord = center.x
-y_coord = center.y
+x_coord = center.X()
+y_coord = center.Y()
 
 # Points are commonly used with LED and KeyPad APIs
 MatrixOS.LED.SetColor(center, Color(255, 0, 0), 255)
 key_info = MatrixOS.KeyPad.GetKey(corner)
+```
+
+### Point Arithmetic Operations
+```python
+# Point addition
+point1 = Point(2, 3)
+point2 = Point(1, 2)
+result = point1 + point2  # Point(3, 5)
+
+# Point subtraction
+result = point1 - point2  # Point(1, 1)
+
+# Point multiplication with scalar
+scaled = point1 * 2  # Point(4, 6)
+
+# Point comparison
+if point1 == point2:
+    print("Points are equal")
+
+if point1 != point2:
+    print("Points are different")
+```
+
+### Point Rotation
+```python
+from MatrixOS_Direction import Direction
+
+# Rotate point around a dimension
+point = Point(1, 0)
+dimension = Point(8, 8)  # Grid size
+rotated = point.Rotate(Direction.CW_90, dimension, False)
+```
+
+### Static Factory Methods
+```python
+# Create origin point (0, 0)
+origin = Point.Origin()
+
+# Create invalid point marker
+invalid_point = Point.Invalid()
 ```
 
 ### Grid Coordinate Helpers
@@ -181,19 +237,19 @@ for i in range(8):
 ```python
 def is_valid_point(point):
     """Check if point is within 8x8 grid bounds"""
-    return 0 <= point.x <= 7 and 0 <= point.y <= 7
+    return 0 <= point.X() <= 7 and 0 <= point.Y() <= 7
 
 def clamp_point(point):
     """Clamp point to grid bounds"""
-    x = max(0, min(7, point.x))
-    y = max(0, min(7, point.y))
+    x = max(0, min(7, point.X()))
+    y = max(0, min(7, point.Y()))
     return Point(x, y)
 
 # Example usage
 test_point = Point(10, -2)
 if not is_valid_point(test_point):
     test_point = clamp_point(test_point)
-    print(f"Clamped to: ({test_point.x}, {test_point.y})")
+    print(f"Clamped to: ({test_point.X()}, {test_point.Y()})")
 ```
 
 ---
@@ -206,11 +262,3 @@ The MatrixOS coordinate system:
 - **Y-axis**: Increases from top to bottom (0-7)
 - **Valid range**: Both x and y coordinates should be 0-7 for the 8x8 grid
 
----
-
-## Best Practices
-
-1. **Bounds Checking**: Always validate that Point coordinates are within device bounds (0-7 for 8x8 grid)
-2. **Coordinate Caching**: Cache frequently used Point objects to avoid repeated allocations
-3. **Validation**: Validate coordinates before using with LED/KeyPad APIs
-4. **Coordinate Mapping**: Use consistent coordinate transformation functions when needed

@@ -12,7 +12,11 @@ There are two ways to write Python applications for MatrixOS:
 Use the Python app in the application launcher to access a Python REPL through USB serial. This is great for testing and rapid prototyping.
 
 ### Method 2: Standalone Application
-Create a standalone Python application by placing your files in the device storage.
+Create a standalone Python application by placing your files in the device storage. This is great for saving your work and share with others.
+
+:::warning Micro SD Card Required
+A Micro SD card must be installed in your device to use standalone Python applications. See [Install Micro SD Card](/docs/Mystrix/InstallMicroSD) for installation instructions.
+:::
 
 ## Creating a Standalone Application
 
@@ -47,9 +51,13 @@ The `AppInfo.json` file defines your application's metadata:
 - `color`: RGB color array [R, G, B] for the app icon (0-255)
 - `version`: Application version number
 - `osMinimalVer`: Minimum MatrixOS version required [major, minor, patch]
-- `appMainFile`: The main Python file to execute
+- `appMainFile`: The main Python file to execute (can be `.py` for source code or `.py.a` for compiled Python code)
 
-### Example Applications
+## Clear Compiled Byte Code
+
+Matrix OS will auto pick compiled bytecode over raw .py files. So if you updated the .py file, make sure to delete the `/MatrixOS/Applications/<appname>/pikapython-api` folder to force recompile.
+
+## Example Applications
 
 For App examples, see:
 [https://github.com/203Systems/Matrix-OS-Python-App-Examples](https://github.com/203Systems/Matrix-OS-Python-App-Examples)

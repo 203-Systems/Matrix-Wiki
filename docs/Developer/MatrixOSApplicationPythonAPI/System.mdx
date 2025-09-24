@@ -17,13 +17,13 @@ The System API in MatrixOS provides core system functions including timing, appl
 
 ### `MatrixOS.SYS.GetVersion`
 ```python
-def GetVersion() -> tuple[int, int, int]
+def GetVersion() -> tuple
 ```
 
 Returns the current MatrixOS version as a tuple of major, minor, and patch version numbers.
 
 **Returns:**
-- `tuple[int, int, int]`: A tuple containing (major, minor, patch) version numbers
+- `tuple`: A tuple containing (major, minor, patch) version numbers
 
 **Example:**
 ```python
@@ -31,9 +31,9 @@ version = MatrixOS.SYS.GetVersion()
 major, minor, patch = version
 print(f"MatrixOS Version: {major}.{minor}.{patch}")
 
-# Check if version is at least 2.1.0
-if version >= (2, 1, 0):
-    print("Version 2.1.0 or newer detected")
+# Example: Check if version is at least 3.0.0
+if version >= (3, 0, 0):
+    print("Version 3.0.0 or newer detected")
 ```
 
 ---
@@ -90,13 +90,13 @@ print("One second has passed")
 
 ### `MatrixOS.SYS.Millis`
 ```python
-def Millis() -> int64
+def Millis() -> int
 ```
 
 Returns the number of milliseconds since the device started.
 
 **Returns:**
-- `int64`: Milliseconds since boot
+- `int`: Milliseconds since boot
 
 **Example:**
 ```python
@@ -110,13 +110,13 @@ print(f"Operation took {elapsed} ms")
 
 ### `MatrixOS.SYS.Micros`
 ```python
-def Micros() -> int64
+def Micros() -> int
 ```
 
 Returns the number of microseconds since the device started.
 
 **Returns:**
-- `int64`: Microseconds since boot
+- `int`: Microseconds since boot
 
 **Example:**
 ```python
@@ -146,7 +146,7 @@ MatrixOS.SYS.OpenSetting()  # Launch settings app
 
 ### `MatrixOS.SYS.ExecuteAPP`
 ```python
-def ExecuteAPP(author: str, app_name: str, args: list = None) -> None
+def ExecuteAPP(author: str, app_name: str, args: list = []) -> None
 ```
 
 Launches an application by author and name with optional arguments.
@@ -154,7 +154,7 @@ Launches an application by author and name with optional arguments.
 **Parameters:**
 - `author` (`str`): Application author name
 - `app_name` (`str`): Application name
-- `args` (`list`, optional): Arguments to pass to the application
+- `args` (`list`, optional): Arguments to pass to the application (defaults to empty list)
 
 **Example:**
 ```python
@@ -169,14 +169,14 @@ MatrixOS.SYS.ExecuteAPP("MyAuthor", "MyApp", ["demo_mode"])
 
 ### `MatrixOS.SYS.ExecuteAPPByID`
 ```python
-def ExecuteAPPByID(app_id: int, args: list = None) -> None
+def ExecuteAPPByID(app_id: int, args: list = []) -> None
 ```
 
 Launches an application by its ID with optional arguments.
 
 **Parameters:**
 - `app_id` (`int`): Application ID number
-- `args` (`list`, optional): Arguments to pass to the application
+- `args` (`list`, optional): Arguments to pass to the application (defaults to empty list)
 
 **Example:**
 ```python
@@ -262,39 +262,6 @@ else:
 
 ---
 
-## Application Launcher Example
-
-```python
-def application_launcher():
-    """Simple application launcher with menu"""
-    apps = [
-        {"author": "203 Systems", "name": "Performance", "id": 1},
-        {"author": "203 Systems", "name": "Setting", "id": 2},
-        {"author": "MyAuthor", "name": "CustomApp", "id": 10}
-    ]
-
-    print("Available Applications:")
-    for i, app in enumerate(apps):
-        print(f"{i}: {app['author']} - {app['name']}")
-
-    # In a real implementation, you'd get input from keypad
-    selection = 0  # Example selection
-
-    if 0 <= selection < len(apps):
-        app = apps[selection]
-        print(f"Launching {app['name']}...")
-
-        # Launch by name
-        MatrixOS.SYS.ExecuteAPP(app['author'], app['name'])
-
-        # Alternative: Launch by ID
-        # MatrixOS.SYS.ExecuteAPPByID(app['id'])
-
-application_launcher()
-```
-
----
-
 ## System Monitoring
 
 ```python
@@ -317,13 +284,3 @@ def system_monitor():
 system_monitor()
 ```
 
----
-
-## Best Practices
-
-1. **Timing Precision**: Use `Micros()` for high-precision timing, `Millis()` for general use
-2. **Delay Usage**: Use `DelayMs()` for simple delays, but avoid blocking in time-critical code
-3. **Application Management**: Check if target applications exist before launching
-4. **Resource Management**: Monitor system resources when running intensive operations
-5. **Error Handling**: Handle cases where application launches might fail
-6. **Timeout Patterns**: Always implement timeouts for operations that might hang

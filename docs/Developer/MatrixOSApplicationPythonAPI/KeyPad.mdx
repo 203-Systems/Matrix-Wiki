@@ -17,13 +17,13 @@ The API returns `KeyEvent` objects containing information about key presses, rel
 
 ## `MatrixOS.KeyPad.Get`
 ```python
-def Get(timeout_ms: int) -> any
+def Get(timeout_ms: int = 0) -> any
 ```
 
 Gets the next key event from the input queue.
 
 **Parameters:**
-- `timeout_ms` (`int`): Timeout in milliseconds to wait for input
+- `timeout_ms` (`int`, optional): Timeout in milliseconds to wait for input (defaults to 0 for no timeout)
 
 **Returns:**
 - `KeyEvent`: Key event object on success

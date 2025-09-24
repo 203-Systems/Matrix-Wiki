@@ -33,8 +33,7 @@ Creates a MIDI packet with variable arguments depending on the message type.
 
 #### `NoteOn`
 ```python
-@staticmethod
-def NoteOn(channel: int, note: int, velocity: int) -> MidiPacket
+def NoteOn(self, channel: int, note: int, velocity: int = 127) -> MidiPacket
 ```
 
 Creates a MIDI Note On message.
@@ -42,7 +41,7 @@ Creates a MIDI Note On message.
 **Parameters:**
 - `channel` (`int`): MIDI channel (0-15)
 - `note` (`int`): MIDI note number (0-127)
-- `velocity` (`int`): Note velocity (0-127)
+- `velocity` (`int`, optional): Note velocity (0-127, defaults to 127)
 
 **Returns:**
 - `MidiPacket`: Note On packet
@@ -50,14 +49,14 @@ Creates a MIDI Note On message.
 **Example:**
 ```python
 # Play middle C on channel 1 with medium velocity
-note_on = MidiPacket.NoteOn(0, 60, 64)
+packet = MidiPacket()
+note_on = packet.NoteOn(0, 60, 64)
 MatrixOS.MIDI.Send(note_on)
 ```
 
 #### `NoteOff`
 ```python
-@staticmethod
-def NoteOff(channel: int, note: int, velocity: int) -> MidiPacket
+def NoteOff(self, channel: int, note: int, velocity: int = 0) -> MidiPacket
 ```
 
 Creates a MIDI Note Off message.
@@ -65,12 +64,13 @@ Creates a MIDI Note Off message.
 **Parameters:**
 - `channel` (`int`): MIDI channel (0-15)
 - `note` (`int`): MIDI note number (0-127)
-- `velocity` (`int`): Release velocity (0-127)
+- `velocity` (`int`, optional): Release velocity (0-127, defaults to 0)
 
 **Example:**
 ```python
 # Stop middle C on channel 1
-note_off = MidiPacket.NoteOff(0, 60, 0)
+packet = MidiPacket()
+note_off = packet.NoteOff(0, 60, 0)
 MatrixOS.MIDI.Send(note_off)
 ```
 
@@ -80,8 +80,7 @@ MatrixOS.MIDI.Send(note_off)
 
 #### `ControlChange`
 ```python
-@staticmethod
-def ControlChange(channel: int, controller: int, value: int) -> MidiPacket
+def ControlChange(self, channel: int, controller: int, value: int) -> MidiPacket
 ```
 
 Creates a MIDI Control Change message.
@@ -94,14 +93,14 @@ Creates a MIDI Control Change message.
 **Example:**
 ```python
 # Set volume (CC 7) to maximum on channel 1
-volume_cc = MidiPacket.ControlChange(0, 7, 127)
+packet = MidiPacket()
+volume_cc = packet.ControlChange(0, 7, 127)
 MatrixOS.MIDI.Send(volume_cc)
 ```
 
 #### `ProgramChange`
 ```python
-@staticmethod
-def ProgramChange(channel: int, program: int) -> MidiPacket
+def ProgramChange(self, channel: int, program: int) -> MidiPacket
 ```
 
 Creates a MIDI Program Change message.
@@ -113,14 +112,14 @@ Creates a MIDI Program Change message.
 **Example:**
 ```python
 # Change to program 1 (piano) on channel 1
-program_change = MidiPacket.ProgramChange(0, 0)
+packet = MidiPacket()
+program_change = packet.ProgramChange(0, 0)
 MatrixOS.MIDI.Send(program_change)
 ```
 
 #### `PitchBend`
 ```python
-@staticmethod
-def PitchBend(channel: int, value: int) -> MidiPacket
+def PitchBend(self, channel: int, value: int) -> MidiPacket
 ```
 
 Creates a MIDI Pitch Bend message.
@@ -132,7 +131,8 @@ Creates a MIDI Pitch Bend message.
 **Example:**
 ```python
 # Bend pitch up on channel 1
-pitch_bend = MidiPacket.PitchBend(0, 10000)
+packet = MidiPacket()
+pitch_bend = packet.PitchBend(0, 10000)
 MatrixOS.MIDI.Send(pitch_bend)
 ```
 
@@ -142,8 +142,7 @@ MatrixOS.MIDI.Send(pitch_bend)
 
 #### `AfterTouch`
 ```python
-@staticmethod
-def AfterTouch(channel: int, note: int, pressure: int) -> MidiPacket
+def AfterTouch(self, channel: int, note: int, pressure: int) -> MidiPacket
 ```
 
 Creates a MIDI Polyphonic Key Pressure (Aftertouch) message.
@@ -155,8 +154,7 @@ Creates a MIDI Polyphonic Key Pressure (Aftertouch) message.
 
 #### `ChannelPressure`
 ```python
-@staticmethod
-def ChannelPressure(channel: int, pressure: int) -> MidiPacket
+def ChannelPressure(self, channel: int, pressure: int) -> MidiPacket
 ```
 
 Creates a MIDI Channel Pressure message.
@@ -171,48 +169,42 @@ Creates a MIDI Channel Pressure message.
 
 #### `Clock`
 ```python
-@staticmethod
-def Clock() -> MidiPacket
+def Clock(self) -> MidiPacket
 ```
 
 Creates a MIDI Clock message for tempo synchronization.
 
 #### `Start`
 ```python
-@staticmethod
-def Start() -> MidiPacket
+def Start(self) -> MidiPacket
 ```
 
 Creates a MIDI Start message to begin sequencer playback.
 
 #### `Continue`
 ```python
-@staticmethod
-def Continue() -> MidiPacket
+def Continue(self) -> MidiPacket
 ```
 
 Creates a MIDI Continue message to resume sequencer playback.
 
 #### `Stop`
 ```python
-@staticmethod
-def Stop() -> MidiPacket
+def Stop(self) -> MidiPacket
 ```
 
 Creates a MIDI Stop message to halt sequencer playback.
 
 #### `ActiveSense`
 ```python
-@staticmethod
-def ActiveSense() -> MidiPacket
+def ActiveSense(self) -> MidiPacket
 ```
 
 Creates a MIDI Active Sensing message.
 
 #### `Reset`
 ```python
-@staticmethod
-def Reset() -> MidiPacket
+def Reset(self) -> MidiPacket
 ```
 
 Creates a MIDI System Reset message.
@@ -223,8 +215,7 @@ Creates a MIDI System Reset message.
 
 #### `SongPosition`
 ```python
-@staticmethod
-def SongPosition(position: int) -> MidiPacket
+def SongPosition(self, position: int) -> MidiPacket
 ```
 
 Creates a MIDI Song Position Pointer message.
@@ -234,8 +225,7 @@ Creates a MIDI Song Position Pointer message.
 
 #### `SongSelect`
 ```python
-@staticmethod
-def SongSelect(song: int) -> MidiPacket
+def SongSelect(self, song: int) -> MidiPacket
 ```
 
 Creates a MIDI Song Select message.
@@ -245,8 +235,7 @@ Creates a MIDI Song Select message.
 
 #### `TuneRequest`
 ```python
-@staticmethod
-def TuneRequest() -> MidiPacket
+def TuneRequest(self) -> MidiPacket
 ```
 
 Creates a MIDI Tune Request message.
@@ -419,14 +408,16 @@ def play_scale():
 
     for note in notes:
         # Play note
-        note_on = MidiPacket.NoteOn(channel, note, 64)
+        packet = MidiPacket()
+        note_on = packet.NoteOn(channel, note, 64)
         MatrixOS.MIDI.Send(note_on)
 
         # Wait
         MatrixOS.SYS.DelayMs(500)
 
         # Stop note
-        note_off = MidiPacket.NoteOff(channel, note, 0)
+        note_off_packet = MidiPacket()
+        note_off = note_off_packet.NoteOff(channel, note, 0)
         MatrixOS.MIDI.Send(note_off)
 
         MatrixOS.SYS.DelayMs(100)
@@ -462,32 +453,34 @@ def midi_controller():
                     velocity = int(key_info.Velocity() * 127)
 
                     # Send Note On
-                    note_on = MidiPacket.NoteOn(channel, note, velocity)
+                    packet = MidiPacket()
+                    note_on = packet.NoteOn(channel, note, velocity)
                     MatrixOS.MIDI.Send(note_on)
 
                     # Track active note
                     active_notes[key_id] = note
 
                     # Light up key
-                    MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 255)
+                    MatrixOS.LED.SetColor(xy, Color(0, 255, 0))
 
                     print(f"Note On: {note}, Velocity: {velocity}")
 
             elif not key_info.Active() and key_id in active_notes:
                 # Send Note Off
                 note = active_notes[key_id]
-                note_off = MidiPacket.NoteOff(channel, note, 0)
+                packet = MidiPacket()
+                note_off = packet.NoteOff(channel, note, 0)
                 MatrixOS.MIDI.Send(note_off)
 
                 # Remove from active notes
                 del active_notes[key_id]
 
                 # Turn off LED
-                MatrixOS.LED.SetColor(xy, Color(0, 0, 0), 0)
+                MatrixOS.LED.SetColor(xy, Color(0, 0, 0))
 
                 print(f"Note Off: {note}")
 
-            MatrixOS.LED.Update(255)
+            MatrixOS.LED.Update()
 
 midi_controller()
 ```
@@ -517,9 +510,9 @@ def cc_controller():
 
             # Map value to color intensity
             intensity = int((value / 127.0) * 255)
-            MatrixOS.LED.SetColor(xy, Color(255, 0, 0), intensity)
+            MatrixOS.LED.SetColor(xy, Color(255, 0, 0))
 
-        MatrixOS.LED.Update(255)
+        MatrixOS.LED.Update()
 
     print("Control Change Interface")
     print("Keys 0,1,2,3,8,9 control different CCs")
@@ -542,7 +535,8 @@ def cc_controller():
                 current_values[cc_num] = cc_value
 
                 # Send Control Change
-                cc_msg = MidiPacket.ControlChange(channel, cc_num, cc_value)
+                packet = MidiPacket()
+                cc_msg = packet.ControlChange(channel, cc_num, cc_value)
                 MatrixOS.MIDI.Send(cc_msg)
 
                 print(f"CC {cc_num}: {cc_value}")
@@ -569,18 +563,18 @@ def simple_sequencer():
         for i in range(8):
             xy = MatrixOS.KeyPad.ID2XY(i)
             if i == current_step and playing:
-                MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)  # Current step
+                MatrixOS.LED.SetColor(xy, Color(255, 255, 255))  # Current step
             elif sequence[i] > 0:
-                MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 255)    # Active step
+                MatrixOS.LED.SetColor(xy, Color(0, 255, 0))    # Active step
             else:
-                MatrixOS.LED.SetColor(xy, Color(100, 0, 0), 100)    # Inactive step
+                MatrixOS.LED.SetColor(xy, Color(100, 0, 0))    # Inactive step
 
         # Play/stop button
         play_xy = MatrixOS.KeyPad.ID2XY(56)  # Bottom-right corner
         color = Color(0, 255, 0) if playing else Color(255, 0, 0)
-        MatrixOS.LED.SetColor(play_xy, color, 255)
+        MatrixOS.LED.SetColor(play_xy, color)
 
-        MatrixOS.LED.Update(255)
+        MatrixOS.LED.Update()
 
     last_step_time = MatrixOS.SYS.Millis()
     active_note = None
@@ -598,12 +592,14 @@ def simple_sequencer():
         if playing and (current_time - last_step_time) >= step_time:
             # Stop previous note
             if active_note is not None:
-                note_off = MidiPacket.NoteOff(channel, active_note, 0)
+                packet = MidiPacket()
+                note_off = packet.NoteOff(channel, active_note, 0)
                 MatrixOS.MIDI.Send(note_off)
 
             # Play current step if active
             if sequence[current_step] > 0:
-                note_on = MidiPacket.NoteOn(channel, sequence[current_step], 64)
+                packet = MidiPacket()
+                note_on = packet.NoteOn(channel, sequence[current_step], 64)
                 MatrixOS.MIDI.Send(note_on)
                 active_note = sequence[current_step]
             else:
@@ -634,7 +630,8 @@ def simple_sequencer():
                     playing = not playing
                     if not playing and active_note is not None:
                         # Stop current note
-                        note_off = MidiPacket.NoteOff(channel, active_note, 0)
+                        packet = MidiPacket()
+                        note_off = packet.NoteOff(channel, active_note, 0)
                         MatrixOS.MIDI.Send(note_off)
                         active_note = None
                     print("Sequencer:", "Playing" if playing else "Stopped")
@@ -689,10 +686,13 @@ def midi_monitor():
     while True:
         # This would typically receive MIDI messages
         # For demonstration, create some test messages
+        packet1 = MidiPacket()
+        packet2 = MidiPacket()
+        packet3 = MidiPacket()
         test_messages = [
-            MidiPacket.NoteOn(0, 60, 64),
-            MidiPacket.ControlChange(0, 7, 100),
-            MidiPacket.NoteOff(0, 60, 0),
+            packet1.NoteOn(0, 60, 64),
+            packet2.ControlChange(0, 7, 100),
+            packet3.NoteOff(0, 60, 0),
         ]
 
         for packet in test_messages:
@@ -703,14 +703,3 @@ def midi_monitor():
 midi_monitor()
 ```
 
----
-
-## Best Practices
-
-1. **Message Creation**: Use static factory methods for creating MIDI messages
-2. **Channel Range**: Remember MIDI channels are 0-15 (displayed as 1-16)
-3. **Value Ranges**: Most MIDI values are 0-127, pitch bend is 0-16383
-4. **Note Management**: Always send Note Off for every Note On to avoid stuck notes
-5. **Timing**: Use appropriate delays between messages for musical timing
-6. **SysEx Handling**: Use SysEx() and SysExStart() for handling system exclusive messages
-7. **Port Management**: Set appropriate port IDs for message routing

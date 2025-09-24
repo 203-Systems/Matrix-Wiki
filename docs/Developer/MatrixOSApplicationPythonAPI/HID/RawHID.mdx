@@ -11,28 +11,55 @@ The HID RawHID interface provides custom communication protocols for application
 
 *The Python HID RawHID API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_RawHID.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_RawHID.pyi"/>.*
 
-:::warning Availability
-RawHID functions may be commented out or limited in some builds. Check the implementation files for availability in your specific MatrixOS version.
-:::
-
 ---
 
 ## RawHID Functions
 
-The RawHID interface typically provides functions for:
+### `Get`
+```python
+def Get(timeout_ms: int = 0) -> bytes
+```
 
-- Custom data protocols
-- Bidirectional communication
-- Application-specific messaging
-- Raw data transmission
-- Custom HID report handling
+Receives raw HID data from the host.
 
-### Example Usage Pattern
+**Parameters:**
+- `timeout_ms` (`int`, optional): Timeout in milliseconds to wait for data (defaults to 0 for no timeout)
+
+**Returns:**
+- `bytes`: Received raw HID data, or empty bytes if no data available
+
+**Example:**
 ```python
 if MatrixOS.HID.Ready():
-    # RawHID functions would be used here
-    # Check specific implementation for available functions
-    pass
+    # Wait up to 100ms for HID data
+    data = MatrixOS.HID.RawHID.Get(100)
+    if data:
+        print(f"Received {len(data)} bytes: {data.hex()}")
+```
+
+---
+
+### `Send`
+```python
+def Send(report: bytes) -> bool
+```
+
+Sends raw HID data to the host.
+
+**Parameters:**
+- `report` (`bytes`): Raw HID report data to send
+
+**Returns:**
+- `bool`: True if sent successfully, False on error
+
+**Example:**
+```python
+if MatrixOS.HID.Ready():
+    # Send custom HID report
+    report_data = bytes([0x01, 0x02, 0x03, 0x04])
+    success = MatrixOS.HID.RawHID.Send(report_data)
+    if success:
+        print("HID report sent successfully")
 ```
 
 ---
@@ -319,19 +346,6 @@ def rawhid_control_protocol():
 
 rawhid_control_protocol()
 ```
-
----
-
-## Best Practices
-
-1. **HID Status Checking**: Always verify `MatrixOS.HID.Ready()` before using RawHID functions
-2. **Implementation Check**: Verify specific RawHID functions are available in your build
-3. **Protocol Design**: Design robust protocols with error handling and validation
-4. **Data Serialization**: Use consistent data serialization methods (JSON, binary, etc.)
-5. **Buffer Management**: Handle input/output buffers appropriately to prevent overflow
-6. **Error Handling**: Implement proper error handling for communication failures
-7. **Documentation**: Document custom protocols thoroughly for maintenance and integration
-8. **Testing**: Test RawHID protocols extensively with host applications
 
 ---
 
