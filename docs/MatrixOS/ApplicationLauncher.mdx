@@ -6,13 +6,14 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 # Application Launcher
 
+:::warning
+The application launcher layout is customizable. The view in the visualizer might not be exact as the view on your device.
+:::
+
 The Application Launcher is the main menu of Matrix OS. It allows users to select an application to use.
 
 The top section of the Application Launcher shows the available applications. The bottom section features the app catalog selection on the left and [system settings](/docs/MatrixOS/SystemSettings) on the right.
 
-:::note
-Currently, the stock application catalog is the only one available. In the future, more application catalogs will be added to the bottom left corner.
-:::
 
 export function ApplicationLauncher() {
 
@@ -95,30 +96,30 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Poly playground App",
-        "desc": "Enter the poly playground application",
-        "link": "/docs/MatrixOS/Applications/PolyPlayground",
-        "elements": [
-            {
-                "pos": [7, 0],
-                "color": "#AEFF00"
-            }
-        ]
-    },
-    {
         "name": "Strum App",
-        "desc": "Enter the strum application",
+        "desc": "Enter the Strum application",
         "link": "/docs/MatrixOS/Applications/Strum",
         "elements": [
             {
-                "pos": [0, 1],
+                "pos": [7, 0],
                 "color": "#FF80FF"
             }
         ]
     },
     {
-        "name": "Application Catalog: Stock Apps",
-        "desc": "Switch to the stock application catalog. Currently, the stock application catalog is the only available catalog. In the future, more application catalogs will be available.",
+        "name": "Python App",
+        "desc": "Enter the Python application",
+        "link": "/docs/MatrixOS/Applications/Python",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#4995d0"
+            }
+        ]
+    },
+    {
+        "name": "Application Folder 1",
+        "desc": "Your customizable Application folder 1",
         "elements": [
             {
                 "pos": [0, 7],
@@ -136,8 +137,17 @@ export function ApplicationLauncher() {
                 "color": "#FFFFFF"
             }
         ]
+    },
+    {
+        "name": "Customize layout",
+        "desc": "Hold down the key to customize your application launcher layout.",
+        "link": "#customize-layout",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
     }
-
 ];
 
     const uiName = "Application Launcher"
@@ -151,3 +161,250 @@ export function ApplicationLauncher() {
 }
 
 <ApplicationLauncher />
+
+## Customize Layout
+
+You can fully customize your application launcher layout to organize apps according to your preferences. The customization features include:
+
+### Application Management
+- **Select App**: Tap an app to select it (it will light up bright while others dim). Tap any empty space to deselect.
+- **Move Apps**: With an app selected, tap another app to swap their positions.
+- **Organize in Folders**: Select an app and tap a folder to move it into that folder
+- **Hide Apps**: Remove apps from the launcher view that you don't frequently use
+
+### Folder Management
+- **Create Folders**: Empty folder slots will have a breathing animation - tap them to create a new folder
+- **Customize Folders**: Hold on an existing folder to:
+  - Change the folder color
+  - Delete the folder (apps inside will return to the folder 1)
+- **Organize Apps**: Move apps between folders to keep your launcher organized
+
+export function ApplicationLauncherEditing() {
+
+    const uiElements = [
+    {
+        "name": "Performance App (Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the performance application",
+        "link": "/docs/MatrixOS/Applications/Performance",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Note App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the note application",
+        "link": "/docs/MatrixOS/Applications/Note",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Companion App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the companion application",
+        "link": "/docs/MatrixOS/Applications/Companion",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#0000C0"
+            }
+        ]
+    },
+        {
+        "name": "Custom Control Map App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Custom Control Map application",
+        "link": "/docs/MatrixOS/Applications/CustomControlMap",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Lighting App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the lighting application",
+        "link": "/docs/MatrixOS/Applications/Lighting",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Dice App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the dice application",
+        "link": "/docs/MatrixOS/Applications/Dice",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C07E00"
+            }
+        ]
+    },
+    {
+        "name": "Reversi App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Reversi application",
+        "link": "/docs/MatrixOS/Applications/Reversi",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#009000"
+            }
+        ]
+    },
+    {
+        "name": "Strum App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Strum application",
+        "link": "/docs/MatrixOS/Applications/Strum",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#C060C0"
+            }
+        ]
+    },
+    {
+        "name": "Python App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Python application",
+        "link": "/docs/MatrixOS/Applications/Python",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#36709C"
+            }
+        ]
+    },
+    {
+        "name": "Application Folder 1 (Active)",
+        "desc": "Application folder 1 - Created and Selected. (Hold to edit color or delete folder)",
+        "link": "#folder-editing",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Application Folder 2 (Not Active)",
+        "desc": "Application folder 2 - Created and not selected. (Hold to edit color or delete folder)",
+        "link": "#folder-editing",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Application Folder 3 ~ 6 (Not Created)",
+        "desc": "Application folder not created. Click on any to create them",
+        "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [4, 1],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Hidden Application Folder",
+        "desc": "Hidden Application folder - Move apps here to hide them",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Exit customizing",
+        "desc": "Click the to exit editing.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Exit customizing",
+        "desc": "Click the function key to exit editing.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    },
+];
+
+    const uiName = "Application Launcher (Editing)"
+    const uiDescription = "Application Launcher layout editing mode"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ApplicationLauncherEditing />
+
+### Folder Editing
+
+When you hold down on an existing folder, this menu appears allowing you to customize the folder's color or delete it entirely. Deleting a folder will return all apps inside back to the main launcher.
+
+export function ApplicationLauncherFolderEdit() {
+
+    const uiElements = [
+    {
+        "name": "Change Color",
+        "desc": "Change the folder color",
+        "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 3],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Delete Folder",
+        "desc": "Delete this folder (apps inside will return to the main launcher)",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "size": [4, 1],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Return to the application launcher",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Folder Edit Menu"
+    const uiDescription = "Edit folder properties - change color or delete the folder"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ApplicationLauncherFolderEdit />
