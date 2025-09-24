@@ -652,102 +652,287 @@ The Layout Selector allows you to choose between different note pad layout modes
 - **Offset Layout**: Customizable offset pattern with configurable X and Y offsets
 - **Piano Layout**: Piano-style key arrangement
 
-## Overlap
+### Octave Layout Mode
 
-The Overlap Selector determines how much each row above overlaps with the row below it. This is useful for playing chords with one hand.
-
-There is also an `Align Root` toggle within this menu. When enabled, the next row above, after the entire scale is completed, will realign with the root note.
-
-This setting is independent of the layout configuration.
-
-export function OverlapSelector() {
+export function LayoutSelectorOctave() {
 
     const uiElements = [
     {
-        "name": "Overlap Display",
-        "desc": "Displays the overlap of the active note pad layout.",
+        "name": "Octave Mode (Selected)",
+        "desc": "Traditional octave-based layout",
         "elements": [
             {
-                "pos": [0, 0],
-                "size": [8, 4],
-                "color": undefined
-            },
-            {
-                "pos": [5, 0],
-                "size": [3, 1],
-                "color": "#FFFF00"
-            },
-            {
-                "pos": [6, 1],
-                "size": [2, 1],
-                "color": "#FFFF00"
-            },
-            {
-                "pos": [7, 2],
-                "color": "#FFFF00"
-            },
-            {
-                "pos": [5, 3],
-                "size": [3, 1],
+                "pos": [2, 0],
                 "color": "#FFFF00"
             }
         ]
     },
     {
-        "name": "Overlap Selector",
-        "desc": "Selects how much each row above overlaps with the row below it.",
+        "name": "Offset Mode",
+        "desc": "Switch to offset layout mode",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode",
+        "desc": "Switch to piano layout mode",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "In Key Notes Only",
+        "desc": "Toggle to show only notes in the selected key",
         "elements": [
             {
                 "pos": [0, 7],
-                "size": [7, 1],
-                "color": "#C0C000"
-            },
-            {
-                "pos": [3, 7],
-                "color": "#FFFF00"
+                "color": "#C0C0C0"
             }
-
         ]
     },
     {
-        "name": "Align Root",
-        "desc": "Toggle if the next row above after the entire scale is completed will realign with root note.",
-        "link": "#align-root",
-        "elements": [
-            {
-                "pos": [7, 7],
-                "color": "#FFFFFF"
-            },
-
-        ]
-    },
-    {
-        "name": "Return to Config Menu",
-        "desc": "Tap to return to the config menu.",
+        "name": "Return",
+        "desc": "Return to the previous menu",
         "elements": [
             {
                 "pos": ["c"]
             }
         ]
     }
-
 ];
 
-    const uiName = "Overlap Selector"
-    const uiDescription = "The Overlap Selector allows you to select how much each row above overlaps with the row below it and if root should be aligned."
+    const uiName = "Layout Selector - Octave Mode"
+    const uiDescription = "Octave layout mode for traditional note arrangement"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
     />
-
 }
 
-<OverlapSelector />
+<LayoutSelectorOctave />
 
-### Align Root
+### Offset Layout Mode
 
-If the align root option is enabled, the next row above will realign with the root note after completing the entire scale. If the align root option is disabled, the layout will continue from the note where the last row ended.
+export function LayoutSelectorOffset() {
+
+    const uiElements = [
+    {
+        "name": "Octave Mode",
+        "desc": "Switch to octave layout mode",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Offset Mode (Selected)",
+        "desc": "Customizable offset pattern layout",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode",
+        "desc": "Switch to piano layout mode",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Y Offset Selector",
+        "desc": "Select the vertical offset between rows",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Y Offset Display",
+        "desc": "Shows the current Y offset value",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "size": [3, 4],
+                "color": undefined
+            },
+            {
+                "pos": [2, 2],
+                "size": [3, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 5],
+                "size": [3, 1],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "X Offset Display",
+        "desc": "Shows the current X offset value",
+        "elements": [
+          {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": undefined
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "X Offset Selector",
+        "desc": "Select the horizontal offset between rows",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 7],
+                "size": [5, 1],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "In Key Notes Only",
+        "desc": "Toggle to show only notes in the selected key",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Return",
+        "desc": "Return to the previous menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Layout Selector - Offset Mode"
+    const uiDescription = "Offset layout mode with customizable X and Y offsets"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<LayoutSelectorOffset />
+
+### Piano Layout Mode
+
+export function LayoutSelectorPiano() {
+
+    const uiElements = [
+    {
+        "name": "Octave Mode",
+        "desc": "Switch to octave layout mode",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Offset Mode",
+        "desc": "Switch to offset layout mode",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode (Selected)",
+        "desc": "Piano-style key arrangement",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Return",
+        "desc": "Return to the previous menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Layout Selector - Piano Mode"
+    const uiDescription = "Piano layout mode for piano-style key arrangement"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<LayoutSelectorPiano />
 
 ## MIDI Channel
 
