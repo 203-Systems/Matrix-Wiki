@@ -125,27 +125,6 @@ def adaptive_application():
 adaptive_application()
 ```
 
----
-
-## USB Submodules
-
-### USB::CDC - Communication Device Class
-The USB CDC interface provides serial communication functionality over USB. See the [CDC documentation](./CDC) for detailed information on:
-
-- Serial communication over USB
-- Virtual COM port functionality
-- Bidirectional text communication
-- Command interfaces and data logging
-
-**Example:**
-```python
-if MatrixOS.USB.CDC.Connected():
-    MatrixOS.USB.CDC.Print("Hello from MatrixOS!", "\n")
-
-    if MatrixOS.USB.CDC.Available() > 0:
-        message = MatrixOS.USB.CDC.ReadString()
-        print(f"Received: {message}")
-```
 
 ---
 

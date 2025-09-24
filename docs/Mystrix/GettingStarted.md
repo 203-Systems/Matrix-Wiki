@@ -14,16 +14,16 @@ Mystrix is a multipurpose grid controller, designed to be community-centric, hig
 
 The first steps to get your Mystrix ready for use are:
 
-1. **[Install the Anti-Slip Pad](/docs/Mystrix/InstallAntiSlipPad)** - Apply the included anti-slip pad to the bottom of your device
-2. **[Install Micro SD Card](/docs/Mystrix/InstallMicroSD)** - Required to use Python applications in Matrix OS 3
+1. **[Install the Anti-Slip Pad](./InstallAntiSlipPad)** - Apply the included anti-slip pad to the bottom of your device
+2. **[Install Micro SD Card](./InstallMicroSD)** - Required to use Python applications in Matrix OS 3
 
 ### Update to the Latest OS
 
-See [Update Matrix OS](/docs/Mystrix/UpdateMatrixOS) for instructions on how to update your Mystrix to the latest OS. Since Matrix OS is constantly updated, make sure you are on the latest OS and have the latest documentation to start using your Mystrix!
+See [Update Matrix OS](./UpdateMatrixOS) for instructions on how to update your Mystrix to the latest OS. Since Matrix OS is constantly updated, make sure you are on the latest OS and have the latest documentation to start using your Mystrix!
 
 ### Start Using Your Mystrix
 
-See the [Use your Mystrix](/docs/category/use-your-mystrix) section for what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
+See the [Use your Mystrix](../category/use-your-mystrix) section for what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](../MatrixOS/MatrixOSBasics) has to offer!
 
 <!-- idea: gif showcasing possibilities -->
 

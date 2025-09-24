@@ -102,7 +102,7 @@ After installation, verify the SD card is working properly:
 Once your SD card is installed and working:
 
 1. Try some of the included Python example applications
-2. Explore the [Python Application Development](/docs/Developer/PythonApplication) documentation
+2. Explore the [Python Application Development](../Developer/PythonApplication) documentation
 3. Consider developing your own custom Python applications
 
 ---

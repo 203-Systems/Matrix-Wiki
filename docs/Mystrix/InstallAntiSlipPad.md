@@ -23,7 +23,7 @@ If you have an alternate Function Key you want to install (like the one that cam
 :::
 
 :::note Micro SD Card Installation
-If you plan to use Python applications in Matrix OS 3, you'll also need to install a Micro SD card before applying the anti-slip pad. See [Install Micro SD Card](/docs/Mystrix/InstallMicroSD) for detailed instructions on how to open your device and install the SD card.
+If you plan to use Python applications in Matrix OS 3, you'll also need to install a Micro SD card before applying the anti-slip pad. See [Install Micro SD Card](./InstallMicroSD) for detailed instructions on how to open your device and install the SD card.
 :::
 
 :::warning Loose Magnets
