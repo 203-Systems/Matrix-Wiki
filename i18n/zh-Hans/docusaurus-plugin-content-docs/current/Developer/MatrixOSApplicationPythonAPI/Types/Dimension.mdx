@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # Dimension
 
-## Overview
+## 概述
 
-The `Dimension` class represents 2D dimension structure containing width and height. It's used for layout operations, size calculations, and spatial operations within the MatrixOS framework.
+`Dimension` 类表示包含宽度和高度的 2D 尺寸结构。它用于 Matrix OS 框架内的布局操作、大小计算和空间操作。
 
-*The Dimension class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Dimension.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Dimension.pyi"/>.*
+*Dimension 类实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_Dimension.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Dimension.pyi"/>。*
 
 ---
 
@@ -19,24 +19,24 @@ class Dimension:
     def __init__(self, *val) -> None
 ```
 
-Creates a dimension using various input formats:
-- **0 arguments**: Zero dimension (0, 0)
-- **1 argument**: From raw bytes
-- **2 arguments**: Width and height
+使用各种输入格式创建尺寸：
+- **0 个参数**：零尺寸 (0, 0)
+- **1 个参数**：从原始字节
+- **2 个参数**：宽度和高度
 
-**Parameters:**
-- `*val`: Variable arguments depending on desired constructor
+**参数：**
+- `*val`：根据所需构造函数的可变参数
 
-**Examples:**
+**示例：**
 ```python
-# Create zero dimension
+# 创建零尺寸
 zero_dim = Dimension()
 
-# Create dimension from width and height
-size = Dimension(8, 8)  # 8x8 dimension
+# 从宽度和高度创建尺寸
+size = Dimension(8, 8)  # 8x8 尺寸
 
-# Create from raw bytes (advanced usage)
-raw_dim = Dimension(0x00080008)  # Packed width/height
+# 从原始字节创建（高级用法）
+raw_dim = Dimension(0x00080008)  # 打包的宽度/高度
 ```
 
 ---

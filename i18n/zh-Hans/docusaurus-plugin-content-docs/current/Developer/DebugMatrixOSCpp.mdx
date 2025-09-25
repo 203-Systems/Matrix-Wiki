@@ -2,17 +2,17 @@
 sidebar_position: 3
 ---
 
-# Debug Your Application (C++)
+# 调试 C++ 应用
 
 
-## Enable Debug in Matrix OS
-To enable debug in Matrix OS. You will need to first build Matrix OS in debug mode.
+## 在 Matrix OS 中启用调试
+要在 Matrix OS 中启用调试，你需要首先在调试模式下构建 Matrix OS。
 
-In the Matrix OS source folder run
+在 Matrix OS 源文件夹中运行
 > make DEVICE=Mystrix **build-dev** uf2-upload
 
-Then logging will be enabled on both USB and hardware UART on the device. 
+然后将在设备的 USB 和硬件 UART 上启用日志记录。
 
-## Send Debug Logs
+## 发送调试日志
 
-You can use MLOG* macros or MatrixOS::Logging:Log* functions for sending out debug logs from your code. See [Logging API](/docs/Developer/MatrixOSApplicationCppAPI/Logging)
+你可以使用 MLOG* 宏或 MatrixOS::Logging:Log* 函数从代码中发送调试日志。请参阅 [日志记录 API](/docs/Developer/MatrixOSApplicationCppAPI/Logging)

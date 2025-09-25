@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # Color
 
-## Overview
+## 概述
 
-The `Color` class represents RGB color values for LED control. Colors can be created using individual RGB values or hexadecimal notation.
+`Color` 类表示用于 LED 控制的 RGB 颜色值。可以使用单个 RGB 值或十六进制记号法创建颜色。
 
-*The Color class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Color.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Color.pyi"/>.*
+*Color 类实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_Color.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Color.pyi"/>。*
 
 ---
 
@@ -19,53 +19,53 @@ class Color:
     def __init__(self, *val) -> None
 ```
 
-Creates a color using various input formats:
-- **0 arguments**: Creates black color (0, 0, 0)
-- **1 argument**: WRGB hexadecimal color value
-- **3 arguments**: R, G, B values (0-255)
-- **4 arguments**: R, G, B, W values (0-255)
+使用各种输入格式创建颜色：
+- **0 个参数**：创建黑色 (0, 0, 0)
+- **1 个参数**：WRGB 十六进制颜色值
+- **3 个参数**：R, G, B 值 (0-255)
+- **4 个参数**：R, G, B, W 值 (0-255)
 
-**Parameters:**
-- `*val`: Variable arguments depending on desired constructor
+**参数：**
+- `*val`：根据所需构造函数的可变参数
 
-**Examples:**
+**示例：**
 ```python
-# Create black color (default)
+# 创建黑色（默认）
 black = Color()
 
-# Create colors using RGB values
+# 使用 RGB 值创建颜色
 red = Color(255, 0, 0)
 green = Color(0, 255, 0)
 blue = Color(0, 0, 255)
 
-# Create color using WRGB hex value
+# 使用 WRGB 十六进制值创建颜色
 purple = Color(0xFF00FF)
 yellow = Color(0xFFFF00)
 
-# Create RGBW color
-warm_white = Color(255, 255, 255, 128)  # RGB + white component
+# 创建 RGBW 颜色
+warm_white = Color(255, 255, 255, 128)  # RGB + 白色组件
 ```
 
 ---
 
-## Static Factory Methods
+## 静态工厂方法
 
 ### `FromRGB`
 ```python
 def FromRGB(r: int, g: int, b: int) -> Color
 ```
 
-Creates a color from RGB values.
+从 RGB 值创建颜色。
 
-**Parameters:**
-- `r` (`int`): Red component (0-255)
-- `g` (`int`): Green component (0-255)
-- `b` (`int`): Blue component (0-255)
+**参数：**
+- `r` (`int`)：红色组件 (0-255)
+- `g` (`int`)：绿色组件 (0-255)
+- `b` (`int`)：蓝色组件 (0-255)
 
-**Returns:**
-- `Color`: New color instance
+**返回值：**
+- `Color`：新的颜色实例
 
-**Example:**
+**示例：**
 ```python
 red = Color.FromRGB(255, 0, 0)
 ```
@@ -75,18 +75,18 @@ red = Color.FromRGB(255, 0, 0)
 def FromRGBW(r: int, g: int, b: int, w: int) -> Color
 ```
 
-Creates a color from RGBW values.
+从 RGBW 值创建颜色。
 
-**Parameters:**
-- `r` (`int`): Red component (0-255)
-- `g` (`int`): Green component (0-255)
-- `b` (`int`): Blue component (0-255)
-- `w` (`int`): White component (0-255)
+**参数：**
+- `r` (`int`)：红色组件 (0-255)
+- `g` (`int`)：绿色组件 (0-255)
+- `b` (`int`)：蓝色组件 (0-255)
+- `w` (`int`)：白色组件 (0-255)
 
-**Returns:**
-- `Color`: New color instance
+**返回值：**
+- `Color`：新的颜色实例
 
-**Example:**
+**示例：**
 ```python
 warm_white = Color.FromRGBW(255, 255, 255, 128)
 ```
@@ -96,62 +96,62 @@ warm_white = Color.FromRGBW(255, 255, 255, 128)
 def FromHex(wrgb: int) -> Color
 ```
 
-Creates a color from a hexadecimal WRGB value.
+从十六进制 WRGB 值创建颜色。
 
-**Parameters:**
-- `wrgb` (`int`): Hexadecimal color value
+**参数：**
+- `wrgb` (`int`)：十六进制颜色值
 
-**Returns:**
-- `Color`: New color instance
+**返回值：**
+- `Color`：新的颜色实例
 
-**Example:**
+**示例：**
 ```python
 blue = Color.FromHex(0x0000FF)
 ```
 
 ---
 
-## Getter Methods
+## Getter 方法
 
 ### `R`
 ```python
 def R(self) -> int
 ```
 
-Gets the red component of the color.
+获取颜色的红色组件。
 
-**Returns:**
-- `int`: Red component value (0-255)
+**返回值：**
+- `int`：红色组件值 (0-255)
 
 ### `G`
 ```python
 def G(self) -> int
 ```
 
-Gets the green component of the color.
+获取颜色的绿色组件。
 
-**Returns:**
-- `int`: Green component value (0-255)
+**返回值：**
+- `int`：绿色组件值 (0-255)
 
 ### `B`
 ```python
 def B(self) -> int
 ```
 
-Gets the blue component of the color.
+获取颜色的蓝色组件。
 
-**Returns:**
-- `int`: Blue component value (0-255)
+**返回值：**
+- `int`：蓝色组件值 (0-255)
 
 ### `W`
 ```python
 def W(self) -> int
 ```
 
-Gets the white component of the color (for RGBW LEDs).
+获取颜色的白色组件（用于 RGBW LED）。
 
-**Returns:**
-- `int`: White component value (0-255)
+**返回值：**
+- `int`：白色组件值 (0-255)
 
 ### `RGB`
 ```python
@@ -243,25 +243,25 @@ color.SetW(128)  # Adds white component for RGBW LEDs
 
 ---
 
-## Color Manipulation Methods
+## 颜色操作方法
 
 ### `Scale`
 ```python
 def Scale(self, factor: float) -> Color
 ```
 
-Scales the color intensity by a factor.
+按因子缩放颜色强度。
 
-**Parameters:**
-- `factor` (`float`): Scaling factor (0.0 to 1.0+)
+**参数：**
+- `factor` (`float`)：缩放因子 (0.0 到 1.0+)
 
-**Returns:**
-- `Color`: New scaled color
+**返回值：**
+- `Color`：新的缩放颜色
 
-**Example:**
+**示例：**
 ```python
 color = Color(255, 128, 64)
-dimmed = color.Scale(0.5)  # Half brightness
+dimmed = color.Scale(0.5)  # 一半亮度
 ```
 
 ### `Dim`
@@ -269,18 +269,18 @@ dimmed = color.Scale(0.5)  # Half brightness
 def Dim(self, factor: float) -> Color
 ```
 
-Dims the color by a factor.
+按因子调暗颜色。
 
-**Parameters:**
-- `factor` (`float`): Dimming factor (0.0 to 1.0)
+**参数：**
+- `factor` (`float`)：调暗因子 (0.0 到 1.0)
 
-**Returns:**
-- `Color`: New dimmed color
+**返回值：**
+- `Color`：新的调暗颜色
 
-**Example:**
+**示例：**
 ```python
 color = Color(255, 128, 64)
-dimmed = color.Dim(0.8)  # 80% of original brightness
+dimmed = color.Dim(0.8)  # 原亮度的 80%
 ```
 
 ### `DimIfNot`
@@ -340,21 +340,21 @@ if color1 != color2:
 
 ---
 
-## Predefined Colors
+## 预定义颜色
 
-### Basic Colors
+### 基本颜色
 ```python
-# Primary colors
+# 原色
 red = Color(255, 0, 0)
 green = Color(0, 255, 0)
 blue = Color(0, 0, 255)
 
-# Secondary colors
+# 二次色
 cyan = Color(0, 255, 255)
 magenta = Color(255, 0, 255)
 yellow = Color(255, 255, 0)
 
-# Grayscale
+# 灰度
 white = Color(255, 255, 255)
 gray = Color(128, 128, 128)
 black = Color(0, 0, 0)

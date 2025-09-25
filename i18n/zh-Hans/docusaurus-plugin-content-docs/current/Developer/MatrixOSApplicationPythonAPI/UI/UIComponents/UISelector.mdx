@@ -5,15 +5,15 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # UISelector
 
-## Overview
+## 概述
 
-The `UISelector` component provides a versatile selection interface with multiple lighting modes and layout directions. It's ideal for creating value selectors, level indicators, and interactive controls.
+`UISelector` 组件提供了一个多功能的选择界面，具有多种照明模式和布局方向。它非常适合创建值选择器、级别指示器和交互式控件。
 
-*The UISelector component is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UISelector.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UISelector.pyi"/>.*
+*UISelector 组件实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UISelector.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UISelector.pyi"/>。*
 
 ---
 
-## Constructor
+## 构造函数
 
 ### `MatrixOS.UISelector()`
 ```python
@@ -21,223 +21,223 @@ class UISelector(UIComponent):
     def __init__(self) -> None
 ```
 
-Creates a new selector component.
+创建一个新的选择器组件。
 
-**Example:**
+**示例：**
 ```python
 selector = UISelector()
 ```
 
 ---
 
-## Enumerations
+## 枚举类型
 
 ### `UISelectorDirection`
 ```python
 class UISelectorDirection:
-    RIGHT_THEN_DOWN: int = 0
-    DOWN_THEN_RIGHT: int = 1
-    LEFT_THEN_DOWN: int = 2
-    DOWN_THEN_LEFT: int = 3
-    UP_THEN_RIGHT: int = 4
-    RIGHT_THEN_UP: int = 5
-    UP_THEN_LEFT: int = 6
-    LEFT_THEN_UP: int = 7
+    RIGHT_THEN_DOWN: int = 0  # 向右然后向下
+    DOWN_THEN_RIGHT: int = 1  # 向下然后向右
+    LEFT_THEN_DOWN: int = 2   # 向左然后向下
+    DOWN_THEN_LEFT: int = 3   # 向下然后向左
+    UP_THEN_RIGHT: int = 4    # 向上然后向右
+    RIGHT_THEN_UP: int = 5    # 向右然后向上
+    UP_THEN_LEFT: int = 6     # 向上然后向左
+    LEFT_THEN_UP: int = 7     # 向左然后向上
 ```
 
 ### `UISelectorLitMode`
 ```python
 class UISelectorLitMode:
-    LIT_EQUAL: int = 0              # Light only the selected value
-    LIT_LESS_EQUAL_THAN: int = 1    # Light all values <= selected
-    LIT_GREATER_EQUAL_THAN: int = 2 # Light all values >= selected
-    LIT_ALWAYS: int = 3             # Always light all positions
+    LIT_EQUAL: int = 0              # 仅点亮选中的值
+    LIT_LESS_EQUAL_THAN: int = 1    # 点亮所有 <= 选中值的位置
+    LIT_GREATER_EQUAL_THAN: int = 2 # 点亮所有 >= 选中值的位置
+    LIT_ALWAYS: int = 3             # 始终点亮所有位置
 ```
 
 ---
 
-## Behavior Functions
+## 行为函数
 
 ### `SetValueFunc`
 ```python
 def SetValueFunc(self, getValueFunc: any) -> bool
 ```
 
-Sets a function to get the current selector value.
+设置一个函数来获取当前选择器的值。
 
-**Parameters:**
-- `getValueFunc` (`function`): Function returning current value
+**参数：**
+- `getValueFunc` (`function`)：返回当前值的函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetColorFunc`
 ```python
 def SetColorFunc(self, colorFunc: any) -> bool
 ```
 
-Sets a function to determine the selector color.
+设置一个函数来确定选择器的颜色。
 
-**Parameters:**
-- `colorFunc` (`function`): Function returning current color
+**参数：**
+- `colorFunc` (`function`)：返回当前颜色的函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetIndividualColorFunc`
 ```python
 def SetIndividualColorFunc(self, individualColorFunc: any) -> bool
 ```
 
-Sets a function to determine individual position colors.
+设置一个函数来确定各个位置的颜色。
 
-**Parameters:**
-- `individualColorFunc` (`function`): Function returning color for each position
+**参数：**
+- `individualColorFunc` (`function`)：为每个位置返回颜色的函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetNameFunc`
 ```python
 def SetNameFunc(self, nameFunc: any) -> bool
 ```
 
-Sets a function to determine the selector name.
+设置一个函数来确定选择器的名称。
 
-**Parameters:**
-- `nameFunc` (`function`): Function returning current name
+**参数：**
+- `nameFunc` (`function`)：返回当前名称的函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
-## Configuration Methods
+## 配置方法
 
 ### `SetLitMode`
 ```python
 def SetLitMode(self, litMode: int) -> bool
 ```
 
-Sets the lighting mode for the selector.
+设置选择器的照明模式。
 
-**Parameters:**
-- `litMode` (`int`): Lighting mode from `UISelectorLitMode`
+**参数：**
+- `litMode` (`int`)：来自 `UISelectorLitMode` 的照明模式
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetDimension`
 ```python
 def SetDimension(self, dimension: Dimension) -> bool
 ```
 
-Sets the size of the selector.
+设置选择器的大小。
 
-**Parameters:**
-- `dimension` (`Dimension`): Selector dimensions
+**参数：**
+- `dimension` (`Dimension`)：选择器的尺寸
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetName`
 ```python
 def SetName(self, name: str) -> bool
 ```
 
-Sets the selector name.
+设置选择器的名称。
 
-**Parameters:**
-- `name` (`str`): Selector name
+**参数：**
+- `name` (`str`)：选择器名称
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetCount`
 ```python
 def SetCount(self, count: int) -> bool
 ```
 
-Sets the number of selectable positions.
+设置可选择位置的数量。
 
-**Parameters:**
-- `count` (`int`): Number of positions
+**参数：**
+- `count` (`int`)：位置数量
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetDirection`
 ```python
 def SetDirection(self, direction: int) -> bool
 ```
 
-Sets the layout direction for the selector.
+设置选择器的布局方向。
 
-**Parameters:**
-- `direction` (`int`): Direction from `UISelectorDirection`
+**参数：**
+- `direction` (`int`)：来自 `UISelectorDirection` 的方向
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ### `SetColor`
 ```python
 def SetColor(self, color: Color) -> bool
 ```
 
-Sets the base color for the selector.
+设置选择器的基础颜色。
 
-**Parameters:**
-- `color` (`Color`): Base color
+**参数：**
+- `color` (`Color`)：基础颜色
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
-## Callback Functions
+## 回调函数
 
 ### `OnChange`
 ```python
 def OnChange(self, changeCallback: any) -> bool
 ```
 
-Sets a callback function for when the selection changes.
+设置当选择发生改变时的回调函数。
 
-**Parameters:**
-- `changeCallback` (`function`): Function called on value change
+**参数：**
+- `changeCallback` (`function`)：值改变时调用的函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
-## Usage Examples
+## 使用示例
 
-### Basic Volume Selector
+### 基本音量选择器
 ```python
 def create_volume_selector():
-    """Create a horizontal volume selector"""
+    """创建一个水平音量选择器"""
 
-    volume_level = 5  # Current volume (0-10)
+    volume_level = 5  # 当前音量 (0-10)
     volume_selector = UISelector()
 
-    # Configure the selector
-    volume_selector.SetName("Volume")
-    volume_selector.SetCount(11)  # 0-10 levels
+    # 配置选择器
+    volume_selector.SetName("音量")
+    volume_selector.SetCount(11)  # 0-10 级别
     volume_selector.SetDirection(UISelectorDirection.RIGHT_THEN_DOWN)
     volume_selector.SetLitMode(UISelectorLitMode.LIT_LESS_EQUAL_THAN)
-    volume_selector.SetDimension(Dimension(8, 1))  # Full width, 1 row
+    volume_selector.SetDimension(Dimension(8, 1))  # 全宽，1 行
     volume_selector.SetColor(Color(0, 255, 0))
 
-    # Value function
+    # 值函数
     def get_volume():
         return volume_level
 
-    # Change callback
+    # 改变回调
     def on_volume_change(new_value):
         nonlocal volume_level
         volume_level = new_value
-        print(f"Volume changed to: {volume_level}")
+        print(f"音量改变为： {volume_level}")
 
     volume_selector.SetValueFunc(get_volume)
     volume_selector.OnChange(on_volume_change)
@@ -251,31 +251,31 @@ ui, vol_selector = create_volume_selector()
 ui.Start()
 ```
 
-### Multi-Color Level Indicator
+### 多色级别指示器
 ```python
 def create_level_indicator():
-    """Create a level indicator with color coding"""
+    """创建一个带有颜色编码的级别指示器"""
 
     current_level = 0
     max_level = 16
     level_selector = UISelector()
 
-    level_selector.SetName("Level")
+    level_selector.SetName("级别")
     level_selector.SetCount(max_level)
     level_selector.SetDirection(UISelectorDirection.DOWN_THEN_RIGHT)
     level_selector.SetLitMode(UISelectorLitMode.LIT_LESS_EQUAL_THAN)
     level_selector.SetDimension(Dimension(4, 4))
 
-    # Dynamic color based on level
+    # 根据级别动态设置颜色
     def get_level_color():
         if current_level < 4:
-            return Color(0, 255, 0)    # Green - low
+            return Color(0, 255, 0)    # 绿色 - 低
         elif current_level < 8:
-            return Color(255, 255, 0)  # Yellow - medium
+            return Color(255, 255, 0)  # 黄色 - 中等
         elif current_level < 12:
-            return Color(255, 100, 0)  # Orange - high
+            return Color(255, 100, 0)  # 橙色 - 高
         else:
-            return Color(255, 0, 0)    # Red - maximum
+            return Color(255, 0, 0)    # 红色 - 最大
 
     # Individual color function for gradient effect
     def get_individual_colors(position):
@@ -468,33 +468,33 @@ ui.Start()
 
 ---
 
-## Lighting Mode Examples
+## 照明模式示例
 
-### LIT_EQUAL (Single Selection)
+### LIT_EQUAL (单选)
 ```python
-# Shows only the selected position
+# 仅显示选中的位置
 selector.SetLitMode(UISelectorLitMode.LIT_EQUAL)
-# Use for: Radio buttons, single item selection
+# 用于：单选按钮、单项选择
 ```
 
-### LIT_LESS_EQUAL_THAN (Fill Mode)
+### LIT_LESS_EQUAL_THAN (填充模式)
 ```python
-# Shows all positions up to and including selected
+# 显示所有不超过选中值的位置
 selector.SetLitMode(UISelectorLitMode.LIT_LESS_EQUAL_THAN)
-# Use for: Volume bars, progress indicators, level meters
+# 用于：音量条、进度指示器、级别表
 ```
 
-### LIT_GREATER_EQUAL_THAN (Reverse Fill)
+### LIT_GREATER_EQUAL_THAN (反向填充)
 ```python
-# Shows selected position and all higher positions
+# 显示选中位置及之后的所有位置
 selector.SetLitMode(UISelectorLitMode.LIT_GREATER_EQUAL_THAN)
-# Use for: Countdown displays, remaining capacity
+# 用于：倒计时显示、剩余容量
 ```
 
-### LIT_ALWAYS (Show All)
+### LIT_ALWAYS (显示所有)
 ```python
-# Shows all positions with different colors
+# 以不同颜色显示所有位置
 selector.SetLitMode(UISelectorLitMode.LIT_ALWAYS)
-# Use for: Pattern editors, multi-state displays
+# 用于：模式编辑器、多状态显示
 ```
 

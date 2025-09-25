@@ -5,15 +5,15 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # UI4pxNumber
 
-## Overview
+## 概述
 
-The `UI4pxNumber` component displays numbers using a 4-pixel high font on the LED matrix. It's ideal for showing numeric values, scores, timers, and other quantitative information in a compact format.
+`UI4pxNumber` 组件使用4像素高的字体在LED矩阵上显示数字。它非常适合以紧凑格式显示数值、分数、计时器和其他定量信息。
 
-*The UI4pxNumber component is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UI4pxNumber.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UI4pxNumber.pyi"/>.*
+*UI4pxNumber 组件实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UI4pxNumber.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UI4pxNumber.pyi"/>。*
 
 ---
 
-## Constructor
+## 构造函数
 
 ### `MatrixOS.UI4pxNumber()`
 ```python
@@ -21,29 +21,29 @@ class UI4pxNumber(UIComponent):
     def __init__(self) -> None
 ```
 
-Creates a new 4-pixel number display component.
+创建一个新的4像素数字显示组件。
 
-**Example:**
+**示例：**
 ```python
 number_display = UI4pxNumber()
 ```
 
 ---
 
-## Configuration Methods
+## 配置方法
 
 ### `SetName`
 ```python
 def SetName(self, name: str) -> bool
 ```
 
-Sets the name/label for the number display.
+设置数字显示的名称或标签。
 
-**Parameters:**
-- `name` (`str`): Display name or label
+**参数：**
+- `name` (`str`)：显示名称或标签
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回True
 
 ---
 
@@ -52,13 +52,13 @@ Sets the name/label for the number display.
 def SetColor(self, color: Color) -> bool
 ```
 
-Sets the primary color for the number display.
+设置数字显示的主颜色。
 
-**Parameters:**
-- `color` (`Color`): Primary display color
+**参数：**
+- `color` (`Color`)：主显示颜色
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回True
 
 ---
 
@@ -67,13 +67,13 @@ Sets the primary color for the number display.
 def SetAlternativeColor(self, alternativeColor: Color) -> bool
 ```
 
-Sets an alternative color for special states or highlighting.
+为特殊状态或高亮显示设置替代颜色。
 
-**Parameters:**
-- `alternativeColor` (`Color`): Alternative color
+**参数：**
+- `alternativeColor` (`Color`)：替代颜色
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回True
 
 ---
 
@@ -82,13 +82,13 @@ Sets an alternative color for special states or highlighting.
 def SetDigits(self, digits: int) -> bool
 ```
 
-Sets the number of digits to display.
+设置要显示的数字位数。
 
-**Parameters:**
-- `digits` (`int`): Number of digits (1-4 typically)
+**参数：**
+- `digits` (`int`)：数字位数（通常为1-4）
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回True
 
 ---
 
@@ -97,30 +97,30 @@ Sets the number of digits to display.
 def SetSpacing(self, spacing: int) -> bool
 ```
 
-Sets the spacing between digits.
+设置数字间的间距。
 
-**Parameters:**
-- `spacing` (`int`): Pixel spacing between digits
+**参数：**
+- `spacing` (`int`)：数字间的像素间距
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回True
 
 ---
 
-## Value and Color Functions
+## 值和颜色函数
 
 ### `SetValueFunc`
 ```python
 def SetValueFunc(self, getValueFunc: any) -> bool
 ```
 
-Sets a function to dynamically get the current value to display.
+设置一个函数来动态获取当前要显示的值。
 
-**Parameters:**
-- `getValueFunc` (`function`): Function that returns the current value
+**参数：**
+- `getValueFunc` (`function`)：返回当前值的函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回True
 
 ---
 
@@ -129,80 +129,80 @@ Sets a function to dynamically get the current value to display.
 def SetColorFunc(self, colorFunc: any) -> bool
 ```
 
-Sets a function to dynamically determine the display color.
+设置一个函数来动态确定显示颜色。
 
-**Parameters:**
-- `colorFunc` (`function`): Function that returns the current color
+**参数：**
+- `colorFunc` (`function`)：返回当前颜色的函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回True
 
 ---
 
-## Usage Examples
+## 使用示例
 
-### Basic Score Display
+### 基本分数显示
 ```python
 def create_score_display():
-    """Create a simple score display"""
+    """创建一个简单的分数显示"""
 
     score = 0
     score_display = UI4pxNumber()
 
-    # Configure the display
-    score_display.SetName("Score")
-    score_display.SetColor(Color(0, 255, 0))  # Green
+    # 配置显示
+    score_display.SetName("分数")
+    score_display.SetColor(Color(0, 255, 0))  # 绿色
     score_display.SetDigits(4)
     score_display.SetSpacing(1)
 
-    # Set value function
+    # 设置值函数
     def get_score():
         return score
 
     score_display.SetValueFunc(get_score)
 
-    # Add to UI
+    # 添加到UI
     ui = UI()
     ui.AddUIComponent(score_display, Point(2, 2))
 
     return ui, score_display
 
-# Game loop example
+# 游戏循环示例
 ui, score_display = create_score_display()
 score = 0
 
 while True:
-    # Game logic here
-    score += 10  # Example score increase
+    # 这里是游戏逻辑
+    score += 10  # 示例分数增加
 
-    # UI will automatically update the display
+    # UI会自动更新显示
     MatrixOS.SYS.DelayMs(1000)
 ```
 
-### Dynamic Color Timer
+### 动态颜色计时器
 ```python
 def create_countdown_timer():
-    """Create a countdown timer with color-coded urgency"""
+    """创建一个带有颜色编码紧急度的倒计时计时器"""
 
     timer_seconds = 60
     timer_display = UI4pxNumber()
 
-    timer_display.SetName("Timer")
+    timer_display.SetName("计时器")
     timer_display.SetDigits(2)
     timer_display.SetSpacing(1)
 
-    # Dynamic value function
+    # 动态值函数
     def get_timer_value():
         return max(0, timer_seconds)
 
-    # Dynamic color function
+    # 动态颜色函数
     def get_timer_color():
         if timer_seconds > 30:
-            return Color(0, 255, 0)    # Green - plenty of time
+            return Color(0, 255, 0)    # 绿色 - 时间充足
         elif timer_seconds > 10:
-            return Color(255, 255, 0)  # Yellow - getting low
+            return Color(255, 255, 0)  # 黄色 - 时间不多
         else:
-            return Color(255, 0, 0)    # Red - urgent
+            return Color(255, 0, 0)    # 红色 - 紧急
 
     timer_display.SetValueFunc(get_timer_value)
     timer_display.SetColorFunc(get_timer_color)

@@ -5,108 +5,106 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # RawHID API
 
-## Overview
+## 概述
 
-The HID RawHID interface provides custom communication protocols for applications that need specialized HID functionality beyond standard keyboard, mouse, and gamepad interfaces. This allows for bidirectional communication and application-specific messaging.
+HID RawHID 接口提供自定义通信协议，适用于需要超越标准键盘、鼠标和手柄接口的专门 HID 功能的应用。这样可以实现双向通信和应用特定的消息传递。
 
-*The Python HID RawHID API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_RawHID.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_RawHID.pyi"/>.*
+*Python HID RawHID API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_RawHID.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_RawHID.pyi"/>。*
 
 ---
 
-## RawHID Functions
-
-### `Get`
+### `MatrixOS.HID.RawHID.Get`
 ```python
 def Get(timeout_ms: int = 0) -> bytes
 ```
 
-Receives raw HID data from the host.
+从主机接收原始 HID 数据。
 
-**Parameters:**
-- `timeout_ms` (`int`, optional): Timeout in milliseconds to wait for data (defaults to 0 for no timeout)
+**参数：**
+- `timeout_ms` (`int`, 可选)：等待数据的超时时间（毫秒），默认 0 表示无超时
 
-**Returns:**
-- `bytes`: Received raw HID data, or empty bytes if no data available
+**返回值：**
+- `bytes`：接收到的原始 HID 数据，如果没有数据则返回空字节
 
-**Example:**
+**示例：**
 ```python
 if MatrixOS.HID.Ready():
-    # Wait up to 100ms for HID data
+    # 等待最多 100ms 的 HID 数据
     data = MatrixOS.HID.RawHID.Get(100)
     if data:
-        print(f"Received {len(data)} bytes: {data.hex()}")
+        print(f"收到 {len(data)} 字节：{data.hex()}")
 ```
 
 ---
 
-### `Send`
+### `MatrixOS.HID.RawHID.Send`
 ```python
 def Send(report: bytes) -> bool
 ```
 
-Sends raw HID data to the host.
+向主机发送原始 HID 数据。
 
-**Parameters:**
-- `report` (`bytes`): Raw HID report data to send
+**参数：**
+- `report` (`bytes`)：要发送的原始 HID 报告数据
 
-**Returns:**
-- `bool`: True if sent successfully, False on error
+**返回值：**
+- `bool`：成功发送时返回 True，出错时返回 False
 
-**Example:**
+**示例：**
 ```python
 if MatrixOS.HID.Ready():
-    # Send custom HID report
+    # 发送自定义 HID 报告
     report_data = bytes([0x01, 0x02, 0x03, 0x04])
     success = MatrixOS.HID.RawHID.Send(report_data)
     if success:
-        print("HID report sent successfully")
+        print("HID 报告发送成功")
 ```
 
 ---
 
-## RawHID Concepts
+## RawHID 概念
 
-### Custom HID Reports
-RawHID allows sending and receiving custom HID reports that don't fit standard HID device classes:
+### 自定义 HID 报告
+RawHID 允许发送和接收不符合标准 HID 设备类的自定义 HID 报告：
 
-- **Custom Input Reports**: Device to host communication
-- **Custom Output Reports**: Host to device communication
-- **Feature Reports**: Bidirectional configuration data
+- **自定义输入报告**：设备到主机的通信
+- **自定义输出报告**：主机到设备的通信
+- **功能报告**：双向配置数据
 
-### Data Protocols
-- **Binary Data**: Raw byte transmission
-- **Structured Messages**: Protocol-specific data formats
-- **Command/Response**: Request-response communication patterns
+### 数据协议
+- **二进制数据**：原始字节传输
+- **结构化消息**：协议特定的数据格式
+- **命令/响应**：请求-响应通信模式
 
 ---
 
-## Example Implementation
+## 实现示例
 
 ```python
 def rawhid_communication_example():
-    """Example RawHID communication interface"""
+    """RawHID 通信接口示例"""
 
     def send_custom_message(message_type, data):
-        """Send a custom message via RawHID"""
-        # This would depend on actual RawHID implementation
-        print(f"Sending RawHID message: Type {message_type}, Data: {data}")
+        """通过 RawHID 发送自定义消息"""
+        # 这将取决于实际的 RawHID 实现
+        print(f"发送 RawHID 消息：类型 {message_type}，数据：{data}")
 
     def handle_rawhid_input():
-        """Handle incoming RawHID data"""
-        # This would depend on actual RawHID implementation
-        print("Checking for RawHID input...")
+        """处理传入的 RawHID 数据"""
+        # 这将取决于实际的 RawHID 实现
+        print("检查 RawHID 输入...")
 
     message_types = {
-        0: "status_request",
-        1: "led_control",
-        2: "config_update",
-        3: "sensor_data"
+        0: "状态请求",
+        1: "LED 控制",
+        2: "配置更新",
+        3: "传感器数据"
     }
 
-    print("RawHID Communication Interface")
-    print("Press keys to send different message types")
+    print("RawHID 通信接口")
+    print("按按键发送不同的消息类型")
 
-    # Display message types
+    # 显示消息类型
     for key_id, msg_type in message_types.items():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
         MatrixOS.LED.SetColor(xy, Color(0, 100, 200), 100)
@@ -115,14 +113,14 @@ def rawhid_communication_example():
 
     while True:
         if not MatrixOS.HID.Ready():
-            print("HID not ready, retrying...")
+            print("HID 未准备好，重新尝试...")
             MatrixOS.SYS.DelayMs(1000)
             continue
 
-        # Check for incoming data
+        # 检查传入数据
         handle_rawhid_input()
 
-        # Handle key input for sending messages
+        # 处理按键输入以发送消息
         key_event = MatrixOS.KeyPad.Get(100)
         if key_event is not None:
             key_id = key_event.ID()
@@ -131,19 +129,19 @@ def rawhid_communication_example():
             if key_info.Active() and key_id in message_types:
                 msg_type = message_types[key_id]
 
-                # Prepare sample data based on message type
-                if msg_type == "status_request":
-                    data = {"uptime": MatrixOS.SYS.Millis()}
-                elif msg_type == "led_control":
-                    data = {"pattern": "rainbow", "brightness": 255}
-                elif msg_type == "config_update":
-                    data = {"setting": "auto_brightness", "value": True}
-                elif msg_type == "sensor_data":
-                    data = {"temperature": 25.5, "humidity": 60}
+                # 根据消息类型准备示例数据
+                if msg_type == "状态请求":
+                    data = {"运行时间": MatrixOS.SYS.Millis()}
+                elif msg_type == "LED 控制":
+                    data = {"模式": "彩虹", "亮度": 255}
+                elif msg_type == "配置更新":
+                    data = {"设置": "自动亮度", "值": True}
+                elif msg_type == "传感器数据":
+                    data = {"温度": 25.5, "湿度": 60}
 
                 send_custom_message(key_id, data)
 
-                # Visual feedback
+                # 视觉反馈
                 xy = MatrixOS.KeyPad.ID2XY(key_id)
                 MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                 MatrixOS.LED.Update(255)
@@ -156,59 +154,59 @@ rawhid_communication_example()
 
 ---
 
-## Advanced RawHID Examples
+## 高级 RawHID 示例
 
-### Data Logger Interface
+### 数据记录接口
 ```python
 def rawhid_data_logger():
-    """RawHID-based data logging interface"""
+    """基于 RawHID 的数据记录接口"""
 
     log_buffer = []
     max_buffer_size = 100
 
     def add_log_entry(entry_type, data):
-        """Add entry to log buffer"""
+        """添加日志条目到缓冲区"""
         timestamp = MatrixOS.SYS.Millis()
         entry = {
-            "timestamp": timestamp,
-            "type": entry_type,
-            "data": data
+            "时间戳": timestamp,
+            "类型": entry_type,
+            "数据": data
         }
 
         log_buffer.append(entry)
 
-        # Maintain buffer size
+        # 维持缓冲区大小
         if len(log_buffer) > max_buffer_size:
             log_buffer.pop(0)
 
-        print(f"Log entry added: {entry_type}")
+        print(f"日志条目已添加：{entry_type}")
 
     def send_log_data():
-        """Send log data via RawHID"""
+        """通过 RawHID 发送日志数据"""
         if log_buffer:
-            # In actual implementation, this would send via RawHID
-            print(f"Sending {len(log_buffer)} log entries via RawHID")
-            # Could implement chunked transmission for large logs
+            # 在实际实现中，这会通过 RawHID 发送
+            print(f"通过 RawHID 发送 {len(log_buffer)} 条日志")
+            # 可以为大型日志实现分块传输
         else:
-            print("No log data to send")
+            print("没有日志数据要发送")
 
     log_types = {
-        8: "key_press",
-        9: "system_event",
-        10: "error_event",
-        16: "send_logs"
+        8: "按键",
+        9: "系统事件",
+        10: "错误事件",
+        16: "发送日志"
     }
 
-    print("RawHID Data Logger")
-    print("Generate log entries and send via RawHID")
+    print("RawHID 数据记录器")
+    print("生成日志条目并通过 RawHID 发送")
 
-    # Display log type options
+    # 显示日志类型选项
     for key_id, log_type in log_types.items():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
-        if log_type == "send_logs":
-            color = Color(255, 255, 0)  # Yellow for send
+        if log_type == "发送日志":
+            color = Color(255, 255, 0)  # 黄色表示发送
         else:
-            color = Color(0, 255, 100)  # Green for log types
+            color = Color(0, 255, 100)  # 绿色表示日志类型
         MatrixOS.LED.SetColor(xy, color, 150)
 
     MatrixOS.LED.Update(255)
@@ -223,26 +221,26 @@ def rawhid_data_logger():
                 if key_info.Active() and key_id in log_types:
                     log_type = log_types[key_id]
 
-                    if log_type == "send_logs":
+                    if log_type == "发送日志":
                         send_log_data()
                     else:
-                        # Generate sample log data
+                        # 生成示例日志数据
                         sample_data = {
-                            "key_press": {"key_id": key_id, "velocity": key_info.Velocity()},
-                            "system_event": {"event": "mode_change", "new_mode": "logging"},
-                            "error_event": {"error": "test_error", "severity": "low"}
+                            "按键": {"key_id": key_id, "力度": key_info.Velocity()},
+                            "系统事件": {"事件": "模式切换", "新模式": "记录"},
+                            "错误事件": {"错误": "测试错误", "严重程度": "低"}
                         }
 
                         add_log_entry(log_type, sample_data.get(log_type, {}))
 
-                    # Visual feedback
+                    # 视觉反馈
                     xy = MatrixOS.KeyPad.ID2XY(key_id)
                     MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                     MatrixOS.LED.Update(255)
                     MatrixOS.SYS.DelayMs(150)
 
-                    # Restore color
-                    if log_type == "send_logs":
+                    # 恢复颜色
+                    if log_type == "发送日志":
                         color = Color(255, 255, 0)
                     else:
                         color = Color(0, 255, 100)
@@ -252,62 +250,63 @@ def rawhid_data_logger():
 rawhid_data_logger()
 ```
 
-### Custom Control Protocol
+### 自定义控制协议
 ```python
 def rawhid_control_protocol():
-    """Custom control protocol via RawHID"""
+    """通过 RawHID 的自定义控制协议"""
 
     device_state = {
-        "mode": "normal",
-        "brightness": 128,
-        "pattern": "solid",
-        "color": [255, 0, 0]
+        "模式": "正常",
+        "亮度": 128,
+        "图案": "纯色",
+        "颜色": [255, 0, 0]
     }
 
     def send_state_update():
-        """Send current device state via RawHID"""
-        # In actual implementation, this would serialize and send state
-        print("Sending device state update:")
+        """通过 RawHID 发送当前设备状态"""
+        # 在实际实现中，这会序列化并发送状态
+        print("发送设备状态更新：")
         for key, value in device_state.items():
-            print(f"  {key}: {value}")
+            print(f"  {key}：{value}")
 
     def process_control_command(command, value):
-        """Process incoming control command"""
-        if command == "set_brightness":
-            device_state["brightness"] = max(0, min(255, value))
-        elif command == "set_mode":
-            device_state["mode"] = value
-        elif command == "set_pattern":
-            device_state["pattern"] = value
-        elif command == "set_color":
-            device_state["color"] = value
+        """处理传入的控制命令"""
+        if command == "设置亮度":
+            device_state["亮度"] = max(0, min(255, value))
+        elif command == "设置模式":
+            device_state["模式"] = value
+        elif command == "设置图案":
+            device_state["图案"] = value
+        elif command == "设置颜色":
+            device_state["颜色"] = value
 
-        print(f"Command processed: {command} = {value}")
+        print(f"命令已处理：{command} = {value}")
         send_state_update()
 
     controls = {
-        0: ("brightness_up", lambda: device_state["brightness"] + 32),
-        1: ("brightness_down", lambda: device_state["brightness"] - 32),
-        2: ("toggle_mode", lambda: "demo" if device_state["mode"] == "normal" else "normal"),
-        3: ("cycle_pattern", lambda: {"solid": "fade", "fade": "pulse", "pulse": "solid"}[device_state["pattern"]]),
-        8: ("red_color", lambda: [255, 0, 0]),
-        9: ("green_color", lambda: [0, 255, 0]),
-        10: ("blue_color", lambda: [0, 0, 255]),
-        16: ("send_state", None)
+        0: ("亮度增加", lambda: device_state["亮度"] + 32),
+        1: ("亮度减少", lambda: device_state["亮度"] - 32),
+        2: ("切换模式", lambda: "演示" if device_state["模式"] == "正常" else "正常"),
+        3: ("循环图案", lambda: {"纯色": "渐变", "渐变": "脉冲", "脉冲": "纯色"}[device_state["图案"]]),
+        8: ("红色", lambda: [255, 0, 0]),
+        9: ("绿色", lambda: [0, 255, 0]),
+        10: ("蓝色", lambda: [0, 0, 255]),
+        16: ("发送状态", None)
     }
 
-    print("RawHID Control Protocol")
-    print("Control device state via custom HID protocol")
+    print("RawHID 控制协议")
+    print("通过自定义 HID 协议控制设备状态")
 
-    # Display controls
+    # 显示控制选项
     for key_id, (name, _) in controls.items():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
-        if "color" in name:
-            color = Color(255, 100, 0)  # Orange for color controls
-        elif "brightness" in name:
-            color = Color(255, 255, 0)  # Yellow for brightness
+        if "颜色" in name:
+            color = Color(255, 100, 0)  # 橙色表示颜色控制
+        elif "亮度" in name:
+            color = Color(255, 255, 0)  # 黄色表示亮度
         else:
-            color = Color(0, 200, 255)  # Cyan for other controls
+            color = Color(0, 200, 255)  # 青色表示其他控制
+
         MatrixOS.LED.SetColor(xy, color, 100)
 
     MatrixOS.LED.Update(255)
@@ -322,22 +321,22 @@ def rawhid_control_protocol():
                 if key_info.Active() and key_id in controls:
                     name, value_func = controls[key_id]
 
-                    if name == "send_state":
+                    if name == "发送状态":
                         send_state_update()
                     else:
                         new_value = value_func()
                         process_control_command(name, new_value)
 
-                    # Visual feedback
+                    # 视觉反馈
                     xy = MatrixOS.KeyPad.ID2XY(key_id)
                     MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                     MatrixOS.LED.Update(255)
                     MatrixOS.SYS.DelayMs(200)
 
-                    # Restore color
-                    if "color" in name:
+                    # 恢复颜色
+                    if "颜色" in name:
                         color = Color(255, 100, 0)
-                    elif "brightness" in name:
+                    elif "亮度" in name:
                         color = Color(255, 255, 0)
                     else:
                         color = Color(0, 200, 255)
@@ -349,19 +348,19 @@ rawhid_control_protocol()
 
 ---
 
-## Integration Considerations
+## 集成注意事项
 
-### Host Application Requirements
-When using RawHID, the host application must:
+### 主机应用要求
+使用 RawHID 时，主机应用必须：
 
-- Support custom HID device classes
-- Handle custom HID reports
-- Implement the corresponding protocol on the host side
-- Manage device enumeration and communication
+- 支持自定义 HID 设备类
+- 处理自定义 HID 报告
+- 在主机端实现相应协议
+- 管理设备枚举和通信
 
-### Development Workflow
-1. **Define Protocol**: Specify message formats and communication patterns
-2. **Implement Device Side**: Create MatrixOS RawHID implementation
-3. **Implement Host Side**: Create corresponding host application
-4. **Test Communication**: Verify bidirectional communication works correctly
-5. **Handle Edge Cases**: Implement error recovery and edge case handling
+### 开发工作流程
+1. **定义协议**：指定消息格式和通信模式
+2. **实现设备端**：创建 MatrixOS RawHID 实现
+3. **实现主机端**：创建相应的主机应用
+4. **测试通信**：验证双向通信正常工作
+5. **处理边缘情况**：实现错误恢复和边缘情况处理

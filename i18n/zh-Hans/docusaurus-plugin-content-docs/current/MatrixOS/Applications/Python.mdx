@@ -3,75 +3,75 @@ sidebar_position: 10
 ---
 
 
-# Python App
+# Python 应用
 
-The Python app provides an interactive Python REPL (Read-Eval-Print Loop) environment directly on your Mystrix device. This allows you to write and execute Python code in real-time, control LEDs, respond to keypresses, and access all MatrixOS APIs through the PikaPython interpreter.
+Python 应用在你的魔矩设备上直接提供交互式 Python REPL（读取-求值-打印循环）环境。这允许你实时编写和执行 Python 代码，控制 LED，响应按键，并通过 PikaPython 解释器访问所有 Matrix OS API。
 
-:::warning Emergency Exit
-To exit the Python app, hold down the Function Key (center key) for 3 seconds to return to the home screen. This emergency exit method works system-wide across all applications.
+:::warning 紧急退出
+要退出 Python 应用，长按功能键（中心键）3 秒钟返回主屏幕。此紧急退出方法在所有应用程序中都可以系统级使用。
 :::
 
-## Features
+## 功能特性
 
-- **Interactive Python REPL**: Write and execute Python code line by line
-- **MatrixOS API Access**: Control LEDs, read keypads, send MIDI, use HID functions
-- **Persistent Session**: Variables and functions remain in memory during your session
-- **Real-time Feedback**: See immediate results from your code on the device
-- **Educational Tool**: Perfect for learning Python and exploring MatrixOS capabilities
+- **交互式 Python REPL**：逐行编写和执行 Python 代码
+- **Matrix OS API 访问**：控制 LED、读取键盘、发送 MIDI、使用 HID 功能
+- **持久会话**：变量和函数在你的会话期间保持在内存中
+- **实时反馈**：在设备上立即查看代码结果
+- **教育工具**：非常适合学习 Python 和探索 Matrix OS 功能
 
 
-## Getting Started
+## 入门指南
 
-### Connecting via Serial Terminal
+### 通过串口终端连接
 
-To use the Python REPL, you'll need a serial terminal application:
+要使用 Python REPL，你需要一个串口终端应用程序：
 
-**Windows Users:**
-1. **Download PuTTY**: Get PuTTY from [https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+**Windows 用户：**
+1. **下载 PuTTY**：从 [https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) 获取 PuTTY
 
-**macOS/Linux Users:**
-Use the built-in `screen` command or other terminal applications like `minicom`
-2. **Configure Connection**:
-   - Connection type: Serial
-   - Serial line: Your device's COM port (e.g., COM3)
-   - Speed: 115200
-3. **Important Terminal Settings**:
-   - Go to Terminal → check "Implicit CR in every LF" - **This is required for proper line endings**
-4. **Connect**: Click "Open" to establish the connection
+**macOS/Linux 用户：**
+使用内置的 `screen` 命令或其他终端应用程序，如 `minicom`
+2. **配置连接**：
+   - 连接类型：串口
+   - 串口线：你设备的 COM 端口（例如，COM3）
+   - 速度：115200
+3. **重要终端设置**：
+   - 转到 Terminal → 勾选 "Implicit CR in every LF" - **这是正确行结尾所必需的**
+4. **连接**：点击 "打开" 建立连接
 
-### Basic Usage
+### 基本使用
 
-1. **Enter the Python App**: Select Python from the application launcher on your device
-2. **Start Coding**: The REPL will appear in your PuTTY terminal, ready to accept Python commands
-3. **Execute Code**: Type Python statements and press Enter to see immediate results
-4. **Exit**: Use python function `exit()` to return to application launcher, or hold the center key for 3 seconds to force exit
+1. **进入 Python 应用**：从设备上的应用程序启动器中选择 Python
+2. **开始编码**：REPL 将在你的 PuTTY 终端中显示，准备接受 Python 命令
+3. **执行代码**：输入 Python 语句并按 Enter 键查看即时结果
+4. **退出**：使用 Python 函数 `exit()` 返回应用程序启动器，或长按中心键 3 秒钟强制退出
 
-### Quick Examples
+### 快速示例
 
-#### LED Control
+#### LED 控制
 ```python
-# Turn on an LED at position (3, 3) with red color
+# 在位置 (3, 3) 以红色点亮 LED
 MatrixOS.LED.SetColor(Point(3, 3), Color(255, 0, 0), 255)
 MatrixOS.LED.Update(255)
 
-# Fill all LEDs with blue
+# 用蓝色填充所有 LED
 MatrixOS.LED.Fill(Color(0, 0, 255), 255)
 MatrixOS.LED.Update(255)
 
-# Clear all LEDs
+# 清除所有 LED
 MatrixOS.LED.Fill(Color(0, 0, 0), 0)
 MatrixOS.LED.Update(0)
 ```
 
-#### Keypad Input
+#### 键盘输入
 ```python
 while True:
     event = MatrixOS.KeyPad.Get()
     if event != None and event.State() == MatrixOS.KeyState.PRESSED:
-        print(f"Key pressed at ({event.xy.x}, {event.xy.y})")
+        print(f"在 ({event.xy.x}, {event.xy.y}) 处按下了按键")
 ```
 
 
-## Available APIs
+## 可用 API
 
-For detailed documentation on all available Python APIs, see [Python Application Development](../../Developer/PythonApplication).
+有关所有可用 Python API 的详细文档，请参阅 [Python 应用程序开发](../../Developer/PythonApplication)。

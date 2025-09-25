@@ -4,24 +4,24 @@ sidebar_position: 5
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Dice App
+# 骰子应用
 
-The Dice App is a simple app that allows you to roll a dice.
+骰子应用是一个简单的应用程序，允许你掷骰子。
 
-The dice has two modes: dotted dice and number dice.
+骰子有两种模式：点数骰子和数字骰子。
 
-You can customize the number of faces on the dice (2 to 9 for dot mode, 2 to 99 for number mode) and the color and effect of the animation.
+你可以自定义骰子的面数（点数模式为 2 到 9，数字模式为 2 到 99）以及动画的颜色和效果。
 
-## Dice View
+## 骰子视图
 
-### Dot Mode
+### 点数模式
 
 export function DotView() {
 
     const uiElements = [
         {
-            "name": "Dots",
-            "desc": "Display the dots of the dice.",
+            "name": "点数",
+            "desc": "显示骰子的点数。",
             "elements": [
                 {
                     "pos": [0, 1],
@@ -56,8 +56,8 @@ export function DotView() {
             ]
         },
         {
-            "name": "Config Menu",
-            "desc": "Tap to enter the config menu.",
+            "name": "配置菜单",
+            "desc": "点击进入配置菜单。",
             "link": "#config-menu",
             "elements": [
                 {
@@ -67,8 +67,8 @@ export function DotView() {
         }
     ];
 
-    const uiName = "Dice View - Dot Mode"
-    const uiDescription = "Dot mode displays the dice dots on the screen. You can customize the number of faces from 2 to 9."
+    const uiName = "骰子视图 - 点数模式"
+    const uiDescription = "点数模式在屏幕上显示骰子点数。你可以自定义面数从 2 到 9。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
@@ -79,14 +79,14 @@ export function DotView() {
 
 <DotView />
 
-### Number Mode
+### 数字模式
 
 export function NumberView() {
 
     const uiElements = [
         {
-            "name": "Number",
-            "desc": "Display the number of the dice.",
+            "name": "数字",
+            "desc": "显示骰子的数字。",
             "elements": [
                 {
                     "pos": [2, 2],
@@ -116,8 +116,8 @@ export function NumberView() {
             ]
         },
         {
-            "name": "Config Menu",
-            "desc": "Tap to enter the config menu.",
+            "name": "配置菜单",
+            "desc": "点击进入配置菜单。",
             "link": "#config-menu",
             "elements": [
                 {
@@ -127,8 +127,8 @@ export function NumberView() {
         }
     ];
 
-    const uiName = "Dice View - Number Mode"
-    const uiDescription = "Number mode displays numerical values on the screen. You can customize the number of faces from 2 to 99."
+    const uiName = "骰子视图 - 数字模式"
+    const uiDescription = "数字模式在屏幕上显示数值。你可以自定义面数从 2 到 99。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
@@ -139,14 +139,14 @@ export function NumberView() {
 
 <NumberView />
 
-## Config Menu
+## 配置菜单
 
 export function ConfigMenu() {
 
     const uiElements = [
         {
-            "name": "Dot Mode",
-            "desc": "Switch to Dot mode.",
+            "name": "点数模式",
+            "desc": "切换到点数模式。",
             "link": "#dot-mode",
             "elements": [
                 {
@@ -156,8 +156,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Number Mode",
-            "desc": "Switch to Number Mode.",
+            "name": "数字模式",
+            "desc": "切换到数字模式。",
             "link": "#number-mode",
             "elements": [
                 {
@@ -167,8 +167,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Rolling Rainbow Mode",
-            "desc": "Enable rainbow mode when rolling the dice.",
+            "name": "滚动彩虹模式",
+            "desc": "在滚动骰子时启用彩虹模式。",
             "elements": [
                 {
                     "pos": [0, 0],
@@ -177,8 +177,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Rolling Color",
-            "desc": "Change the display color when the dice is rolling (it can be rainbow if rolling rainbow mode is on).",
+            "name": "滚动颜色",
+            "desc": "更改骰子滚动时的显示颜色（如果打开滚动彩虹模式，则可以是彩虹效果）。",
             "link": "/docs/MatrixOS/SharedUI/ColorPicker",
             "elements": [
                 {
@@ -189,8 +189,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Rolling Underglow Effect",
-            "desc": "Change the underglow effect when the dice is rolling (it can be rainbow if rolling rainbow mode is on) (Only available on Mystrix Pro).",
+            "name": "滚动底光效果",
+            "desc": "更改骰子滚动时的底光效果（如果打开滚动彩虹模式，则可以是彩虹效果）（仅限魔矩 Pro）。",
             "link": "#underglow-effect",
             "elements": [
                 {
@@ -200,8 +200,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Confirmed Rainbow Mode",
-            "desc": "Enable rainbow mode after the dice roll is confirmed.",
+            "name": "确认彩虹模式",
+            "desc": "在骰子投掷结果确认后启用彩虹模式。",
             "elements": [
                 {
                     "pos": [7, 0],
@@ -210,8 +210,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Confirmed Color",
-            "desc": "Change the display color after the dice roll is confirmed (it can be rainbow if confirmed rainbow mode is on).",
+            "name": "确认颜色",
+            "desc": "更改骰子投掷结果确认后的显示颜色（如果打开确认彩虹模式，则可以是彩虹效果）。",
             "link": "/docs/MatrixOS/SharedUI/ColorPicker",
             "elements": [
                 {
@@ -222,8 +222,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Confirmed Underglow Effect",
-            "desc": "Change the underglow effect after the dice roll is confirmed (it can be rainbow if confirmed rainbow mode is on) (Only available on Mystrix Pro).",
+            "name": "确认底光效果",
+            "desc": "更改骰子投掷结果确认后的底光效果（如果打开确认彩虹模式，则可以是彩虹效果）（仅限魔矩 Pro）。",
             "link": "#underglow-effect",
             "elements": [
                 {
@@ -233,8 +233,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Faces",
-            "desc": "Change the number of faces on the dice (config independent).",
+            "name": "面数",
+            "desc": "更改骰子的面数（配置独立）。",
             "elements": [
                 {
                     "pos": [2, 7],
@@ -244,8 +244,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Dice View or Exit App",
-            "desc": "Tap to return to the dice view. Hold to exit the app.",
+            "name": "骰子视图或退出应用",
+            "desc": "点击返回骰子视图。长按退出应用。",
             "link": "#dice-view",
             "elements": [
                 {
@@ -255,8 +255,8 @@ export function ConfigMenu() {
         }
     ];
 
-    const uiName = "Config Menu"
-    const uiDescription = "The config menu allows you to modify customization options."
+    const uiName = "配置菜单"
+    const uiDescription = "配置菜单允许你修改自定义选项。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
@@ -267,16 +267,16 @@ export function ConfigMenu() {
 
 <ConfigMenu />
 
-## Underglow Effect
+## 底光效果
 
-Underglow can have different LED effects during dice roll or after dice roll. You can adjust the animation effect and speed of the effect or turn it off. Underglow Effect is only available on Mystrix Pro.
+底光可以在骰子滚动期间或滚动后具有不同的 LED 效果。你可以调整动画效果和效果速度或将其关闭。底光效果仅限魔矩 Pro。
 
 export function UnderglowEffect() {
 
     const uiElements = [
         {
-            "name": "Enable Underglow",
-            "desc": "Enable or disable underglow effects.",
+            "name": "启用底光",
+            "desc": "启用或禁用底光效果。",
             "elements": [
                 {
                     "pos": [0, 0],
@@ -285,8 +285,8 @@ export function UnderglowEffect() {
             ]
         },
         {
-            "name": "Effect: Static",
-            "desc": "Set the underglow effect to Static.",
+            "name": "效果：静态",
+            "desc": "将底光效果设置为静态。",
             "elements": [
                 {
                     "pos": [2, 0],
@@ -295,8 +295,8 @@ export function UnderglowEffect() {
             ]
         },
         {
-            "name": "Effect: Breath",
-            "desc": "Set the underglow effect to Breath.",
+            "name": "效果：呼吸",
+            "desc": "将底光效果设置为呼吸。",
             "elements": [
                 {
                     "pos": [3, 0],
@@ -305,8 +305,8 @@ export function UnderglowEffect() {
             ]
         },
         {
-            "name": "Effect: Strobe",
-            "desc": "Set the underglow effect to Strobe.",
+            "name": "效果：闪烁",
+            "desc": "将底光效果设置为闪烁。",
             "elements": [
                 {
                     "pos": [4, 0],
@@ -315,8 +315,8 @@ export function UnderglowEffect() {
             ]
         },
         {
-            "name": "Effect: Saw",
-            "desc": "Set the underglow effect to Saw.",
+            "name": "效果：锂齿",
+            "desc": "将底光效果设置为锂齿。",
             "elements": [
                 {
                     "pos": [5, 0],
@@ -325,8 +325,8 @@ export function UnderglowEffect() {
             ]
         },
         {
-            "name": "Speed Control",
-            "desc": "Change the speed of the underglow effect.",
+            "name": "速度控制",
+            "desc": "更改底光效果的速度。",
             "elements": [
                 {
                     "pos": [0, 6],
@@ -340,8 +340,8 @@ export function UnderglowEffect() {
             ]
         },
         {
-            "name": "Go Back to Config Menu",
-            "desc": "Tap to return to the config menu.",
+            "name": "返回配置菜单",
+            "desc": "点击返回配置菜单。",
             "link": "#config-menu",
             "elements": [
                 {
@@ -351,8 +351,8 @@ export function UnderglowEffect() {
         }
     ];
 
-    const uiName = "Underglow Effect Menu"
-    const uiDescription = "The Underglow Effect Menu allows you to modify underglow effect options."
+    const uiName = "底光效果菜单"
+    const uiDescription = "底光效果菜单允许你修改底光效果选项。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}

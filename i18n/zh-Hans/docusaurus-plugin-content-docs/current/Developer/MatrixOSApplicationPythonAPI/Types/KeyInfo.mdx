@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # KeyInfo
 
-## Overview
+## 概述
 
-The `KeyInfo` class contains detailed information about a key's state, including timing data, force/pressure, and activity status. It provides methods to query key behavior and detect various input patterns.
+`KeyInfo` 类包含关于按键状态的详细信息，包括时间数据、力度/压力和活动状态。它提供查询按键行为和检测各种输入模式的方法。
 
-*The Python KeyInfo class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_KeyInfo.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_KeyInfo.pyi"/>.*
+*Python KeyInfo 类实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_KeyInfo.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_KeyInfo.pyi"/>。*
 
 ---
 
@@ -27,17 +27,17 @@ Creates a KeyInfo instance with variable arguments.
 
 ---
 
-## Methods
+## 方法
 
 ### `State`
 ```python
 def State(self) -> int
 ```
 
-Gets the current key state value.
+获取当前按键状态值。
 
-**Returns:**
-- `int`: The key state (corresponds to KeyState enum values)
+**返回值：**
+- `int`：按键状态（对应 KeyState 枚举值）
 
 ### `Force`
 ```python

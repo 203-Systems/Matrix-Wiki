@@ -4,20 +4,20 @@ sidebar_position: 7
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Reversi App
+# 黑白棋应用
 
-Reversi is a strategy board game for two players, played on an 8x8 board. Players take turns placing disks on the board with their assigned color facing up. During a play, any disks of the opponent's color that are in a straight line and bounded by the disk just placed and another disk of the current player's color are turned over to the current player's color.
+黑白棋是一个双人策略棋盘游戏，在 8x8 的棋盘上进行。玩家轮流在棋盘上放置棋子，棋子朝上显示自己的颜色。在一次下棋中，任何被刚放置的棋子和当前玩家的另一颗棋子夹在一条直线上的对方棋子都会翻转为当前玩家的颜色。
 
-Learn more about Reversi [here](https://en.wikipedia.org/wiki/Reversi).
+在 [这里](https://en.wikipedia.org/wiki/Reversi) 了解更多关于黑白棋的信息。
 
-## Game View
+## 游戏界面
 
 export function GameView() {
 
     const uiElements = [
         {
-            "name": "Player 1 Pieces",
-            "desc": "The game starts with 2 pieces for each player in the center of the board.",
+            "name": "玩家1棋子",
+            "desc": "游戏开始时，每位玩家在棋盘中央各有2枚棋子。",
             "elements": [
                 {
                     "pos": [3, 3],
@@ -30,8 +30,8 @@ export function GameView() {
             ]
         },
         {
-            "name": "Player 2 Pieces",
-            "desc": "The game starts with 2 pieces for each player in the center of the board.",
+            "name": "玩家2棋子",
+            "desc": "游戏开始时，每位玩家在棋盘中央各有2枚棋子。",
             "elements": [
                 {
                     "pos": [3, 4],
@@ -44,8 +44,8 @@ export function GameView() {
             ]
         },
         {
-            "name": "Possible Placement",
-            "desc": "The possible placement of the next piece is shown.",
+            "name": "可能的放置位置",
+            "desc": "显示下一步棋子的可能放置位置。",
             "elements": [
                 {
                     "pos": [4, 2],
@@ -75,8 +75,8 @@ export function GameView() {
             ]
         },
         {
-            "name": "Config Menu",
-            "desc": "Tap to enter the config menu.",
+            "name": "配置菜单",
+            "desc": "点击进入配置菜单。",
             "link": "#config-menu",
             "elements": [
                 {
@@ -86,8 +86,8 @@ export function GameView() {
         }
     ];
 
-    const uiName = "Game View"
-    const uiDescription = "The game view allows you to play the Reversi game. The underglow shows the current player's color."
+    const uiName = "游戏界面"
+    const uiDescription = "游戏界面允许你进行黑白棋游戏。底灯显示当前玩家的颜色。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
@@ -98,14 +98,14 @@ export function GameView() {
 
 <GameView />
 
-## Config Menu
+## 配置菜单
 
 export function ConfigMenu() {
 
     const uiElements = [
         {
-            "name": "Player 1 Color",
-            "desc": "Tap to select colors for Player 1.",
+            "name": "玩家1颜色",
+            "desc": "点击选择玩家1的颜色。",
             "link": "/docs/MatrixOS/SharedUI/ColorPicker",
             "elements": [
                 {
@@ -116,8 +116,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Player 1 First Hand",
-            "desc": "Toggle if Player 1 goes first.",
+            "name": "玩家1先手",
+            "desc": "切换玩家1是否先走。",
             "elements": [
                 {
                     "pos": [7, 6],
@@ -126,8 +126,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Player 2 Color",
-            "desc": "Tap to select colors for Player 2.",
+            "name": "玩家2颜色",
+            "desc": "点击选择玩家2的颜色。",
             "link": "/docs/MatrixOS/SharedUI/ColorPicker",
             "elements": [
                 {
@@ -138,8 +138,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Player 2 First Hand",
-            "desc": "Toggle if Player 2 goes first.",
+            "name": "玩家2先手",
+            "desc": "切换玩家2是否先走。",
             "elements": [
                 {
                     "pos": [0, 1],
@@ -148,8 +148,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Reset Game",
-            "desc": "Reset the game to the initial state.",
+            "name": "重置游戏",
+            "desc": "将游戏重置为初始状态。",
             "elements": [
                 {
                     "pos": [7, 3],
@@ -159,8 +159,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Placement Hint",
-            "desc": "Toggle the placement hint.",
+            "name": "放置提示",
+            "desc": "切换放置提示的显示。",
             "elements": [
                 {
                     "pos": [0, 3],
@@ -170,8 +170,8 @@ export function ConfigMenu() {
             ]
         },
         {
-            "name": "Go back or Exit App",
-            "desc": "Tap to return to the board. Hold to exit the app.",
+            "name": "返回或退出应用",
+            "desc": "点击返回棋盘。长按退出应用。",
             "elements": [
                 {
                     "pos": ["c"]
@@ -180,8 +180,8 @@ export function ConfigMenu() {
         }
     ];
 
-    const uiName = "Config Menu"
-    const uiDescription = "The config menu allows you to modify settings of the app and the device."
+    const uiName = "配置菜单"
+    const uiDescription = "配置菜单允许你修改应用和设备的设置。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}

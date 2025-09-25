@@ -5,25 +5,25 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # KeyEvent
 
-## Overview
+## 概述
 
-The `KeyEvent` class represents an event triggered by key input interaction. KeyEvent objects are typically obtained from `MatrixOS.KeyPad.Get()` and provide direct access to key state, force, timing, and other input properties.
+`KeyEvent` 类表示由按键输入交互触发的事件。KeyEvent 对象通常从 `MatrixOS.KeyPad.Get()` 获取，并提供对按键状态、力度、时间和其他输入属性的直接访问。
 
-*The Python KeyEvent class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_KeyEvent.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_KeyEvent.pyi"/>.*
+*Python KeyEvent 类实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_KeyEvent.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_KeyEvent.pyi"/>。*
 
 ---
 
-## Methods
+## 方法
 
 ### `ID`
 ```python
 def ID(self) -> int
 ```
 
-Gets the unique identifier for this key event.
+获取此按键事件的唯一标识符。
 
-**Returns:**
-- `int`: The key ID
+**返回值：**
+- `int`：按键 ID
 
 **Example:**
 ```python

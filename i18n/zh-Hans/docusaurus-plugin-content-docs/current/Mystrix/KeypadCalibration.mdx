@@ -4,27 +4,27 @@ sidebar_position: 7
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Keypad Calibration
+# 键盘校准
 
 :::danger
-This feature is intended for advanced users and is not recommended for general users.
+此功能适用于高级用户，不建议普通用户使用。
 
-Incorrect calibration of the keypad may result in unexpected device behavior. In the worst case, you may need to reflash the OS and wipe all data to recover the device.
+键盘校准错误可能导致意外的设备行为。在最坏的情况下，你可能需要重新刷写操作系统并清除所有数据来恢复设备。
 :::
 
 :::info
-This feature is only available for Mystrix devices with a force-sensitive keypad, such as the Mystrix Pro.
+此功能仅适用于具有压力感应键盘的魔矩设备，例如魔矩 Pro。
 :::
 
-This app allows users to calibrate the keypad according to their preferences by adjusting the minimal and maximal trigger forces.
+该应用程序允许用户通过调整最小和最大触发力来根据自己的偏好校准键盘。
 
-## Keypad Calibration UI
+## 键盘校准界面
 
 export function KeypadCalibrationMenu() {
     const uiElements = [
         {
-            "name": "Max Force Offset",
-            "desc": "Globally offset the maximum force threshold of the keypad.",
+            "name": "最大力度偏移",
+            "desc": "全局偏移键盘的最大力度阈值。",
             "link": "#offset-editor",
             "elements": [
                 {
@@ -35,8 +35,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Max Force Calibration",
-            "desc": "Manually calibrate the maximum force threshold for each key on the keypad. If calibrated, the pad will be lit up as green.",
+            "name": "最大力度校准",
+            "desc": "手动校准键盘上每个按键的最大力度阈值。如果已校准，按键将显示为绿色。",
             "link": "#max-force-calibration",
             "elements": [
                 {
@@ -47,8 +47,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Clear Max Force Calibration",
-            "desc": "Clear the maximum force calibration of the keypad.",
+            "name": "清除最大力度校准",
+            "desc": "清除键盘的最大力度校准。",
             "elements": [
                 {
                     "pos": [7, 0],
@@ -58,8 +58,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Min Force Offset",
-            "desc": "Globally offset the minimal force threshold of the keypad.",
+            "name": "最小力度偏移",
+            "desc": "全局偏移键盘的最小力度阈值。",
             "link": "#offset-editor",
             "elements": [
                 {
@@ -70,8 +70,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Min Force Calibration",
-            "desc": "Automatically calibrate the minimal force threshold for each key on the keypad. If calibrated, the pad will be lit up as green.",
+            "name": "最小力度校准",
+            "desc": "自动校准键盘上每个按键的最小力度阈值。如果已校准，按键将显示为绿色。",
             "link": "#minimal-force-calibration",
             "elements": [
                 {
@@ -82,8 +82,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Clear Min Force Calibration",
-            "desc": "Clear the minimal force calibration of the keypad.",
+            "name": "清除最小力度校准",
+            "desc": "清除键盘的最小力度校准。",
             "elements": [
                 {
                     "pos": [7, 6],
@@ -93,8 +93,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Keypad Tester",
-            "desc": "Test the force sensitivity of the keypad.",
+            "name": "键盘测试器",
+            "desc": "测试键盘的力度敏感性。",
             "link": "#keypad-tester",
             "elements": [
                 {
@@ -105,8 +105,8 @@ export function KeypadCalibrationMenu() {
             ]
         },
         {
-            "name": "Exit Keypad Calibration",
-            "desc": "Return to the application launcher.",
+            "name": "退出键盘校准",
+            "desc": "返回应用程序启动器。",
             "link": "/docs/MatrixOS/ApplicationLauncher",
             "elements": [
                 {
@@ -116,8 +116,8 @@ export function KeypadCalibrationMenu() {
         }
     ];
 
-    const uiName = "Device Settings";
-    const uiDescription = "Device Settings contains all the settings specific to Mystrix.";
+    const uiName = "设备设置";
+    const uiDescription = "设备设置包含魔矩特定的所有设置。";
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
@@ -132,16 +132,16 @@ export function KeypadCalibrationMenu() {
 
 <!-- this makes vertical space -->
 
-:::warning[Content Under Construction]
-This content is currently under construction. If you need any assistance, please [reach out to us](/docs/Support/ConnectWithUs) or leave a comment.
+:::warning[内容正在建设中]
+此内容目前正在建设中。如果你需要任何帮助，请[联系我们](/docs/Support/ConnectWithUs) 或留言。
 :::
 
-## Max Force Calibration
+## 最大力度校准
 
 <!-- idea: i would suggest having different colors for max and min so that you know which one is which (even though you already have up and down kinda telling you that, but still, others might be confused) -->
 
-## Minimal Force Calibration
+## 最小力度校准
 
-## Offset Editor
+## 偏移编辑器
 
-## Keypad Tester
+## 键盘测试器

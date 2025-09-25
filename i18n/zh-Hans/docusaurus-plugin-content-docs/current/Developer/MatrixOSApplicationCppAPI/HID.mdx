@@ -5,14 +5,14 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink'
 
 # HID API
 
-## Overview
-The `HID` namespace provides APIs for controlling various Human Interface Device (HID) peripherals like keyboards, mice, gamepads, and more. It also includes support for Raw HID communication.
+## 概述
+`HID` 命名空间提供控制各种人机接口设备（HID）外设的 API，如键盘、鼠标、游戏手柄等。还包括原始 HID 通信支持。
 
-Unlike MIDI system. The HID system is more straightforward and does not require the user to manage ports. So all input from different source devices is mixed together and sent to the application as a single stream and all outbound messages are sent to all endpoints. (If there's a need for more complex routing, please let me know and I will consider adding support for it.)
+与 MIDI 系统不同，HID 系统更加直接，无需用户管理端口。来自不同源设备的所有输入都混合在一起，作为单一流发送给应用程序，所有出站消息都发送到所有端点。（如需更复杂的路由功能，请告诉我，我会考虑添加支持。）
 
-**This API only supports USB HID. Bluetooth HID are not supported at this time.**
+**此 API 仅支持 USB HID，目前不支持蓝牙 HID。**
 
-*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/HID/"/>.*
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/HID/"/>。*
 
 ---
 
@@ -23,13 +23,13 @@ Unlike MIDI system. The HID system is more straightforward and does not require 
 bool Write(KeyboardKeycode k);
 ```
 
-Writes a keyboard key event.
+写入键盘按键事件。
 
-**Parameters:**
-- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode)): The key to write.
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要写入的按键。
 
-**Returns:**
-- `bool`: `true` if the event was written successfully, otherwise `false`.
+**返回值：**
+- `bool`：成功写入事件返回 `true`，否则返回 `false`。
 
 ---
 
@@ -38,13 +38,13 @@ Writes a keyboard key event.
 bool Press(KeyboardKeycode k);
 ```
 
-Presses a keyboard key.
+按下键盘按键。
 
-**Parameters:**
-- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode)): The key to press.
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要按下的按键。
 
-**Returns:**
-- `bool`: `true` if the key press was successful, otherwise `false`.
+**返回值：**
+- `bool`：成功按下按键返回 `true`，否则返回 `false`。
 
 ---
 
@@ -53,13 +53,13 @@ Presses a keyboard key.
 bool Release(KeyboardKeycode k);
 ```
 
-Releases a keyboard key.
+释放键盘按键。
 
-**Parameters:**
-- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode)): The key to release.
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要释放的按键。
 
-**Returns:**
-- `bool`: `true` if the key release was successful, otherwise `false`.
+**返回值：**
+- `bool`：成功释放按键返回 `true`，否则返回 `false`。
 
 ---
 
@@ -68,13 +68,13 @@ Releases a keyboard key.
 bool Remove(KeyboardKeycode k);
 ```
 
-Removes a key event from the active key list.
+从活动按键列表中移除按键事件。
 
-**Parameters:**
-- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode)): The key to remove.
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要移除的按键。
 
-**Returns:**
-- `bool`: `true` if the key was removed successfully, otherwise `false`.
+**返回值：**
+- `bool`：成功移除按键返回 `true`，否则返回 `false`。
 
 ---
 
@@ -83,7 +83,7 @@ Removes a key event from the active key list.
 void ReleaseAll(void);
 ```
 
-Releases all pressed keyboard keys.
+释放所有已按下的键盘按键。
 
 ---
 
@@ -94,10 +94,10 @@ Releases all pressed keyboard keys.
 void Click(MouseKeycode b = MOUSE_LEFT);
 ```
 
-Simulates a mouse click.
+模拟鼠标点击。
 
-**Parameters:**
-- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode), optional): The button to click. Defaults to `MOUSE_LEFT`.
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要点击的按钮。默认值为 `MOUSE_LEFT`。
 
 ---
 
@@ -106,10 +106,10 @@ Simulates a mouse click.
 void Press(MouseKeycode b = MOUSE_LEFT);
 ```
 
-Presses a mouse button.
+按下鼠标按钮。
 
-**Parameters:**
-- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode), optional): The button to press. Defaults to `MOUSE_LEFT`.
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要按下的按钮。默认值为 `MOUSE_LEFT`。
 
 ---
 
@@ -118,10 +118,10 @@ Presses a mouse button.
 void Release(MouseKeycode b = MOUSE_LEFT);
 ```
 
-Releases a mouse button.
+释放鼠标按钮。
 
-**Parameters:**
-- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode), optional): The button to release. Defaults to `MOUSE_LEFT`.
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要释放的按钮。默认值为 `MOUSE_LEFT`。
 
 ---
 
@@ -130,7 +130,7 @@ Releases a mouse button.
 void ReleaseAll(void);
 ```
 
-Releases all mouse buttons.
+释放所有鼠标按钮。
 
 ---
 
@@ -139,12 +139,12 @@ Releases all mouse buttons.
 void Move(signed char x, signed char y, signed char wheel = 0);
 ```
 
-Moves the mouse cursor.
+移动鼠标光标。
 
-**Parameters:**
-- `x` (`signed char`): Horizontal movement.
-- `y` (`signed char`): Vertical movement.
-- `wheel` (`signed char`, optional): Scroll wheel movement. Defaults to `0`.
+**参数：**
+- `x` (`signed char`)：水平移动。
+- `y` (`signed char`)：垂直移动。
+- `wheel` (`signed char`，可选)：滚轮移动。默认值为 `0`。
 
 ---
 
@@ -155,10 +155,10 @@ Moves the mouse cursor.
 void Click(MouseKeycode b = MOUSE_LEFT);
 ```
 
-Simulates a mouse click in touch mode.
+在触控模式下模拟鼠标点击。
 
-**Parameters:**
-- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode), optional): The button to click. Defaults to `MOUSE_LEFT`.
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要点击的按钮。默认值为 `MOUSE_LEFT`。
 
 ---
 
@@ -167,10 +167,10 @@ Simulates a mouse click in touch mode.
 void Press(MouseKeycode b = MOUSE_LEFT);
 ```
 
-Presses a mouse button in touch mode.
+在触控模式下按下鼠标按钮。
 
-**Parameters:**
-- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode), optional): The button to press. Defaults to `MOUSE_LEFT`.
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要按下的按钮。默认值为 `MOUSE_LEFT`。
 
 ---
 
@@ -179,10 +179,10 @@ Presses a mouse button in touch mode.
 void Release(MouseKeycode b = MOUSE_LEFT);
 ```
 
-Releases a mouse button in touch mode.
+在触控模式下释放鼠标按钮。
 
-**Parameters:**
-- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode), optional): The button to release. Defaults to `MOUSE_LEFT`.
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要释放的按钮。默认值为 `MOUSE_LEFT`。
 
 ---
 
@@ -191,12 +191,12 @@ Releases a mouse button in touch mode.
 void MoveTo(signed char x, signed char y, signed char wheel = 0);
 ```
 
-Moves the cursor to an absolute position in touch mode.
+在触控模式下将光标移动到绝对位置。
 
-**Parameters:**
-- `x` (`signed char`): Horizontal position.
-- `y` (`signed char`): Vertical position.
-- `wheel` (`signed char`, optional): Scroll wheel movement. Defaults to `0`.
+**参数：**
+- `x` (`signed char`)：水平位置。
+- `y` (`signed char`)：垂直位置。
+- `wheel` (`signed char`，可选)：滚轮移动。默认值为 `0`。
 
 ---
 
@@ -205,12 +205,12 @@ Moves the cursor to an absolute position in touch mode.
 void Move(signed char x, signed char y, signed char wheel = 0);
 ```
 
-Moves the cursor relative to its current position in touch mode.
+在触控模式下相对于当前位置移动光标。
 
-**Parameters:**
-- `x` (`signed char`): Horizontal movement.
-- `y` (`signed char`): Vertical movement.
-- `wheel` (`signed char`, optional): Scroll wheel movement. Defaults to `0`.
+**参数：**
+- `x` (`signed char`)：水平移动。
+- `y` (`signed char`)：垂直移动。
+- `wheel` (`signed char`，可选)：滚轮移动。默认值为 `0`。
 
 ---
 
@@ -221,10 +221,10 @@ Moves the cursor relative to its current position in touch mode.
 void Press(GamepadKeycode b);
 ```
 
-Presses a gamepad button.
+按下游戏手柄按钮。
 
-**Parameters:**
-- `b` ([`GamepadKeycode`](./Types/HIDSpecs#enum-gamepadkeycode)): The button to press.
+**参数：**
+- `b` ([`GamepadKeycode`](./Types/HIDSpecs#enum-gamepadkeycode))：要按下的按钮。
 
 ---
 
@@ -233,10 +233,10 @@ Presses a gamepad button.
 void Release(GamepadKeycode b);
 ```
 
-Releases a gamepad button.
+释放游戏手柄按钮。
 
-**Parameters:**
-- `b` ([`GamepadKeycode`](./Types/HIDSpecs#enum-gamepadkeycode)): The button to release.
+**参数：**
+- `b` ([`GamepadKeycode`](./Types/HIDSpecs#enum-gamepadkeycode))：要释放的按钮。
 
 ---
 
@@ -245,7 +245,7 @@ Releases a gamepad button.
 void ReleaseAll(void);
 ```
 
-Releases all pressed gamepad buttons.
+释放所有已按下的游戏手柄按钮。
 
 ---
 
@@ -254,10 +254,10 @@ Releases all pressed gamepad buttons.
 void Buttons(uint32_t b);
 ```
 
-Sets the state of all gamepad buttons.
+设置所有游戏手柄按钮的状态。
 
-**Parameters:**
-- `b` (`uint32_t`): Bitmask representing the state of all buttons.
+**参数：**
+- `b` (`uint32_t`)：表示所有按钮状态的位掌码。
 
 ---
 
@@ -266,10 +266,10 @@ Sets the state of all gamepad buttons.
 void XAxis(int8_t a);
 ```
 
-Sets the X-axis value for the gamepad.
+设置游戏手柄的 X 轴值。
 
-**Parameters:**
-- `a` (`int8_t`): Value of the X-axis (range: -128 to 127).
+**参数：**
+- `a` (`int8_t`)：X 轴的值（范围：-128 到 127）。
 
 ---
 
@@ -278,10 +278,10 @@ Sets the X-axis value for the gamepad.
 void YAxis(int8_t a);
 ```
 
-Sets the Y-axis value for the gamepad.
+设置游戏手柄的 Y 轴值。
 
-**Parameters:**
-- `a` (`int8_t`): Value of the Y-axis (range: -128 to 127).
+**参数：**
+- `a` (`int8_t`)：Y 轴的值（范围：-128 到 127）。
 
 ---
 
@@ -290,10 +290,10 @@ Sets the Y-axis value for the gamepad.
 void ZAxis(int8_t a);
 ```
 
-Sets the Z-axis value for the gamepad.
+设置游戏手柄的 Z 轴值。
 
-**Parameters:**
-- `a` (`int8_t`): Value of the Z-axis (range: -128 to 127).
+**参数：**
+- `a` (`int8_t`)：Z 轴的值（范围：-128 到 127）。
 
 ---
 
@@ -302,10 +302,10 @@ Sets the Z-axis value for the gamepad.
 void RXAxis(int8_t a);
 ```
 
-Sets the value of the right X-axis for the gamepad.
+设置游戏手柄右侧 X 轴的值。
 
-**Parameters:**
-- `a` (`int8_t`): Value of the right X-axis (range: -128 to 127).
+**参数：**
+- `a` (`int8_t`)：右侧 X 轴的值（范围：-128 到 127）。
 
 ---
 
@@ -314,10 +314,10 @@ Sets the value of the right X-axis for the gamepad.
 void RYAxis(int8_t a);
 ```
 
-Sets the value of the right Y-axis for the gamepad.
+设置游戏手柄右侧 Y 轴的值。
 
-**Parameters:**
-- `a` (`int8_t`): Value of the right Y-axis (range: -128 to 127).
+**参数：**
+- `a` (`int8_t`)：右侧 Y 轴的值（范围：-128 到 127）。
 
 ---
 
@@ -326,10 +326,10 @@ Sets the value of the right Y-axis for the gamepad.
 void RZAxis(int8_t a);
 ```
 
-Sets the value of the right Z-axis for the gamepad.
+设置游戏手柄右侧 Z 轴的值。
 
-**Parameters:**
-- `a` (`int8_t`): Value of the right Z-axis (range: -128 to 127).
+**参数：**
+- `a` (`int8_t`)：右侧 Z 轴的值（范围：-128 到 127）。
 
 ---
 
@@ -338,10 +338,10 @@ Sets the value of the right Z-axis for the gamepad.
 void DPad(GamepadDPadDirection d);
 ```
 
-Sets the D-pad direction.
+设置方向键方向。
 
-**Parameters:**
-- `d` ([`GamepadDPadDirection`](./Types/HIDSpecs#enum-gamepaddpaddirection)): Direction for the D-pad.
+**参数：**
+- `d` ([`GamepadDPadDirection`](./Types/HIDSpecs#enum-gamepaddpaddirection))：方向键的方向。
 
 ---
 
@@ -352,10 +352,10 @@ Sets the D-pad direction.
 void Write(ConsumerKeycode c);
 ```
 
-Writes a consumer control key event.
+写入消费者控制按键事件。
 
-**Parameters:**
-- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode)): The consumer control key to write.
+**参数：**
+- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode))：要写入的消费者控制按键。
 
 ---
 
@@ -364,10 +364,10 @@ Writes a consumer control key event.
 void Press(ConsumerKeycode c);
 ```
 
-Presses a consumer control key.
+按下消费者控制按键。
 
-**Parameters:**
-- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode)): The consumer control key to press.
+**参数：**
+- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode))：要按下的消费者控制按键。
 
 ---
 
@@ -376,10 +376,10 @@ Presses a consumer control key.
 void Release(ConsumerKeycode c);
 ```
 
-Releases a consumer control key.
+释放消费者控制按键。
 
-**Parameters:**
-- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode)): The consumer control key to release.
+**参数：**
+- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode))：要释放的消费者控制按键。
 
 ---
 
@@ -388,7 +388,7 @@ Releases a consumer control key.
 void ReleaseAll(void);
 ```
 
-Releases all pressed consumer control keys.
+释放所有已按下的消费者控制按键。
 
 ---
 
@@ -399,10 +399,10 @@ Releases all pressed consumer control keys.
 void Write(SystemKeycode s);
 ```
 
-Writes a system control key event.
+写入系统控制按键事件。
 
-**Parameters:**
-- `s` ([`SystemKeycode`](./Types/HIDSpecs#enum-systemkeycode)): The system key to write.
+**参数：**
+- `s` ([`SystemKeycode`](./Types/HIDSpecs#enum-systemkeycode))：要写入的系统按键。
 
 ---
 
@@ -411,10 +411,10 @@ Writes a system control key event.
 void Press(SystemKeycode s);
 ```
 
-Presses a system control key.
+按下系统控制按键。
 
-**Parameters:**
-- `s` ([`SystemKeycode`](./Types/HIDSpecs#enum-systemkeycode)): The system key to press.
+**参数：**
+- `s` ([`SystemKeycode`](./Types/HIDSpecs#enum-systemkeycode))：要按下的系统按键。
 
 ---
 
@@ -423,7 +423,7 @@ Presses a system control key.
 void Release(void);
 ```
 
-Releases the last pressed system control key.
+释放上一个按下的系统控制按键。
 
 ---
 
@@ -432,7 +432,7 @@ Releases the last pressed system control key.
 void ReleaseAll(void);
 ```
 
-Releases all pressed system control keys.
+释放所有已按下的系统控制按键。
 
 ---
 
@@ -443,14 +443,14 @@ Releases all pressed system control keys.
 size_t Get(uint8_t** report, uint32_t timeout_ms = 0);
 ```
 
-Retrieves a 16 byte HID report from report ID 255.
+从报告 ID 255 获取 16 字节的 HID 报告。
 
-**Parameters:**
-- `report` (`uint8_t**`): Pointer to store the retrieved report.
-- `timeout_ms` (`uint32_t`, optional): Timeout for retrieving the report in milliseconds. Defaults to `0`.
+**参数：**
+- `report` (`uint8_t**`)：用于存储获取的报告的指针。
+- `timeout_ms` (`uint32_t`，可选)：获取报告的超时时间（毫秒）。默认值为 `0`。
 
-**Returns:**
-- `size_t`: Size of the retrieved report.
+**返回值：**
+- `size_t`：获取的报告大小。
 
 ---
 
@@ -459,11 +459,11 @@ Retrieves a 16 byte HID report from report ID 255.
 bool Send(const vector<uint8_t>& report);
 ```
 
-Sends a Raw HID report from report ID 255. The max report size is 16 bytes (extra bytes will be padded with zeros).
+从报告 ID 255 发送原始 HID 报告。最大报告大小为 16 字节（额外的字节将用零填充）。
 
-**Parameters:**
-- `report` (`const vector<uint8_t>&`): The report to send.
+**参数：**
+- `report` (`const vector<uint8_t>&`)：要发送的报告。
 
-**Returns:**
-- `bool`: `true` if the report was sent successfully, otherwise `false`.
+**返回值：**
+- `bool`：成功发送报告返回 `true`，否则返回 `false`。
 ```

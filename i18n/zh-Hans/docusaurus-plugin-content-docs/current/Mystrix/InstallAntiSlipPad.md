@@ -2,41 +2,41 @@
 sidebar_position: 2
 ---
 
-# Install the Anti-Slip Pad
+# 安装防滑垫
 
 <!-- idea: video here would be perfect -->
 
-The first thing you should do is apply the included silicon anti-slip pad from the packaging to your Mystrix.
+首先需要将包装内附带的硅胶防滑垫安装到魔矩上。
 
-:::info Mystrix 1 Family Only
-This page only applies to Mystrix 1 family devices.
+:::info 仅限魔矩 1 系列
+此页面仅适用于魔矩 1 系列设备。
 :::
 
 <!-- idea: image of the label -->
 
-We are unable to install it in the factory due to regulatory reasons, as we need to conceal the metal device information label under the pad to keep it clean and prevent wear and scratches.
+由于合规要求，我们无法在出厂时预装防滑垫，需要将金属标识标签放置在垫子下方以保护其免受磨损和划痕。
 
-## Important Pre-Installation Steps
+## 重要的安装前步骤
 
-:::note Alternate Function Key
-If you have an alternate Function Key you want to install (like the one that came with the Kickstarter), make sure you install this prior to installing the anti-slip pad.
+:::note 替换功能键
+如果你有要安装的替换功能键（例如 Kickstarter 附带的功能键），请确保在安装防滑垫之前先安装它。
 :::
 
-:::note Micro SD Card Installation
-If you plan to use Python applications in Matrix OS 3, you'll also need to install a Micro SD card before applying the anti-slip pad. See [Install Micro SD Card](./InstallMicroSD) for detailed instructions on how to open your device and install the SD card.
+:::note Micro SD 卡安装
+如果你计划在 Matrix OS 3 中使用 Python 应用程序，你还需要在应用防滑垫之前安装 Micro SD 卡。请参阅[安装 Micro SD 卡](./InstallMicroSD) 以获取有关如何打开设备并安装 SD 卡的详细说明。
 :::
 
-:::warning Loose Magnets
-Some magnets under the device might have come loose during shipping. You can glue them back on or just place them in and then apply the anti-slip pad.
-However, make sure the polarity of the magnets are facing the same way. The side of the magnet with the dried glue should face the device and not the anti-slip pad.
+:::warning 松动的磁铁
+运输过程中，设备底部的磁铁可能会松动。可以重新粘合或重新放置到位后再安装防滑垫。
+请注意确保磁铁极性方向一致，有胶水残留的一面应朝向设备，而非朝向防滑垫。
 :::
 
-## Installation Process
+## 安装过程
 
-To install the anti-slip pad, turn the Mystrix face down and peel the clear protective sheet off the bottom. Align the anti-slip pad (making sure the curved edge is aligned with the pogo pins) and press firmly.
+安装时，将魔矩翻转至背面朝上，撕掉底部的透明保护膜。对准防滑垫位置（确保弯曲边缘与弹簧针孔对齐）并用力按压贴紧。
 
 <!-- idea: step-by-step images showing the installation process -->
 
 ---
 
-*Need help? Join our [Discord community](https://discord.gg/rRVCBHHPfw) for support and tips from other Mystrix users.*
+*需要帮助？加入我们的 [Discord 社区](https://discord.gg/rRVCBHHPfw) 获取其他魔矩用户的支持和技巧。*

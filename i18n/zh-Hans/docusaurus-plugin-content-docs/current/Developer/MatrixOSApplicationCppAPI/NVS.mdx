@@ -5,18 +5,18 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # NVS API
 
-## Overview
-The Non-Volatile Storage (NVS) API provides a mechanism for storing and retrieving variables in the device's non-volatile memory. This API is useful for saving and loading configuration settings, calibration data, and other persistent variables.
+## 概述
+非易失性存储（NVS）API 提供了在设备非易失性存储器中存储和检索变量的机制。此 API 可用于保存和加载配置设置、校准数据和其他持久变量。
 
-*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/NVS.cpp"/>.*
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/NVS.cpp"/>。*
 
-## Saved Variables
-The NVS API is rather complex requiring the use of a hash to identify variables. In most case you will want to use the [SavedVar Macro](./Utilities/SavedVariable)  to create saved variables instead of using the NVS API directly.
+## 保存的变量
+NVS API 相当复杂，需要使用哈希来标识变量。在大多数情况下，建议使用 [SavedVar 宏](./Utilities/SavedVariable) 来创建保存的变量，而不是直接使用 NVS API。
 
-You will want to use the NVS API directly if you need to store a large amount of data like save the full configuration for Note layout after user is done configuring instead saving after every small changes with large numbers of saved variables.
+如果需要存储大量数据，如用户完成配置后保存音符布局的完整配置，而不是通过大量保存变量在每次小改动后都保存，则需要直接使用 NVS API。
 
-## Hashing 
-Need a way to hash the key to a unique value? Check out the [Hash Utility](./Utilities/Hash) for more information.
+## 哈希
+需要将键哈希为唯一值的方法？查看 [哈希工具](./Utilities/Hash) 了解更多信息。
 
 
 ---
@@ -26,47 +26,47 @@ Need a way to hash the key to a unique value? Check out the [Hash Utility](./Uti
 size_t GetSize(uint32_t hash);
 ```
 
-Retrieves the size of the variable associated with the given hash.
+获取与给定哈希关联的变量的大小。
 
-**Parameters:**
-- `hash` (`uint32_t`): The hash identifying the variable.
+**参数：**
+- `hash` (`uint32_t`)：标识变量的哈希值。
 
-**Returns:**
-- `size_t`: The size of the variable in bytes. If the variable does not exist, the returned size will be -1.
+**返回值：**
+- `size_t`：变量的字节大小。如果变量不存在，返回的大小为 -1。
 
 ---
 
-## `MatrixOS::NVS::GetVariable` (Overloaded)
+## `MatrixOS::NVS::GetVariable`（重载）
 
-### Version 1: Returns Variable Content
+### 版本 1：返回变量内容
 ```cpp
 vector<char> GetVariable(uint32_t hash);
 ```
 
-Retrieves the content of the variable associated with the given hash as a `vector<char>`.
+将与给定哈希关联的变量内容作为 `vector<char>` 检索。
 
-**Parameters:**
-- `hash` (`uint32_t`): The hash identifying the variable.
+**参数：**
+- `hash` (`uint32_t`)：标识变量的哈希值。
 
-**Returns:**
-- `vector<char>`: The content of the variable. If the variable does not exist, the returned vector will be zero length.
+**返回值：**
+- `vector<char>`：变量的内容。如果变量不存在，返回的向量长度为零。
 
 ---
 
-### Version 2: Loads Variable into Pointer
+### 版本 2：将变量加载到指针中
 ```cpp
 int8_t GetVariable(uint32_t hash, void* pointer, uint16_t length);
 ```
 
-Loads the variable content into the provided pointer. If the variable is not defined, the function attempts to use the current value at the pointer to define the variable.
+将变量内容加载到提供的指针中。如果变量未定义，函数尝试使用指针处的当前值来定义变量。
 
-**Parameters:**
-- `hash` (`uint32_t`): The hash identifying the variable.
-- `pointer` (`void*`): A pointer to the memory location where the variable's content will be loaded.
-- `length` (`uint16_t`): The size of the data to load.
+**参数：**
+- `hash` (`uint32_t`)：标识变量的哈希值。
+- `pointer` (`void*`)：指向将加载变量内容的内存位置的指针。
+- `length` (`uint16_t`)：要加载的数据大小。
 
-**Returns:**
-- `int8_t`: A status code indicating success or failure.
+**返回值：**
+- `int8_t`：表示成功或失败的状态代码。
 
 ---
 
@@ -75,15 +75,15 @@ Loads the variable content into the provided pointer. If the variable is not def
 bool SetVariable(uint32_t hash, void* pointer, uint16_t length);
 ```
 
-Sets or updates the variable identified by the given hash with the content provided in the pointer.
+使用指针中提供的内容设置或更新由给定哈希标识的变量。
 
-**Parameters:**
-- `hash` (`uint32_t`): The hash identifying the variable.
-- `pointer` (`void*`): A pointer to the memory location containing the data to store.
-- `length` (`uint16_t`): The size of the data to store.
+**参数：**
+- `hash` (`uint32_t`)：标识变量的哈希值。
+- `pointer` (`void*`)：指向包含要存储数据的内存位置的指针。
+- `length` (`uint16_t`)：要存储的数据大小。
 
-**Returns:**
-- `bool`: `true` if the operation was successful; `false` otherwise.
+**返回值：**
+- `bool`：操作成功返回 `true`，否则返回 `false`。
 
 ---
 
@@ -92,11 +92,11 @@ Sets or updates the variable identified by the given hash with the content provi
 bool DeleteVariable(uint32_t hash);
 ```
 
-Deletes the variable associated with the given hash.
+删除与给定哈希关联的变量。
 
-**Parameters:**
-- `hash` (`uint32_t`): The hash identifying the variable.
+**参数：**
+- `hash` (`uint32_t`)：标识变量的哈希值。
 
-**Returns:**
-- `bool`: `true` if the variable was successfully deleted; `false` otherwise.
+**返回值：**
+- `bool`：变量成功删除返回 `true`，否则返回 `false`。
 ```

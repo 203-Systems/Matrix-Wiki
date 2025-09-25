@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # NVS API
 
-## Overview
+## 概述
 
-The NVS (Non-Volatile Storage) API in MatrixOS provides persistent storage for application data that survives device reboots. Data is stored using hash-based keys and can store arbitrary binary data. The NVS API is available as `MatrixOS.NVS` and is imported by default.
+Matrix OS 中的 NVS（非易失存储）API 为应用数据提供持久存储，数据在设备重启后仍然保存。数据使用基于哈希的键存储，可以存储任意二进制数据。NVS API 可通过 `MatrixOS.NVS` 访问，默认已导入。
 
-*The Python NVS API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_NVS.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_NVS.pyi"/>.*
+*Python NVS API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_NVS.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_NVS.pyi"/>。*
 
 ---
 
@@ -18,21 +18,21 @@ The NVS (Non-Volatile Storage) API in MatrixOS provides persistent storage for a
 def GetSize(hash: int) -> int
 ```
 
-Gets the size of stored data for a given hash key.
+获取给定哈希键存储数据的大小。
 
-**Parameters:**
-- `hash` (`int`): Hash key identifying the stored data
+**参数：**
+- `hash` (`int`)：标识存储数据的哈希键
 
-**Returns:**
-- `int`: Size of stored data in bytes, or 0 if not found
+**返回值：**
+- `int`：存储数据的字节大小，未找到时返回 0
 
-**Example:**
+**示例：**
 ```python
 data_size = MatrixOS.NVS.GetSize(0xDEADBEAF)
 if data_size > 0:
-    print(f"Data size: {data_size} bytes")
+    print(f"数据大小：{data_size} 字节")
 else:
-    print("No data found for this key")
+    print("此键未找到数据")
 ```
 
 ---
@@ -42,21 +42,21 @@ else:
 def GetVariable(hash: int) -> bytes
 ```
 
-Retrieves stored data for a given hash key.
+检索给定哈希键的存储数据。
 
-**Parameters:**
-- `hash` (`int`): Hash key identifying the stored data
+**参数：**
+- `hash` (`int`)：标识存储数据的哈希键
 
-**Returns:**
-- `bytes`: Stored data as bytes object, or empty bytes if not found
+**返回值：**
+- `bytes`：作为字节对象的存储数据，未找到时返回空字节
 
-**Example:**
+**示例：**
 ```python
 data = MatrixOS.NVS.GetVariable(0xDEADBEAF)
 if data:
-    print(f"Retrieved data: {data}")
+    print(f"检索到数据：{data}")
 else:
-    print("No data found")
+    print("未找到数据")
 ```
 
 ---
@@ -66,23 +66,23 @@ else:
 def SetVariable(hash: int, data: bytes) -> bool
 ```
 
-Stores data with a given hash key.
+使用给定的哈希键存储数据。
 
-**Parameters:**
-- `hash` (`int`): Hash key to identify the data
-- `data` (`bytes`): Data to store
+**参数：**
+- `hash` (`int`)：用于标识数据的哈希键
+- `data` (`bytes`)：要存储的数据
 
-**Returns:**
-- `bool`: True if successful, False on error
+**返回值：**
+- `bool`：成功时返回 True，错误时返回 False
 
-**Example:**
+**示例：**
 ```python
-data_to_store = b"Hello, persistent world!"
+data_to_store = b"你好，持久世界！"
 success = MatrixOS.NVS.SetVariable(0xDEADBEAF, data_to_store)
 if success:
-    print("Data stored successfully")
+    print("数据存储成功")
 else:
-    print("Failed to store data")
+    print("存储数据失败")
 ```
 
 ---
@@ -92,72 +92,72 @@ else:
 def DeleteVariable(hash: int) -> bool
 ```
 
-Deletes stored data for a given hash key.
+删除给定哈希键的存储数据。
 
-**Parameters:**
-- `hash` (`int`): Hash key identifying the data to delete
+**参数：**
+- `hash` (`int`)：标识要删除数据的哈希键
 
-**Returns:**
-- `bool`: True if successful, False if key not found or error
+**返回值：**
+- `bool`：成功时返回 True，键未找到或错误时返回 False
 
-**Example:**
+**示例：**
 ```python
 success = MatrixOS.NVS.DeleteVariable(0xDEADBEAF)
 if success:
-    print("Data deleted successfully")
+    print("数据删除成功")
 else:
-    print("Failed to delete data or key not found")
+    print("删除数据失败或键未找到")
 ```
 
 ---
 
-## Practical Examples
+## 实际示例
 
-### Simple Key-Value Storage
+### 简单键值存储
 ```python
 def simple_storage_example():
-    """Demonstrate basic NVS operations"""
+    """演示基本 NVS 操作"""
 
-    # Store some configuration
+    # 存储一些配置
     config_key = 0xDEADBEAF
     config_data = b"brightness:128,volume:75"
 
-    # Store the data
+    # 存储数据
     if MatrixOS.NVS.SetVariable(config_key, config_data):
-        print("Configuration saved")
+        print("配置已保存")
 
-        # Retrieve the data
+        # 检索数据
         retrieved = MatrixOS.NVS.GetVariable(config_key)
         if retrieved:
-            print(f"Retrieved config: {retrieved.decode()}")
+            print(f"检索到配置：{retrieved.decode()}")
 
-        # Check size
+        # 检查大小
         size = MatrixOS.NVS.GetSize(config_key)
-        print(f"Config size: {size} bytes")
+        print(f"配置大小：{size} 字节")
 
-        # Clean up
+        # 清理
         MatrixOS.NVS.DeleteVariable(config_key)
-        print("Configuration deleted")
+        print("配置已删除")
 
 simple_storage_example()
 ```
 
-### Settings Manager
+### 设置管理器
 ```python
 class SettingsManager:
-    """Simple settings manager using NVS"""
+    """使用 NVS 的简单设置管理器"""
 
     def __init__(self, base_key=2000):
         self.base_key = base_key
         self.key_counter = 0
 
     def _get_key(self, name):
-        """Generate hash key from setting name"""
-        # Simple hash - in production, use a proper hash function
+        """从设置名生成哈希键"""
+        # 简单哈希 - 生产中使用适当的哈希函数
         return self.base_key + hash(name) % 10000
 
     def save_setting(self, name, value):
-        """Save a setting as JSON-like string"""
+        """保存设置为类 JSON 字符串"""
         key = self._get_key(name)
         data = f"{name}:{value}".encode()
 
@@ -165,13 +165,13 @@ class SettingsManager:
         return success
 
     def load_setting(self, name, default=None):
-        """Load a setting, return default if not found"""
+        """加载设置，未找到时返回默认值"""
         key = self._get_key(name)
         data = MatrixOS.NVS.GetVariable(key)
 
         if data:
             try:
-                # Parse simple name:value format
+                # 解析简单的 name:value 格式
                 decoded = data.decode()
                 if ':' in decoded:
                     _, value = decoded.split(':', 1)
@@ -182,70 +182,70 @@ class SettingsManager:
         return default
 
     def delete_setting(self, name):
-        """Delete a setting"""
+        """删除设置"""
         key = self._get_key(name)
         return MatrixOS.NVS.DeleteVariable(key)
 
     def setting_exists(self, name):
-        """Check if a setting exists"""
+        """检查设置是否存在"""
         key = self._get_key(name)
         return MatrixOS.NVS.GetSize(key) > 0
 
-# Usage example
+# 使用示例
 settings = SettingsManager()
 
-# Save settings
+# 保存设置
 settings.save_setting("brightness", "128")
 settings.save_setting("last_app", "Performance")
 settings.save_setting("user_name", "MatrixUser")
 
-# Load settings
+# 加载设置
 brightness = settings.load_setting("brightness", "100")
 last_app = settings.load_setting("last_app", "Default")
 user_name = settings.load_setting("user_name", "Anonymous")
 
-print(f"Brightness: {brightness}")
-print(f"Last app: {last_app}")
-print(f"User: {user_name}")
+print(f"亮度：{brightness}")
+print(f"上次应用：{last_app}")
+print(f"用户：{user_name}")
 
-# Check existence
+# 检查存在性
 if settings.setting_exists("brightness"):
-    print("Brightness setting exists")
+    print("亮度设置存在")
 
-# Clean up
+# 清理
 settings.delete_setting("brightness")
 ```
 
-### Binary Data Storage
+### 二进制数据存储
 ```python
 def binary_storage_example():
-    """Store and retrieve binary data"""
+    """存储和检索二进制数据"""
 
-    # Create some binary data (e.g., color palette)
+    # 创建一些二进制数据（例如色彩调色板）
     color_palette = bytes([
-        255, 0, 0,    # Red
-        0, 255, 0,    # Green
-        0, 0, 255,    # Blue
-        255, 255, 0,  # Yellow
+        255, 0, 0,    # 红色
+        0, 255, 0,    # 绿色
+        0, 0, 255,    # 蓝色
+        255, 255, 0,  # 黄色
     ])
 
     palette_key = 0xDEADBEAF
 
-    # Store the palette
+    # 存储调色板
     if MatrixOS.NVS.SetVariable(palette_key, color_palette):
-        print("Color palette saved")
+        print("色彩调色板已保存")
 
-        # Retrieve and verify
+        # 检索和验证
         retrieved_palette = MatrixOS.NVS.GetVariable(palette_key)
         if retrieved_palette == color_palette:
-            print("✓ Palette retrieved correctly")
+            print("✓ 调色板检索正确")
 
-            # Parse colors
+            # 解析颜色
             for i in range(0, len(retrieved_palette), 3):
                 r, g, b = retrieved_palette[i:i+3]
-                print(f"Color {i//3}: RGB({r}, {g}, {b})")
+                print(f"颜色 {i//3}: RGB({r}, {g}, {b})")
         else:
-            print("✗ Palette corruption detected")
+            print("✗ 检测到调色板损坏")
 
 binary_storage_example()
 ```
@@ -320,18 +320,18 @@ print(f"Level: {level}, Score: {score}")
 
 ---
 
-## Hash Key Guidelines
+## 哈希键指南
 
-1. **Uniqueness**: Ensure hash keys don't collide between applications
-2. **Consistency**: Use the same key generation method throughout your app
-3. **Namespacing**: Consider using base offsets for different data types
-4. **Documentation**: Document your key allocation scheme
+1. **唯一性**：确保哈希键在应用程序之间不会冲突
+2. **一致性**：在整个应用中使用相同的键生成方法
+3. **命名空间**：考虑为不同数据类型使用基础偏移量
+4. **文档**：记录你的键分配方案
 
 ---
 
-## Storage Considerations
+## 存储注意事项
 
-- **Persistence**: Data survives reboots and power cycles
-- **Wear Leveling**: NVS handles flash wear leveling automatically
-- **Size Limits**: Check device specifications for NVS capacity
-- **Performance**: NVS operations may have latency, avoid in time-critical code
+- **持久性**：数据在重启和断电后仍然保存
+- **磨损均衡**：NVS 自动处理闪存磨损均衡
+- **大小限制**：检查设备规格了解 NVS 容量
+- **性能**：NVS 操作可能有延迟，避免在时间关键代码中使用

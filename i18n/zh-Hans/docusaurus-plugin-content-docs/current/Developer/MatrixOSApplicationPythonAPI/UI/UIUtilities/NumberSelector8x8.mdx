@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # NumberSelector8x8
 
-## Overview
+## 概述
 
-The `NumberSelector8x8` utility provides a full-screen number selection interface that utilizes the entire 8x8 LED grid. It allows users to select numeric values within a specified range with visual feedback.
+`NumberSelector8x8` 实用程序提供了一个全屏数字选择界面，利用整个 8x8 LED 网格。它允许用户在指定范围内选择数值，并提供视觉反馈。
 
-*The NumberSelector8x8 utility is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>.*
+*NumberSelector8x8 实用程序实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>。*
 
 ---
 
@@ -18,34 +18,34 @@ The `NumberSelector8x8` utility provides a full-screen number selection interfac
 def NumberSelector8x8(value: int, color: Color, name: str, lower_limit: int, upper_limit: int) -> int
 ```
 
-Displays a full-screen number selector interface and returns the selected value.
+显示一个全屏数字选择器界面并返回选中的值。
 
-**Parameters:**
-- `value` (`int`): Initial/current value to display
-- `color` (`Color`): Color theme for the selector
-- `name` (`str`): Name/title displayed with the selector
-- `lower_limit` (`int`): Minimum selectable value
-- `upper_limit` (`int`): Maximum selectable value
+**参数：**
+- `value` (`int`)：要显示的初始/当前值
+- `color` (`Color`)：选择器的颜色主题
+- `name` (`str`)：与选择器一起显示的名称/标题
+- `lower_limit` (`int`)：最小可选值
+- `upper_limit` (`int`)：最大可选值
 
-**Returns:**
-- `int`: Selected value chosen by the user
+**返回值：**
+- `int`：用户选择的值
 
-**Example:**
+**示例：**
 ```python
-# Select a brightness value
-brightness = MatrixOS.UIUtility.NumberSelector8x8(128, Color(255, 255, 0), "Brightness", 0, 255)
-print(f"Selected brightness: {brightness}")
+# 选择亮度值
+brightness = MatrixOS.UIUtility.NumberSelector8x8(128, Color(255, 255, 0), "亮度", 0, 255)
+print(f"选中的亮度：{brightness}")
 
-# Select a tempo value
+# 选择节拍值
 tempo = MatrixOS.UIUtility.NumberSelector8x8(120, Color(0, 255, 0), "BPM", 60, 200)
-print(f"Selected tempo: {tempo} BPM")
+print(f"选中的节拍：{tempo} BPM")
 ```
 
 ---
 
-## Usage Examples
+## 使用示例
 
-### Settings Configuration
+### 设置配置
 ```python
 def configure_system_settings():
     """Configure various system settings using number selectors"""

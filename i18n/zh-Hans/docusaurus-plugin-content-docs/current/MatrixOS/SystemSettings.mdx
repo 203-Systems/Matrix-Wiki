@@ -4,15 +4,15 @@ sidebar_position: 3
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# System Settings
+# 系统设置
 
-The System Settings control various system-wide features such as brightness, rotation, device-specific features, and more.
+系统设置控制各种系统级功能，如亮度、旋转、设备特定功能等。
 
 export function SystemSettings() {
     const uiElements = [
         {
-            "name": "Device Settings",
-            "desc": "Enter the device settings",
+            "name": "设备设置",
+            "desc": "进入设备设置",
             "link": "/docs/Mystrix/DeviceSettings",
             "elements": [
                 {
@@ -22,8 +22,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "UI Animation Toggle",
-            "desc": "Toggle UI animations on or off",
+            "name": "UI 动画",
+            "desc": "开启或关闭UI动画",
             "elements": [
                 {
                     "pos": [7, 0],
@@ -32,8 +32,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Brightness Control",
-            "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+            "name": "亮度控制",
+            "desc": "点击以循环调节亮度等级。长按进入亮度控制菜单。",
             "link": "#brightness-control",
             "elements": [
                 {
@@ -44,8 +44,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Rotate Device Up",
-            "desc": "This technically doesn't do anything.",
+            "name": "向上旋转",
+            "desc": "此功能当前不可用。",
             "link": "#device-rotation",
             "elements": [
                 {
@@ -56,8 +56,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Rotate Device Left",
-            "desc": "Rotate the device so that the top of the device is oriented to the left.",
+            "name": "向左旋转",
+            "desc": "将设备顶部旋转至左侧。",
             "link": "#device-rotation",
             "elements": [
                 {
@@ -68,8 +68,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Rotate Device Down",
-            "desc": "Rotate the device so that the top of the device is oriented to the bottom.",
+            "name": "向下旋转",
+            "desc": "将设备顶部旋转至底部。",
             "link": "#device-rotation",
             "elements": [
                 {
@@ -80,8 +80,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Rotate Device Right",
-            "desc": "Rotate the device so that the top of the device is oriented to the right.",
+            "name": "向右旋转",
+            "desc": "将设备顶部旋转至右侧。",
             "link": "#device-rotation",
             "elements": [
                 {
@@ -92,8 +92,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "USB Storage Mode",
-            "desc": "Enter USB Mass Storage mode (only available if SD card is installed)",
+            "name": "USB 存储模式",
+            "desc": "进入USB大容量存储模式（仅在安装SD卡时可用）",
             "elements": [
                 {
                     "pos": [7, 7],
@@ -102,8 +102,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Device ID",
-            "desc": "Assign an ID to the device.",
+            "name": "设备ID",
+            "desc": "为设备分配ID。",
             "link": "#device-id",
             "elements": [
                 {
@@ -113,8 +113,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Factory Reset",
-            "desc": "Factory reset the device.",
+            "name": "恢复出厂设置",
+            "desc": "将设备恢复到出厂设置。",
             "link": "#factory-reset",
             "elements": [
                 {
@@ -124,8 +124,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Enter Device Update Mode",
-            "desc": "Reboot the device into update mode.",
+            "name": "进入更新模式",
+            "desc": "重启设备进入更新模式。",
             "link": "/docs/Mystrix/UpdateMatrixOS",
             "elements": [
                 {
@@ -135,8 +135,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Matrix OS Version",
-            "desc": "View the current version of the Matrix OS.",
+            "name": "Matrix OS 版本",
+            "desc": "查看当前Matrix OS版本。",
             "elements": [
                 {
                     "pos": [1, 7],
@@ -145,8 +145,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Device Name",
-            "desc": "View the name of the device.",
+            "name": "设备名称",
+            "desc": "查看设备名称。",
             "elements": [
                 {
                     "pos": [2, 7],
@@ -155,8 +155,8 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Device Serial",
-            "desc": "View the serial number of the device.",
+            "name": "设备序列号",
+            "desc": "查看设备序列号。",
             "elements": [
                 {
                     "pos": [3, 7],
@@ -166,42 +166,42 @@ export function SystemSettings() {
         }
     ];
 
-    const uiName = "System Settings"
-    const uiDescription = "The System Settings include system-wide configurations, device information, and more for Matrix OS. There is also a dedicated Device Settings page for device-specific configurations."
+    const uiName = "系统设置"
+    const uiDescription = "系统设置包括Matrix OS的系统级配置、设备信息等。还有专门的设备设置页面用于设备特定配置。"
     return <MystrixVisualizer
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
     />
 
 }
 
 <SystemSettings />
 
-## Rotate Device
+## 设备旋转
 
-Rotates the device so that the top of the device is oriented to the specified side.
+调整设备方向，使设备顶部朝向指定方向。
 
 :::note
-Some device controls are asymmetrical, and certain controls might not work or may function differently when the device is in a different orientation.
+某些设备控制功能是非对称的，当设备处于不同方向时，部分控制可能无法正常工作或功能会有所差异。
 
-For example, in the Performance App with Mystrix, the touchbar will be mapped differently when the device is rotated, as there are only two touchbars on the device.
+例如，在魔矩的 Performance 应用中，设备旋转时触摸条的映射会发生变化，这是因为设备仅配备两个触摸条。
 :::
 
-## Brightness Control
+## 亮度控制
 
-You can tap the brightness control pad to cycle through brightness levels. Additionally, you can hold the brightness control pad to enter the brightness control menu.
+你可以点击亮度控制按钮循环调节亮度等级。此外，你可以长按亮度控制按钮进入亮度控制菜单。
 
-### Brightness Control Menu
+### 亮度控制菜单
 
-The brightness control menu allows you to fine-tune the brightness of the device and set brightness multipliers for different LED sections (if the device supports it).
+亮度控制菜单允许你微调设备的亮度，并为不同的LED区域设置亮度倍数（如果设备支持的话）。
 
 export function BrightnessControlMenu() {
 
     const uiElements = [
     {
-        "name": "Brightness Level Display",
-        "desc": "Displays the current brightness level as a percentage.",
+        "name": "亮度等级显示",
+        "desc": "以百分比显示当前亮度等级。",
         "elements": [
             {
                 "pos": [0, 0],
@@ -236,8 +236,8 @@ export function BrightnessControlMenu() {
         ]
     },
     {
-        "name": "Global Brightness",
-        "desc": "Controls the System Wide brightness level. (Only visible if the device has multiple LED sections)",
+        "name": "全局亮度",
+        "desc": "控制系统级亮度等级。（仅在设备具有多个LED区域时显示）",
         "elements": [
             {
                 "pos": [0, 5],
@@ -246,8 +246,8 @@ export function BrightnessControlMenu() {
         ]
     },
     {
-        "name": "LED Sections Brightness Multiplier",
-        "desc": "Adjusts the brightness multiplier for different LED sections. (Only visible if the device has multiple LED sections. For Mystrix Pro, this applies to the underglow)",
+        "name": "LED区域亮度倍数",
+        "desc": "调整不同LED区域的亮度倍数。（仅在设备具有多个LED区域时显示。对于魔矩Pro，这适用于底部灯光）",
         "elements": [
             {
                 "pos": [1, 5],
@@ -256,8 +256,8 @@ export function BrightnessControlMenu() {
         ]
     },
     {
-        "name": "Brightness Selector",
-        "desc": "Adjusts the brightness. If an LED section is selected, the selector will adjust the multiplier for that section.",
+        "name": "亮度选择器",
+        "desc": "调整亮度。如果选中了LED区域，选择器将调整该区域的倍数。",
         "elements": [
             {
                 "pos": [0, 6],
@@ -267,8 +267,8 @@ export function BrightnessControlMenu() {
         ]
     },
     {
-        "name": "Brightness Selector (Overdrive)",
-        "desc": "Adjusts LED brightness beyond safety limits. Use with caution as it may be unsafe for your eyes.",
+        "name": "亮度选择器（超频）",
+        "desc": "调整LED亮度超出安全限制。请谨慎使用，因为可能对眼睛有害。",
         "elements": [
             {
                 "pos": [4, 7],
@@ -278,8 +278,8 @@ export function BrightnessControlMenu() {
         ]
     },
     {
-        "name": "Go Back",
-        "desc": "Tap to return to the previous screen.",
+        "name": "返回",
+        "desc": "点击返回上一页面。",
         "elements": [
             {
                 "pos": ["c"]
@@ -289,30 +289,30 @@ export function BrightnessControlMenu() {
 
 ];
 
-    const uiName = "Brightness Control Menu"
-    const uiDescription = "The brightness control menu allows you to fine-tune the brightness of the device and set brightness multipliers for different LED sections (if the device supports it)."
+    const uiName = "亮度控制菜单"
+    const uiDescription = "亮度控制菜单允许你微调设备的亮度，并为不同的LED区域设置亮度倍数（如果设备支持的话）。"
     return <MystrixVisualizer
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
     />
 
 }
 
 <BrightnessControlMenu />
 
-## Factory Reset
+## 恢复出厂设置
 
-Resets the device to its factory settings.
+将设备重置为出厂设置。
 
-You will need to confirm the factory reset by clicking on the green pad to proceed.
+你需要点击绿色按钮确认恢复出厂设置才能继续。
 
 export function FactoryResetConfirmMenu() {
 
     const uiElements = [
     {
-        "name": "Clear",
-        "desc": "Indicates that you are about to perform a factory reset on the device.",
+        "name": "清除",
+        "desc": "表示你即将对设备执行恢复出厂设置。",
         "elements": [
             {
                 "pos": [0, 0],
@@ -358,8 +358,8 @@ export function FactoryResetConfirmMenu() {
         ]
     },
     {
-        "name": "Cancel",
-        "desc": "Tap to cancel the factory reset process.",
+        "name": "取消",
+        "desc": "点击取消恢复出厂设置过程。",
         "elements": [
             {
                 "pos": [1, 5],
@@ -369,8 +369,8 @@ export function FactoryResetConfirmMenu() {
         ]
     },
     {
-        "name": "Confirm",
-        "desc": "Tap to confirm the factory reset process.",
+        "name": "确认",
+        "desc": "点击确认恢复出厂设置过程。",
         "elements": [
             {
                 "pos": [5, 5],
@@ -380,8 +380,8 @@ export function FactoryResetConfirmMenu() {
         ]
     },
     {
-        "name": "Go Back",
-        "desc": "Tap to return to the previous screen.",
+        "name": "返回",
+        "desc": "点击返回上一页面。",
         "elements": [
             {
                 "pos": ["c"]
@@ -391,30 +391,30 @@ export function FactoryResetConfirmMenu() {
 
 ];
 
-    const uiName = "Factory Reset Confirm Menu"
-    const uiDescription = "The factory reset confirm menu allows you to confirm the factory reset of the device."
+    const uiName = "恢复出厂设置确认菜单"
+    const uiDescription = "恢复出厂设置确认菜单允许你确认设备的恢复出厂设置。"
     return <MystrixVisualizer
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
     />
 
 }
 
 <FactoryResetConfirmMenu />
 
-## Device ID
+## 设备ID
 
-Assign an ID to the device. The ID will show up on the host after the device's name. This is useful for identifying the device when you have multiple devices connected to the same host.
+为设备分配ID。ID将在主机上显示在设备名称之后。当你有多个设备连接到同一主机时，这对识别设备很有用。
 
-If set to zero, the device ID will not show up on the host.
+如果设置为零，设备ID将不会在主机上显示。
 
 export function DeviceIDSelector() {
 
     const uiElements = [
     {
-        "name": "Device ID Display",
-        "desc": "Displays the current device ID number.",
+        "name": "设备ID显示",
+        "desc": "显示当前设备ID号码。",
         "elements": [
             {
                 "pos": [0, 0],
@@ -434,8 +434,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Minus 50",
-        "desc": "Decrease the device ID by 50.",
+        "name": "减50",
+        "desc": "将设备ID减少50。",
         "elements": [
             {
                 "pos": [0, 7],
@@ -444,8 +444,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Minus 20",
-        "desc": "Decrease the device ID by 20.",
+        "name": "减20",
+        "desc": "将设备ID减少20。",
         "elements": [
             {
                 "pos": [1, 7],
@@ -454,8 +454,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Minus 5",
-        "desc": "Decrease the device ID by 5.",
+        "name": "减5",
+        "desc": "将设备ID减少5。",
         "elements": [
             {
                 "pos": [2, 7],
@@ -464,8 +464,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Minus 1",
-        "desc": "Decrease the device ID by 1.",
+        "name": "减1",
+        "desc": "将设备ID减少1。",
         "elements": [
             {
                 "pos": [3, 7],
@@ -474,8 +474,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Add 1",
-        "desc": "Increase the device ID by 1.",
+        "name": "加1",
+        "desc": "将设备ID增加1。",
         "elements": [
             {
                 "pos": [4, 7],
@@ -484,8 +484,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Add 5",
-        "desc": "Increase the device ID by 5.",
+        "name": "加5",
+        "desc": "将设备ID增加5。",
         "elements": [
             {
                 "pos": [5, 7],
@@ -494,8 +494,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Add 20",
-        "desc": "Increase the device ID by 20.",
+        "name": "加20",
+        "desc": "将设备ID增加20。",
         "elements": [
             {
                 "pos": [6, 7],
@@ -504,8 +504,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Add 50",
-        "desc": "Increase the device ID by 50.",
+        "name": "加50",
+        "desc": "将设备ID增加50。",
         "elements": [
             {
                 "pos": [7, 7],
@@ -514,8 +514,8 @@ export function DeviceIDSelector() {
         ]
     },
     {
-        "name": "Go Back",
-        "desc": "Tap to return to the previous screen.",
+        "name": "返回",
+        "desc": "点击返回上一页面。",
         "elements": [
             {
                 "pos": ["c"]
@@ -525,12 +525,12 @@ export function DeviceIDSelector() {
 
 ];
 
-    const uiName = "Device ID Selector"
-    const uiDescription = "The device ID selector allows you to assign an ID to the device."
+    const uiName = "设备ID选择器"
+    const uiDescription = "设备ID选择器允许你为设备分配ID。"
     return <MystrixVisualizer
-    uiName = {uiName}
-    uiDescription = {uiDescription}
-    uiElements = {uiElements}
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
     />
 
 }

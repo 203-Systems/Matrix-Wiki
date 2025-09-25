@@ -2,109 +2,109 @@
 sidebar_position: 3
 ---
 
-# Install Micro SD Card
+# 安装Micro SD卡
 
-## Overview
+## 概述
 
-In Matrix OS 3, a Micro SD card is required to enable Python application functionality. This guide will walk you through the process of installing a Micro SD card into your Mystrix device.
+在 Matrix OS 3 中，需要 Micro SD 卡来启用 Python 应用程序功能。本指南将引导你完成在魔矩设备中安装 Micro SD 卡的过程。
 
-:::info Mystrix 2 Users
-Mystrix 2 devices come preloaded with a 32GB SD card. This page only applies to Mystrix 1 family devices.
+:::info 魔矩 2 用户
+魔矩 2 设备预装了 32GB SD 卡。此页面仅适用于魔矩 1 系列设备。
 :::
 
-## Requirements
+## 要求
 
-- **Micro SD Card**: Any size (minimum 1GB recommended)
-- **File System**: Must be formatted as FAT32
-- **Tools**: Small Phillips head screwdriver
-- **Time**: Approximately 10-15 minutes
+- **Micro SD 卡**：任意大小（建议最小 1GB）
+- **文件系统**：必须格式化为 FAT32
+- **工具**：小型十字螺丝刀
+- **时间**：大约 10-15 分钟
 
-:::warning Important
-Ensure your Mystrix device is powered off and disconnected from all cables before beginning the installation process.
+:::warning 重要
+在开始安装过程之前，请确保你的魔矩设备已关机并断开所有电缆连接。
 :::
 
-## Step-by-Step Installation
+## 分步安装
 
-### Step 1: Prepare the SD Card
+### 步骤 1：准备 SD 卡
 
-Before installing the SD card, ensure it is properly formatted:
+在安装 SD 卡之前，请确保其格式正确：
 
-1. **Format the SD Card**: The card must be formatted as FAT32
-   - On Windows: Right-click the SD card in File Explorer → Format → Select "FAT32"
-   - On macOS: Use Disk Utility → Erase → Select "MS-DOS (FAT)"
-   - On Linux: Use `mkfs.fat -F 32 /dev/sdX` (replace X with your device)
+1. **格式化 SD 卡**：卡必须格式化为 FAT32
+   - 在 Windows 上：在文件资源管理器中右键单击 SD 卡 → 格式化 → 选择 "FAT32"
+   - 在 macOS 上：使用磁盘工具 → 抹掉 → 选择 "MS-DOS (FAT)"
+   - 在 Linux 上：使用 `mkfs.fat -F 32 /dev/sdX`（将 X 替换为你的设备）
 
-2. **Verify Format**: Confirm the SD card shows as FAT32 format before proceeding
+2. **验证格式**：在继续之前确认 SD 卡显示为 FAT32 格式
 
-### Step 2: Access the Internal Hardware
+### 步骤 2：访问内部硬件
 
-To install the Micro SD card, you'll need to open the Mystrix device:
+要安装 Micro SD 卡，你需要打开魔矩设备：
 
-1. **Power Off**: Ensure the device is completely powered off
-2. **Remove Screws**: Carefully remove all **16 screws** from the back panel using a small Phillips head screwdriver
-3. **Keep Screws Safe**: Place all screws in a small container to prevent loss
-4. **Remove Back Panel**: Gently lift off the back panel to access the internal components
+1. **关机**：确保设备完全关机
+2. **取下螺丝**：使用小型十字螺丝刀小心地取下背面板上的所有 **16 颗螺丝**
+3. **妥善保管螺丝**：将所有螺丝放在小容器中以防丢失
+4. **取下背面板**：轻轻抬起背面板以访问内部组件
 
-:::caution Handle with Care
-Take care when handling the internal components. Avoid touching circuit boards or sensitive components.
+:::caution 小心操作
+处理内部组件时要小心。避免触摸电路板或敏感组件。
 :::
 
 <!-- Image placeholder: Device with back panel removed showing internal layout -->
-*[Image: Internal view of Mystrix with back panel removed]*
+*[图像：取下背面板的魔矩内部视图]*
 
-### Step 3: Locate the SD Card Slot
+### 步骤 3：定位 SD 卡插槽
 
-Once the back panel is removed:
+取下背面板后：
 
-1. **Identify the Slot**: Locate the Micro SD card slot on the main board
-2. **Check Orientation**: Note the correct orientation for SD card insertion (usually marked on the board)
+1. **识别插槽**：在主板上找到 Micro SD 卡插槽
+2. **检查方向**：注意 SD 卡插入的正确方向（通常在板子上有标记）
 
 <!-- Image placeholder: Close-up of SD card slot location -->
-*[Image: Close-up view of Micro SD card slot location on the main board]*
+*[图像：主板上 Micro SD 卡插槽位置的特写视图]*
 
-### Step 4: Insert the SD Card
+### 步骤 4：插入 SD 卡
 
-1. **Orient Correctly**: Ensure the SD card is oriented properly. See the attached image for example
-2. **Insert Gently**: Carefully slide the Micro SD card into the slot until it clicks into place
-3. **Verify Secure**: Ensure the card is fully seated and secure in the slot
+1. **正确定向**：确保 SD 卡方向正确。请参阅附图示例
+2. **轻轻插入**：小心地将 Micro SD 卡滑入插槽，直到听到咔嗒声就位
+3. **验证安全**：确保卡完全就位并在插槽中固定
 
 <!-- Image placeholder: SD card being inserted into slot -->
-*[Image: Micro SD card being inserted into the slot]*
+*[图像：Micro SD 卡正在插入插槽]*
 
-### Step 5: Reassemble the Device
+### 步骤 5：重新组装设备
 
-1. **Replace Back Panel**: Carefully position the back panel back onto the device
-2. **Reinstall Screws**: Replace all 16 screws, tightening them securely but not over-tightening
-3. **Final Check**: Ensure all screws are properly installed and the panel is flush
+1. **更换背面板**：小心地将背面板重新放置到设备上
+2. **重新安装螺丝**：重新安装所有 16 颗螺丝，拧紧但不要过紧
+3. **最终检查**：确保所有螺丝都正确安装且面板平齐
 
 <!-- Image placeholder: Device reassembled -->
-*[Image: Fully reassembled Mystrix device]*
+*[图像：完全重新组装的魔矩设备]*
 
-## Verification
+## 验证
 
-After installation, verify the SD card is working properly:
+安装后，验证 SD 卡是否正常工作：
 
-1. **Power On**: Turn on your Mystrix device
-2. **Check Device Settings**: Go to Device Settings and check if the USB Storage Mode button is lit up
-3. **Test Python Apps**: Try installing or running a Python application to confirm functionality
-
-
-## Important Notes
-
-- **Backup**: Always backup important data before formatting the SD card
-- **Quality**: Use a reliable, brand-name Micro SD card for best performance
-- **Speed**: Class 10 or higher SD cards are recommended for optimal performance
-- **Size**: While any size works, 8GB or larger provides ample space for Python applications
+1. **开机**：打开你的魔矩设备
+2. **检查设备设置**：转到设备设置并检查 USB 存储模式按钮是否亮起
+3. **测试 Python 应用**：尝试安装或运行 Python 应用程序以确认功能
 
 
-## Next Steps
+## 重要提示
 
-Once your SD card is installed and working:
+- **备份**：格式化 SD 卡之前始终备份重要数据
+- **质量**：使用可靠的品牌 Micro SD 卡以获得最佳性能
+- **速度**：建议使用 Class 10 或更高级别的 SD 卡以获得最佳性能
+- **大小**：虽然任何大小都可以使用，但 8GB 或更大的空间为 Python 应用程序提供充足的空间
 
-1. Try some of the included Python example applications
-2. Explore the [Python Application Development](../Developer/PythonApplication) documentation
-3. Consider developing your own custom Python applications
+
+## 下一步
+
+SD 卡安装并正常工作后：
+
+1. 尝试一些包含的 Python 示例应用程序
+2. 探索 [Python 应用程序开发](../Developer/PythonApplication) 文档
+3. 考虑开发你自己的自定义 Python 应用程序
 
 ---
 
-*Need help? Join our [Discord community](https://discord.gg/rRVCBHHPfw) for support and tips from other Mystrix users.*
+*需要帮助？加入我们的 [Discord 社区](https://discord.gg/rRVCBHHPfw) 获取其他魔矩用户的支持和技巧。*

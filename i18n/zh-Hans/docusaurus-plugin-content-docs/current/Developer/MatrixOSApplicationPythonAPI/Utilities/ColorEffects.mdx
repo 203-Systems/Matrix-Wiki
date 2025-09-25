@@ -3,66 +3,66 @@ sidebar_position: 2
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# ColorEffects
+# 颜色效果
 
-## Overview
+## 概述
 
-The ColorEffects API provides utility functions for generating dynamic lighting effects such as rainbow, breathing, strobe, and other color modulation effects based on time and phase offsets. Access these functions through `ColorEffects`.
+颜色效果 API 提供生成动态灯光效果的实用函数，如彩虹、呼吸、闪烁等基于时间和相位偏移的颜色调制效果。通过 `ColorEffects` 访问这些函数。
 
-*The Python ColorEffects API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_ColorEffects.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_ColorEffects.pyi"/>.*
+*Python 颜色效果 API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_ColorEffects.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_ColorEffects.pyi"/>。*
 
 ---
 
-## Color Generation Effects
+## 颜色生成效果
 
 ### `ColorEffects.Rainbow`
 ```python
 def Rainbow(period: int = 1000, offset: int = 0) -> Color
 ```
 
-Generates a rainbow color effect that cycles through the hue spectrum over the specified period.
+生成彩虹色效果，在指定周期内循环遍历色相光谱。
 
-**Parameters:**
-- `period` (`int`, optional): Duration of the full color cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the starting hue. Defaults to `0`
+**参数：**
+- `period` (`int`, 可选)：完整颜色循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整起始色相的偏移量，默认为 `0`
 
-**Returns:**
-- `Color`: The current color in the rainbow cycle
+**返回值：**
+- `Color`：彩虹循环中的当前颜色
 
-**Example:**
+**示例：**
 ```python
-# Basic rainbow effect
+# 基础彩虹效果
 rainbow_color = ColorEffects.Rainbow()
 MatrixOS.LED.Fill(rainbow_color)
 MatrixOS.LED.Update()
 
-# Faster rainbow with offset
+# 更快的彩虹，带偏移
 fast_rainbow = ColorEffects.Rainbow(500, 100)
 MatrixOS.LED.SetColor(Point(0, 0), fast_rainbow)
 ```
 
 ---
 
-## Brightness Modulation Effects
+## 亮度调制效果
 
 ### `ColorEffects.Breath`
 ```python
 def Breath(period: int = 1000, offset: int = 0) -> int
 ```
 
-Generates a brightness value that smoothly transitions in a sinusoidal pattern (breathing effect).
+生成以正弦波模式平滑过渡的亮度值（呼吸效果）。
 
-**Parameters:**
-- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+**参数：**
+- `period` (`int`, 可选)：呼吸循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整呼吸相位的偏移量，默认为 `0`
 
-**Returns:**
-- `int`: The brightness value (0-255)
+**返回值：**
+- `int`：亮度值（0-255）
 
-**Example:**
+**示例：**
 ```python
-# Create breathing effect
-brightness = ColorEffects.Breath(2000)  # 2-second cycle
+# 创建呼吸效果
+brightness = ColorEffects.Breath(2000)  # 2秒循环
 MatrixOS.LED.Fill(Color(255, 0, 0), brightness)
 MatrixOS.LED.Update(brightness)
 ```
@@ -74,19 +74,19 @@ MatrixOS.LED.Update(brightness)
 def BreathLowBound(low_bound: int = 64, period: int = 1000, offset: int = 0) -> int
 ```
 
-Generates a breathing effect with a minimum brightness value.
+生成具有最低亮度值的呼吸效果。
 
-**Parameters:**
-- `low_bound` (`int`, optional): Minimum brightness value. Defaults to `64`
-- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+**参数：**
+- `low_bound` (`int`, 可选)：最低亮度值，默认为 `64`
+- `period` (`int`, 可选)：呼吸循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整呼吸相位的偏移量，默认为 `0`
 
-**Returns:**
-- `int`: The brightness value (low_bound to 255)
+**返回值：**
+- `int`：亮度值（low_bound 到 255）
 
-**Example:**
+**示例：**
 ```python
-# Breathing effect that never goes completely dark
+# 永远不会完全变暗的呼吸效果
 brightness = ColorEffects.BreathLowBound(100, 1500)
 MatrixOS.LED.Fill(Color(0, 255, 0), brightness)
 ```
@@ -98,19 +98,19 @@ MatrixOS.LED.Fill(Color(0, 255, 0), brightness)
 def Strobe(period: int = 1000, offset: int = 0) -> int
 ```
 
-Generates a strobe effect by alternating between full brightness and off states.
+通过在满亮度和关闭状态之间交替来生成闪烁效果。
 
-**Parameters:**
-- `period` (`int`, optional): Duration of one strobe cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the strobe phase. Defaults to `0`
+**参数：**
+- `period` (`int`, 可选)：一个闪烁循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整闪烁相位的偏移量，默认为 `0`
 
-**Returns:**
-- `int`: The brightness value (0 or 255)
+**返回值：**
+- `int`：亮度值（0 或 255）
 
-**Example:**
+**示例：**
 ```python
-# Fast strobe effect
-brightness = ColorEffects.Strobe(200)  # 200ms cycles
+# 快速闪烁效果
+brightness = ColorEffects.Strobe(200)  # 200ms 循环
 MatrixOS.LED.Fill(Color(255, 255, 255), brightness)
 ```
 
@@ -121,19 +121,19 @@ MatrixOS.LED.Fill(Color(255, 255, 255), brightness)
 def Saw(period: int = 1000, offset: int = 0) -> int
 ```
 
-Generates a sawtooth waveform for brightness, cycling from 0 to 255 linearly.
+生成用于亮度的锯齿波形，从 0 到 255 线性循环。
 
-**Parameters:**
-- `period` (`int`, optional): Duration of one sawtooth cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+**参数：**
+- `period` (`int`, 可选)：一个锯齿循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整相位的偏移量，默认为 `0`
 
-**Returns:**
-- `int`: The brightness value (0-255)
+**返回值：**
+- `int`：亮度值（0-255）
 
-**Example:**
+**示例：**
 ```python
-# Sawtooth brightness ramp
-brightness = ColorEffects.Saw(3000)  # 3-second ramp up
+# 锯齿亮度渐变
+brightness = ColorEffects.Saw(3000)  # 3秒渐亮
 MatrixOS.LED.Fill(Color(0, 0, 255), brightness)
 ```
 
@@ -144,44 +144,44 @@ MatrixOS.LED.Fill(Color(0, 0, 255), brightness)
 def Triangle(period: int = 1000, offset: int = 0) -> int
 ```
 
-Generates a triangle waveform for brightness, cycling up and down between 0 and 255.
+生成用于亮度的三角波形，在 0 和 255 之间上下循环。
 
-**Parameters:**
-- `period` (`int`, optional): Duration of one triangle cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+**参数：**
+- `period` (`int`, 可选)：一个三角循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整相位的偏移量，默认为 `0`
 
-**Returns:**
-- `int`: The brightness value (0-255)
+**返回值：**
+- `int`：亮度值（0-255）
 
-**Example:**
+**示例：**
 ```python
-# Triangle wave brightness
+# 三角波亮度
 brightness = ColorEffects.Triangle(2000)
 MatrixOS.LED.Fill(Color(255, 255, 0), brightness)
 ```
 
 ---
 
-## Color Modulation Effects
+## 颜色调制效果
 
 ### `ColorEffects.ColorBreath`
 ```python
 def ColorBreath(color: Color, period: int = 1000, offset: int = 0) -> Color
 ```
 
-Applies a breathing effect to a specific color by modulating its brightness.
+通过调制亮度为特定颜色应用呼吸效果。
 
-**Parameters:**
-- `color` (`Color`): The base color
-- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+**参数：**
+- `color` (`Color`)：基础颜色
+- `period` (`int`, 可选)：呼吸循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整呼吸相位的偏移量，默认为 `0`
 
-**Returns:**
-- `Color`: The modulated color with the breathing effect applied
+**返回值：**
+- `Color`：应用呼吸效果后的调制颜色
 
-**Example:**
+**示例：**
 ```python
-base_color = Color(255, 0, 0)  # Red
+base_color = Color(255, 0, 0)  # 红色
 breathing_red = ColorEffects.ColorBreath(base_color, 1500)
 MatrixOS.LED.Fill(breathing_red)
 ```
@@ -193,20 +193,20 @@ MatrixOS.LED.Fill(breathing_red)
 def ColorBreathLowBound(color: Color, low_bound: int = 64, period: int = 1000, offset: int = 0) -> Color
 ```
 
-Applies a breathing effect to a color, ensuring a minimum brightness value.
+为颜色应用呼吸效果，确保最低亮度值。
 
-**Parameters:**
-- `color` (`Color`): The base color
-- `low_bound` (`int`, optional): Minimum brightness value. Defaults to `64`
-- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+**参数：**
+- `color` (`Color`)：基础颜色
+- `low_bound` (`int`, 可选)：最低亮度值，默认为 `64`
+- `period` (`int`, 可选)：呼吸循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整呼吸相位的偏移量，默认为 `0`
 
-**Returns:**
-- `Color`: The modulated color with the breathing effect applied
+**返回值：**
+- `Color`：应用呼吸效果后的调制颜色
 
-**Example:**
+**示例：**
 ```python
-base_color = Color(0, 255, 255)  # Cyan
+base_color = Color(0, 255, 255)  # 青色
 subtle_breath = ColorEffects.ColorBreathLowBound(base_color, 128, 2000)
 MatrixOS.LED.Fill(subtle_breath)
 ```
@@ -218,19 +218,19 @@ MatrixOS.LED.Fill(subtle_breath)
 def ColorStrobe(color: Color, period: int = 1000, offset: int = 0) -> Color
 ```
 
-Applies a strobe effect to a specific color.
+为特定颜色应用闪烁效果。
 
-**Parameters:**
-- `color` (`Color`): The base color
-- `period` (`int`, optional): Duration of one strobe cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the strobe phase. Defaults to `0`
+**参数：**
+- `color` (`Color`)：基础颜色
+- `period` (`int`, 可选)：一个闪烁循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整闪烁相位的偏移量，默认为 `0`
 
-**Returns:**
-- `Color`: The modulated color with the strobe effect applied
+**返回值：**
+- `Color`：应用闪烁效果后的调制颜色
 
-**Example:**
+**示例：**
 ```python
-base_color = Color(255, 0, 255)  # Magenta
+base_color = Color(255, 0, 255)  # 洋红色
 strobe_magenta = ColorEffects.ColorStrobe(base_color, 300)
 MatrixOS.LED.Fill(strobe_magenta)
 ```
@@ -242,19 +242,19 @@ MatrixOS.LED.Fill(strobe_magenta)
 def ColorSaw(color: Color, period: int = 1000, offset: int = 0) -> Color
 ```
 
-Applies a sawtooth waveform to the brightness of a specific color.
+为特定颜色的亮度应用锯齿波形。
 
-**Parameters:**
-- `color` (`Color`): The base color
-- `period` (`int`, optional): Duration of one sawtooth cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+**参数：**
+- `color` (`Color`)：基础颜色
+- `period` (`int`, 可选)：一个锯齿循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整相位的偏移量，默认为 `0`
 
-**Returns:**
-- `Color`: The modulated color with the sawtooth effect applied
+**返回值：**
+- `Color`：应用锯齿效果后的调制颜色
 
-**Example:**
+**示例：**
 ```python
-base_color = Color(255, 255, 0)  # Yellow
+base_color = Color(255, 255, 0)  # 黄色
 saw_yellow = ColorEffects.ColorSaw(base_color, 2500)
 MatrixOS.LED.Fill(saw_yellow)
 ```
@@ -266,37 +266,37 @@ MatrixOS.LED.Fill(saw_yellow)
 def ColorTriangle(color: Color, period: int = 1000, offset: int = 0) -> Color
 ```
 
-Applies a triangle waveform to the brightness of a specific color.
+为特定颜色的亮度应用三角波形。
 
-**Parameters:**
-- `color` (`Color`): The base color
-- `period` (`int`, optional): Duration of one triangle cycle in milliseconds. Defaults to `1000ms`
-- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+**参数：**
+- `color` (`Color`)：基础颜色
+- `period` (`int`, 可选)：一个三角循环的持续时间（毫秒），默认为 `1000ms`
+- `offset` (`int`, 可选)：调整相位的偏移量，默认为 `0`
 
-**Returns:**
-- `Color`: The modulated color with the triangle effect applied
+**返回值：**
+- `Color`：应用三角效果后的调制颜色
 
-**Example:**
+**示例：**
 ```python
-base_color = Color(0, 255, 0)  # Green
+base_color = Color(0, 255, 0)  # 绿色
 triangle_green = ColorEffects.ColorTriangle(base_color, 1800)
 MatrixOS.LED.Fill(triangle_green)
 ```
 
 ---
 
-## Usage Examples
+## 使用示例
 
-### Dynamic Rainbow Grid
+### 动态彩虹网格
 ```python
 def rainbow_grid():
-    """Create a rainbow effect across the LED grid"""
+    """在 LED 网格上创建彩虹效果"""
 
     while True:
         for x in range(8):
             for y in range(8):
-                # Create phase offset based on position
-                offset = (x + y) * 125  # 125ms offset per step
+                # 根据位置创建相位偏移
+                offset = (x + y) * 125  # 每步 125ms 偏移
 
                 rainbow_color = ColorEffects.Rainbow(2000, offset)
                 MatrixOS.LED.SetColor(Point(x, y), rainbow_color)
@@ -307,28 +307,28 @@ def rainbow_grid():
 rainbow_grid()
 ```
 
-### Multi-Effect Combination
+### 多效果组合
 ```python
 def combined_effects():
-    """Combine multiple color effects"""
+    """组合多种颜色效果"""
 
     base_colors = [
-        Color(255, 0, 0),    # Red
-        Color(0, 255, 0),    # Green
-        Color(0, 0, 255),    # Blue
-        Color(255, 255, 0)   # Yellow
+        Color(255, 0, 0),    # 红色
+        Color(0, 255, 0),    # 绿色
+        Color(0, 0, 255),    # 蓝色
+        Color(255, 255, 0)   # 黄色
     ]
 
     while True:
         for i, base_color in enumerate(base_colors):
-            row = i * 2  # Use two rows per color
+            row = i * 2  # 每种颜色使用两行
 
-            # Row 1: Breathing effect
+            # 第 1 行：呼吸效果
             breath_color = ColorEffects.ColorBreath(base_color, 3000, i * 750)
             for x in range(8):
                 MatrixOS.LED.SetColor(Point(x, row), breath_color)
 
-            # Row 2: Strobe effect
+            # 第 2 行：闪烁效果
             if row + 1 < 8:
                 strobe_color = ColorEffects.ColorStrobe(base_color, 1000, i * 250)
                 for x in range(8):
@@ -340,31 +340,31 @@ def combined_effects():
 combined_effects()
 ```
 
-### Music-Reactive Effects
+### 音乐响应效果
 ```python
 def music_visualizer():
-    """Simple music-reactive lighting using effects"""
+    """使用效果的简单音乐响应灯光"""
 
-    # Simulate audio intensity (in real application, this would come from audio input)
+    # 模拟音频强度（在实际应用中，这将来自音频输入）
     import random
 
-    base_color = Color(255, 100, 0)  # Orange
+    base_color = Color(255, 100, 0)  # 橙色
 
     while True:
-        # Simulate varying audio levels
+        # 模拟不同的音频级别
         audio_level = random.randint(0, 100)
 
         if audio_level > 80:
-            # High energy - fast strobe
+            # 高能量 - 快速闪烁
             effect_color = ColorEffects.ColorStrobe(base_color, 100)
         elif audio_level > 50:
-            # Medium energy - breathing
+            # 中等能量 - 呼吸
             effect_color = ColorEffects.ColorBreath(base_color, 500)
         elif audio_level > 20:
-            # Low energy - slow triangle
+            # 低能量 - 缓慢三角波
             effect_color = ColorEffects.ColorTriangle(base_color, 2000)
         else:
-            # Silence - dim breath
+            # 静音 - 暗淡呼吸
             effect_color = ColorEffects.ColorBreathLowBound(base_color, 32, 4000)
 
         MatrixOS.LED.Fill(effect_color)
@@ -374,22 +374,22 @@ def music_visualizer():
 music_visualizer()
 ```
 
-### Time-Based Color Zones
+### 基于时间的颜色区域
 ```python
 def time_zones():
-    """Different effects for different grid zones"""
+    """不同网格区域的不同效果"""
 
     while True:
         current_time = MatrixOS.SYS.Millis()
 
-        # Top section: Rainbow
+        # 顶部区域：彩虹
         for x in range(8):
             for y in range(2):
                 offset = x * 100
                 rainbow = ColorEffects.Rainbow(4000, offset)
                 MatrixOS.LED.SetColor(Point(x, y), rainbow)
 
-        # Middle section: Breathing colors
+        # 中间区域：呼吸颜色
         colors = [Color(255, 0, 0), Color(0, 255, 0), Color(0, 0, 255)]
         for x in range(8):
             for y in range(2, 6):
@@ -398,7 +398,7 @@ def time_zones():
                 breath_color = ColorEffects.ColorBreath(base_color, 2000, x * 200)
                 MatrixOS.LED.SetColor(Point(x, y), breath_color)
 
-        # Bottom section: Sawtooth white
+        # 底部区域：锯齿白色
         for x in range(8):
             for y in range(6, 8):
                 brightness = ColorEffects.Saw(3000, x * 100)
@@ -410,4 +410,3 @@ def time_zones():
 
 time_zones()
 ```
-

@@ -2,8 +2,8 @@
 sidebar_position: 12
 ---
 
-# Matrix OS Remote API (HID)
+# Matrix OS 远程控制协议 (HID)
 
-:::warning[Content Under Construction]
-This content is currently under construction. If you need any assistance, please [reach out to us](/docs/Support/ConnectWithUs) or leave a comment.
+:::warning[内容建设中]
+此内容正在建设中。如需帮助，请[联系我们](/docs/Support/ConnectWithUs)或留言。
 :::

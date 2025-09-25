@@ -5,14 +5,14 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # MIDI API
 
-## Overview
-Matrix OS's MIDI system is complex and powerful. It allows you to send and receive MIDI messages, including System Exclusive (SysEx) messages to different registered MIDI ports or multiple MIDI ports at the same time. 
+## 概述
+Matrix OS 的 MIDI 系统复杂且强大。它允许你向不同的已注册 MIDI 端口或同时向多个 MIDI 端口发送和接收 MIDI 消息，包括系统独占（SysEx）消息。
 
-You can even create virtual ports on a thread to communicate with your applications.
+你甚至可以在线程上创建虚拟端口来与你的应用程序通信。
 
-See the [MIDI Packet](./Types/MidiPacket/) and [MIDI Port](./Utilities/MidiPort/) documentation for more information on the MIDI packet and port structures.
+有关 MIDI 数据包和端口结构的更多信息，请参阅 [MIDI 数据包](./Types/MidiPacket/) 和 [MIDI 端口](./Utilities/MidiPort/) 文档。
 
-*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/MIDI.cpp"/>.*
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/MIDI.cpp"/>。*
 
 ---
 
@@ -21,16 +21,16 @@ See the [MIDI Packet](./Types/MidiPacket/) and [MIDI Port](./Utilities/MidiPort/
 bool Get(MidiPacket* midiPacketDest, uint16_t timeout_ms = 0);
 ```
 
-Retrieves the next available MIDI packet. If no packet is available, the function waits for the specified timeout.
+检索下一个可用的 MIDI 数据包。如果没有数据包可用，函数将等待指定的超时时间。
 
-The source of the MIDI packet is in the `port` field of the packet.
+MIDI 数据包的源在数据包的 `port` 字段中。
 
-**Parameters:**
-- `midiPacketDest` ([`MidiPacket*`](./Types/MidiPacket/)): Pointer to store the retrieved MIDI packet.
-- `timeout_ms` (`uint16_t`, optional): Maximum time to wait for a MIDI packet in milliseconds. Defaults to `0`.
+**参数：**
+- `midiPacketDest` ([`MidiPacket*`](./Types/MidiPacket/))：用于存储检索到的 MIDI 数据包的指针。
+- `timeout_ms` (`uint16_t`，可选)：等待 MIDI 数据包的最大时间（以毫秒为单位）。默认值为 `0`。
 
-**Returns:**
-- `bool`: `true` if a MIDI packet was retrieved successfully, otherwise `false`.
+**返回值：**
+- `bool`：如果成功检索到 MIDI 数据包则返回 `true`，否则返回 `false`。
 
 ---
 
@@ -39,14 +39,14 @@ The source of the MIDI packet is in the `port` field of the packet.
 bool Send(MidiPacket midiPacket, uint16_t timeout_ms = 0);
 ```
 
-Sends a MIDI packet. The packet will be send to the port specified in the packet.
+发送 MIDI 数据包。数据包将被发送到数据包中指定的端口。
 
-**Parameters:**
-- `midiPacket` ([`MidiPacket`](./Types/MidiPacket/)): The MIDI packet to send. 
-- `timeout_ms` (`uint16_t`, optional): Maximum time to wait for the send operation in milliseconds. Defaults to `0`.
+**参数：**
+- `midiPacket` ([`MidiPacket`](./Types/MidiPacket/))：要发送的 MIDI 数据包。
+- `timeout_ms` (`uint16_t`，可选)：发送操作的最大等待时间（以毫秒为单位）。默认值为 `0`。
 
-**Returns:**
-- `bool`: `true` if the MIDI packet was sent successfully, otherwise `false`.
+**返回值：**
+- `bool`：如果 MIDI 数据包发送成功则返回 `true`，否则返回 `false`。
 
 ---
 
@@ -55,14 +55,13 @@ Sends a MIDI packet. The packet will be send to the port specified in the packet
 bool SendSysEx(uint16_t port, uint16_t length, uint8_t* data, bool includeMeta = true);
 ```
 
-Sends a System Exclusive (SysEx) MIDI message buffer. Optionally includes the correct SysEx header and ending.
+发送系统独占（SysEx）MIDI 消息缓冲区。可选择性地包含正确的 SysEx 头和结尾。
 
-**Parameters:**
-- `port` (`uint16_t`): The MIDI port to send the SysEx message through.
-- `length` (`uint16_t`): The length of the SysEx data.
-- `data` (`uint8_t*`): Pointer to the SysEx data to send.
-- `includeMeta` (`bool`, optional): Whether to include the default SysEx header and ending. Defaults to `true`. If this is false, the data must include the SysEx header and ending.
+**参数：**
+- `port` (`uint16_t`)：用于发送 SysEx 消息的 MIDI 端口。
+- `length` (`uint16_t`)：SysEx 数据的长度。
+- `data` (`uint8_t*`)：指向要发送的 SysEx 数据的指针。
+- `includeMeta` (`bool`，可选)：是否包含默认的 SysEx 头和结尾。默认值为 `true`。如果为 false，数据必须包含 SysEx 头和结尾。
 
-**Returns:**
-- `bool`: `true` if the SysEx message was sent successfully, otherwise `false`.
-```
+**返回值：**
+- `bool`：如果 SysEx 消息发送成功则返回 `true`，否则返回 `false`。

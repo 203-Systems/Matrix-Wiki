@@ -4,7 +4,7 @@
     "description": "The alt text of navbar logo"
   },
   "item.label.Mystrix": {
-    "message": "Mystrix",
+    "message": "魔矩",
     "description": "Navbar item with label Mystrix"
   },
   "item.label.Matrix OS": {
@@ -12,15 +12,15 @@
     "description": "Navbar item with label Matrix OS"
   },
   "item.label.Developer": {
-    "message": "Developer",
+    "message": "开发者",
     "description": "Navbar item with label Developer"
   },
   "item.label.Resources": {
-    "message": "Resources",
+    "message": "资源",
     "description": "Navbar item with label Resources"
   },
   "item.label.Support": {
-    "message": "Support",
+    "message": "支持",
     "description": "Navbar item with label Support"
   }
 }

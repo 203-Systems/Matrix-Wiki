@@ -2,11 +2,11 @@
 sidebar_position: 2
 ---
 
-# Open Source Repositories
+# 开源仓库
 
-Explore our open source projects on GitHub:
+在 GitHub 上探索我们的开源项目：
 
-- **[Matrix OS](https://github.com/203-Systems/MatrixOS)**: The core operating system for Mystrix, providing a robust and flexible platform for various applications.
-- **[Matrix OS Keymap Editor](https://github.com/203-Systems/MatrixOS-Keymap-Editor)**: A powerful tool for customizing keymaps and configurations for Matrix OS.
-- **[Amethyst Player](https://github.com/Project-Amethyst/amethyst-player)**: An in-house web application for performing lightshows, supporting Unipad Projects (Unipack) and compatible MIDI controllers.
-- **[Matrix Wiki](https://github.com/203-Systems/Matrix-Wiki)**: A comprehensive wiki providing detailed documentation and guides for Matrix OS and related projects.
+- **[Matrix OS](https://github.com/203-Systems/MatrixOS)**：魔矩的核心操作系统，为各种应用提供强大而灵活的平台。
+- **[Matrix OS 键位编辑器](https://github.com/203-Systems/MatrixOS-Keymap-Editor)**：用于自定义 Matrix OS 键位映射和配置的强大工具。
+- **[Amethyst Player](https://github.com/Project-Amethyst/amethyst-player)**：用于灯光秀表演的网页应用，支持 Unipad 项目（Unipack）和兼容的 MIDI 控制器。
+- **[Matrix Wiki](https://github.com/203-Systems/Matrix-Wiki)**：提供 Matrix OS 和相关项目详细文档和指南的综合文档站点。

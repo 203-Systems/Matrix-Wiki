@@ -4,22 +4,22 @@ sidebar_position: 1
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Color Picker
+# 颜色选择器
 
-The Color Picker is a user interface for selecting a color. It is part of the shared UIs used in various applications.
+颜色选择器是用于选择颜色的用户界面，是多个应用程序中使用的共享界面组件。
 
-The Color Picker is divided into two parts: Hue Selection and Shade Selection. First, you select the hue of the color you want to use, then you select the shade of the color.
+颜色选择器分为两部分：色相选择和深浅选择。首先选择想要使用的颜色的色相，然后选择颜色的深浅。
 
-If the function key is pressed inside the picker, the color picker will abort and return to the previous screen without changing the color.
+在选择器内按功能键时，颜色选择器会中止并返回上一屏幕，不改变颜色。
 
-## Hue Selection
+## 色相选择
 
 export function HueSelector() {
 
     const uiElements = [
         {
-            "name": "Select Hue",
-            "desc": "Tap on the color you want to use.",
+            "name": "选择色相",
+            "desc": "点击想要使用的颜色。",
             "elements": [
                 {
                     "pos": [0, 0],
@@ -38,8 +38,8 @@ export function HueSelector() {
             ]
         },
         {
-            "name": "Abort and Go Back",
-            "desc": "Tap to abort the color selection and return to the previous screen.",
+            "name": "中止并返回",
+            "desc": "点击中止颜色选择并返回上一屏幕。",
             "elements": [
                 {
                     "pos": ["c"]
@@ -48,8 +48,8 @@ export function HueSelector() {
         }
     ]
 
-    const uiName = "Hue Selector"
-    const uiDescription = "Select the hue of the color you want to use."
+    const uiName = "色相选择器"
+    const uiDescription = "选择想要使用的颜色的色相。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
@@ -60,14 +60,14 @@ export function HueSelector() {
 
 <HueSelector />
 
-## Shade Selection
+## 深浅选择
 
 export function ShadeSelector() {
 
     const uiElements = [
         {
-            "name": "Select Shade",
-            "desc": "Tap on the shade of the color you want to use.",
+            "name": "选择深浅",
+            "desc": "点击想要使用的颜色的深浅。",
             "elements": [
                 {
                     "pos": [0, 0],
@@ -86,8 +86,8 @@ export function ShadeSelector() {
             ]
         },
         {
-            "name": "Abort and Go Back",
-            "desc": "Tap to abort the color selection and return to the previous screen.",
+            "name": "中止并返回",
+            "desc": "点击中止颜色选择并返回上一屏幕。",
             "elements": [
                 {
                     "pos": ["c"]
@@ -96,8 +96,8 @@ export function ShadeSelector() {
         }
     ]
 
-    const uiName = "Shade Selector"
-    const uiDescription = "Select the shade of the color you want to use."
+    const uiName = "深浅选择器"
+    const uiDescription = "选择想要使用的颜色的深浅。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}

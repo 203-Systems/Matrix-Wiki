@@ -13,9 +13,7 @@ The HID RawHID interface provides custom communication protocols for application
 
 ---
 
-## RawHID Functions
-
-### `Get`
+### `MatrixOS.HID.RawHID.Get`
 ```python
 def Get(timeout_ms: int = 0) -> bytes
 ```
@@ -39,7 +37,7 @@ if MatrixOS.HID.Ready():
 
 ---
 
-### `Send`
+### `MatrixOS.HID.RawHID.Send`
 ```python
 def Send(report: bytes) -> bool
 ```

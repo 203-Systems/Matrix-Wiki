@@ -3,15 +3,15 @@ sidebar_position: 3
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# Keypad API
+# 键盘 API
 
-## Overview
+## 概述
 
-The Keypad API provides functionality to interact with the devices's Keypad or other input types really (knob, sensor, touchbar). It allows you to retrieve key events, get information about keys, and convert between key positions and IDs.
+键盘 API 提供与设备键盘或其他输入类型（旋钮、传感器、触摸条）交互的功能。它允许你检索按键事件、获取按键信息，以及在按键位置和 ID 之间转换。
 
-The [KeyInfo](./Types/KeyEvent/) API might see some changes in the future to support complex dynamic input types.
+[KeyInfo](./Types/KeyEvent/) API 将来可能会有一些变化，以支持复杂的动态输入类型。
 
-*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/KeyPad.cpp"/>.*
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/KeyPad.cpp"/>。*
 
 ---
 
@@ -20,44 +20,44 @@ The [KeyInfo](./Types/KeyEvent/) API might see some changes in the future to sup
 bool Get([`KeyEvent`](./Types/KeyEvent/)* keyEvent_dest, uint32_t timeout_ms = 0);
 ```
 
-Fetches the next available key event. If no event is available, the function waits for the specified timeout.
+获取下一个可用的按键事件。如果没有事件可用，函数将等待指定的超时时间。
 
-**Parameters:**
-- `keyEvent_dest` ([`KeyEvent`](./Types/KeyEvent/)*): Destination pointer to store the retrieved key event.
-- `timeout_ms` (`uint32_t`, optional): Maximum time to wait for an event in milliseconds. Defaults to `0`.
+**参数：**
+- `keyEvent_dest` ([`KeyEvent`](./Types/KeyEvent/)*)：用于存储检索到的按键事件的目标指针。
+- `timeout_ms` (`uint32_t`，可选)：等待事件的最大时间（以毫秒为单位）。默认值为 `0`。
 
-**Returns:**
-- `bool`: `true` if a key event was retrieved, otherwise `false`.
+**返回值：**
+- `bool`：如果检索到按键事件则返回 `true`，否则返回 `false`。
 
 ---
 
-## `MatrixOS::KEYPAD::GetKey` (by Position)
+## `MatrixOS::KEYPAD::GetKey`（按位置）
 ```cpp
 [`KeyInfo`](./Types/KeyInfo/)* GetKey(Point keyXY);
 ```
 
-Gets information about the key located at the specified position.
+获取位于指定位置的按键的信息。
 
-**Parameters:**
-- `keyXY` ([`Point`](./Types/Point/)): Position of the key.
+**参数：**
+- `keyXY` ([`Point`](./Types/Point/))：按键的位置。
 
-**Returns:**
-- [`KeyInfo*`](./Types/KeyInfo/): Pointer to the key information. Returns `nullptr` if no key is found.
+**返回值：**
+- [`KeyInfo*`](./Types/KeyInfo/)：指向按键信息的指针。如果未找到按键则返回 `nullptr`。
 
 ---
 
-## `MatrixOS::KEYPAD::GetKey` (by ID)
+## `MatrixOS::KEYPAD::GetKey`（按 ID）
 ```cpp
 [`KeyInfo`](./Types/KeyInfo/)* GetKey(uint16_t keyID);
 ```
 
-Gets information about the key with the specified ID.
+获取具有指定 ID 的按键的信息。
 
-**Parameters:**
-- `keyID` (`uint16_t`): ID of the key.
+**参数：**
+- `keyID` (`uint16_t`)：按键的 ID。
 
-**Returns:**
-- [`KeyInfo*`](./Types/KeyInfo/): Pointer to the key information. Returns `nullptr` if no key is found.
+**返回值：**
+- [`KeyInfo*`](./Types/KeyInfo/)：指向按键信息的指针。如果未找到按键则返回 `nullptr`。
 
 ---
 
@@ -66,7 +66,7 @@ Gets information about the key with the specified ID.
 void Clear();
 ```
 
-Clears the current key state and suppresses further events (e.g., `Release`, `Hold`) for all keys until their next `Press` event.
+清除当前按键状态并抑制所有按键的后续事件（例如 `Release`、`Hold`），直到它们的下一个 `Press` 事件。
 
 ---
 
@@ -75,7 +75,7 @@ Clears the current key state and suppresses further events (e.g., `Release`, `Ho
 void ClearList();
 ```
 
-Clears the current `KeyEvent` queue. No events will remain in the queue after this call.
+清除当前的 `KeyEvent` 队列。调用此函数后，队列中将不再有任何事件。
 
 ---
 
@@ -84,13 +84,13 @@ Clears the current `KeyEvent` queue. No events will remain in the queue after th
 uint16_t XY2ID(Point xy);
 ```
 
-Converts a key position to its corresponding key ID.
+将按键位置转换为对应的按键 ID。
 
-**Parameters:**
-- `xy` ([`Point`](./Types/Point/)): The position of the key.
+**参数：**
+- `xy` ([`Point`](./Types/Point/))：按键的位置。
 
-**Returns:**
-- `uint16_t`: The key ID associated with the position. Returns `UINT16_MAX` if no key ID is assigned to the given position.
+**返回值：**
+- `uint16_t`：与位置关联的按键 ID。如果指定位置没有分配按键 ID 则返回 `UINT16_MAX`。
 
 ---
 
@@ -99,11 +99,10 @@ Converts a key position to its corresponding key ID.
 Point ID2XY(uint16_t keyID);
 ```
 
-Converts a key ID to its corresponding position.
+将按键 ID 转换为对应的位置。
 
-**Parameters:**
-- `keyID` (`uint16_t`): The ID of the key.
+**参数：**
+- `keyID` (`uint16_t`)：按键的 ID。
 
-**Returns:**
-- [`Point`](./Types/Point/): The position of the key. Returns `Point::Invalid()` if no position is found for the given ID. You can then do bool(Point) to check if the point is valid.
-```
+**返回值：**
+- [`Point`](./Types/Point/)：按键的位置。如果找不到指定 ID 的位置则返回 `Point::Invalid()`。你可以使用 bool(Point) 来检查点是否有效。

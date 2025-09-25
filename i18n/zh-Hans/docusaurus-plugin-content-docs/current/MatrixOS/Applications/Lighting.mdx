@@ -4,26 +4,26 @@ sidebar_position: 3
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Lighting App
+# 灯光应用
 
-The Lighting App transforms your device into a versatile lighting panel that can be used in various environments.
+灯光应用将你的设备转变为可以在各种环境中使用的多功能灯光面板。
 
-Holding down the function key in the [config menu](#config-menu) will exit this app and bring you back to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
+在[配置菜单](#config-menu)中长按功能键将退出此应用并返回[应用程序启动器](/docs/MatrixOS/ApplicationLauncher)。
 
-## Lighting View
+## 灯光视图
 
-The Lighting View is the main interface of the Lighting App. It displays the current lighting effect and color.
+灯光视图是灯光应用的主界面。它显示当前的灯光效果和颜色。
 
-Clicking the function key will bring you to the [config menu](#config-menu).
+点击功能键将带你进入[配置菜单](#config-menu)。
 
-## Config Menu
+## 配置菜单
 
 export function ConfigMenu() {
 
     const uiElements = [
     {
-        "name": "RGB Mode",
-        "desc": "Switch to RGB mode.",
+        "name": "RGB模式",
+        "desc": "切换到RGB模式。",
         "link": "#rgb-mode",
         "elements": [
             {
@@ -33,8 +33,8 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Temperature Mode",
-        "desc": "Switch to Temperature Mode.",
+        "name": "色温模式",
+        "desc": "切换到色温模式。",
         "link": "#temperature-mode",
         "elements": [
             {
@@ -44,8 +44,8 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Effect & BPM",
-        "desc": "Change the effect and BPM of the lighting view.",
+        "name": "效果和BPM",
+        "desc": "更改灯光视图的效果和BPM。",
         "link": "#lighting-effect",
         "elements": [
             {
@@ -56,8 +56,8 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Color Selector",
-        "desc": "Change the color of the lighting view (RGB mode) or temperature (Temperature mode).",
+        "name": "颜色选择器",
+        "desc": "更改灯光视图的颜色（RGB模式）或色温（色温模式）。",
         "elements": [
             {
                 "pos": [0, 6],
@@ -67,8 +67,8 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "Lighting View or Exit App",
-        "desc": "Tap to return to the lighting view. Hold to exit the app.",
+        "name": "灯光视图或退出应用",
+        "desc": "轻触返回灯光视图。长按退出应用。",
         "elements": [
             {
                 "pos": ["c"]
@@ -78,8 +78,8 @@ export function ConfigMenu() {
 
 ];
 
-    const uiName = "Config Menu"
-    const uiDescription = "The config menu allows you to modify lighting options."
+    const uiName = "配置菜单"
+    const uiDescription = "配置菜单允许你修改灯光选项。"
     return <MystrixVisualizer
     uiName={uiName}
     uiDescription={uiDescription}
@@ -90,24 +90,24 @@ export function ConfigMenu() {
 
 <ConfigMenu />
 
-## RGB Mode
+## RGB模式
 
-In RGB mode, you can set the color of the lighting view to any color you want via the [Color Picker](/docs/MatrixOS/SharedUI/ColorPicker).
+在RGB模式下，你可以通过[选色器](/docs/MatrixOS/SharedUI/ColorPicker)将灯光视图的颜色设置为你想要的任何颜色。
 
-## Temperature Mode
+## 色温模式
 
-In Temperature mode, you can set the color of the lighting view to a color that represents a temperature. The color will change based on the temperature you set.
+在色温模式下，你可以将灯光视图的颜色设置为代表色温的颜色。颜色将根据你设置的色温而变化。
 
-The selector UI is similar to the [Color Picker](/docs/MatrixOS/SharedUI/ColorPicker), but the hue selector is replaced with a temperature selector and there is no saturation selector.
+选择器UI与[选色器](/docs/MatrixOS/SharedUI/ColorPicker)类似，但色相选择器被色温选择器取代，并且没有饱和度选择器。
 
-## Lighting Effect
+## 灯光效果
 
 export function LightingEffect() {
 
     const uiElements = [
         {
-            "name": "Effect: Static",
-            "desc": "Set the lighting effect to Static (no effect).",
+            "name": "效果：静态",
+            "desc": "将灯光效果设置为静态（无效果）。",
             "elements": [
                 {
                     "pos": [2, 0],
@@ -116,8 +116,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Effect: Breath",
-            "desc": "Set the lighting effect to Breath.",
+            "name": "效果：呼吸",
+            "desc": "将灯光效果设置为呼吸效果。",
             "elements": [
                 {
                     "pos": [3, 0],
@@ -126,8 +126,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Effect: Strobe",
-            "desc": "Set the lighting effect to Strobe.",
+            "name": "效果：闪烁",
+            "desc": "将灯光效果设置为闪烁效果。",
             "elements": [
                 {
                     "pos": [4, 0],
@@ -136,8 +136,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Effect: Saw",
-            "desc": "Set the lighting effect to Saw.",
+            "name": "效果：镂齿",
+            "desc": "将灯光效果设置为镂齿效果。",
             "elements": [
                 {
                     "pos": [5, 0],
@@ -146,8 +146,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "BPM Display & Tapper",
-            "desc": "Shows the current BPM value. Tap this display to updated the BPM based on your tapping rhythm.",
+            "name": "BPM显示和点拍器",
+            "desc": "显示当前BPM值。点击此显示器根据你的点拍节奏更新BPM。",
             "elements": [
                 {
                     "pos": [0, 2],
@@ -195,8 +195,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Minus 50",
-            "desc": "Decrease the BPM by 50.",
+            "name": "减50",
+            "desc": "将BPM减少50。",
             "elements": [
                 {
                     "pos": [0, 7],
@@ -205,8 +205,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Minus 20",
-            "desc": "Decrease the BPM by 20.",
+            "name": "减20",
+            "desc": "将BPM减少20。",
             "elements": [
                 {
                     "pos": [1, 7],
@@ -215,8 +215,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Minus 5",
-            "desc": "Decrease the BPM by 5.",
+            "name": "减5",
+            "desc": "将BPM减少5。",
             "elements": [
                 {
                     "pos": [2, 7],
@@ -225,8 +225,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Minus 1",
-            "desc": "Decrease the BPM by 1.",
+            "name": "减1",
+            "desc": "将BPM减少1。",
             "elements": [
                 {
                     "pos": [3, 7],
@@ -235,8 +235,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Add 1",
-            "desc": "Increase the BPM by 1.",
+            "name": "加1",
+            "desc": "将BPM增加1。",
             "elements": [
                 {
                     "pos": [4, 7],
@@ -245,8 +245,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Add 5",
-            "desc": "Increase the BPM by 5.",
+            "name": "加5",
+            "desc": "将BPM增加5。",
             "elements": [
                 {
                     "pos": [5, 7],
@@ -255,8 +255,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Add 20",
-            "desc": "Increase the BPM by 20.",
+            "name": "加20",
+            "desc": "将BPM增加20。",
             "elements": [
                 {
                     "pos": [6, 7],
@@ -265,8 +265,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Add 50",
-            "desc": "Increase the BPM by 50.",
+            "name": "加50",
+            "desc": "将BPM增加50。",
             "elements": [
                 {
                     "pos": [7, 7],
@@ -275,8 +275,8 @@ export function LightingEffect() {
             ]
         },
         {
-            "name": "Return to Config Menu",
-            "desc": "Tap to return to the config menu.",
+            "name": "返回配置菜单",
+            "desc": "轻触返回配置菜单。",
             "link": "#config-menu",
             "elements": [
                 {
@@ -286,8 +286,8 @@ export function LightingEffect() {
         }
     ];
 
-    const uiName = "Lighting Effect Menu"
-    const uiDescription = "The Lighting Effect Menu allows you to modify lighting effect options."
+    const uiName = "灯光效果菜单"
+    const uiDescription = "灯光效果菜单允许你修改灯光效果选项。"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}

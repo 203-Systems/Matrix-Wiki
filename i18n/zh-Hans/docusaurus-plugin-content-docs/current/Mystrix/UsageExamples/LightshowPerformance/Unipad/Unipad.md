@@ -4,19 +4,19 @@ sidebar_position: 4
 
 # Unipad
 
-[Unipad](https://play.google.com/store/apps/details?id=com.kimjisub.launchpad&hl=en_US&pli=1) is an Android app developed by kimjisub.
+[Unipad](https://play.google.com/store/apps/details?id=com.kimjisub.launchpad&hl=en_US&pli=1) 是由 kimjisub 开发的 Android 应用。
 
-Unipad 4.0 supports Mystrix natively. Simply connect Mystrix to your Android device and enter the [Performance App](/docs/MatrixOS/Applications/Performance).
+Unipad 4.0 原生支持魔矩。只需将魔矩连接到你的 Android 设备并进入 [Performance 应用](/docs/MatrixOS/Applications/Performance)。
 
 ![Unipad](Unipad.png)
 
-For a video tutorial on how to connect, refer to [this link](https://www.youtube.com/watch?v=VYMQWO7jlws). Note that the app version shown is outdated, but the process remains largely the same.
+要查看如何连接的视频教程，请参考[此链接](https://www.youtube.com/watch?v=VYMQWO7jlws)。注意视频中显示的应用版本已过时，但操作步骤基本相同。
 
-## Get Unipad Projects (UniPack)
+## 获取 Unipad 项目（UniPack）
 
-Unipad has a built-in store where you can obtain various Unipacks.
+Unipad 内置了商店，您可以在其中获取各种 Unipack。
 
-You can also get Unipad Projects from YouTube videos. Here are some great examples:
+您也可以从 YouTube 视频中获取 Unipad 项目。以下是一些精彩的例子：
 
 - [Alan Walker - The Spectre by Clement Show](https://www.youtube.com/watch?v=-96eVsFJW-M)
 - [BLACKPINK (블랙핑크) - 뚜두뚜두 (DDU-DU-DDU-DU) by JinCreeMusic](https://www.youtube.com/watch?v=QTsq8lM9uqg)
@@ -24,4 +24,4 @@ You can also get Unipad Projects from YouTube videos. Here are some great exampl
 - [Fonglee, Moudelica & Silkorr - Midnight City by YamiEDM](https://www.youtube.com/watch?v=KYiaGXlBxLE)
 - [Alan Walker - Darkside by Yubo Ki](https://www.youtube.com/watch?v=ZtSGblqfmKQ)
 
-~~Or from sites like [Unipad DB Kims](https://unipad.dbkims.com/).~~ (Currently down)
+~~或从 [Unipad DB Kims](https://unipad.dbkims.com/) 等网站获取。~~ （目前已停止服务）

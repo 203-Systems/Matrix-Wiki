@@ -3,21 +3,21 @@ sidebar_position: 1
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# UI Framework
+# UI 框架
 
-:::warning Development Status
-The UI Framework in Python is not ready for the initial release. It might be unstable and subject to significant changes. Use with caution in production applications.
+:::warning 开发状态
+Python 中的 UI 框架还未为初始发布做好准备。它可能不稳定且会有重大变化。在生产应用中请谨慎使用。
 :::
 
-## Overview
+## 概述
 
-The UI system in MatrixOS provides a framework for creating interactive user interfaces on the 8x8 LED grid. The UI class serves as a container for UI components and handles rendering, input events, and lifecycle management. The UI API is available as `MatrixOS.UI` and related components.
+Matrix OS 中的 UI 系统提供了在 8x8 LED 网格上创建交互式用户界面的框架。UI 类作为 UI 组件的容器，处理渲染、输入事件和生命周期管理。UI API 通过 `MatrixOS.UI` 和相关组件提供。
 
-*The Python UI API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UI.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UI.pyi"/>.*
+*Python UI API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UI.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UI.pyi"/>。*
 
 ---
 
-## UI Class
+## UI 类
 
 ### `MatrixOS.UI()`
 ```python
@@ -25,9 +25,9 @@ class UI:
     def __init__(self, *val) -> None
 ```
 
-Creates a new UI instance for building interactive interfaces.
+创建一个新的 UI 实例来构建交互式界面。
 
-**Example:**
+**示例：**
 ```python
 
 ui = UI()
@@ -35,23 +35,23 @@ ui = UI()
 
 ---
 
-## UI Control Methods
+## UI 控制方法
 
 ### `MatrixOS.UI.Start`
 ```python
 def Start(self) -> bool
 ```
 
-Starts the UI, making it active and visible on the device.
+启动 UI，使其在设备上激活并可见。
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
 ui = UI()
-# Configure UI...
-ui.Start()  # Launch the UI
+# 配置 UI...
+ui.Start()  # 启动 UI
 ```
 
 ---
@@ -61,13 +61,13 @@ ui.Start()  # Launch the UI
 def SetName(self, name: str) -> bool
 ```
 
-Sets the name/title of the UI.
+设置 UI 的名称或标题。
 
-**Parameters:**
-- `name` (`str`): UI name or title
+**参数：**
+- `name` (`str`)：UI 名称或标题
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
@@ -76,13 +76,13 @@ Sets the name/title of the UI.
 def SetColor(self, color: Color) -> bool
 ```
 
-Sets the default color theme for the UI.
+设置 UI 的默认颜色主题。
 
-**Parameters:**
-- `color` (`Color`): Default UI color
+**参数：**
+- `color` (`Color`)：默认 UI 颜色
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
@@ -91,35 +91,35 @@ Sets the default color theme for the UI.
 def ShouldCreatenewLEDLayer(self, create: bool) -> bool
 ```
 
-Configures whether the UI should create its own LED layer.
+配置 UI 是否应该创建自己的 LED 图层。
 
-**Parameters:**
-- `create` (`bool`): True to create new layer, False to use existing
+**参数：**
+- `create` (`bool`)：True 表示创建新图层，False 表示使用现有图层
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
-## Callback Configuration
+## 回调函数配置
 
 ### `MatrixOS.UI.SetSetupFunc`
 ```python
 def SetSetupFunc(self, setupFunc: any) -> bool
 ```
 
-Sets the setup callback function, called once when UI starts.
+设置初始化回调函数，在 UI 启动时调用一次。
 
-**Parameters:**
-- `setupFunc` (`function`): Setup callback function
+**参数：**
+- `setupFunc` (`function`)：初始化回调函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
 def setup_callback():
-    print("UI setup complete")
+    print("UI 初始化完成")
 
 ui.SetSetupFunc(setup_callback)
 ```
@@ -131,13 +131,13 @@ ui.SetSetupFunc(setup_callback)
 def SetLoopFunc(self, loopFunc: any) -> bool
 ```
 
-Sets the loop callback function, called repeatedly while UI is active.
+设置循环回调函数，在 UI 活跃时重复调用。
 
-**Parameters:**
-- `loopFunc` (`function`): Loop callback function
+**参数：**
+- `loopFunc` (`function`)：循环回调函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
@@ -146,13 +146,13 @@ Sets the loop callback function, called repeatedly while UI is active.
 def SetEndFunc(self, endFunc: any) -> bool
 ```
 
-Sets the end callback function, called when UI exits.
+设置结束回调函数，在 UI 退出时调用。
 
-**Parameters:**
-- `endFunc` (`function`): End callback function
+**参数：**
+- `endFunc` (`function`)：结束回调函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
@@ -161,13 +161,13 @@ Sets the end callback function, called when UI exits.
 def SetPreRenderFunc(self, pre_renderFunc: any) -> bool
 ```
 
-Sets the pre-render callback, called before each frame render.
+设置预渲染回调，在每帧渲染之前调用。
 
-**Parameters:**
-- `pre_renderFunc` (`function`): Pre-render callback function
+**参数：**
+- `pre_renderFunc` (`function`)：预渲染回调函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
@@ -176,13 +176,13 @@ Sets the pre-render callback, called before each frame render.
 def SetPostRenderFunc(self, post_renderFunc: any) -> bool
 ```
 
-Sets the post-render callback, called after each frame render.
+设置后渲染回调，在每帧渲染之后调用。
 
-**Parameters:**
-- `post_renderFunc` (`function`): Post-render callback function
+**参数：**
+- `post_renderFunc` (`function`)：后渲染回调函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
@@ -191,41 +191,41 @@ Sets the post-render callback, called after each frame render.
 def SetKeyEventHandler(self, key_event_handler: any) -> bool
 ```
 
-Sets the key event handler for processing input events.
+设置按键事件处理器，用于处理输入事件。
 
-**Parameters:**
-- `key_event_handler` (`function`): Key event handler function
+**参数：**
+- `key_event_handler` (`function`)：按键事件处理函数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
 def handle_key_event(key_event):
-    print(f"Key at ({key_event.xy.x}, {key_event.xy.y}) pressed")
+    print(f"按键位于 ({key_event.xy.x}, {key_event.xy.y}) 被按下")
 
 ui.SetKeyEventHandler(handle_key_event)
 ```
 
 ---
 
-## Component Management
+## 组件管理
 
 ### `MatrixOS.UI.AddUIComponent`
 ```python
 def AddUIComponent(self, uiComponent: UIComponent, xy: Point) -> bool
 ```
 
-Adds a UI component to the interface at the specified position.
+在指定位置向界面添加 UI 组件。
 
-**Parameters:**
-- `uiComponent` (`UIComponent`): Component to add
-- `xy` (`Point`): Position to place the component
+**参数：**
+- `uiComponent` (`UIComponent`)：要添加的组件
+- `xy` (`Point`)：放置组件的位置
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
 
 button = UIButton()
@@ -240,27 +240,27 @@ ui.AddUIComponent(button, Point(2, 2))
 def ClearUIComponents(self) -> bool
 ```
 
-Removes all UI components from the interface.
+从界面中移除所有 UI 组件。
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
-## UI Configuration
+## UI 配置
 
 ### `MatrixOS.UI.AllowExit`
 ```python
 def AllowExit(self, allow: bool) -> bool
 ```
 
-Configures whether the UI can be exited by the user.
+配置 UI 是否可以被用户退出。
 
-**Parameters:**
-- `allow` (`bool`): True to allow exit, False to prevent
+**参数：**
+- `allow` (`bool`)：True 允许退出，False 禁止退出
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
 ---
 
@@ -269,56 +269,56 @@ Configures whether the UI can be exited by the user.
 def SetFPS(self, fps: int) -> bool
 ```
 
-Sets the frame rate for UI updates.
+设置 UI 更新的帧率。
 
-**Parameters:**
-- `fps` (`int`): Target frames per second
+**参数：**
+- `fps` (`int`)：目标每秒帧数
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
-ui.SetFPS(30)  # Set to 30 FPS
+ui.SetFPS(30)  # 设置为 30 FPS
 ```
 
 ---
 
-## Complete UI Example
+## 完整的 UI 示例
 
 ```python
 
-# Create UI instance
+# 创建 UI 实例
 ui = UI()
-ui.SetName("My Interface")
+ui.SetName("我的界面")
 ui.SetColor(Color(0, 255, 0))
 
-# Setup callback
+# 设置回调
 def setup():
-    print("UI initialized")
+    print("UI 已初始化")
 
-# Loop callback
+# 循环回调
 def loop():
-    # UI update logic here
+    # 这里放 UI 更新逻辑
     pass
 
-# Key event handler
+# 按键事件处理器
 def handle_keys(key_event):
-    if key_event.state == 1:  # Key pressed
-        print(f"Button at ({key_event.xy.x}, {key_event.xy.y}) pressed")
+    if key_event.state == 1:  # 按键被按下
+        print(f"位于 ({key_event.xy.x}, {key_event.xy.y}) 的按钮被按下")
 
-# Configure callbacks
+# 配置回调函数
 ui.SetSetupFunc(setup)
 ui.SetLoopFunc(loop)
 ui.SetKeyEventHandler(handle_keys)
 
-# Add a button component
+# 添加按钮组件
 button = UIButton()
-button.SetName("Click Me")
+button.SetName("点击我")
 button.SetColor(Color(255, 0, 0))
 ui.AddUIComponent(button, Point(3, 3))
 
-# Configure and start UI
+# 配置并启动 UI
 ui.SetFPS(30)
 ui.AllowExit(True)
 ui.Start()
@@ -326,18 +326,18 @@ ui.Start()
 
 ---
 
-## UI Components
+## UI 组件
 
-The UI system includes several pre-built components:
+UI 系统包含几个预构建的组件：
 
 ### UIButton
-Interactive button with press and hold callbacks.
+带有按下和长按回调的交互式按钮。
 
 ### UISelector
-Value selector with multiple lighting modes and directions.
+具有多种照明模式和方向的值选择器。
 
 ### UI4pxNumber
-4-pixel number display component.
+4像素数字显示组件。
 
-See individual component documentation for detailed usage information.
+请查看各个组件的文档以获取详细的使用信息。
 

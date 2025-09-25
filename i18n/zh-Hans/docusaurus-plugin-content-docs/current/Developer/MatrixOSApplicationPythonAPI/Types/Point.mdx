@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # Point
 
-## Overview
+## 概述
 
-The `Point` class represents 2D coordinates for LED positions and UI layouts. Points are used throughout the MatrixOS API for specifying positions on the 8x8 grid.
+`Point` 类表示 LED 位置和 UI 布局的 2D 坐标。在 Matrix OS API 中广泛使用点来指定 8x8 网格上的位置。
 
-*The Point class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Point.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Point.pyi"/>.*
+*Point 类实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_Point.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Point.pyi"/>。*
 
 ---
 
@@ -19,11 +19,11 @@ class Point:
     def __init__(self, x: int, y: int) -> None
 ```
 
-Creates a point at the specified coordinates.
+在指定坐标创建点。
 
-**Parameters:**
-- `x` (`int`): X coordinate (0-7 for 8x8 grid)
-- `y` (`int`): Y coordinate (0-7 for 8x8 grid)
+**参数：**
+- `x` (`int`)：X 坐标（8x8 网格为 0-7）
+- `y` (`int`)：Y 坐标（8x8 网格为 0-7）
 
 **Example:**
 ```python

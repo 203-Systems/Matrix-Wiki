@@ -3,37 +3,37 @@ title: Point
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# Class: `Point`
+# 类：`Point`
 
-The `Point` class represents a 2D point with `x` and `y` coordinates. It provides various utility functions for mathematical operations and transformations, including rotations.
+`Point` 类表示具有 `x` 和 `y` 坐标的二维点。它提供了各种数学运算和变换的实用函数，包括旋转。
 
-*The source file for this class is located in <GithubLink path="os/framework/Point.h"/>*
+*该类的源文件位于 <GithubLink path="os/framework/Point.h"/>*
 
 ---
 
-## Members
+## 成员
 
 ### `x`
 - Type: `int16_t`
-- Description: The x-coordinate of the point.
+- 描述：点的 x 坐标。
 
 ### `y`
 - Type: `int16_t`
-- Description: The y-coordinate of the point.
+- 描述：点的 y 坐标。
 
 ---
 
-## Constructors
+## 构造函数
 
-### Default Constructor
+### 默认构造函数
 ```cpp
 Point();
 ```
-Initializes the point with both `x` and `y` set to `INT16_MIN`, indicating an invalid point.
+初始化点，将 `x` 和 `y` 都设置为 `INT16_MIN`，表示无效点。
 
 ---
 
-### From X and Y Coordinates
+### 从 X 和 Y 坐标创建
 ```cpp
 Point(int16_t x, int16_t y);
 ```

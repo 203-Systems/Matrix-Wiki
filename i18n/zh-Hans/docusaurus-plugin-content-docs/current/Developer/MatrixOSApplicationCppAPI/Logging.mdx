@@ -3,35 +3,35 @@ sidebar_position: 8
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# Logging API
+# 日志 API
 
-## Overview
+## 概述
 
-The Logging API provides a set of functions and macros for logging messages at different levels of severity. The API includes functions for logging error, warning, informational, debug, and verbose messages. The logging level can be set at compile time to control which messages are logged.
+日志 API 提供了一套用于记录不同严重级别消息的函数和宏。该 API 包括记录错误、警告、信息、调试和详细消息的函数。日志级别可以在编译时设置，以控制记录哪些消息。
 
-The use of logging macro is recommended for performance reasons. The macro will generate no code if the system log level is lower than the level of the message being logged.
+推荐使用日志宏，这是出于性能考虑。如果系统日志级别低于要记录消息的级别，宏将不生成任何代码。
 
-The logging functions will generate code regardless of the log level, so they should be used sparingly. In the future there will be a way to change log level at runtime, those functions will be more useful then.
+日志函数无论日志级别如何都会生成代码，因此应谨慎使用。未来会有在运行时更改日志级别的方法，届时这些函数会更有用。
 
-Note: The system log level can be set to debug by using build-dev in build command. All other command has log level None. If you are using build, the default log level in the os/Parameters.h file will be used. (See [Debug Matrix OS](/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp/) for more information.) 
+注意：可以通过在构建命令中使用 build-dev 将系统日志级别设置为调试。所有其他命令的日志级别为 None。如果使用 build，将使用 os/Parameters.h 文件中的默认日志级别。（详情请参阅 [调试 Matrix OS](/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp/)。）
 
-*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/Logging.cpp"/>.*
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/Logging.cpp"/>。*
 
 ---
 
-## Macro Logging
+## 宏日志
 
 ### `MLOGE`
 ```cpp
 #define MLOGE(tag, format, ...)
 ```
 
-Logs an error message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_ERROR`.
+记录错误消息（宏版本）。如果日志级别低于 `LOG_LEVEL_ERROR`，此宏将不生成任何代码。
 
-**Parameters:**
-- `tag`: The tag associated with the log.
-- `format`: The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -40,12 +40,12 @@ Logs an error message (macro version). This macro will generate no code if the l
 #define MLOGW(tag, format, ...)
 ```
 
-Logs a warning message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_WARNING`.
+记录警告消息（宏版本）。如果日志级别低于 `LOG_LEVEL_WARNING`，此宏将不生成任何代码。
 
-**Parameters:**
-- `tag`: The tag associated with the log.
-- `format`: The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -54,12 +54,12 @@ Logs a warning message (macro version). This macro will generate no code if the 
 #define MLOGI(tag, format, ...)
 ```
 
-Logs an informational message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_INFO`.
+记录信息消息（宏版本）。如果日志级别低于 `LOG_LEVEL_INFO`，此宏将不生成任何代码。
 
-**Parameters:**
-- `tag`: The tag associated with the log.
-- `format`: The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -68,12 +68,12 @@ Logs an informational message (macro version). This macro will generate no code 
 #define MLOGD(tag, format, ...)
 ```
 
-Logs a debug message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_DEBUG`.
+记录调试消息（宏版本）。如果日志级别低于 `LOG_LEVEL_DEBUG`，此宏将不生成任何代码。
 
-**Parameters:**
-- `tag`: The tag associated with the log.
-- `format`: The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -82,28 +82,28 @@ Logs a debug message (macro version). This macro will generate no code if the lo
 #define MLOGV(tag, format, ...)
 ```
 
-Logs a verbose message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_VERBOSE`.
+记录详细消息（宏版本）。如果日志级别低于 `LOG_LEVEL_VERBOSE`，此宏将不生成任何代码。
 
-**Parameters:**
-- `tag`: The tag associated with the log.
-- `format`: The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
-## Function Logging
+## 函数日志
 
 ### `MatrixOS::Logging::LogError`
 ```cpp
 void LogError(const string &tag, const string &format, ...);
 ```
 
-Logs an error message.
+记录错误消息。
 
-**Parameters:**
-- `tag` (`const string &`): The tag associated with the log.
-- `format` (`const string &`): The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -112,12 +112,12 @@ Logs an error message.
 void LogWarning(const string &tag, const string &format, ...);
 ```
 
-Logs a warning message.
+记录警告消息。
 
-**Parameters:**
-- `tag` (`const string &`): The tag associated with the log.
-- `format` (`const string &`): The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -126,12 +126,12 @@ Logs a warning message.
 void LogInfo(const string &tag, const string &format, ...);
 ```
 
-Logs an informational message.
+记录信息消息。
 
-**Parameters:**
-- `tag` (`const string &`): The tag associated with the log.
-- `format` (`const string &`): The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -140,12 +140,12 @@ Logs an informational message.
 void LogDebug(const string &tag, const string &format, ...);
 ```
 
-Logs a debug message.
+记录调试消息。
 
-**Parameters:**
-- `tag` (`const string &`): The tag associated with the log.
-- `format` (`const string &`): The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---
 
@@ -154,11 +154,11 @@ Logs a debug message.
 void LogVerbose(const string &tag, const string &format, ...);
 ```
 
-Logs a verbose message.
+记录详细消息。
 
-**Parameters:**
-- `tag` (`const string &`): The tag associated with the log.
-- `format` (`const string &`): The format string for the log message.
-- `...`: Additional arguments for the format string.
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
 
 ---

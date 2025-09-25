@@ -2,44 +2,44 @@
 sidebar_position: 2
 ---
 
-# Building on macOS
+# 在 macOS 上构建
 
-## Installing Homebrew
-Homebrew is a popular package manager for macOS and Linux, allowing you to install and manage software efficiently from the command line. We will use it to install the dependencies needed to build Matrix OS.
+## 安装 Homebrew
+Homebrew 是 macOS 和 Linux 的流行包管理器，可以从命令行高效安装和管理软件。我们将用它来安装构建 Matrix OS 所需的依赖项。
 
-1. Visit [https://brew.sh/](https://brew.sh/) and follow the instructions to install the latest version of Homebrew
-2. After installation, you may need to follow any on-screen instructions to add Homebrew to your system's PATH. Once installed, verify it by running:
+1. 访问 [https://brew.sh/](https://brew.sh/) 并按照说明安装最新版本的 Homebrew
+2. 安装后，可能需要按照屏幕上的说明将 Homebrew 添加到系统 PATH。安装完成后，运行以下命令验证：
 
 ```bash
 brew --version
 ```
 
-## Install Dependencies
-The Matrix OS codebase is hosted in a Git repository, it also uses the Espressif IoT Development Framework for building and uploading to the Mystrix device. We'll install the dependencies for both by running:
+## 安装依赖项
+Matrix OS 代码库托管在 Git 仓库中，它还使用 Espressif IoT 开发框架来构建和上传到魔矩设备。通过运行以下命令安装依赖项：
 
 ```bash
 brew install git cmake ninja dfu-util python3
 pip3 install psutil
 ```
 
-## Clone Matrix OS repo
-1. Clone the Matrix OS repository:
+## 克隆 Matrix OS 仓库
+1. 克隆 Matrix OS 仓库：
    ```bash
    git clone https://github.com/203-Systems/MatrixOS.git
    ```
 
-2. Navigate to the cloned repository:
+2. 进入克隆的仓库：
    ```bash
    cd MatrixOS
    ```
 
-3. Initialize the submodules in the Matrix OS repository:
+3. 初始化 Matrix OS 仓库中的子模块：
    ```bash
    git submodule update --init
    ```
 
-## Install ESP IDF v5.3.1
-Run the following to set up the ESP IDF
+## 安装 ESP IDF v5.3.1
+运行以下命令设置 ESP IDF
 ```bash
 mkdir -p ~/esp
 cd ~/esp
@@ -49,7 +49,7 @@ cd ~/esp/esp-idf
 python3 $HOME/esp/esp-idf/tools/idf_tools.py install riscv32-esp-elf
 ```
 
-## Build Matrix OS
+## 构建 Matrix OS
 1. Load ESP-IDF by sourcing it in your terminal session. You can run this command to set up ESP-IDF for the session:
    ```bash
    source ~/esp/esp-idf/export.sh

@@ -13,7 +13,7 @@ The Utils API in MatrixOS provides utility functions for common operations like 
 
 ---
 
-## `MatrixOS.Utils.StringHash`
+## `StringHash`
 ```python
 def StringHash(text: str) -> int
 ```
@@ -29,14 +29,14 @@ Generates a hash value from a text string. This is useful for creating consisten
 **Example:**
 ```python
 # Generate hash for NVS key
-app_key = MatrixOS.Utils.StringHash("MyApplication")
-user_key = MatrixOS.Utils.StringHash("UserSettings")
+app_key = StringHash("MyApplication")
+user_key = StringHash("UserSettings")
 
 print(f"App key: {app_key}")
 print(f"User key: {user_key}")
 
 # Use with NVS storage
-config_hash = MatrixOS.Utils.StringHash("brightness_config")
+config_hash = StringHash("brightness_config")
 MatrixOS.NVS.SetVariable(config_hash, b"128")
 ```
 
@@ -52,22 +52,22 @@ def create_nv_storage_manager():
     class StringKeyNVS:
         def save(self, key_name: str, data: bytes) -> bool:
             """Save data using a string key name"""
-            hash_key = MatrixOS.Utils.StringHash(key_name)
+            hash_key = StringHash(key_name)
             return MatrixOS.NVS.SetVariable(hash_key, data)
 
         def load(self, key_name: str) -> bytes:
             """Load data using a string key name"""
-            hash_key = MatrixOS.Utils.StringHash(key_name)
+            hash_key = StringHash(key_name)
             return MatrixOS.NVS.GetVariable(hash_key)
 
         def delete(self, key_name: str) -> bool:
             """Delete data using a string key name"""
-            hash_key = MatrixOS.Utils.StringHash(key_name)
+            hash_key = StringHash(key_name)
             return MatrixOS.NVS.DeleteVariable(hash_key)
 
         def exists(self, key_name: str) -> bool:
             """Check if data exists using a string key name"""
-            hash_key = MatrixOS.Utils.StringHash(key_name)
+            hash_key = StringHash(key_name)
             return MatrixOS.NVS.GetSize(hash_key) > 0
 
     return StringKeyNVS()
@@ -101,12 +101,12 @@ def create_app_namespace(app_name: str):
     class AppNamespace:
         def __init__(self, name: str):
             self.app_name = name
-            self.base_hash = MatrixOS.Utils.StringHash(f"app_{name}")
+            self.base_hash = StringHash(f"app_{name}")
 
         def get_key(self, setting_name: str) -> int:
             """Generate namespaced key for a setting"""
             full_key = f"{self.app_name}_{setting_name}"
-            return MatrixOS.Utils.StringHash(full_key)
+            return StringHash(full_key)
 
         def save_setting(self, name: str, value: str) -> bool:
             """Save an application setting"""
@@ -177,9 +177,9 @@ def test_hash_consistency():
 
     # Test multiple calls return same hash
     for test_str in test_strings:
-        hash1 = MatrixOS.Utils.StringHash(test_str)
-        hash2 = MatrixOS.Utils.StringHash(test_str)
-        hash3 = MatrixOS.Utils.StringHash(test_str)
+        hash1 = StringHash(test_str)
+        hash2 = StringHash(test_str)
+        hash3 = StringHash(test_str)
 
         consistent = (hash1 == hash2 == hash3)
         status = "✓ PASS" if consistent else "✗ FAIL"
@@ -197,7 +197,7 @@ def test_hash_consistency():
     collisions = 0
 
     for test_str in test_strings:
-        hash_val = MatrixOS.Utils.StringHash(test_str)
+        hash_val = StringHash(test_str)
         if hash_val in hashes:
             collisions += 1
             print(f"COLLISION: '{test_str}' and '{hashes[hash_val]}' both hash to {hash_val}")
@@ -236,8 +236,8 @@ The `StringHash` function provides:
 **Example of good key naming:**
 ```python
 # Good: descriptive and namespaced
-user_settings_key = MatrixOS.Utils.StringHash("MyApp_v2_user_settings")
-brightness_key = MatrixOS.Utils.StringHash("MyApp_display_brightness")
+user_settings_key = StringHash("MyApp_v2_user_settings")
+brightness_key = StringHash("MyApp_display_brightness")
 
 # Avoid: generic names that might conflict
 generic_key = MatrixOS.Utils.StringHash("settings")  # Too generic

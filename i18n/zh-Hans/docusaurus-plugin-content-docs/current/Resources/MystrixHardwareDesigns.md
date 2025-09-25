@@ -2,14 +2,14 @@
 sidebar_position: 1
 ---
 
-# Mystrix Hardware Designs
+# 魔矩硬件设计
 
-- **[Mystrix (Matrix Block 6)](https://github.com/203-Systems/Matrix-Block6-Hardware)**: Includes PCB designs, mechanical designs, and Blender files for 3D renders.
+- **[魔矩 (Matrix Block 6)](https://github.com/203-Systems/Matrix-Block6-Hardware)**：包括 PCB 设计、机械设计和用于 3D 渲染的 Blender 文件。
 
-## License
+## 许可证
 
-The designs are licensed under the CERN Open Hardware License v2 - Permissive. See the LICENSE file for details.
+设计采用 CERN 开放硬件许可证 v2 - 宽松版 进行许可。详见 LICENSE 文件。
 
-The designs are provided as-is, and 203 Systems is not responsible for any damage or injury that may be caused by the use of these designs.
+设计按原样提供，203 Systems 对因使用这些设计而可能造成的任何损坏或伤害概不负责。
 
-The open source license permits private and commercial use, but 203 Systems reserves the rights to the design patent. We do not permit uses of the design for commercial purposes without modification. If you want to use the design for commercial purposes, please contact us for details.
+开源许可证允许私人和商业使用，但 203 Systems 保留设计专利权。我们不允许在未修改的情况下将设计用于商业目的。如果要将设计用于商业目的，请联系我们了解详细信息。

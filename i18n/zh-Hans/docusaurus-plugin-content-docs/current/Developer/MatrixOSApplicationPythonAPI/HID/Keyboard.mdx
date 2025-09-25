@@ -3,114 +3,112 @@ sidebar_position: 1
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# Keyboard API
+# 键盘 API
 
-## Overview
+## 概述
 
-The HID Keyboard interface allows the device to emulate a standard USB keyboard, sending key press and release events to connected hosts. This enables text input, keyboard shortcuts, and comprehensive keyboard functionality.
+通过 HID 键盘接口可以让设备模拟标准 USB 键盘，向连接的主机发送按键事件。这样就可以输入文字、使用键盘快捷键和实现完整的键盘功能。
 
-*The Python HID Keyboard API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_Keyboard.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_Keyboard.pyi"/>.*
+*Python HID 键盘 API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_Keyboard.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_Keyboard.pyi"/>。*
 
 ---
 
-## Keyboard Functions
-
-### `Tap`
+### `MatrixOS.HID.Keyboard.Tap`
 ```python
 def Tap(keycode: KeyboardKeycode, length_ms: int = 100) -> bool
 ```
 
-Sends a complete keystroke (key press followed by key release) with configurable duration.
+发送完整的按键操作（按下再松开），可以设置按键持续时间。
 
-**Parameters:**
-- `keycode` (`KeyboardKeycode`): Key to press and release
-- `length_ms` (`int`, optional): Duration to hold key in milliseconds (defaults to 100)
+**参数：**
+- `keycode` (`KeyboardKeycode`)：要按下和松开的按键
+- `length_ms` (`int`, 可选)：按键持续时间（毫秒），默认 100
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
-# Type the letter 'A' with default 100ms duration
+# 输入字母 'A'，使用默认的 100ms 持续时间
 MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
 
-# Type a space with custom 50ms duration
+# 输入空格键，自定义 50ms 持续时间
 MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_SPACE, 50)
 ```
 
 ---
 
-### `Press`
+### `MatrixOS.HID.Keyboard.Press`
 ```python
 def Press(keycode: KeyboardKeycode) -> bool
 ```
 
-Presses a key (key down event) without releasing it.
+按下按键（按键按下事件），但不松开。
 
-**Parameters:**
-- `keycode` (`KeyboardKeycode`): Key to press
+**参数：**
+- `keycode` (`KeyboardKeycode`)：要按下的按键
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
-# Press and hold Ctrl key
+# 按下并保持 Ctrl 键
 MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
 
-# Press Shift key
+# 按下 Shift 键
 MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_SHIFT)
 ```
 
 ---
 
-### `Release`
+### `MatrixOS.HID.Keyboard.Release`
 ```python
 def Release(keycode: KeyboardKeycode) -> bool
 ```
 
-Releases a previously pressed key (key up event).
+松开之前按下的按键（按键松开事件）。
 
-**Parameters:**
-- `keycode` (`KeyboardKeycode`): Key to release
+**参数：**
+- `keycode` (`KeyboardKeycode`)：要松开的按键
 
-**Returns:**
-- `bool`: True if successful
+**返回值：**
+- `bool`：成功时返回 True
 
-**Example:**
+**示例：**
 ```python
-# Release Ctrl key
+# 松开 Ctrl 键
 MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
 
-# Release Shift key
+# 松开 Shift 键
 MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_SHIFT)
 ```
 
 ---
 
-### `ReleaseAll`
+### `MatrixOS.HID.Keyboard.ReleaseAll`
 ```python
 def ReleaseAll() -> None
 ```
 
-Releases all currently pressed keys.
+松开当前按下的所有按键。
 
-**Example:**
+**示例：**
 ```python
-# Ensure no keys are stuck
+# 确保没有按键卡住
 MatrixOS.HID.Keyboard.ReleaseAll()
 ```
 
 ---
 
-## Keyboard Examples
+## 键盘使用示例
 
-### Basic Text Input
+### 基本文字输入
 ```python
 def type_text(text):
-    """Type text character by character"""
+    """逐字符输入文本"""
 
-    # Character to keycode mapping (simplified)
+    # 字符到按键码的映射（简化版）
     char_map = {
         'a': KeyboardKeycode.KEY_A, 'b': KeyboardKeycode.KEY_B, 'c': KeyboardKeycode.KEY_C,
         'd': KeyboardKeycode.KEY_D, 'e': KeyboardKeycode.KEY_E, 'f': KeyboardKeycode.KEY_F,
@@ -130,17 +128,17 @@ def type_text(text):
 
     for char in text.lower():
         if char in char_map:
-            MatrixOS.HID.Keyboard.Write(char_map[char])
-            MatrixOS.SYS.DelayMs(50)  # Small delay between characters
+            MatrixOS.HID.Keyboard.Tap(char_map[char])
+            MatrixOS.SYS.DelayMs(50)  # 字符之间稍微延时
 
-# Usage
+# 使用方法
 type_text("hello world\n")
 ```
 
-### Keyboard Shortcuts
+### 键盘快捷键
 ```python
 def send_ctrl_c():
-    """Send Ctrl+C shortcut"""
+    """发送 Ctrl+C 快捷键"""
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_C)
     MatrixOS.SYS.DelayMs(10)
@@ -148,7 +146,7 @@ def send_ctrl_c():
     MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
 
 def send_ctrl_v():
-    """Send Ctrl+V shortcut"""
+    """发送 Ctrl+V 快捷键"""
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_V)
     MatrixOS.SYS.DelayMs(10)
@@ -156,75 +154,75 @@ def send_ctrl_v():
     MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
 
 def send_alt_tab():
-    """Send Alt+Tab shortcut"""
+    """发送 Alt+Tab 快捷键"""
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_ALT)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_TAB)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_TAB)
     MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_ALT)
 
-# Usage
+# 使用方法
 send_ctrl_c()
 MatrixOS.SYS.DelayMs(100)
 send_ctrl_v()
 ```
 
-### Function Keys and Special Keys
+### 功能键和特殊键
 ```python
 def media_controls():
-    """Example media control functions"""
+    """媒体控制功能示例"""
 
-    # Volume controls (if available)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_VOLUME_UP)
+    # 音量控制（如果支持的话）
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_VOLUME_UP)
     MatrixOS.SYS.DelayMs(100)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_VOLUME_DOWN)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_VOLUME_DOWN)
 
-    # Function keys
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_F1)
+    # 功能键
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_F1)
     MatrixOS.SYS.DelayMs(100)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_F12)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_F12)
 
 def navigation_keys():
-    """Example navigation key usage"""
+    """导航键使用示例"""
 
-    # Arrow keys
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_UP_ARROW)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_DOWN_ARROW)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_LEFT_ARROW)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_RIGHT_ARROW)
+    # 方向键
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_UP_ARROW)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_DOWN_ARROW)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_LEFT_ARROW)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_RIGHT_ARROW)
 
-    # Page navigation
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_PAGE_UP)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_PAGE_DOWN)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_HOME)
-    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_END)
+    # 页面导航
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_PAGE_UP)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_PAGE_DOWN)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_HOME)
+    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_END)
 
 media_controls()
 navigation_keys()
 ```
 
-### Advanced Macro System
+### 高级宏系统
 ```python
 def keyboard_macro_pad():
-    """Turn device into a comprehensive keyboard macro pad"""
+    """把设备变成全面的键盘宏控制器"""
 
-    # Define macros for each key
+    # 为每个按键定义宏
     macros = {
-        0: {"name": "Copy", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_C]},
-        1: {"name": "Paste", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_V]},
-        2: {"name": "Cut", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_X]},
-        3: {"name": "Undo", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_Z]},
-        4: {"name": "Redo", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_Y]},
-        5: {"name": "Select All", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_A]},
-        6: {"name": "Save", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_S]},
-        7: {"name": "Find", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_F]},
+        0: {"name": "复制", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_C]},
+        1: {"name": "粘贴", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_V]},
+        2: {"name": "剪切", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_X]},
+        3: {"name": "撤销", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_Z]},
+        4: {"name": "重做", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_Y]},
+        5: {"name": "全选", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_A]},
+        6: {"name": "保存", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_S]},
+        7: {"name": "查找", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_F]},
 
-        8: {"name": "New Tab", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_T]},
-        9: {"name": "Close Tab", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_W]},
-        10: {"name": "Refresh", "keys": [KeyboardKeycode.KEY_F5]},
-        11: {"name": "Dev Tools", "keys": [KeyboardKeycode.KEY_F12]},
+        8: {"name": "新标签页", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_T]},
+        9: {"name": "关闭标签页", "keys": [KeyboardKeycode.KEY_LEFT_CTRL, KeyboardKeycode.KEY_W]},
+        10: {"name": "刷新", "keys": [KeyboardKeycode.KEY_F5]},
+        11: {"name": "开发者工具", "keys": [KeyboardKeycode.KEY_F12]},
 
-        16: {"name": "Vol Up", "keys": [KeyboardKeycode.KEY_VOLUME_UP]},
-        17: {"name": "Vol Down", "keys": [KeyboardKeycode.KEY_VOLUME_DOWN]},
-        18: {"name": "Mute", "keys": [KeyboardKeycode.KEY_MUTE]},
+        16: {"name": "音量+", "keys": [KeyboardKeycode.KEY_VOLUME_UP]},
+        17: {"name": "音量-", "keys": [KeyboardKeycode.KEY_VOLUME_DOWN]},
+        18: {"name": "静音", "keys": [KeyboardKeycode.KEY_MUTE]},
 
         24: {"name": "Alt+Tab", "keys": [KeyboardKeycode.KEY_LEFT_ALT, KeyboardKeycode.KEY_TAB]},
         25: {"name": "Win+D", "keys": [KeyboardKeycode.KEY_LEFT_GUI, KeyboardKeycode.KEY_D]},
@@ -232,48 +230,48 @@ def keyboard_macro_pad():
     }
 
     def execute_macro(macro):
-        """Execute a keyboard macro"""
-        print(f"Executing: {macro['name']}")
+        """执行键盘宏"""
+        print(f"执行中：{macro['name']}")
 
-        # Press all keys
+        # 按下所有按键
         for key in macro['keys']:
             MatrixOS.HID.Keyboard.Press(key)
 
         MatrixOS.SYS.DelayMs(10)
 
-        # Release all keys in reverse order
+        # 按相反顺序松开所有按键
         for key in reversed(macro['keys']):
             MatrixOS.HID.Keyboard.Release(key)
 
     def update_display():
-        """Update LED display to show macro assignments"""
+        """更新 LED 显示以显示宏分配"""
         for key_id, macro in macros.items():
             xy = MatrixOS.KeyPad.ID2XY(key_id)
-            # Color code different macro types
-            if "Vol" in macro['name'] or "Mute" in macro['name']:
-                color = Color(255, 0, 255)  # Purple for audio
+            # 用颜色区分不同的宏类型
+            if "音量" in macro['name'] or "静音" in macro['name']:
+                color = Color(255, 0, 255)  # 紫色表示音频
             elif "Win+" in macro['name'] or "Alt+" in macro['name']:
-                color = Color(0, 255, 255)  # Cyan for system
+                color = Color(0, 255, 255)  # 青色表示系统
             elif "Ctrl+" in macro['name']:
-                color = Color(0, 255, 0)    # Green for editing
+                color = Color(0, 255, 0)    # 绿色表示编辑
             else:
-                color = Color(255, 255, 0)  # Yellow for other
+                color = Color(255, 255, 0)  # 黄色表示其他
 
             MatrixOS.LED.SetColor(xy, color, 100)
 
         MatrixOS.LED.Update(255)
 
-    print("Keyboard Macro Pad Active")
-    print("Available macros:")
+    print("键盘宏控制器已激活")
+    print("可用宏：")
     for key_id, macro in macros.items():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
-        print(f"  Key ({xy.x},{xy.y}): {macro['name']}")
+        print(f"  按键 ({xy.x},{xy.y})：{macro['name']}")
 
     update_display()
 
     while True:
         if not MatrixOS.HID.Ready():
-            print("HID not ready, retrying...")
+            print("HID 未准备好，重新尝试...")
             MatrixOS.SYS.DelayMs(1000)
             continue
 
@@ -285,7 +283,7 @@ def keyboard_macro_pad():
             if key_info.Active() and key_id in macros:
                 execute_macro(macros[key_id])
 
-                # Flash the key
+                # 闪烁按键
                 xy = MatrixOS.KeyPad.ID2XY(key_id)
                 MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                 MatrixOS.LED.Update(255)
@@ -295,24 +293,24 @@ def keyboard_macro_pad():
 keyboard_macro_pad()
 ```
 
-### Text Templates and Snippets
+### 文本模板和代码片段
 ```python
 def text_snippet_system():
-    """System for quickly inserting text snippets"""
+    """快速插入文本片段的系统"""
 
     snippets = {
         0: "hello@example.com",
-        1: "Thank you for your email.",
-        2: "Best regards,\nJohn Smith",
-        3: "Please find attached",
-        4: "Looking forward to hearing from you.",
+        1: "感谢您的邮件。",
+        2: "此致敬礼，\n张三",
+        3: "请查看附件",
+        4: "期待您的回复。",
         8: "https://github.com/",
         9: "https://stackoverflow.com/",
         10: "https://docs.python.org/",
     }
 
     def type_snippet(text):
-        """Type a text snippet with proper character mapping"""
+        """输入文本片段，正确映射字符"""
 
         char_map = {
             'a': KeyboardKeycode.KEY_A, 'b': KeyboardKeycode.KEY_B, 'c': KeyboardKeycode.KEY_C,
@@ -329,35 +327,35 @@ def text_snippet_system():
             '7': KeyboardKeycode.KEY_7, '8': KeyboardKeycode.KEY_8, '9': KeyboardKeycode.KEY_9,
             '0': KeyboardKeycode.KEY_0, ' ': KeyboardKeycode.KEY_SPACE,
             '\n': KeyboardKeycode.KEY_ENTER, '\t': KeyboardKeycode.KEY_TAB,
-            '@': KeyboardKeycode.KEY_2,  # Shift+2 for @
+            '@': KeyboardKeycode.KEY_2,  # Shift+2 输入 @
             '.': KeyboardKeycode.KEY_PERIOD, ',': KeyboardKeycode.KEY_COMMA,
-            ':': KeyboardKeycode.KEY_SEMICOLON,  # Shift+; for :
+            ':': KeyboardKeycode.KEY_SEMICOLON,  # Shift+; 输入 :
             '/': KeyboardKeycode.KEY_SLASH, '-': KeyboardKeycode.KEY_MINUS
         }
 
         for char in text.lower():
             if char == '@':
-                # Special handling for @ symbol (Shift+2)
+                # @ 符号的特殊处理（Shift+2）
                 MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_SHIFT)
-                MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_2)
+                MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_2)
                 MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_SHIFT)
             elif char == ':':
-                # Special handling for : symbol (Shift+;)
+                # : 符号的特殊处理（Shift+;）
                 MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_SHIFT)
-                MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_SEMICOLON)
+                MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_SEMICOLON)
                 MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_SHIFT)
             elif char in char_map:
-                MatrixOS.HID.Keyboard.Write(char_map[char])
+                MatrixOS.HID.Keyboard.Tap(char_map[char])
 
-            MatrixOS.SYS.DelayMs(30)  # Delay between characters
+            MatrixOS.SYS.DelayMs(30)  # 字符之间延时
 
-    print("Text Snippet System Active")
-    print("Available snippets:")
+    print("文本片段系统已激活")
+    print("可用片段：")
     for key_id, snippet in snippets.items():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
-        print(f"  Key ({xy.x},{xy.y}): {snippet[:30]}...")
+        print(f"  按键 ({xy.x},{xy.y})：{snippet[:30]}...")
 
-    # Display snippet keys
+    # 显示片段按键
     for key_id in snippets.keys():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
         MatrixOS.LED.SetColor(xy, Color(0, 200, 255), 150)
@@ -371,17 +369,17 @@ def text_snippet_system():
                 key_info = key_event.KeyInfo()
 
                 if key_info.Active() and key_id in snippets:
-                    print(f"Typing snippet: {snippets[key_id][:30]}...")
+                    print(f"正在输入片段：{snippets[key_id][:30]}...")
 
-                    # Flash key
+                    # 闪烁按键
                     xy = MatrixOS.KeyPad.ID2XY(key_id)
                     MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                     MatrixOS.LED.Update(255)
 
-                    # Type the snippet
+                    # 输入片段
                     type_snippet(snippets[key_id])
 
-                    # Restore color
+                    # 恢复颜色
                     MatrixOS.LED.SetColor(xy, Color(0, 200, 255), 150)
                     MatrixOS.LED.Update(255)
 
@@ -390,50 +388,49 @@ text_snippet_system()
 
 ---
 
-## Keyboard Keycodes Reference
+## 键盘按键码参考
 
-Common keyboard keycodes available in `KeyboardKeycode`:
+`KeyboardKeycode` 中可用的常见键盘按键码：
 
-### Letters
-- `KEY_A` through `KEY_Z`: Letter keys
+### 字母
+- `KEY_A` 到 `KEY_Z`：字母键
 
-### Numbers
-- `KEY_1` through `KEY_0`: Number row keys
-- `KEY_KEYPAD_1` through `KEY_KEYPAD_0`: Numpad keys
+### 数字
+- `KEY_1` 到 `KEY_0`：数字行按键
+- `KEY_KEYPAD_1` 到 `KEY_KEYPAD_0`：小键盘按键
 
-### Modifiers
-- `KEY_LEFT_CTRL`, `KEY_RIGHT_CTRL`: Control keys
-- `KEY_LEFT_SHIFT`, `KEY_RIGHT_SHIFT`: Shift keys
-- `KEY_LEFT_ALT`, `KEY_RIGHT_ALT`: Alt keys
-- `KEY_LEFT_GUI`, `KEY_RIGHT_GUI`: Windows/Cmd keys
+### 修饰键
+- `KEY_LEFT_CTRL`、`KEY_RIGHT_CTRL`：Control 键
+- `KEY_LEFT_SHIFT`、`KEY_RIGHT_SHIFT`：Shift 键
+- `KEY_LEFT_ALT`、`KEY_RIGHT_ALT`：Alt 键
+- `KEY_LEFT_GUI`、`KEY_RIGHT_GUI`：Windows/Cmd 键
 
-### Special Keys
-- `KEY_ENTER`: Enter key
-- `KEY_ESCAPE`: Escape key
-- `KEY_BACKSPACE`: Backspace key
-- `KEY_TAB`: Tab key
-- `KEY_SPACE`: Space bar
-- `KEY_DELETE`: Delete key
+### 特殊键
+- `KEY_ENTER`：回车键
+- `KEY_ESCAPE`：Esc 键
+- `KEY_BACKSPACE`：退格键
+- `KEY_TAB`：Tab 键
+- `KEY_SPACE`：空格键
+- `KEY_DELETE`：Delete 键
 
-### Function Keys
-- `KEY_F1` through `KEY_F12`: Function keys
+### 功能键
+- `KEY_F1` 到 `KEY_F12`：功能键
 
-### Arrow Keys
-- `KEY_RIGHT_ARROW`, `KEY_LEFT_ARROW`
-- `KEY_DOWN_ARROW`, `KEY_UP_ARROW`
+### 方向键
+- `KEY_RIGHT_ARROW`、`KEY_LEFT_ARROW`
+- `KEY_DOWN_ARROW`、`KEY_UP_ARROW`
 
-### Navigation Keys
-- `KEY_PAGE_UP`, `KEY_PAGE_DOWN`
-- `KEY_HOME`, `KEY_END`
+### 导航键
+- `KEY_PAGE_UP`、`KEY_PAGE_DOWN`
+- `KEY_HOME`、`KEY_END`
 - `KEY_INSERT`
 
-### Media Keys (device dependent)
-- `KEY_VOLUME_UP`, `KEY_VOLUME_DOWN`
+### 媒体键（设备相关）
+- `KEY_VOLUME_UP`、`KEY_VOLUME_DOWN`
 - `KEY_MUTE`
 
-### Punctuation
-- `KEY_PERIOD`, `KEY_COMMA`
-- `KEY_SEMICOLON`, `KEY_APOSTROPHE`
-- `KEY_SLASH`, `KEY_BACKSLASH`
-- `KEY_MINUS`, `KEY_EQUAL`
-
+### 标点符号
+- `KEY_PERIOD`、`KEY_COMMA`
+- `KEY_SEMICOLON`、`KEY_APOSTROPHE`
+- `KEY_SLASH`、`KEY_BACKSLASH`
+- `KEY_MINUS`、`KEY_EQUAL`

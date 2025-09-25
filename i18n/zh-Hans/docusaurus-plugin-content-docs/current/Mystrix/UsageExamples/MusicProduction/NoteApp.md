@@ -2,8 +2,8 @@
 sidebar_position: 1
 ---
 
-# Note App
+# Note 应用
 
 <!-- idea: image here? -->
 
-Refer to the Matrix OS [Note App](/docs/MatrixOS/Applications/Note) documentation for instructions on how to use the Mystrix as a customizable musical controller.
+请参阅 Matrix OS [Note 应用](/docs/MatrixOS/Applications/Note) 文档，了解如何将魔矩用作可定制的音乐控制器。

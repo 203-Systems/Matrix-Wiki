@@ -13,9 +13,7 @@ The HID Keyboard interface allows the device to emulate a standard USB keyboard,
 
 ---
 
-## Keyboard Functions
-
-### `Tap`
+### `MatrixOS.HID.Keyboard.Tap`
 ```python
 def Tap(keycode: KeyboardKeycode, length_ms: int = 100) -> bool
 ```
@@ -40,7 +38,7 @@ MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_SPACE, 50)
 
 ---
 
-### `Press`
+### `MatrixOS.HID.Keyboard.Press`
 ```python
 def Press(keycode: KeyboardKeycode) -> bool
 ```
@@ -64,7 +62,7 @@ MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_SHIFT)
 
 ---
 
-### `Release`
+### `MatrixOS.HID.Keyboard.Release`
 ```python
 def Release(keycode: KeyboardKeycode) -> bool
 ```
@@ -88,7 +86,7 @@ MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_SHIFT)
 
 ---
 
-### `ReleaseAll`
+### `MatrixOS.HID.Keyboard.ReleaseAll`
 ```python
 def ReleaseAll() -> None
 ```

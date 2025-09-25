@@ -4,28 +4,28 @@ sidebar_position: 5
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Update Matrix OS
+# 更新 Matrix OS
 
-## Enter OS Update Mode
+## 进入操作系统更新模式
 
-Mystrix can enter OS update mode in two ways:
+魔矩可以通过两种方式进入操作系统更新模式：
 
-1. Use the red button on the bottom left of the [settings menu](/docs/MatrixOS/SystemSettings).
-2. Hold down the function key (middle button) while plugging in Mystrix. (If you can't boot into the OS, this is your backup method)
+1. 使用[设置菜单](/docs/MatrixOS/SystemSettings)左下角的红色按钮。
+2. 在插入魔矩时按住功能键（中间按钮）。（如果无法启动到操作系统，这是备用方法）
 
-You should see an arrow on the Mystrix.
+应该在魔矩上看到一个箭头。
 
-If the arrow is **red**, it means that the device is not connected via USB.
+如果箭头是**红色**，表示设备未通过 USB 连接。
 
-If the arrow is **green**, it means that the device is connected via USB and is ready to receive a new OS.
+如果箭头是**绿色**，表示设备已通过 USB 连接并准备接收新操作系统。
 
 <!-- this has to be there and not at the top cause than it breaks spaces in the navigation -->
 
 export function ArrowGreen() {
 const uiElements = [
     {
-        "name": "Arrow",
-        "desc": "If the arrow is green, it means that the device is connected via USB and is ready to receive a new OS, if the arrow is red, it means that the device is not connected via USB.",
+        "name": "箭头",
+        "desc": "如果箭头是绿色，表示设备已通过 USB 连接并准备接收新操作系统；如果箭头是红色，表示设备未通过 USB 连接。",
         "elements": [
             {
                 "pos": [3, 2],
@@ -41,8 +41,8 @@ const uiElements = [
     }
 ];
 
-    const uiName = "Connected";
-    const uiDescription = "The animation that shows up when Mystrix is in OS update mode and has connected via USB.";
+    const uiName = "已连接";
+    const uiDescription = "魔矩处于操作系统更新模式并已通过 USB 连接时显示的动画。";
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -53,24 +53,24 @@ const uiElements = [
 
 <ArrowGreen />
 
-## Upload New OS
+## 上传新操作系统
 
-You will need a new firmware file to update your Mystrix. You can find them in the [release section of the Matrix OS GitHub](https://github.com/203-Systems/MatrixOS/releases).
+你需要一个新的固件文件来更新你的魔矩。你可以在 [Matrix OS GitHub 的发布区](https://github.com/203-Systems/MatrixOS/releases) 找到它们。
 
-Mystrix will show up as a USB mass storage drive on your host device. Simply copy the UF2 file of your desired OS into this drive.
+魔矩将在你的主机设备上显示为 USB 大容量存储驱动器。只需将所需操作系统的 UF2 文件复制到此驱动器中即可。
 
-![Disk](MatrixDisk.png)
+![磁盘](MatrixDisk.png)
 
-Your Mystrix should start showing a blue arrow animation. Once the update is completed, Mystrix will automatically reboot into the new OS.
+你的魔矩应该开始显示蓝色箭头动画。更新完成后，魔矩将自动重启到新操作系统。
 
-:::info[Note]
-If you're on a Mac, you might get a warning that Mystrix was ejected improperly.
-![Eject](MatrixEject.png)
-You can ignore this warning.
+:::info[注意]
+如果你使用的是 Mac，你可能会收到魔矩被错误弹出的警告。
+![弹出](MatrixEject.png)
+你可以忽略此警告。
 :::
 
-## Downgrade Matrix OS
+## 降级 Matrix OS
 
-:::danger[Downgrade Matrix OS]
-While you can downgrade Matrix OS, this is not recommended as the downgraded OS might clear all user data. If you downgrade the OS to a version that is not compatible with your device, you might not be able to boot into the OS.
+:::danger[降级 Matrix OS]
+虽然你可以降级 Matrix OS，但这不被推荐，因为降级的操作系统可能会清除所有用户数据。如果你将操作系统降级到与你的设备不兼容的版本，你可能无法启动到操作系统。
 :::

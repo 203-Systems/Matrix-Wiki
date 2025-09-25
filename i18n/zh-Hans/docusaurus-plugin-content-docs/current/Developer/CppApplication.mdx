@@ -5,33 +5,33 @@ sidebar_position: 1
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-# Code your application (C++)
+# 编写 C++ 应用
 
-## Native Application System Overview
+## 原生应用系统概述
 
-In Matrix OS, native (C++) applications will be running on the device as it's own thread in the OS and have access to System API, device level low level API, and any third party library. This is great for performance but not great for portability and sharing. (hint hint)
+在 Matrix OS 中，原生 (C++) 应用程序将在设备上作为操作系统中的独立线程运行，并可以访问系统 API、设备级低级 API 和任何第三方库。这对性能很有好处，但对可移植性和共享性不太友好。（提示提示）
 
-The application code will be similar to the Arduino, which you will have an user defined Setup() for the initialization of your application, a user defined Loop() as infinite loop for your application code. Additionally, you will have a user defined End() for end of your application and a Exit() function that you can call to exit the application.
+应用程序代码类似于 Arduino，你将有一个用户定义的 Setup() 函数用于应用程序初始化，一个用户定义的 Loop() 函数作为应用程序代码的无限循环。此外，你还将有一个用户定义的 End() 函数用于应用程序结束，以及一个可以调用以退出应用程序的 Exit() 函数。
 
-## Available API
+## 可用 API
 
-- Matrix OS C++ API - Matrix OS provided APIs, they are the easiest to use, provides the best portability, and memory safe (supposedly).
-- Device Layer API - Device layer provided API. Matrix OS API are largely a wrapper over those and you should be using them instead. There might be some non standard API for some special device features that have not been added into the Matrix OS API.
-- FreeRTOS API - Matrix OS runs on FreeRTOS and you can use FreeRTOS API as well to create threads and cross thread communication. 
-- Any third party C/C++ library you wish to use - You should be able to include them inside your application folder and use them.
+- Matrix OS C++ API - Matrix OS 提供的 API，它们是最容易使用的，提供最佳的可移植性和内存安全性（据说如此）。
+- 设备层 API - 设备层提供的 API。Matrix OS API 很大程度上是对这些 API 的封装，你应该使用 Matrix OS API。对于一些尚未添加到 Matrix OS API 中的特殊设备功能，可能会有一些非标准 API。
+- FreeRTOS API - Matrix OS 运行在 FreeRTOS 上，你也可以使用 FreeRTOS API 来创建线程和跨线程通信。
+- 你希望使用的任何第三方 C/C++ 库 - 你应该能够将它们包含在应用程序文件夹中并使用它们。
 
-:::warning[Non Stable API & Build system]
-As this project is still evolving, I can not promise APIs will stay the same. There are constantly a lot of new usages that requires new API and changes of existing API. Your code will break, but I don't know when and how. I do try to maintain backward compatibility as much as possible but I won't try to save an obviously bad design.
+:::warning[不稳定的 API 和构建系统]
+由于该项目仍在发展中，我无法保证 API 会保持不变。经常会有很多新用法需要新的 API 和对现有 API 的更改。你的代码会出现问题，但我不知道何时以及如何出现。我会尽可能地保持向后兼容性，但不会试图拯救明显糟糕的设计。
 
-Matrix OS build system might be receiving an overhaul soon so it will be smarter to know what to compile and what not to. Your code might need to change a bit to adapt to it, but it shouldn't be very hard and there will be migration guide.
+Matrix OS 构建系统可能很快会进行大修，以便更智能地知道要编译什么和不编译什么。你的代码可能需要稍作更改以适应它，但这应该不会很困难，并且会有迁移指南。
 :::
 
-## Example App
+## 示例应用
 
-We use the example App in the Matrix OS the example to explain how the application works. You can find the source code at the [Matrix OS repo](https://github.com/203Null/MatrixOS/tree/WiFi-Example/applications/Example)
+我们使用 Matrix OS 中的示例应用作为例子来解释应用程序是如何工作的。你可以在 [Matrix OS 仓库](https://github.com/203Null/MatrixOS/tree/WiFi-Example/applications/Example) 找到源代码
 
 
-### Header File
+### 头文件
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus} showLineNumbers>
 {`
@@ -89,7 +89,7 @@ REGISTER_APPLICATION(ExampleAPP);
 `}
 </SyntaxHighlighter>
 
-#### Break Down 
+#### 详细分解
 
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
@@ -98,7 +98,7 @@ REGISTER_APPLICATION(ExampleAPP);
 `} 
 </SyntaxHighlighter>
 
-This includes the MatrixOS.h file, which includes all the framework, type, and APIs provided by the Matrix OS.
+这包含了 MatrixOS.h 文件，其中包含了 Matrix OS 提供的所有框架、类型和 API。
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
 {`
@@ -106,7 +106,7 @@ This includes the MatrixOS.h file, which includes all the framework, type, and A
 `}
 </SyntaxHighlighter>
 
-This include the Application.h file, which is the base class for all applications. It provides the basic structure for the application.
+这包含了 Application.h 文件，它是所有应用程序的基类。它为应用程序提供了基本结构。
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
 {`
@@ -114,7 +114,7 @@ This include the Application.h file, which is the base class for all application
 `}
 </SyntaxHighlighter>
 
-This include the BrightnessControl.h file, which is an external UI for brightness control. This shows that you can include UI or UI elements from other applications. (Although it's not recommended)
+这包含了 BrightnessControl.h 文件，它是一个用于亮度控制的外部 UI。这表明你可以包含来自其他应用程序的 UI 或 UI 元素。（尽管不推荐这样做）
 
 
 
@@ -130,10 +130,10 @@ void End() override;
 `}
 </SyntaxHighlighter>
 
-This is the class definition of the ExampleAPP class. It inherits from the Application class, which is the base class for all applications. 
-The Application_Info info is a static variable that contains the meta data of the application. It includes the name, author, color, version, and visibility of the application. (See below for more info)
+这是 ExampleAPP 类的类定义。它继承自 Application 类，后者是所有应用程序的基类。
+Application_Info info 是一个静态变量，包含应用程序的元数据。它包括应用程序的名称、作者、颜色、版本和可见性。（更多信息请参见下文）
 
-It also defines the override of Setup(), Loop(), and End() functions from the Application class. (If you don't need them, you can remove them and not override them. They will do nothing by default)
+它还定义了对 Application 类中 Setup()、Loop() 和 End() 函数的重写。（如果你不需要它们，可以删除它们并不重写它们。它们默认情况下不会做任何事情）
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
 {`
@@ -141,10 +141,10 @@ uint8_t number = 0;
 Color color = Color(0xFFFFFF);
 `}
 </SyntaxHighlighter>
-This is the variable definition of the number and color variable. They are used by the application to store the number and color at run time.
+这是 number 和 color 变量的变量定义。它们被应用程序用于在运行时存储数字和颜色。
 
-:::warning[Local variable only]
-Make sure all your variables are within the class. If you define them outside of the class, they will be global variables and the memory will not be managed by the OS. This will cause memory to be taken even if the application is not running.
+:::warning[仅限本地变量]
+确保你的所有变量都在类内。如果你在类外部定义它们，它们将成为全局变量，并且内存不会被操作系统管理。这将导致即使应用程序没有运行时也会占用内存。
 :::
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
@@ -153,19 +153,19 @@ Make sure all your variables are within the class. If you define them outside of
   CreateSavedVar("Example", color, Color, Color(0xFFFFFF))
 `}
 </SyntaxHighlighter>
-If you want to save your variable between restarts, you can use the CreateSavedVar() macro.
-This is the saved variable definition of the number and color variable. They are used by the application to store the number and color between restarts. 
+如果你希望在重启之间保存你的变量，可以使用 CreateSavedVar() 宏。
+这是 number 和 color 变量的保存变量定义。它们被应用程序用于在重启之间存储数字和颜色。
 
-The macro is defined as CreateSavedVar(namespace string, variable name, variable type, default value). 
-- Namespace string is the name of the application. It is used to separate the saved variables between different applications. (You can technically use the same namespace to access the saved variables of another application, but it's not recommended)
-- Variable name is the name of the variable. It is used to identify the variable in the saved variables. You also use this name to access the variable in the code.
-- Variable type is the type of the variable. It is used to determine the size of the variable and how to save/load it.
-- Default value is the default value of the variable. It is used to initialize the variable if it is not saved yet.
+宏定义为 CreateSavedVar(命名空间字符串、变量名称、变量类型、默认值)。
+- 命名空间字符串是应用程序的名称。它用于在不同应用程序之间分隔保存的变量。（从技术上讲，你可以使用相同的命名空间来访问另一个应用程序的保存变量，但不推荐这样做）
+- 变量名称是变量的名称。它用于在保存变量中标识变量。你也使用此名称在代码中访问变量。
+- 变量类型是变量的类型。它用于确定变量的大小以及如何保存/加载它。
+- 默认值是变量的默认值。如果变量尚未保存，它用于初始化变量。
 
-In most case when you are access the variable, you can just use the variable name as if it's a normal variable. The value will be saved & loaded automatically! For primitive types, you also will be able to use it in arithmetic operations.
-If you have a complex variable, you might need to use .Get() to get a pointer to the variable, modifiy it, and then use .Save() to save it.
+在大多数情况下，当你访问变量时，你可以像普通变量一样使用变量名。值将自动保存和加载！对于原始类型，你也能够在算术运算中使用它。
+如果你有一个复杂变量，你可能需要使用 .Get() 来获得指向变量的指针，修改它，然后使用 .Save() 来保存它。
 
-I know the macro is not very intuitive and it's not following C's syntex on varible creation. If you have a better idea, please let me know.
+我知道这个宏不是很直观，也不遵循 C 语言在变量创建上的语法。如果你有更好的想法，请告诉我。
 
 For more info on saved variable, see [Saved Variable](/docs/Developer/MatrixOSApplicationCppAPI/Utilities/SavedVariable)
 

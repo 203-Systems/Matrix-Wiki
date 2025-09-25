@@ -3,269 +3,267 @@ sidebar_position: 3
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# Gamepad API
+# 手柄 API
 
-## Overview
+## 概述
 
-The HID Gamepad interface allows the device to emulate a standard USB game controller, providing button controls, analog sticks, directional pad, and trigger functionality. This enables the device to work as a gamepad for gaming applications and other controller-aware software.
+通过 HID 手柄接口可以让设备模拟标准 USB 游戏控制器，提供按钮控制、模拟摇杆、方向键和扳机功能。这样设备就能作为手柄用于游戏和其他支持控制器的软件。
 
-*The Python HID Gamepad API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_Gamepad.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_Gamepad.pyi"/>.*
+*Python HID 手柄 API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_Gamepad.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_Gamepad.pyi"/>。*
 
 ---
 
-## Button Functions
-
-### `Press`
+### `MatrixOS.HID.Gamepad.Press`
 ```python
 def Press(button_id: int) -> None
 ```
 
-Presses a gamepad button.
+按下手柄按钮。
 
-**Parameters:**
-- `button_id` (`int`): Button identifier (0-15 for standard gamepad buttons)
+**参数：**
+- `button_id` (`int`)：按钮标识符（标准手柄按钮为 0-15）
 
-**Example:**
+**示例：**
 ```python
-# Press button 0 (typically "A" or "X")
+# 按下按钮 0（通常是 "A" 或 "X"）
 MatrixOS.HID.Gamepad.Press(0)
 
-# Press button 1 (typically "B" or "Circle")
+# 按下按钮 1（通常是 "B" 或 "○"）
 MatrixOS.HID.Gamepad.Press(1)
 ```
 
 ---
 
-### `Release`
+### `MatrixOS.HID.Gamepad.Release`
 ```python
 def Release(button_id: int) -> None
 ```
 
-Releases a gamepad button.
+松开手柄按钮。
 
-**Parameters:**
-- `button_id` (`int`): Button identifier to release
+**参数：**
+- `button_id` (`int`)：要松开的按钮标识符
 
-**Example:**
+**示例：**
 ```python
-# Release button 0
+# 松开按钮 0
 MatrixOS.HID.Gamepad.Release(0)
 ```
 
 ---
 
-### `ReleaseAll`
+### `MatrixOS.HID.Gamepad.ReleaseAll`
 ```python
 def ReleaseAll() -> None
 ```
 
-Releases all currently pressed gamepad buttons.
+松开当前按下的所有手柄按钮。
 
-**Example:**
+**示例：**
 ```python
-# Ensure no buttons are stuck
+# 确保没有按钮卡住
 MatrixOS.HID.Gamepad.ReleaseAll()
 ```
 
 ---
 
-### `Button`
+### `MatrixOS.HID.Gamepad.Button`
 ```python
 def Button(button_id: int, state: bool) -> None
 ```
 
-Sets the state of a specific button.
+设置特定按钮的状态。
 
-**Parameters:**
-- `button_id` (`int`): Button identifier
-- `state` (`bool`): True to press, False to release
+**参数：**
+- `button_id` (`int`)：按钮标识符
+- `state` (`bool`)：True 表示按下，False 表示松开
 
-**Example:**
+**示例：**
 ```python
-# Press button 2
+# 按下按钮 2
 MatrixOS.HID.Gamepad.Button(2, True)
 
-# Release button 2
+# 松开按钮 2
 MatrixOS.HID.Gamepad.Button(2, False)
 ```
 
 ---
 
-### `Buttons`
+### `MatrixOS.HID.Gamepad.Buttons`
 ```python
 def Buttons(button_mask: int) -> None
 ```
 
-Sets multiple button states using a bitmask.
+使用位掩码设置多个按钮状态。
 
-**Parameters:**
-- `button_mask` (`int`): Bitmask where each bit represents a button state
+**参数：**
+- `button_mask` (`int`)：位掩码，每一位代表一个按钮状态
 
-**Example:**
+**示例：**
 ```python
-# Press buttons 0 and 2 (bits 0 and 2 set)
-MatrixOS.HID.Gamepad.Buttons(0b00000101)  # Binary: buttons 0 and 2
+# 按下按钮 0 和 2（第 0 位和第 2 位设置为 1）
+MatrixOS.HID.Gamepad.Buttons(0b00000101)  # 二进制：按钮 0 和 2
 
-# Press no buttons
+# 不按任何按钮
 MatrixOS.HID.Gamepad.Buttons(0)
 ```
 
 ---
 
-## Analog Stick Functions
+## 模拟摇杆函数
 
-### `XAxis`
+### `MatrixOS.HID.Gamepad.XAxis`
 ```python
 def XAxis(value: int) -> None
 ```
 
-Sets the left analog stick X-axis position.
+设置左摇杆 X 轴位置。
 
-**Parameters:**
-- `value` (`int`): Analog value (typically -32767 to 32767, 0 = center)
+**参数：**
+- `value` (`int`)：模拟值（通常 -32767 到 32767，0 = 中心）
 
-**Example:**
+**示例：**
 ```python
-# Center position
+# 中心位置
 MatrixOS.HID.Gamepad.XAxis(0)
 
-# Full right
+# 完全向右
 MatrixOS.HID.Gamepad.XAxis(32767)
 
-# Full left
+# 完全向左
 MatrixOS.HID.Gamepad.XAxis(-32767)
 ```
 
 ---
 
-### `YAxis`
+### `MatrixOS.HID.Gamepad.YAxis`
 ```python
 def YAxis(value: int) -> None
 ```
 
-Sets the left analog stick Y-axis position.
+设置左摇杆 Y 轴位置。
 
-**Parameters:**
-- `value` (`int`): Analog value (typically -32767 to 32767, 0 = center)
+**参数：**
+- `value` (`int`)：模拟值（通常 -32767 到 32767，0 = 中心）
 
-**Example:**
+**示例：**
 ```python
-# Center position
+# 中心位置
 MatrixOS.HID.Gamepad.YAxis(0)
 
-# Full up
+# 完全向上
 MatrixOS.HID.Gamepad.YAxis(-32767)
 
-# Full down
+# 完全向下
 MatrixOS.HID.Gamepad.YAxis(32767)
 ```
 
 ---
 
-### `ZAxis`
+### `MatrixOS.HID.Gamepad.ZAxis`
 ```python
 def ZAxis(value: int) -> None
 ```
 
-Sets the Z-axis (often used for left trigger).
+设置 Z 轴（通常用于左扳机）。
 
-**Parameters:**
-- `value` (`int`): Analog value
+**参数：**
+- `value` (`int`)：模拟值
 
 ---
 
-### `RXAxis`
+### `MatrixOS.HID.Gamepad.RXAxis`
 ```python
 def RXAxis(value: int) -> None
 ```
 
-Sets the right analog stick X-axis position.
+设置右摇杆 X 轴位置。
 
-**Parameters:**
-- `value` (`int`): Analog value (typically -32767 to 32767, 0 = center)
+**参数：**
+- `value` (`int`)：模拟值（通常 -32767 到 32767，0 = 中心）
 
 ---
 
-### `RYAxis`
+### `MatrixOS.HID.Gamepad.RYAxis`
 ```python
 def RYAxis(value: int) -> None
 ```
 
-Sets the right analog stick Y-axis position.
+设置右摇杆 Y 轴位置。
 
-**Parameters:**
-- `value` (`int`): Analog value (typically -32767 to 32767, 0 = center)
+**参数：**
+- `value` (`int`)：模拟值（通常 -32767 到 32767，0 = 中心）
 
 ---
 
-### `RZAxis`
+### `MatrixOS.HID.Gamepad.RZAxis`
 ```python
 def RZAxis(value: int) -> None
 ```
 
-Sets the RZ-axis (often used for right trigger).
+设置 RZ 轴（通常用于右扳机）。
 
-**Parameters:**
-- `value` (`int`): Analog value
+**参数：**
+- `value` (`int`)：模拟值
 
 ---
 
-## Directional Pad Function
+## 方向键函数
 
-### `DPad`
+### `MatrixOS.HID.Gamepad.DPad`
 ```python
 def DPad(direction: GamepadDPadDirection) -> None
 ```
 
-Sets the directional pad (D-pad) direction.
+设置方向键（D-pad）方向。
 
-**Parameters:**
-- `direction` (`GamepadDPadDirection`): D-pad direction
+**参数：**
+- `direction` (`GamepadDPadDirection`)：D-pad 方向
 
-**Example:**
+**示例：**
 ```python
-# Set D-pad to up
+# 设置 D-pad 为向上
 MatrixOS.HID.Gamepad.DPad(GamepadDPadDirection.UP)
 
-# Set D-pad to neutral
+# 设置 D-pad 为中性
 MatrixOS.HID.Gamepad.DPad(GamepadDPadDirection.NEUTRAL)
 ```
 
 ---
 
-## Gamepad Examples
+## 手柄使用示例
 
-### Basic Button Controller
+### 基本按钮控制器
 ```python
 def button_controller():
-    """Use grid keys as gamepad buttons"""
+    """用网格按键作为手柄按钮"""
 
     button_map = {
-        0: 0,   # A button
-        1: 1,   # B button
-        2: 2,   # X button
-        3: 3,   # Y button
-        8: 4,   # Left shoulder
-        9: 5,   # Right shoulder
-        16: 6,  # Left trigger button
-        17: 7,  # Right trigger button
+        0: 0,   # A 按钮
+        1: 1,   # B 按钮
+        2: 2,   # X 按钮
+        3: 3,   # Y 按钮
+        8: 4,   # 左肩键
+        9: 5,   # 右肩键
+        16: 6,  # 左扳机按钮
+        17: 7,  # 右扳机按钮
         24: 8,  # Back/Select
         25: 9,  # Start
     }
 
     def update_display():
-        """Show button mappings on LED grid"""
+        """在 LED 网格上显示按钮映射"""
         MatrixOS.LED.Fill(Color(0, 0, 0), 0)
 
         for key_id, button_id in button_map.items():
             xy = MatrixOS.KeyPad.ID2XY(key_id)
 
-            # Color code different button types
-            if button_id < 4:  # Face buttons
+            # 用颜色区分不同按钮类型
+            if button_id < 4:  # 面键
                 color = Color(0, 255, 0)
-            elif button_id < 6:  # Shoulders
+            elif button_id < 6:  # 肩键
                 color = Color(255, 255, 0)
-            elif button_id < 8:  # Triggers
+            elif button_id < 8:  # 扳机
                 color = Color(255, 0, 0)
             else:  # Start/Select
                 color = Color(0, 0, 255)
@@ -274,17 +272,17 @@ def button_controller():
 
         MatrixOS.LED.Update(255)
 
-    print("Gamepad Button Controller")
-    print("Green: Face buttons (A,B,X,Y)")
-    print("Yellow: Shoulder buttons")
-    print("Red: Trigger buttons")
-    print("Blue: Start/Select")
+    print("手柄按钮控制器")
+    print("绿色：面键 (A,B,X,Y)")
+    print("黄色：肩键")
+    print("红色：扳机按钮")
+    print("蓝色：Start/Select")
 
     update_display()
 
     while True:
         if not MatrixOS.HID.Ready():
-            print("HID not ready, retrying...")
+            print("HID 未准备好，重新尝试...")
             MatrixOS.SYS.DelayMs(1000)
             continue
 
@@ -298,74 +296,74 @@ def button_controller():
 
                 if key_info.Active():
                     MatrixOS.HID.Gamepad.Press(button_id)
-                    print(f"Pressed gamepad button {button_id}")
+                    print(f"按下手柄按钮 {button_id}")
 
-                    # Light up pressed button
+                    # 点亮被按下的按钮
                     xy = MatrixOS.KeyPad.ID2XY(key_id)
                     MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                     MatrixOS.LED.Update(255)
                 else:
                     MatrixOS.HID.Gamepad.Release(button_id)
-                    print(f"Released gamepad button {button_id}")
+                    print(f"松开手柄按钮 {button_id}")
 
-                    # Restore original color
+                    # 恢复原色
                     update_display()
 
 button_controller()
 ```
 
-### Analog Stick Controller
+### 模拟摇杆控制器
 ```python
 def analog_stick_controller():
-    """Use grid areas as analog stick controls"""
+    """用网格区域作为模拟摇杆控制"""
 
     def map_to_analog(x, y, center_x, center_y, max_range):
-        """Map grid position to analog stick value"""
+        """将网格位置映射到模拟摇杆值"""
         dx = x - center_x
         dy = y - center_y
 
-        # Scale to analog range
+        # 缩放到模拟范围
         analog_x = int((dx / max_range) * 32767)
         analog_y = int((dy / max_range) * 32767)
 
-        # Clamp values
+        # 限制数值
         analog_x = max(-32767, min(32767, analog_x))
         analog_y = max(-32767, min(32767, analog_y))
 
         return analog_x, analog_y
 
     def update_display():
-        """Show analog stick areas"""
+        """显示模拟摇杆区域"""
         MatrixOS.LED.Fill(Color(0, 0, 0), 0)
 
-        # Left stick area (left side)
+        # 左摇杆区域（左侧）
         for x in range(4):
             for y in range(8):
                 intensity = 100 if x == 1 or x == 2 else 50
                 MatrixOS.LED.SetColor(Point(x, y), Color(0, 255, 0), intensity)
 
-        # Right stick area (right side)
+        # 右摇杆区域（右侧）
         for x in range(4, 8):
             for y in range(8):
                 intensity = 100 if x == 5 or x == 6 else 50
                 MatrixOS.LED.SetColor(Point(x, y), Color(0, 0, 255), intensity)
 
-        # Center indicators
-        MatrixOS.LED.SetColor(Point(1, 3), Color(255, 255, 255), 255)  # Left center
-        MatrixOS.LED.SetColor(Point(5, 3), Color(255, 255, 255), 255)  # Right center
+        # 中心指示器
+        MatrixOS.LED.SetColor(Point(1, 3), Color(255, 255, 255), 255)  # 左中心
+        MatrixOS.LED.SetColor(Point(5, 3), Color(255, 255, 255), 255)  # 右中心
 
         MatrixOS.LED.Update(255)
 
-    print("Analog Stick Controller")
-    print("Left side: Left analog stick (green)")
-    print("Right side: Right analog stick (blue)")
-    print("White dots: Center positions")
+    print("模拟摇杆控制器")
+    print("左侧：左摇杆（绿色）")
+    print("右侧：右摇杆（蓝色）")
+    print("白点：中心位置")
 
     update_display()
 
     while True:
         if not MatrixOS.HID.Ready():
-            print("HID not ready, retrying...")
+            print("HID 未准备好，重新尝试...")
             MatrixOS.SYS.DelayMs(1000)
             continue
 
@@ -376,86 +374,86 @@ def analog_stick_controller():
             xy = MatrixOS.KeyPad.ID2XY(key_id)
 
             if key_info.Active():
-                if xy.x < 4:  # Left analog stick area
+                if xy.x < 4:  # 左摇杆区域
                     analog_x, analog_y = map_to_analog(xy.x, xy.y, 1.5, 3.5, 2)
                     MatrixOS.HID.Gamepad.XAxis(analog_x)
                     MatrixOS.HID.Gamepad.YAxis(analog_y)
-                    print(f"Left stick: ({analog_x}, {analog_y})")
+                    print(f"左摇杆：({analog_x}, {analog_y})")
 
-                    # Visual feedback
+                    # 视觉反馈
                     MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                     MatrixOS.LED.Update(255)
 
-                elif xy.x >= 4:  # Right analog stick area
+                elif xy.x >= 4:  # 右摇杆区域
                     analog_x, analog_y = map_to_analog(xy.x, xy.y, 5.5, 3.5, 2)
                     MatrixOS.HID.Gamepad.RXAxis(analog_x)
                     MatrixOS.HID.Gamepad.RYAxis(analog_y)
-                    print(f"Right stick: ({analog_x}, {analog_y})")
+                    print(f"右摇杆：({analog_x}, {analog_y})")
 
-                    # Visual feedback
+                    # 视觉反馈
                     MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                     MatrixOS.LED.Update(255)
 
             else:
-                # Key released - return to center
-                if xy.x < 4:  # Left stick
+                # 按键松开 - 回到中心
+                if xy.x < 4:  # 左摇杆
                     MatrixOS.HID.Gamepad.XAxis(0)
                     MatrixOS.HID.Gamepad.YAxis(0)
-                elif xy.x >= 4:  # Right stick
+                elif xy.x >= 4:  # 右摇杆
                     MatrixOS.HID.Gamepad.RXAxis(0)
                     MatrixOS.HID.Gamepad.RYAxis(0)
 
-                # Restore display
+                # 恢复显示
                 update_display()
 
 analog_stick_controller()
 ```
 
-### Complete Gamepad Emulator
+### 完整手柄模拟器
 ```python
 def full_gamepad_emulator():
-    """Complete gamepad with buttons, sticks, and D-pad"""
+    """完整手柄，包含按钮、摇杆和 D-pad"""
 
-    # Button mappings
-    face_buttons = {56: 0, 57: 1, 48: 2, 49: 3}  # A, B, X, Y (bottom-right area)
-    shoulder_buttons = {8: 4, 15: 5}  # L1, R1 (top corners)
-    start_select = {7: 8, 0: 9}  # Select, Start (top corners)
+    # 按钮映射
+    face_buttons = {56: 0, 57: 1, 48: 2, 49: 3}  # A, B, X, Y（右下区域）
+    shoulder_buttons = {8: 4, 15: 5}  # L1, R1（顶部角落）
+    start_select = {7: 8, 0: 9}  # Select, Start（顶部角落）
 
-    # Analog stick dead zones
+    # 模拟摇杆死区
     current_left_stick = [0, 0]
     current_right_stick = [0, 0]
 
     def update_display():
-        """Update gamepad layout display"""
+        """更新手柄布局显示"""
         MatrixOS.LED.Fill(Color(0, 0, 0), 0)
 
-        # Left analog area (green)
+        # 左摇杆区域（绿色）
         for x in range(3):
             for y in range(2, 6):
                 MatrixOS.LED.SetColor(Point(x, y), Color(0, 100, 0), 50)
 
-        # Right analog area (blue)
+        # 右摇杆区域（蓝色）
         for x in range(5, 8):
             for y in range(2, 6):
                 MatrixOS.LED.SetColor(Point(x, y), Color(0, 0, 100), 50)
 
-        # Face buttons (yellow)
+        # 面键（黄色）
         for key_id in face_buttons.keys():
             xy = MatrixOS.KeyPad.ID2XY(key_id)
             MatrixOS.LED.SetColor(xy, Color(200, 200, 0), 100)
 
-        # Shoulder buttons (red)
+        # 肩键（红色）
         for key_id in shoulder_buttons.keys():
             xy = MatrixOS.KeyPad.ID2XY(key_id)
             MatrixOS.LED.SetColor(xy, Color(200, 0, 0), 100)
 
-        # Start/Select (purple)
+        # Start/Select（紫色）
         for key_id in start_select.keys():
             xy = MatrixOS.KeyPad.ID2XY(key_id)
             MatrixOS.LED.SetColor(xy, Color(200, 0, 200), 100)
 
-        # D-pad (cyan) - center area
-        dpad_keys = [27, 35, 36, 28]  # Up, Down, Right, Left
+        # D-pad（青色） - 中心区域
+        dpad_keys = [27, 35, 36, 28]  # 上、下、右、左
         for key_id in dpad_keys:
             xy = MatrixOS.KeyPad.ID2XY(key_id)
             MatrixOS.LED.SetColor(xy, Color(0, 200, 200), 100)
@@ -463,9 +461,9 @@ def full_gamepad_emulator():
         MatrixOS.LED.Update(255)
 
     def handle_analog_stick(xy, is_left_stick):
-        """Handle analog stick input"""
+        """处理模拟摇杆输入"""
         if is_left_stick:
-            # Left stick area (0-2, 2-5)
+            # 左摇杆区域 (0-2, 2-5)
             center_x, center_y = 1, 3.5
             max_range = 2
 
@@ -475,7 +473,7 @@ def full_gamepad_emulator():
             analog_x = int((dx / max_range) * 32767)
             analog_y = int((dy / max_range) * 32767)
 
-            # Clamp and set
+            # 限制并设置
             analog_x = max(-32767, min(32767, analog_x))
             analog_y = max(-32767, min(32767, analog_y))
 
@@ -485,10 +483,10 @@ def full_gamepad_emulator():
             current_left_stick[0] = analog_x
             current_left_stick[1] = analog_y
 
-            print(f"Left stick: ({analog_x}, {analog_y})")
+            print(f"左摇杆：({analog_x}, {analog_y})")
 
         else:
-            # Right stick area (5-7, 2-5)
+            # 右摇杆区域 (5-7, 2-5)
             center_x, center_y = 6, 3.5
             max_range = 2
 
@@ -498,7 +496,7 @@ def full_gamepad_emulator():
             analog_x = int((dx / max_range) * 32767)
             analog_y = int((dy / max_range) * 32767)
 
-            # Clamp and set
+            # 限制并设置
             analog_x = max(-32767, min(32767, analog_x))
             analog_y = max(-32767, min(32767, analog_y))
 
@@ -508,10 +506,10 @@ def full_gamepad_emulator():
             current_right_stick[0] = analog_x
             current_right_stick[1] = analog_y
 
-            print(f"Right stick: ({analog_x}, {analog_y})")
+            print(f"右摇杆：({analog_x}, {analog_y})")
 
     def handle_dpad(key_id):
-        """Handle D-pad input"""
+        """处理 D-pad 输入"""
         dpad_map = {
             27: GamepadDPadDirection.UP,
             35: GamepadDPadDirection.DOWN,
@@ -524,12 +522,12 @@ def full_gamepad_emulator():
             return True
         return False
 
-    print("Full Gamepad Emulator")
-    print("Left area: Left analog stick")
-    print("Right area: Right analog stick")
-    print("Center: D-pad")
-    print("Corners: Shoulder, Start/Select")
-    print("Bottom-right: Face buttons")
+    print("完整手柄模拟器")
+    print("左区域：左摇杆")
+    print("右区域：右摇杆")
+    print("中间：D-pad")
+    print("角落：肩键、Start/Select")
+    print("右下：面键")
 
     update_display()
 
@@ -537,7 +535,7 @@ def full_gamepad_emulator():
 
     while True:
         if not MatrixOS.HID.Ready():
-            print("HID not ready, retrying...")
+            print("HID 未准备好，重新尝试...")
             MatrixOS.SYS.DelayMs(1000)
             continue
 
@@ -548,41 +546,41 @@ def full_gamepad_emulator():
             xy = MatrixOS.KeyPad.ID2XY(key_id)
 
             if key_info.Active():
-                # Face buttons
+                # 面键
                 if key_id in face_buttons:
                     MatrixOS.HID.Gamepad.Press(face_buttons[key_id])
-                    print(f"Pressed face button {face_buttons[key_id]}")
+                    print(f"按下面键 {face_buttons[key_id]}")
 
-                # Shoulder buttons
+                # 肩键
                 elif key_id in shoulder_buttons:
                     MatrixOS.HID.Gamepad.Press(shoulder_buttons[key_id])
-                    print(f"Pressed shoulder button {shoulder_buttons[key_id]}")
+                    print(f"按下肩键 {shoulder_buttons[key_id]}")
 
                 # Start/Select
                 elif key_id in start_select:
                     MatrixOS.HID.Gamepad.Press(start_select[key_id])
-                    print(f"Pressed start/select {start_select[key_id]}")
+                    print(f"按下 start/select {start_select[key_id]}")
 
                 # D-pad
                 elif handle_dpad(key_id):
-                    print(f"D-pad activated")
+                    print("D-pad 激活")
 
-                # Left analog stick
+                # 左摇杆
                 elif xy.x < 3 and 2 <= xy.y <= 5:
                     handle_analog_stick(xy, True)
                     active_sticks.add(('left', key_id))
 
-                # Right analog stick
+                # 右摇杆
                 elif xy.x >= 5 and 2 <= xy.y <= 5:
                     handle_analog_stick(xy, False)
                     active_sticks.add(('right', key_id))
 
-                # Visual feedback
+                # 视觉反馈
                 MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                 MatrixOS.LED.Update(255)
 
             else:
-                # Key released
+                # 按键松开
                 if key_id in face_buttons:
                     MatrixOS.HID.Gamepad.Release(face_buttons[key_id])
                 elif key_id in shoulder_buttons:
@@ -592,10 +590,10 @@ def full_gamepad_emulator():
                 elif key_id in [27, 35, 36, 28]:  # D-pad
                     MatrixOS.HID.Gamepad.DPad(GamepadDPadDirection.NEUTRAL)
 
-                # Handle analog stick release
+                # 处理摇杆松开
                 active_sticks = {(stick, kid) for stick, kid in active_sticks if kid != key_id}
 
-                # Return sticks to center if no keys active in that area
+                # 如果该区域没有激活的按键，就把摇杆回到中心
                 left_active = any(stick == 'left' for stick, _ in active_sticks)
                 right_active = any(stick == 'right' for stick, _ in active_sticks)
 
@@ -607,7 +605,7 @@ def full_gamepad_emulator():
                     MatrixOS.HID.Gamepad.RXAxis(0)
                     MatrixOS.HID.Gamepad.RYAxis(0)
 
-                # Restore display
+                # 恢复显示
                 update_display()
 
 full_gamepad_emulator()
@@ -615,17 +613,16 @@ full_gamepad_emulator()
 
 ---
 
-## Gamepad D-Pad Directions
+## 手柄 D-Pad 方向
 
-Available directions in `GamepadDPadDirection`:
+`GamepadDPadDirection` 中可用的方向：
 
-- `NEUTRAL`: No direction pressed
-- `UP`: D-pad up
-- `DOWN`: D-pad down
-- `LEFT`: D-pad left
-- `RIGHT`: D-pad right
-- `UP_LEFT`: D-pad up-left diagonal
-- `UP_RIGHT`: D-pad up-right diagonal
-- `DOWN_LEFT`: D-pad down-left diagonal
-- `DOWN_RIGHT`: D-pad down-right diagonal
-
+- `NEUTRAL`：无方向按下
+- `UP`：D-pad 向上
+- `DOWN`：D-pad 向下
+- `LEFT`：D-pad 向左
+- `RIGHT`：D-pad 向右
+- `UP_LEFT`：D-pad 左上对角线
+- `UP_RIGHT`：D-pad 右上对角线
+- `DOWN_LEFT`：D-pad 左下对角线
+- `DOWN_RIGHT`：D-pad 右下对角线

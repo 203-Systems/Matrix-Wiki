@@ -5,103 +5,101 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # HID API
 
-## Overview
+## 概述
 
-The HID (Human Interface Device) system in MatrixOS allows the device to act as a USB HID device, emulating keyboards, gamepads, and custom communication protocols. The HID API is available as `MatrixOS.HID` with various submodules for different device types.
+Matrix OS 中的 HID（人机接口设备）系统允许设备模拟键盘、手柄和自定义通信协议的 USB HID 设备。HID API 可通过 `MatrixOS.HID` 访问，包含针对不同设备类型的多个子模块。
 
-*The Python HID API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID.pyi"/>.*
+*Python HID API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID.pyi"/>。*
 
 ---
-
-## Core HID Functions
 
 ### `MatrixOS.HID.Ready`
 ```python
 def Ready() -> bool
 ```
 
-Checks if the HID subsystem is ready for operation.
+检查 HID 子系统是否准备就绪。
 
-**Returns:**
-- `bool`: True if HID is ready, False otherwise
+**返回值：**
+- `bool`：HID 准备就绪时返回 True，否则返回 False
 
-**Example:**
+**示例：**
 ```python
 if MatrixOS.HID.Ready():
-    print("HID system is ready")
-    # Safe to use HID functionality
+    print("HID 系统已准备就绪")
+    # 可以安全使用 HID 功能
 else:
-    print("HID system not available")
+    print("HID 系统不可用")
 ```
 
 ---
 
-## HID Submodules
+## HID 子模块
 
-### Keyboard API - Keyboard Input Device
-The keyboard HID interface allows sending keyboard input to connected devices. See the [Keyboard documentation](./Keyboard) for detailed information on:
+### Keyboard API - 键盘输入设备
+键盘 HID 接口可向连接的设备发送键盘输入。详细信息参见 [Keyboard 文档](./Keyboard)：
 
-- Key press and release events
-- Keyboard shortcuts and combinations
-- Text input simulation
-- Function keys and special keys
+- 按键按下和释放事件
+- 键盘快捷键和组合键
+- 文本输入模拟
+- 功能键和特殊键
 
-**Example:**
+**示例：**
 ```python
 if MatrixOS.HID.Ready():
-    # Type the letter 'A'
+    # 输入字母 'A'
     MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
 
-    # Send Ctrl+C shortcut
+    # 发送 Ctrl+C 快捷键
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
     MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_C)
     MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_C)
     MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
 ```
 
-### Gamepad API - Game Controller Device
-The gamepad HID interface allows the device to appear as a game controller. See the [Gamepad documentation](./Gamepad) for detailed information on:
+### Gamepad API - 游戏控制器设备
+手柄 HID 接口让设备表现为游戏控制器。详细信息参见 [Gamepad 文档](./Gamepad)：
 
-- Button mapping and states
-- Analog stick simulation
-- D-pad controls
-- Gamepad-specific features
+- 按钮映射和状态
+- 模拟摇杆模拟
+- 方向键控制
+- 手柄特定功能
 
-### RawHID API - Custom HID Communication
-The raw HID interface provides custom communication protocols. See the [RawHID documentation](./RawHID) for detailed information on:
+### RawHID API - 自定义 HID 通信
+原始 HID 接口提供自定义通信协议。详细信息参见 [RawHID 文档](./RawHID)：
 
-- Custom data protocols
-- Bidirectional communication
-- Application-specific messaging
-- Raw data transmission
+- 自定义数据协议
+- 双向通信
+- 应用特定消息传递
+- 原始数据传输
 
 ---
 
-## HID Device Management
+## HID 设备管理
 
-### Checking HID Status
+### 检查 HID 状态
 ```python
 def check_hid_status():
-    """Check if various HID interfaces are ready"""
+    """检查各种 HID 接口是否准备就绪"""
     if MatrixOS.HID.Ready():
-        print("✓ HID system is ready")
+        print("✓ HID 系统已准备就绪")
 
-        # Test keyboard availability
+        # 测试键盘可用性
         try:
             MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
-            print("✓ Keyboard HID working")
+            print("✓ 键盘 HID 正常工作")
         except:
-            print("✗ Keyboard HID not available")
+            print("✗ 键盘 HID 不可用")
     else:
-        print("✗ HID system not ready")
+        print("✗ HID 系统未准备就绪")
 
 check_hid_status()
 ```
 
-### HID Mode Detection
+### HID 模式检测
 ```python
 def detect_hid_capabilities():
-    """Detect available HID capabilities"""
+    """检测可用的 HID 功能"""
 
     capabilities = {
         "keyboard": False,
@@ -110,40 +108,40 @@ def detect_hid_capabilities():
     }
 
     if MatrixOS.HID.Ready():
-        # Test each HID interface
+        # 测试每个 HID 接口
         try:
-            # Test keyboard
+            # 测试键盘
             MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_A)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_A)
             capabilities["keyboard"] = True
         except:
             pass
 
-        # Additional capability tests would go here
+        # 其他功能测试将在此处添加
 
     return capabilities
 
 caps = detect_hid_capabilities()
-print("Available HID capabilities:", caps)
+print("可用的 HID 功能：", caps)
 ```
 
 ---
 
-## Integration Examples
+## 集成示例
 
-### Multi-Modal HID Controller
+### 多模式 HID 控制器
 ```python
 def multi_modal_controller():
-    """Example of using multiple HID interfaces"""
+    """使用多个 HID 接口的示例"""
 
     mode = "keyboard"  # keyboard, gamepad
 
-    print(f"Multi-modal HID controller - Mode: {mode}")
-    print("Press keys to interact, key 63 to switch modes")
+    print(f"多模式 HID 控制器 - 模式：{mode}")
+    print("按键进行交互，按键 63 切换模式")
 
     while True:
         if not MatrixOS.HID.Ready():
-            print("HID not ready, retrying...")
+            print("HID 未准备就绪，重新尝试...")
             MatrixOS.SYS.DelayMs(1000)
             continue
 
@@ -153,44 +151,44 @@ def multi_modal_controller():
             key_info = key_event.KeyInfo()
 
             if key_info.Active():
-                if key_id == 63:  # Mode switch key
+                if key_id == 63:  # 模式切换按键
                     modes = ["keyboard", "gamepad"]
                     current_idx = modes.index(mode)
                     mode = modes[(current_idx + 1) % len(modes)]
-                    print(f"Switched to {mode} mode")
+                    print(f"已切换到 {mode} 模式")
 
                 elif mode == "keyboard":
-                    # Keyboard mode - map keys to letters
+                    # 键盘模式 - 将按键映射到字母
                     if key_id < 26:  # A-Z
                         keycode = getattr(KeyboardKeycode, f"KEY_{chr(65 + key_id)}")
                         MatrixOS.HID.Keyboard.Tap(keycode)
 
                 elif mode == "gamepad":
-                    # Gamepad mode - map to gamepad buttons
-                    print(f"Gamepad button {key_id} pressed")
+                    # 手柄模式 - 映射到手柄按钮
+                    print(f"手柄按钮 {key_id} 被按下")
 
 multi_modal_controller()
 ```
 
-### Keyboard Macro System
+### 键盘宏系统
 ```python
 def keyboard_macro_system():
-    """Keyboard macro system using HID interface"""
+    """使用 HID 接口的键盘宏系统"""
 
     macros = {
-        # Keyboard macros
-        0: {"name": "Copy", "action": "ctrl+c"},
-        1: {"name": "Paste", "action": "ctrl+v"},
-        2: {"name": "Undo", "action": "ctrl+z"},
-        3: {"name": "Redo", "action": "ctrl+y"},
-        8: {"name": "Select All", "action": "ctrl+a"},
-        9: {"name": "Save", "action": "ctrl+s"},
-        10: {"name": "Find", "action": "ctrl+f"},
+        # 键盘宏
+        0: {"name": "复制", "action": "ctrl+c"},
+        1: {"name": "粘贴", "action": "ctrl+v"},
+        2: {"name": "撤销", "action": "ctrl+z"},
+        3: {"name": "重做", "action": "ctrl+y"},
+        8: {"name": "全选", "action": "ctrl+a"},
+        9: {"name": "保存", "action": "ctrl+s"},
+        10: {"name": "查找", "action": "ctrl+f"},
         16: {"name": "Alt+Tab", "action": "alt+tab"},
     }
 
     def execute_macro(macro):
-        """Execute a keyboard macro"""
+        """执行键盘宏"""
         action = macro["action"]
 
         if action == "ctrl+c":
@@ -226,13 +224,13 @@ def keyboard_macro_system():
             MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_TAB)
             MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_ALT)
 
-    print("Keyboard Macro System Active")
-    print("Available macros:")
+    print("键盘宏系统激活")
+    print("可用宏：")
     for key_id, macro in macros.items():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
-        print(f"  Key ({xy.x},{xy.y}): {macro['name']}")
+        print(f"  按键 ({xy.x},{xy.y}): {macro['name']}")
 
-    # Light up macro keys
+    # 点亮宏按键
     for key_id in macros.keys():
         xy = MatrixOS.KeyPad.ID2XY(key_id)
         MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 150)
@@ -246,10 +244,10 @@ def keyboard_macro_system():
                 key_info = key_event.KeyInfo()
 
                 if key_info.Active() and key_id in macros:
-                    print(f"Executing macro: {macros[key_id]['name']}")
+                    print(f"执行宏：{macros[key_id]['name']}")
                     execute_macro(macros[key_id])
 
-                    # Visual feedback
+                    # 视觉反馈
                     xy = MatrixOS.KeyPad.ID2XY(key_id)
                     MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
                     MatrixOS.LED.Update(255)
@@ -262,14 +260,14 @@ keyboard_macro_system()
 
 ---
 
-## HID Modes and Behavior
+## HID 模式和行为
 
-The HID functionality depends on various system conditions:
+HID 功能取决于各种系统条件：
 
-- **USB Connection**: Most HID functionality requires active USB connection
-- **Host OS Support**: Different operating systems may handle HID devices differently
-- **Device Configuration**: HID capabilities depend on device configuration and build options
-- **Interface Priority**: Some HID interfaces may have priority over others
-- **Power Management**: HID operation may affect power consumption and sleep modes
+- **USB 连接**：大多数 HID 功能需要活动的 USB 连接
+- **主机操作系统支持**：不同操作系统可能对 HID 设备有不同处理方式
+- **设备配置**：HID 功能取决于设备配置和构建选项
+- **接口优先级**：某些 HID 接口可能具有优先级
+- **电源管理**：HID 操作可能影响功耗和睡眠模式
 
-Check the specific MatrixOS configuration and device capabilities for detailed HID mode support.
+详细的 HID 模式支持请查看具体的 Matrix OS 配置和设备功能。

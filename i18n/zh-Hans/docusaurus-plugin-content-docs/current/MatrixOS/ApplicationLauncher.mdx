@@ -4,23 +4,23 @@ sidebar_position: 2
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Application Launcher
+# 应用程序启动器
 
 :::warning
-The application launcher layout is customizable. The view in the visualizer might not be exact as the view on your device.
+应用程序启动器布局是可自定义的。虚拟可视化器中的视图可能与你设备上的视图不完全相同。
 :::
 
-The Application Launcher is the main menu of Matrix OS. It allows users to select an application to use.
+应用启动器是 Matrix OS 的主菜单，用户可以在此选择要使用的应用。
 
-The top section of the Application Launcher shows the available applications. The bottom section features the app catalog selection on the left and [system settings](/docs/MatrixOS/SystemSettings) on the right.
+应用启动器顶部显示可用应用，底部左侧为应用目录选择，右侧为[系统设置](/docs/MatrixOS/SystemSettings)。
 
 
 export function ApplicationLauncher() {
 
     const uiElements = [
     {
-        "name": "Performance App",
-        "desc": "Enter the performance application",
+        "name": "Performance 应用",
+        "desc": "进入 Performance 应用",
         "link": "/docs/MatrixOS/Applications/Performance",
         "elements": [
             {
@@ -30,8 +30,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Note App",
-        "desc": "Enter the note application",
+        "name": "Note 应用",
+        "desc": "进入 Note 应用",
         "link": "/docs/MatrixOS/Applications/Note",
         "elements": [
             {
@@ -41,8 +41,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Companion App",
-        "desc": "Enter the companion application",
+        "name": "Companion 应用",
+        "desc": "进入 Companion 应用",
         "link": "/docs/MatrixOS/Applications/Companion",
         "elements": [
             {
@@ -52,8 +52,8 @@ export function ApplicationLauncher() {
         ]
     },
         {
-        "name": "Custom Control Map App",
-        "desc": "Enter the Custom Control Map application",
+        "name": "自定义控制映射应用",
+        "desc": "进入自定义控制映射应用",
         "link": "/docs/MatrixOS/Applications/CustomControlMap",
         "elements": [
             {
@@ -63,8 +63,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Lighting App",
-        "desc": "Enter the lighting application",
+        "name": "Lighting 应用",
+        "desc": "进入 Lighting 应用",
         "link": "/docs/MatrixOS/Applications/Lighting",
         "elements": [
             {
@@ -74,8 +74,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Dice App",
-        "desc": "Enter the dice application",
+        "name": "Dice 应用",
+        "desc": "进入 Dice 应用",
         "link": "/docs/MatrixOS/Applications/Dice",
         "elements": [
             {
@@ -85,8 +85,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Reversi App",
-        "desc": "Enter the Reversi application",
+        "name": "Reversi 应用",
+        "desc": "进入 Reversi 应用",
         "link": "/docs/MatrixOS/Applications/Reversi",
         "elements": [
             {
@@ -96,8 +96,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Strum App",
-        "desc": "Enter the Strum application",
+        "name": "Strum 应用",
+        "desc": "进入 Strum 应用",
         "link": "/docs/MatrixOS/Applications/Strum",
         "elements": [
             {
@@ -107,8 +107,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Python App",
-        "desc": "Enter the Python application",
+        "name": "Python 应用",
+        "desc": "进入 Python 应用",
         "link": "/docs/MatrixOS/Applications/Python",
         "elements": [
             {
@@ -118,8 +118,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Application Folder 1",
-        "desc": "Your customizable Application folder 1",
+        "name": "应用程序文件夹 1",
+        "desc": "可自定义的应用文件夹 1",
         "elements": [
             {
                 "pos": [0, 7],
@@ -128,8 +128,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "System Settings",
-        "desc": "Enter the system settings",
+        "name": "系统设置",
+        "desc": "进入系统设置",
         "link": "/docs/MatrixOS/SystemSettings",
         "elements": [
             {
@@ -139,8 +139,8 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Customize layout",
-        "desc": "Hold down the key to customize your application launcher layout.",
+        "name": "自定义布局",
+        "desc": "长按按键自定义你的应用程序启动器布局。",
         "link": "#customize-layout",
         "elements": [
             {
@@ -150,8 +150,8 @@ export function ApplicationLauncher() {
     }
 ];
 
-    const uiName = "Application Launcher"
-    const uiDescription = "The Application Launcher is the main menu of Matrix OS. It allows users to select an application to use."
+    const uiName = "应用程序启动器"
+    const uiDescription = "应用启动器是 Matrix OS 的主菜单，用户可以在此选择要使用的应用。"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -162,29 +162,29 @@ export function ApplicationLauncher() {
 
 <ApplicationLauncher />
 
-## Customize Layout
+## 自定义布局
 
-You can fully customize your application launcher layout to organize apps according to your preferences. The customization features include:
+你可以完全自定义应用程序启动器布局，按照你的喜好组织应用。自定义功能包括：
 
-### Application Management
-- **Select App**: Tap an app to select it (it will light up bright while others dim). Tap any empty space to deselect.
-- **Move Apps**: With an app selected, tap another app to swap their positions.
-- **Organize in Folders**: Select an app and tap a folder to move it into that folder
-- **Hide Apps**: Remove apps from the launcher view that you don't frequently use
+### 应用程序管理
+- **选择应用**：点击应用以选择它（它将变亮，其他应用变暗）。点击任何空白区域可取消选择。
+- **移动应用**：在选中应用后，点击另一个应用以交换它们的位置。
+- **在文件夹中组织**：选择应用并点击文件夹将其移动到该文件夹
+- **隐藏应用**：从启动器视图中移除你不经常使用的应用
 
-### Folder Management
-- **Create Folders**: Empty folder slots will have a breathing animation - tap them to create a new folder
-- **Customize Folders**: Hold on an existing folder to:
-  - Change the folder color
-  - Delete the folder (apps inside will return to the folder 1)
-- **Organize Apps**: Move apps between folders to keep your launcher organized
+### 文件夹管理
+- **创建文件夹**：空的文件夹插槽将有呼吸动画 - 点击它们创建新文件夹
+- **自定义文件夹**：长按现有文件夹可：
+  - 更改文件夹颜色
+  - 删除文件夹（内部的应用将返回文件夹 1）
+- **组织应用**：在文件夹之间移动应用以保持启动器有序
 
 export function ApplicationLauncherEditing() {
 
     const uiElements = [
     {
-        "name": "Performance App (Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the performance application",
+        "name": "Performance 应用 (已选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择 Performance 应用",
         "link": "/docs/MatrixOS/Applications/Performance",
         "elements": [
             {
@@ -194,8 +194,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Note App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the note application",
+        "name": "Note 应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择 Note 应用",
         "link": "/docs/MatrixOS/Applications/Note",
         "elements": [
             {
@@ -205,8 +205,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Companion App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the companion application",
+        "name": "Companion 应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择 Companion 应用",
         "link": "/docs/MatrixOS/Applications/Companion",
         "elements": [
             {
@@ -216,8 +216,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
         {
-        "name": "Custom Control Map App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Custom Control Map application",
+        "name": "自定义控制映射应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择自定义控制映射应用",
         "link": "/docs/MatrixOS/Applications/CustomControlMap",
         "elements": [
             {
@@ -227,8 +227,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Lighting App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the lighting application",
+        "name": "灯光应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择灯光应用",
         "link": "/docs/MatrixOS/Applications/Lighting",
         "elements": [
             {
@@ -238,8 +238,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Dice App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the dice application",
+        "name": "骰子应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择骰子应用",
         "link": "/docs/MatrixOS/Applications/Dice",
         "elements": [
             {
@@ -249,8 +249,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Reversi App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Reversi application",
+        "name": "黑白棋应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择黑白棋应用",
         "link": "/docs/MatrixOS/Applications/Reversi",
         "elements": [
             {
@@ -260,8 +260,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Strum App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Strum application",
+        "name": "Strum 应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择 Strum 应用",
         "link": "/docs/MatrixOS/Applications/Strum",
         "elements": [
             {
@@ -271,8 +271,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Python App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Python application",
+        "name": "Python 应用 (未选择)",
+        "desc": "如果已选中活动应用：与选中的应用交换位置。\n如果未选中活动应用：选择 Python 应用",
         "link": "/docs/MatrixOS/Applications/Python",
         "elements": [
             {
@@ -282,8 +282,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Application Folder 1 (Active)",
-        "desc": "Application folder 1 - Created and Selected. (Hold to edit color or delete folder)",
+        "name": "应用文件大1 (活动)",
+        "desc": "应用文件大1 - 已创建并已选中。（长按编辑颜色或删除文件夹）",
         "link": "#folder-editing",
         "elements": [
             {
@@ -293,8 +293,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Application Folder 2 (Not Active)",
-        "desc": "Application folder 2 - Created and not selected. (Hold to edit color or delete folder)",
+        "name": "应用文件大2 (非活动)",
+        "desc": "应用文件大2 - 已创建但未选中。（长按编辑颜色或删除文件夹）",
         "link": "#folder-editing",
         "elements": [
             {
@@ -304,8 +304,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Application Folder 3 ~ 6 (Not Created)",
-        "desc": "Application folder not created. Click on any to create them",
+        "name": "应用文件大3 ~ 6 (未创建)",
+        "desc": "应用文件夹未创建。点击任意一个来创建它们",
         "link": "/docs/MatrixOS/SharedUI/ColorPicker",
         "elements": [
             {
@@ -316,8 +316,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Hidden Application Folder",
-        "desc": "Hidden Application folder - Move apps here to hide them",
+        "name": "隐藏应用文件夹",
+        "desc": "隐藏应用文件夹 - 将应用移动到这里以隐藏它们",
         "elements": [
             {
                 "pos": [6, 7],
@@ -326,8 +326,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Exit customizing",
-        "desc": "Click the to exit editing.",
+        "name": "退出自定义",
+        "desc": "点击退出编辑。",
         "elements": [
             {
                 "pos": [7, 7],
@@ -336,8 +336,8 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Exit customizing",
-        "desc": "Click the function key to exit editing.",
+        "name": "退出自定义",
+        "desc": "点击功能键退出编辑。",
         "elements": [
             {
                 "pos": ["c"]
@@ -346,8 +346,8 @@ export function ApplicationLauncherEditing() {
     },
 ];
 
-    const uiName = "Application Launcher (Editing)"
-    const uiDescription = "Application Launcher layout editing mode"
+    const uiName = "应用启动器（编辑模式）"
+    const uiDescription = "应用启动器布局编辑模式"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -359,14 +359,14 @@ export function ApplicationLauncherEditing() {
 
 ### Folder Editing
 
-When you hold down on an existing folder, this menu appears allowing you to customize the folder's color or delete it entirely. Deleting a folder will return all apps inside back to the main launcher.
+当你长按一个现有文件夹时，会出现这个菜单，允许你自定义文件夹的颜色或完全删除它。删除文件夹将使其中的所有应用返回到主启动器。
 
 export function ApplicationLauncherFolderEdit() {
 
     const uiElements = [
     {
-        "name": "Change Color",
-        "desc": "Change the folder color",
+        "name": "更改颜色",
+        "desc": "更改文件夹颜色",
         "link": "/docs/MatrixOS/SharedUI/ColorPicker",
         "elements": [
             {
@@ -377,8 +377,8 @@ export function ApplicationLauncherFolderEdit() {
         ]
     },
     {
-        "name": "Delete Folder",
-        "desc": "Delete this folder (apps inside will return to the main launcher)",
+        "name": "删除文件夹",
+        "desc": "删除这个文件夹（其中的应用将返回到主启动器）",
         "elements": [
             {
                 "pos": [2, 6],
@@ -388,8 +388,8 @@ export function ApplicationLauncherFolderEdit() {
         ]
     },
     {
-        "name": "Go Back",
-        "desc": "Return to the application launcher",
+        "name": "返回",
+        "desc": "返回到应用启动器",
         "elements": [
             {
                 "pos": ["c"]
@@ -398,8 +398,8 @@ export function ApplicationLauncherFolderEdit() {
     }
 ];
 
-    const uiName = "Folder Edit Menu"
-    const uiDescription = "Edit folder properties - change color or delete the folder"
+    const uiName = "文件夹编辑菜单"
+    const uiDescription = "编辑文件夹属性 - 更改颜色或删除文件夹"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}

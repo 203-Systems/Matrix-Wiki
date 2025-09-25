@@ -3,64 +3,64 @@ title: Dimension
 ---
 import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
-# Class: `Dimension`
+# 类：`Dimension`
 
-The `Dimension` class represents a 2D dimension or size, with utility functions for operations like area calculation and comparisons.
+`Dimension` 类表示二维尺寸或大小，提供了面积计算和比较等操作的实用函数。
 
-*The source file for this class is located in <GithubLink path="os/framework/Dimension.h"/>*
+*该类的源文件位于 <GithubLink path="os/framework/Dimension.h"/>*
 
 ---
 
-## Constructors
+## 构造函数
 
-### Default Constructor
+### 默认构造函数
 ```cpp
 Dimension();
 ```
 
-Initializes the dimension to `(0, 0)`.
+将尺寸初始化为 `(0, 0)`。
 
 ---
 
-### From `x` and `y`
+### 从 `x` 和 `y` 创建
 ```cpp
 Dimension(int16_t x, int16_t y);
 ```
 
-Constructs a dimension from individual `x` and `y` values.
+从单独的 `x` 和 `y` 值构造尺寸。
 
-**Parameters:**
-- `x` (`int16_t`): The width.
-- `y` (`int16_t`): The height.
+**参数：**
+- `x` (`int16_t`)：宽度。
+- `y` (`int16_t`)：高度。
 
 ---
 
-### From Raw 32-bit Value
+### 从原始 32 位值创建
 ```cpp
 Dimension(uint32_t rawByte);
 ```
 
-Constructs a dimension from a 32-bit raw value.
+从 32 位原始值构造尺寸。
 
-**Parameters:**
-- `rawByte` (`uint32_t`): The raw data encoding `x` and `y`. The high 16 bits represent `x`, and the low 16 bits represent `y`.
+**参数：**
+- `rawByte` (`uint32_t`)：编码 `x` 和 `y` 的原始数据。高 16 位表示 `x`，低 16 位表示 `y`。
 
 ---
 
-## Member Functions
+## 成员函数
 
 ### `Contains`
 ```cpp
 bool Contains(Point point);
 ```
 
-Checks if a point is within the dimension.
+检查点是否在尺寸范围内。
 
-**Parameters:**
-- `point` ([`Point`](./Point/)): The point to check.
+**参数：**
+- `point` ([`Point`](./Point/))：要检查的点。
 
-**Returns:**
-- `bool`: `true` if the point is within the dimension, otherwise `false`.
+**返回值：**
+- `bool`：如果点在尺寸范围内则返回 `true`，否则返回 `false`。
 
 ---
 
@@ -69,79 +69,79 @@ Checks if a point is within the dimension.
 uint32_t Area();
 ```
 
-Calculates the area of the dimension.
+计算尺寸的面积。
 
-**Returns:**
-- `uint32_t`: The area, calculated as `x * y`.
+**返回值：**
+- `uint32_t`：面积，计算为 `x * y`。
 
 ---
 
-## Operators
+## 运算符
 
-### Addition
+### 加法
 ```cpp
 Dimension operator+(const Dimension& cp) const;
 ```
 
-Adds two dimensions together.
+将两个尺寸相加。
 
-**Parameters:**
-- `cp` (`const Dimension&`): The other dimension to add.
+**参数：**
+- `cp` (`const Dimension&`)：要相加的其他尺寸。
 
-**Returns:**
-- `Dimension`: A new dimension resulting from the addition.
+**返回值：**
+- `Dimension`：加法结果的新尺寸。
 
 ---
 
-### Inequality Comparison
+### 不等于比较
 ```cpp
 bool operator!=(const Dimension& cp) const;
 ```
 
-Checks if two dimensions are not equal.
+检查两个尺寸是否不相等。
 
-**Parameters:**
-- `cp` (`const Dimension&`): The other dimension to compare.
+**参数：**
+- `cp` (`const Dimension&`)：要比较的其他尺寸。
 
-**Returns:**
-- `bool`: `true` if the dimensions are not equal, otherwise `false`.
+**返回值：**
+- `bool`：如果尺寸不相等则返回 `true`，否则返回 `false`。
 
 ---
 
-### Less Than Comparison
+### 小于比较
 ```cpp
 bool operator<(const Dimension& cp) const;
 ```
 
-Compares two dimensions. First compares `x`, and if they are equal, compares `y`.
+比较两个尺寸。首先比较 `x`，如果相等，则比较 `y`。
 
-**Parameters:**
-- `cp` (`const Dimension&`): The other dimension to compare.
+**参数：**
+- `cp` (`const Dimension&`)：要比较的其他尺寸。
 
-**Returns:**
-- `bool`: `true` if the current dimension is smaller, otherwise `false`.
+**返回值：**
+- `bool`：如果当前尺寸更小则返回 `true`，否则返回 `false`。
 
 ---
 
-### Conversion to `bool`
+### 转换为 `bool`
 ```cpp
 operator bool();
 ```
 
-Checks if the dimension is non-zero.
+检查尺寸是否为非零。
 
-**Returns:**
-- `bool`: `true` if both `x` and `y` are non-zero, otherwise `false`.
+**返回值：**
+- `bool`：如果 `x` 和 `y` 都为非零则返回 `true`，否则返回 `false`。
 
 ---
 
-### Conversion to `uint32_t`
+### 转换为 `uint32_t`
 ```cpp
 operator uint32_t();
 ```
 
-Converts the dimension to a 32-bit raw value.
+将尺寸转换为 32 位原始值。
 
-**Returns:**
-- `uint32_t`: A raw representation of the dimension. The high 16 bits represent `x`, and the low 16 bits represent `y`.
+**返回值：**
+- `uint32_t`：尺寸的原始表示。高 16 位表示 `x`，低 16 位表示 `y`。
 ``` 

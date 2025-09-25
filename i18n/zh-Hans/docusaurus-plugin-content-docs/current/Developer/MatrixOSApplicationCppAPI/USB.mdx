@@ -5,14 +5,14 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # USB API
 
-## Overview
+## 概述
 
-The USB API provides functions for interacting with USB devices. The API includes functions for checking if a USB device is connected, sending and receiving data over USB CDC, and more.
+USB API 提供与 USB 设备交互的函数。该 API 包括检查 USB 设备是否连接、通过 USB CDC 发送和接收数据等函数。
 
-*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/USB/"/>.*
+*该 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/USB/"/>。*
 
-## Namespace: `USB`
-The `USB` namespace contains general USB functions.
+## 命名空间：`USB`
+`USB` 命名空间包含通用的 USB 函数。
 
 ---
 
@@ -21,10 +21,10 @@ The `USB` namespace contains general USB functions.
 bool USB::Connected(void);
 ```
 
-Checks if a USB device is connected.
+检查 USB 设备是否已连接。
 
-**Returns:**
-- `bool`: `true` if a USB device is connected; `false` otherwise.
+**返回值：**
+- `bool`：如果 USB 设备已连接则返回 `true`，否则返回 `false`。
 
 ---
 

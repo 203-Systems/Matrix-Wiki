@@ -4,51 +4,51 @@
     "description": "The label for version current"
   },
   "sidebar.mystrixSidebar.category.Use your Mystrix": {
-    "message": "Use your Mystrix",
+    "message": "使用你的魔矩",
     "description": "The label for category Use your Mystrix in sidebar mystrixSidebar"
   },
   "sidebar.mystrixSidebar.category.Lightshow Performance": {
-    "message": "Lightshow Performance",
+    "message": "灯光表演",
     "description": "The label for category Lightshow Performance in sidebar mystrixSidebar"
   },
   "sidebar.mystrixSidebar.category.Customizable Controls": {
-    "message": "Customizable Controls",
+    "message": "自定义控制",
     "description": "The label for category Customizable Controls in sidebar mystrixSidebar"
   },
   "sidebar.mystrixSidebar.category.Music Production": {
-    "message": "Music Production",
+    "message": "音乐制作",
     "description": "The label for category Music Production in sidebar mystrixSidebar"
   },
   "sidebar.mystrixSidebar.category.DAW integrations": {
-    "message": "DAW integrations",
+    "message": "DAW 整合",
     "description": "The label for category DAW integrations in sidebar mystrixSidebar"
   },
   "sidebar.matrixOSSidebar.category.Applications": {
-    "message": "Applications",
+    "message": "应用程序",
     "description": "The label for category Applications in sidebar matrixOSSidebar"
   },
   "sidebar.matrixOSSidebar.category.Shared UI": {
-    "message": "Shared UI",
+    "message": "共享界面",
     "description": "The label for category Shared UI in sidebar matrixOSSidebar"
   },
   "sidebar.developerSidebar.category.Building Matrix OS": {
-    "message": "Building Matrix OS",
+    "message": "构建 Matrix OS",
     "description": "The label for category Building Matrix OS in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.Building for Mystrix": {
-    "message": "Building for Mystrix",
+    "message": "为魔矩构建",
     "description": "The label for category Building for Mystrix in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.Matrix OS Application API (C++)": {
-    "message": "Matrix OS Application API (C++)",
+    "message": "Matrix OS 应用 API (C++)",
     "description": "The label for category Matrix OS Application API (C++) in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.Types": {
-    "message": "Types",
+    "message": "类型",
     "description": "The label for category Types in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.Utilities": {
-    "message": "Utilities",
+    "message": "工具函数",
     "description": "The label for category Utilities in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.UI": {
@@ -56,15 +56,15 @@
     "description": "The label for category UI in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.UI Components": {
-    "message": "UI Components",
+    "message": "界面组件",
     "description": "The label for category UI Components in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.UI Utilities": {
-    "message": "UI Utilities",
+    "message": "界面工具",
     "description": "The label for category UI Utilities in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.Matrix OS Application API (Python)": {
-    "message": "Matrix OS Application API (Python)",
+    "message": "Matrix OS 应用 API (Python)",
     "description": "The label for category Matrix OS Application API (Python) in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.HID API": {
@@ -72,11 +72,11 @@
     "description": "The label for category HID API in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.Interfacing with Matrix OS": {
-    "message": "Interfacing with Matrix OS",
+    "message": "与 Matrix OS 交互",
     "description": "The label for category Interfacing with Matrix OS in sidebar developerSidebar"
   },
   "sidebar.developerSidebar.category.Porting Matrix OS": {
-    "message": "Porting Matrix OS",
+    "message": "移植 Matrix OS",
     "description": "The label for category Porting Matrix OS in sidebar developerSidebar"
   }
 }

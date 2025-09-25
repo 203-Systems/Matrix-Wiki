@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # ColorPicker
 
-## Overview
+## 概述
 
-The `ColorPicker` utility provides an interactive color selection interface on the LED matrix. Users can select colors using the keypad interface with visual feedback.
+`ColorPicker` 实用程序在 LED 矩阵上提供了一个交互式的颜色选择界面。用户可以使用带有视觉反馈的键盘界面选择颜色。
 
-*The ColorPicker utility is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>.*
+*ColorPicker 实用程序实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>。*
 
 ---
 
@@ -18,33 +18,33 @@ The `ColorPicker` utility provides an interactive color selection interface on t
 def ColorPicker() -> any
 ```
 
-Displays an interactive color picker interface and returns the selected color.
+显示一个交互式的颜色选择器界面并返回选中的颜色。
 
-**Returns:**
-- `Color`: Selected color chosen by the user, or `None` if cancelled
+**返回值：**
+- `Color`：用户选择的颜色，或取消时返回 `None`
 
-**Example:**
+**示例：**
 ```python
-# Open color picker
+# 打开颜色选择器
 selected_color = MatrixOS.UIUtility.ColorPicker()
 
 if selected_color is not None:
-    print("User selected a color")
-    # Use the selected color
+    print("用户选择了一个颜色")
+    # 使用选中的颜色
     MatrixOS.LED.Fill(selected_color)
     MatrixOS.LED.Update()
 else:
-    print("Color selection was cancelled")
+    print("颜色选择被取消")
 ```
 
 ---
 
-## Usage Examples
+## 使用示例
 
-### Basic Color Selection
+### 基本颜色选择
 ```python
 def choose_theme_color():
-    """Let user choose a theme color for the application"""
+    """让用户为应用程序选择主题颜色"""
 
     print("Please select your preferred theme color...")
 

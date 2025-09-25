@@ -2,32 +2,24 @@
 sidebar_position: 6
 ---
 
-# TRS MIDI Adapter
+# TRS MIDI 转换器
 
-You can purchase a TRS MIDI adapter (Type A / B) for use with Mystrix at [our store](https://203.io/products/matrix-midi-out-adapter).
+你可以在[我们的商店](https://203.io/products/matrix-midi-out-adapter)购买用于魔矩的 TRS MIDI 转换器（A 型 / B 型）。
 
-The Type A adapter is labeled as `Type A`, while the Type B adapter is **unlabeled**.
+A 型转换器标有 `Type A`，而 B 型转换器**没有标签**。
 
-## Using the Adapter
+## 使用转换器
 
-1. Connect the adapter's USB-C male connector to the Mystrix's USB-C female connector.
-2. Connect the MIDI TRS cable and USB-C cable for power/data to the adapter.
-3. In most cases, the adapter will be automatically detected by Matrix OS, and most MIDI signals will be routed to the USB and TRS ports.
+1. 将转换器的 USB-C 公头连接到魔矩的 USB-C 母座。
+2. 将 MIDI TRS 线缆和用于电源/数据的 USB-C 线缆连接到转换器。
+3. 在大多数情况下，转换器将被 Matrix OS 自动检测，大多数 MIDI 信号将路由到 USB 和 TRS 端口。
 
-## Additional Information
+## 附加信息
 
-### Improved MIDI Adapter
+### Matrix OS 路由
 
-The existing MIDI port adapter is a quick solution for users who need to connect their Mystrix to a MIDI device.
+魔矩和 Matrix OS 能够检测转换器是否连接，并会自动将 MIDI 信号路由至转换器。
 
-In the future, we may release a more advanced dongle that can be connected to the Mystrix's USB-C port to provide MIDI in and out ports or even CV ports.
+Matrix OS 应用还能够灵活地将 MIDI 信号路由至转换器或 USB 端口，功能远超简单的信号镜像。
 
-If this happens, we will provide credit to everyone who purchased the existing MIDI port adapter.
-
-### Matrix OS Routing
-
-Mystrix and Matrix OS can detect the presence of the adapter and will automatically route the MIDI signal to the adapter.
-
-Matrix OS applications also have the ability to route the MIDI signal to the adapter or the USB port, providing more than just simple mirroring.
-
-You can learn more about the MIDI routing system in the Matrix OS MIDI API [here](/docs/Developer/MatrixOSApplicationCppAPI/MIDI) if you want to develop your own application that uses advanced MIDI routing with the adapter.
+如果您想开发利用转换器进行高级 MIDI 路由的自定义应用，可以在[这里](/docs/Developer/MatrixOSApplicationCppAPI/MIDI)了解有关 Matrix OS MIDI API 中 MIDI 路由系统的更多信息。

@@ -4,24 +4,24 @@ sidebar_position: 9
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Strum App
+# Strum 应用
 
-Strum is a chord-based musical instrument app inspired by devices like the Omnichord. You can select chords and strum them using the Mystrix's touchbars on the left and right sides of the device.
+Strum 是一个基于和弦的乐器应用，灵感来自 Omnichord 等设备。你可以选择和弦并使用魔矩设备左右两侧的触摸条来演奏。
 
-:::note Device Orientation Required
-The Strum app requires the device to be in portrait mode (rotated left or right) to access the touchbars for strumming functionality.
+:::note 需要设备旋转
+Strum 应用需要将设备旋转为纵向模式（向左或向右旋转）以访问用于演奏的触摸条功能。
 :::
 
-## Main Interface
+## 主界面
 
-The Strum app interface is organized into several key areas for chord selection, octave control, and note duration settings.
+Strum 应用界面分为几个关键区域，包括和弦选择、八度控制和音符时长设置。
 
 export function MainInterface() {
 
     const uiElements = [
     {
-        "name": "Chord Visualizer",
-        "desc": "Visual representation of the selected chord showing the notes and root key.",
+        "name": "和弦可视化器",
+        "desc": "所选和弦的可视化表示，显示音符和根音。",
         "elements": [
             {
                 "pos": [0, 1],
@@ -53,8 +53,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Octave Shifter",
-        "desc": "Controls for adjusting the octave of the chord.",
+        "name": "八度移调器",
+        "desc": "调整和弦八度的控制器。",
         "elements": [
             {
                 "pos": [0, 2],
@@ -69,8 +69,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Duration Modifier",
-        "desc": "Controls for adjusting the note duration when strumming.",
+        "name": "时长修改器",
+        "desc": "调整演奏时音符时长的控制器。",
         "elements": [
             {
                 "pos": [0, 3],
@@ -85,8 +85,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Major Chord",
-        "desc": "Select major triad chord type.",
+        "name": "大三和弦",
+        "desc": "选择大三和弦类型。",
         "elements": [
             {
                 "pos": [0, 7],
@@ -95,8 +95,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Minor Chord",
-        "desc": "Select minor triad chord type.",
+        "name": "小三和弦",
+        "desc": "选择小三和弦类型。",
         "elements": [
             {
                 "pos": [1, 7],
@@ -105,8 +105,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Major 7th Chord",
-        "desc": "Select major seventh chord type.",
+        "name": "大七和弦",
+        "desc": "选择大七和弦类型。",
         "elements": [
             {
                 "pos": [3, 7],
@@ -115,8 +115,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Minor 7th Chord",
-        "desc": "Select minor seventh chord type.",
+        "name": "小七和弦",
+        "desc": "选择小七和弦类型。",
         "elements": [
             {
                 "pos": [4, 7],
@@ -125,8 +125,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Augmented Chord",
-        "desc": "Select augmented chord type.",
+        "name": "增三和弦",
+        "desc": "选择增三和弦类型。",
         "elements": [
             {
                 "pos": [6, 7],
@@ -135,8 +135,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Diminished Chord",
-        "desc": "Select diminished chord type.",
+        "name": "减三和弦",
+        "desc": "选择减三和弦类型。",
         "elements": [
             {
                 "pos": [7, 7],
@@ -145,8 +145,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Left Strum Bar",
-        "desc": "Left touchbar for strumming chords.",
+        "name": "左侧弹奏条",
+        "desc": "用于弹奏和弦的左侧触摸条。",
         "elements": [
             {
                 "pos": ["l", 0],
@@ -156,8 +156,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Right Strum Bar",
-        "desc": "Right touchbar for strumming chords.",
+        "name": "右侧弹奏条",
+        "desc": "用于弹奏和弦的右侧触摸条。",
         "elements": [
             {
                 "pos": ["r", 0],
@@ -167,8 +167,8 @@ export function MainInterface() {
         ]
     },
     {
-        "name": "Action Menu",
-        "desc": "Tap function key to enter action menu.",
+        "name": "操作菜单",
+        "desc": "点击功能键进入操作菜单。",
         "link": "#action-menu",
         "elements": [
             {
@@ -179,8 +179,8 @@ export function MainInterface() {
 
 ];
 
-    const uiName = "Strum Main Interface"
-    const uiDescription = "The main Strum interface allows you to select chords, adjust octave and duration, then strum using the side touchbars."
+    const uiName = "Strum 主界面"
+    const uiDescription = "Strum 主界面允许你选择和弦、调整八度和时长，然后使用侧边触摸条进行弹奏。"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -191,16 +191,16 @@ export function MainInterface() {
 
 <MainInterface />
 
-## Action Menu
+## 操作菜单
 
-The action menu provides access to system settings and app configuration.
+操作菜单提供对系统设置和应用配置的访问。
 
 export function ActionMenu() {
 
     const uiElements = [
     {
-        "name": "System Settings",
-        "desc": "Enter the system settings.",
+        "name": "系统设置",
+        "desc": "进入系统设置。",
         "link": "/docs/MatrixOS/SystemSettings",
         "elements": [
             {
@@ -210,8 +210,8 @@ export function ActionMenu() {
         ]
     },
     {
-        "name": "Return to Strum or Exit App",
-        "desc": "Tap to return to the strum interface. Hold to exit the app.",
+        "name": "返回 Strum 或退出应用",
+        "desc": "点击返回 Strum 界面。长按退出应用。",
         "elements": [
             {
                 "pos": ["c"]
@@ -221,8 +221,8 @@ export function ActionMenu() {
 
 ];
 
-    const uiName = "Action Menu"
-    const uiDescription = "The action menu provides access to system settings and app navigation."
+    const uiName = "操作菜单"
+    const uiDescription = "操作菜单提供对系统设置和应用导航的访问。"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -233,24 +233,23 @@ export function ActionMenu() {
 
 <ActionMenu />
 
-## How to Use
+## 使用方法
 
-### Getting Started
-1. **Device Orientation**: Rotate your device to portrait mode (left or right) to access the touchbars
-2. **Chord Selection**: Tap any chord button on the bottom row to select your desired chord type
-3. **Octave Adjustment**: Use the octave shifter (row 2) to adjust the pitch range
-4. **Duration Control**: Use the duration modifier (row 3) to set note length
+### 开始使用
+1. **设备方向**：将设备旋转为纵向模式（向左或向右）以访问触摸条
+2. **和弦选择**：点击底部行的任意和弦按钮来选择所需的和弦类型
+3. **八度调节**：使用八度移调器（第2行）调整音高范围
+4. **时长控制**：使用时长修改器（第3行）设置音符长度
 
-### Strumming
-- **Left Touchbar**: Touch and drag along the left side touchbar to strum the chord
-- **Right Touchbar**: Touch and drag along the right side touchbar to strum the chord
-- **Chord Visualization**: The top area shows the selected chord notes and root key
+### 弹奏
+- **左侧触摸条**：在左侧触摸条上触摸并拖拽来弹奏和弦
+- **右侧触摸条**：在右侧触摸条上触摸并拖拽来弹奏和弦
+- **和弦可视化**：顶部区域显示所选和弦的音符和根音
 
-### Available Chord Types
-- **Major**: Basic major triad (1-3-5)
-- **Minor**: Basic minor triad (1-♭3-5)
-- **Major 7th**: Major triad with major seventh (1-3-5-7)
-- **Minor 7th**: Minor triad with minor seventh (1-♭3-5-♭7)
-- **Augmented**: Augmented triad (1-3-#5)
-- **Diminished**: Diminished triad (1-♭3-♭5)
-
+### 可用的和弦类型
+- **大三和弦**：基本大三和弦 (1-3-5)
+- **小三和弦**：基本小三和弦 (1-♭3-5)
+- **大七和弦**：带大七度的大三和弦 (1-3-5-7)
+- **小七和弦**：带小七度的小三和弦 (1-♭3-5-♭7)
+- **增三和弦**：增三和弦 (1-3-#5)
+- **减三和弦**：减三和弦 (1-♭3-♭5)

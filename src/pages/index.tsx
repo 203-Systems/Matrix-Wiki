@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import Translate from '@docusaurus/Translate';
 
 import styles from './index.module.css';
 
@@ -36,18 +37,18 @@ export default function Home(): JSX.Element {
           Project&nbsp;&#8203;Matrix Wiki
         </Heading>
         <p className={styles.hero_subtitle}>
-          Get Started With your Mystrix
+          <Translate id="homepage.hero.subtitle">Get Started With your Mystrix</Translate>
         </p>
         <div className={styles.buttons}>
           <Link
             className={"button" + " " + styles.hero_button}
             to="/docs/Mystrix/GettingStarted">
-            Quick Start
+            <Translate id="homepage.hero.quickStartButton">Quick Start</Translate>
           </Link>
           <Link
             className={"button" + " " + styles.hero_button}
             to="/docs/Developer/MatrixOSBasics">
-            Developer API
+            <Translate id="homepage.hero.developerAPIButton">Developer API</Translate>
           </Link>
         </div>
       </div>

@@ -198,7 +198,7 @@
     "description": "The ARIA label for the main navigation"
   },
   "theme.NotFound.p1": {
-    "message": "我们找不到您要找的页面。",
+    "message": "我们找不到你要找的页面。",
     "description": "The first paragraph of the 404 page"
   },
   "theme.NotFound.p2": {
@@ -443,5 +443,14 @@
   "theme.tags.tagsPageTitle": {
     "message": "标签",
     "description": "The title of the tag list page"
+  },
+  "homepage.hero.subtitle": {
+    "message": "开始使用你的魔矩"
+  },
+  "homepage.hero.quickStartButton": {
+    "message": "快速开始"
+  },
+  "homepage.hero.developerAPIButton": {
+    "message": "开发者 API"
   }
 }

@@ -15,7 +15,7 @@ The HID Gamepad interface allows the device to emulate a standard USB game contr
 
 ## Button Functions
 
-### `Press`
+### `MatrixOS.HID.Gamepad.Press`
 ```python
 def Press(button_id: int) -> None
 ```
@@ -36,7 +36,7 @@ MatrixOS.HID.Gamepad.Press(1)
 
 ---
 
-### `Release`
+### `MatrixOS.HID.Gamepad.Release`
 ```python
 def Release(button_id: int) -> None
 ```
@@ -54,7 +54,7 @@ MatrixOS.HID.Gamepad.Release(0)
 
 ---
 
-### `ReleaseAll`
+### `MatrixOS.HID.Gamepad.ReleaseAll`
 ```python
 def ReleaseAll() -> None
 ```
@@ -69,7 +69,7 @@ MatrixOS.HID.Gamepad.ReleaseAll()
 
 ---
 
-### `Button`
+### `MatrixOS.HID.Gamepad.Button`
 ```python
 def Button(button_id: int, state: bool) -> None
 ```
@@ -91,7 +91,7 @@ MatrixOS.HID.Gamepad.Button(2, False)
 
 ---
 
-### `Buttons`
+### `MatrixOS.HID.Gamepad.Buttons`
 ```python
 def Buttons(button_mask: int) -> None
 ```
@@ -114,7 +114,7 @@ MatrixOS.HID.Gamepad.Buttons(0)
 
 ## Analog Stick Functions
 
-### `XAxis`
+### `MatrixOS.HID.Gamepad.XAxis`
 ```python
 def XAxis(value: int) -> None
 ```
@@ -138,7 +138,7 @@ MatrixOS.HID.Gamepad.XAxis(-32767)
 
 ---
 
-### `YAxis`
+### `MatrixOS.HID.Gamepad.YAxis`
 ```python
 def YAxis(value: int) -> None
 ```
@@ -162,7 +162,7 @@ MatrixOS.HID.Gamepad.YAxis(32767)
 
 ---
 
-### `ZAxis`
+### `MatrixOS.HID.Gamepad.ZAxis`
 ```python
 def ZAxis(value: int) -> None
 ```
@@ -174,7 +174,7 @@ Sets the Z-axis (often used for left trigger).
 
 ---
 
-### `RXAxis`
+### `MatrixOS.HID.Gamepad.RXAxis`
 ```python
 def RXAxis(value: int) -> None
 ```
@@ -186,7 +186,7 @@ Sets the right analog stick X-axis position.
 
 ---
 
-### `RYAxis`
+### `MatrixOS.HID.Gamepad.RYAxis`
 ```python
 def RYAxis(value: int) -> None
 ```
@@ -198,7 +198,7 @@ Sets the right analog stick Y-axis position.
 
 ---
 
-### `RZAxis`
+### `MatrixOS.HID.Gamepad.RZAxis`
 ```python
 def RZAxis(value: int) -> None
 ```
@@ -212,7 +212,7 @@ Sets the RZ-axis (often used for right trigger).
 
 ## Directional Pad Function
 
-### `DPad`
+### `MatrixOS.HID.Gamepad.DPad`
 ```python
 def DPad(direction: GamepadDPadDirection) -> None
 ```

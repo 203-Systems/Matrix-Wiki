@@ -5,22 +5,22 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # LED API
 
-## Overview
+## 概述
 
-The LED system in MatrixOS provides control over the 8x8 LED matrix with layer support, real-time updates, and cross-fade animations. The LED API is available as `MatrixOS.LED` and is imported by default.
+Matrix OS 中的 LED 系统提供对 8x8 LED 矩阵的控制，支持图层、实时更新和交叉渐变动画。LED API 可通过 `MatrixOS.LED` 访问，默认已导入。
 
-For some LED functions, you can specify a layer ID. If you don't specify a layer ID, the API will use layer 255 (the topmost layer). Changes only take effect when you call `Update()`.
+对于某些 LED 函数，可以指定图层 ID。如果不指定图层 ID，API 将使用图层 255（最顶层）。更改仅在调用 `Update()` 时生效。
 
-For immediate updates, write to layer 0 (the active buffer). Changes render immediately unless paused with `PauseUpdate(True)`. This is ideal for real-time effects but may cause flickering.
+要立即更新，请写入图层 0（活动缓冲区）。除非使用 `PauseUpdate(True)` 暂停，否则更改会立即渲染。这适用于实时效果但可能导致闪烁。
 
-*The Python LED API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_LED.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_LED.pyi"/>.*
+*Python LED API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_LED.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_LED.pyi"/>。*
 
-## Constants
+## 常量
 
-The LED API uses the following predefined constants:
+LED API 使用以下预定义常量：
 
-- `CURRENT_LAYER = 255` - Refers to the current active layer when no layer is specified
-- `CROSSFADE_DURATION = 200` - Default crossfade duration in milliseconds
+- `CURRENT_LAYER = 255` - 未指定图层时引用的当前活动图层
+- `CROSSFADE_DURATION = 200` - 默认交叉渐变持续时间（毫秒）
 
 ---
 

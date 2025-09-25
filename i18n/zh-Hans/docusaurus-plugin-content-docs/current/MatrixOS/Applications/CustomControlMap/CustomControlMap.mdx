@@ -4,45 +4,45 @@ sidebar_position: 8
 
 import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
 
-# Custom Control Map App
+# 自定义控制应用
 
-The Custom Control Map app is a powerful tool that allows you to create custom control maps for your Matrix OS device. You can create custom control maps using the [Matrix OS Custom Control Map Editor](https://edit.203.io).
+自定义控制应用是一个强大的工具，允许你为 Matrix OS 设备创建自定义控制界面。你可以使用 [Matrix OS 自定义控制编辑器](https://edit.203.io) 来创建自定义控制界面。
 
 :::warning
-Documentation is still in progress.
+文档仍在编写中。
 
-Most features are easy to understand, but some may require additional explanation.
+大多数功能都很容易理解，但有些可能需要额外的说明。
 
-- Action Driven Color links color to the action state. In MIDI, if you select the toggle option, Color 1 of the action-driven color will be used if the toggle is in the "on" position.
+- 操作驱动颜色将颜色与操作状态关联。在 MIDI 中，如果你选择切换选项，当切换处于"开启"位置时，将使用操作驱动颜色的颜色1。
 
-**There are also some bugs that will be fixed before release. For example, the SysEx is currently not working.**
+**还有一些错误将在发布前修复。例如，SysEx 目前无法正常工作。**
 :::
 
-## Web Editor
+## 网页编辑器
 
-You can create custom control maps using the [Matrix OS Custom Control Map Editor](https://edit.203.io).
+你可以使用 [Matrix OS 自定义控制界面编辑器](https://edit.203.io) 创建自定义控制界面。
 
-You can assign actions and effects to keys. You can also assign multiple actions to a single key, and they will be executed in sequence.
+你可以为按键分配操作和效果。你还可以为单个按键分配多个操作，它们将按顺序执行。
 
-![Editor](editor.png)
+![编辑器](editor.png)
 
-### Action
+### 操作
 
-An action is a single operation that can be performed by the key action.
+操作是按键动作可以执行的单一操作。
 
-### Effect
+### 效果
 
-An effect is a visual feedback that is displayed on the key when the action is performed. It can be triggered via key action or other events.
+效果是在执行操作时在按键上显示的视觉反馈。它可以通过按键操作或其他事件触发。
 
-## Action Menu
+## 操作菜单
 
-When you hold the Function Key while in Custom Control Map mode, you enter the Action Menu which provides access to various settings and controls.
+当你在自定义控制界面模式下长按功能键时，你将进入操作菜单，该菜单提供对各种设置和控制的访问。
 
 export function ActionMenu() {
     const uiElements = [
         {
-            "name": "Activated Layers",
-            "desc": "Shows which layers are currently active in your control map. (The example visualize shows 4 layers in the map, layer 1~3 are enabled, layer 4 is disabled. Layer 3 effects are shown, layer 3 actions and any lower enabled layers are trigger-able)",
+            "name": "激活的图层",
+            "desc": "显示控制界面中当前激活的图层。（示例可视化显示界面中有4个图层，图层1-3已启用，图层4已禁用。显示图层3的效果，可触发图层3的操作和任何更低的启用图层）",
             "elements": [
                 {
                     "pos": [0, 0],
@@ -61,8 +61,8 @@ export function ActionMenu() {
             ]
         },
         {
-            "name": "Menu Lock",
-            "desc": "Toggle to lock/unlock the menu access",
+            "name": "菜单锁定",
+            "desc": "切换锁定/解锁菜单访问",
             "elements": [
                 {
                     "pos": [0, 2],
@@ -71,8 +71,8 @@ export function ActionMenu() {
             ]
         },
         {
-            "name": "Reload",
-            "desc": "Reload the current control map configuration. (So layer configuration are reset to default of the map)",
+            "name": "重新加载",
+            "desc": "重新加载当前控制界面配置。（这样图层配置将重置界面的默认值）",
             "elements": [
                 {
                     "pos": [0, 5],
@@ -81,8 +81,8 @@ export function ActionMenu() {
             ]
         },
         {
-            "name": "System Setting",
-            "desc": "Open the system settings menu",
+            "name": "系统设置",
+            "desc": "打开系统设置菜单",
             "link": "/docs/MatrixOS/SystemSettings",
             "elements": [
                 {
@@ -92,8 +92,8 @@ export function ActionMenu() {
             ]
         },
         {
-            "name": "Layer Passthrough",
-            "desc": "Configure which layers allow passthrough of actions. (The example visualize shows 3 layers in the map, layer 1 are passthrough disabled, layer 2 is enabled. So action on empty spot of Layer 3 will trigger layer 1 actions)",
+            "name": "图层穿透",
+            "desc": "配置哪些图层允许操作穿透。（示例可视化显示界面中有3个图层，图层1禁用了穿透，图层2已启用。因此在图层3的空白位置进行操作将触发图层1的操作）",
             "elements": [
                   {
                     "pos": [0, 6],
@@ -114,8 +114,8 @@ export function ActionMenu() {
         }
     ];
 
-    const uiName = "Custom Control Map - Action Menu"
-    const uiDescription = "The Action Menu provides access to control map settings, layer management, and system functions. Access by holding the Function Key."
+    const uiName = "自定义控制界面 - 操作菜单"
+    const uiDescription = "操作菜单提供对控制界面设置、图层管理和系统功能的访问。通过长按功能键访问。"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}

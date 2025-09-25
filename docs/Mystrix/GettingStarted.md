@@ -57,12 +57,12 @@ You can leave a review at [203.io](https://203.io) or on the platform you purcha
 
 You can submit feature requests and bug reports at the [MatrixOS GitHub Repo](https://github.com/203-Systems/MatrixOS/issues/new).
 
-## Expectations
+## What to Expect
 
 <!-- idea: idk how to rewrite this in a better way lmao -->
 
-There are a lot of things Mystrix can do and is capable of, but it's important to set the correct expectations.
+Mystrix is powerful and versatile, but here are a few things to keep in mind as you get started:
 
-- No, you don't need programming skills to use or even tinker with Mystrix.
-- Yes, some features might not be relevant to your specific needs. We are not trying to appeal to a specific group of people, but rather making Mystrix versatile so it can be used by anyone for whatever needs they have. Having options is a good thing!
-- Yes, Project Mystrix is an ongoing process. There are many things we want to improve, and there are still some rough edges. With your help, it will continue to evolve! We are here to listen and improve based on your feedback!
+- **No programming required**: You can jump right in and use it, even customize features, without any coding knowledge whatsoever.
+- **Feature-rich by design**: Mystrix offers many capabilities, and some might not be relevant to your particular use case. Our goal is to make it flexible enough so everyone can find their perfect workflow.
+- **Continuously improving**: Project Mystrix is actively evolving, and we'll be honest—there are still areas we're polishing. We're constantly improving based on community feedback to make it even better!

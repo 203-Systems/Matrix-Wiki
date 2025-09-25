@@ -2,127 +2,127 @@
 sidebar_position: 3
 ---
 
-# Building on Linux
+# 在 Linux 上构建
 
-:::warning[Unverified Guide]
-I (Null) don't use Linux for development but I was able to get Matrix OS to build on Linux via WSL and Github Action.
+:::warning[未验证指南]
+我（Null）不使用 Linux 进行开发，但通过 WSL 和 Github Action 成功在 Linux 上构建了 Matrix OS。
 
-Since I mainly do develop on Windows, the code base might also have case sensitive issues that prevents it from build build on Linux/MacOS.
+由于主要在 Windows 上开发，代码库可能存在大小写敏感问题，会影响在 Linux/macOS 上的构建。
 
-If you have suggestions or questions, please reach out in our [Discord server](https://discord.gg/rRVCBHHPfw), [Github issue](https://github.com/203-Systems/Matrix-Wiki), or a leave a comment on this page.
+如有建议或问题，请在 [Discord 服务器](https://discord.gg/rRVCBHHPfw)、[Github issue](https://github.com/203-Systems/Matrix-Wiki) 上联系我们，或在此页面留言。
 :::
 
-## Install Git
+## 安装 Git
 
-Git is necessary for cloning the Matrix OS repository. Install Git with:
+克隆 Matrix OS 仓库需要 Git。使用以下命令安装 Git：
 
 ```bash
 sudo apt update
 sudo apt install git
 ```
 
-Verify the installation:
+验证安装：
 
 ```bash
 git --version
 ```
 
-## Install Make
+## 安装 Make
 
-Make is essential for building Matrix OS. Install it using:
+Make 是构建 Matrix OS 的必要工具。使用以下命令安装：
 
 ```bash
 sudo apt install make
 ```
 
-Confirm the installation:
+确认安装：
 
 ```bash
 make --version
 ```
 
-## Clone the Matrix OS Repository
+## 克隆 Matrix OS 仓库
 
-1. Make sure Git is installed as shown above.
+1. 确保已按上述步骤安装 Git。
 
-2. Open your terminal.
+2. 打开终端。
 
-3. Clone the Matrix OS repository:
+3. 克隆 Matrix OS 仓库：
 
    ```bash
    git clone https://github.com/203-Systems/MatrixOS.git
    ```
 
-4. Navigate to the cloned repository:
+4. 进入克隆的仓库：
 
    ```bash
    cd MatrixOS
    ```
 
-5. Initialize the submodules in the Matrix OS repository:
+5. 初始化 Matrix OS 仓库中的子模块：
 
    ```bash
    git submodule update --init
    ```
 
-## Install ESP-IDF
+## 安装 ESP-IDF
 
-The ESP-IDF (Espressif IoT Development Framework) is required to build and upload Matrix OS to the Mystrix device.
+构建并上传 Matrix OS 到魔矩设备需要 ESP-IDF（Espressif IoT 开发框架）。
 
-1. Download and install ESP-IDF version **V5.3.1**. Follow the instructions on [ESP-IDF: Standard Setup of Toolchain for Linux](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-setup.html) to install version V5.3.1.
+1. 下载并安装 ESP-IDF 版本 **V5.3.1**。按照 [ESP-IDF: Linux 工具链标准设置](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-setup.html) 的说明安装 V5.3.1 版本。
 
-2. After installation, locate the installation directory (e.g., `~/esp`).
+2. 安装后，找到安装目录（例如 `~/esp`）。
 
-3. Run the `install.sh` script to complete the setup:
+3. 运行 `install.sh` 脚本完成设置：
 
    ```bash
    ~/esp/esp-idf/install.sh
    ```
 
-## Build Matrix OS
+## 构建 Matrix OS
 
-1. Load ESP-IDF by sourcing it in your terminal session:
+1. 在终端会话中加载 ESP-IDF：
 
    ```bash
    source ~/esp/esp-idf/export.sh
    ```
 
-    In the long run, you will want to automate this. You could add this line to your shell's configuration file (e.g., `.bashrc` or `.zshrc`) or if you are using VS Code, you can modify the MatrixOS.code-workspace file and adapt it to run it on new terminal.
+    从长远来看，建议自动化此操作。可以将这行代码添加到 shell 配置文件中（例如 `.bashrc` 或 `.zshrc`），或如果使用 VS Code，可以修改 MatrixOS.code-workspace 文件并调整以在新终端中运行。
 
-2. Navigate to the Matrix OS root folder if your terminal isn’t already there.
+2. 如果终端尚未在 Matrix OS 根目录中，请进入该目录。
 
-3. Run the following command to build Matrix OS:
+3. 运行以下命令构建 Matrix OS：
 
    ```bash
    make DEVICE=Mystrix build
    ```
 
-4. Prepare for the upload by ensuring your Mystrix is in [upload mode](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode).
+4. 确保魔矩处于[上传模式](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode)以准备上传。
 
-5. Install `psutil` (only needed once):
+5. 安装 `psutil`（只需一次）：
 
    ```bash
    pip install psutil
    ```
 
-6. Upload the compiled Matrix OS to your Mystrix device:
+6. 将编译的 Matrix OS 上传到魔矩设备：
 
    ```bash
    make DEVICE=Mystrix uf2-upload
    ```
 
-7. Your Mystrix device should now flash and start the newly compiled Matrix OS automatically.
+7. 魔矩设备现在应该会闪烁并自动启动新编译的 Matrix OS。
 
-## Build Commands
+## 构建命令
 
-Here are some useful build commands you can use in Matrix OS:
+以下是在 Matrix OS 中可以使用的一些有用构建命令：
 
-- `clean` - Cleans the build.
-- `fullclean` - Cleans the build more thoroughly. Use this if you encounter undefined references or missing files.
-- `build` - Builds Matrix OS based on the default config (OS/parameter.h).
-- `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see [Debug Matrix OS](/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp)).
+- `clean` - 清理构建。
+- `fullclean` - 更彻底地清理构建。如果遇到未定义引用或缺少文件时使用。
+- `build` - 基于默认配置（OS/parameter.h）构建 Matrix OS。
+- `build-release`、`build-rc`、`build-beta`、`build-nightly`、`build-dev` - 以各种模式构建 Matrix OS。`build-dev` 启用 USB 日志记录（参见[调试 Matrix OS](/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp)）。
 
-You can chain commands together like:
+可以将命令链接在一起，如：
 ```bash
 make DEVICE=Mystrix clean build uf2-upload
 ```

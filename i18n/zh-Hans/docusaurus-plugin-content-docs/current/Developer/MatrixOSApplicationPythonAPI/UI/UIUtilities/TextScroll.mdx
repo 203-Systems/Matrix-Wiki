@@ -5,11 +5,11 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # TextScroll
 
-## Overview
+## 概述
 
-The `TextScroll` utility provides scrolling text display functionality on the LED matrix. It can display text that's longer than the display width by scrolling it across the screen.
+`TextScroll` 实用程序在 LED 矩阵上提供滚动文字显示功能。它可以通过在屏幕上滚动来显示比显示宽度更长的文本。
 
-*The TextScroll utility is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>.*
+*TextScroll 实用程序实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>。*
 
 ---
 
@@ -18,42 +18,42 @@ The `TextScroll` utility provides scrolling text display functionality on the LE
 def TextScroll(text: str, color: Color, speed: int, loop: bool) -> None
 ```
 
-Displays scrolling text on the LED matrix.
+在 LED 矩阵上显示滚动文字。
 
-**Parameters:**
-- `text` (`str`): Text to display and scroll
-- `color` (`Color`): Color of the text
-- `speed` (`int`): Scroll speed (higher = faster)
-- `loop` (`bool`): Whether to loop the text continuously
+**参数：**
+- `text` (`str`)：要显示和滚动的文字
+- `color` (`Color`)：文字的颜色
+- `speed` (`int`)：滚动速度（数值越高 = 越快）
+- `loop` (`bool`)：是否连续循环文字
 
-**Example:**
+**示例：**
 ```python
-# Display scrolling text
-MatrixOS.UIUtility.TextScroll("Hello, MatrixOS!", Color(255, 255, 0), 5, True)
+# 显示滚动文字
+MatrixOS.UIUtility.TextScroll("你好，Matrix OS！", Color(255, 255, 0), 5, True)
 
-# One-time scroll with different color
-MatrixOS.UIUtility.TextScroll("Welcome", Color(0, 255, 0), 3, False)
+# 不同颜色的一次性滚动
+MatrixOS.UIUtility.TextScroll("欢迎", Color(0, 255, 0), 3, False)
 ```
 
 ---
 
-## Usage Examples
+## 使用示例
 
-### Basic Text Scrolling
+### 基本文字滚动
 ```python
 def show_welcome_message():
-    """Display a welcome message"""
-    welcome_text = "Welcome to MatrixOS Python!"
+    """显示欢迎信息"""
+    welcome_text = "欢迎使用 Matrix OS Python！"
     MatrixOS.UIUtility.TextScroll(welcome_text, Color(0, 255, 255), 4, False)
 
 def show_status_loop():
-    """Display continuous status information"""
-    status_text = "System Status: OK - Temperature: 25C - Battery: 85%"
+    """显示连续的状态信息"""
+    status_text = "系统状态：正常 - 温度：25℃ - 电池：85%"
     MatrixOS.UIUtility.TextScroll(status_text, Color(0, 255, 0), 3, True)
 
-# Usage
+# 使用
 show_welcome_message()
-MatrixOS.SYS.DelayMs(3000)  # Wait for welcome to finish
+MatrixOS.SYS.DelayMs(3000)  # 等待欢迎信息结束
 show_status_loop()
 ```
 
@@ -148,13 +148,13 @@ show_app_info()
 
 ---
 
-## Speed Guidelines
+## 速度指南
 
-### Recommended Speed Values
-- **1-2**: Very slow, good for important messages
-- **3-4**: Normal reading speed, good for general text
-- **5-6**: Fast, good for notifications
-- **7+**: Very fast, good for tickers or alerts
+### 推荐的速度值
+- **1-2**：非常慢，适用于重要信息
+- **3-4**：正常阅读速度，适用于一般文字
+- **5-6**：快速，适用于通知
+- **7+**：非常快，适用于跑马灯或警报
 
 ### Speed Selection Tips
 ```python
@@ -185,21 +185,21 @@ normal_speed = get_appropriate_speed(30, "normal")     # Result: 4
 
 ---
 
-## Text Formatting Tips
+## 文字格式化技巧
 
-### Character Considerations
+### 字符考虑
 ```python
 def format_text_for_scroll(text):
-    """Format text for optimal scrolling display"""
+    """为最佳滚动显示格式化文字"""
 
-    # Add spacing for better readability
+    # 添加间距以提高可读性
     formatted_text = f"  {text}  "
 
-    # Replace problematic characters if needed
+    # 必要时替换问题字符
     replacements = {
-        '"': "'",   # Use single quotes instead of double
-        '&': "and", # Replace ampersand
-        '%': "pct"  # Replace percent if too wide
+        '"': "'",   # 使用单引号替代双引号
+        '&': "和", # 替换和号
+        '%': "百分比"  # 太宽时替换百分比
     }
 
     for old, new in replacements.items():

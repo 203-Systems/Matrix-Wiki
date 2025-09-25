@@ -2,37 +2,37 @@
 sidebar_position: 4
 ---
 
-# Code your application (Python)
+# 编写 Python 应用
 
-## Writing Python Apps
+## 编写 Python 应用
 
-There are two ways to write Python applications for MatrixOS:
+为 Matrix OS 编写 Python 应用有两种方式：
 
-### Method 1: Python REPL
-Use the Python app in the application launcher to access a Python REPL through USB serial. This is great for testing and rapid prototyping.
+### 方式 1：Python REPL
+使用应用启动器中的 Python 应用通过 USB 串口访问 Python REPL。适合测试和快速原型开发。
 
-### Method 2: Standalone Application
-Create a standalone Python application by placing your files in the device storage. This is great for saving your work and share with others.
+### 方式 2：独立应用
+将文件存储在设备上来创建独立的 Python 应用。适合保存作品并与他人分享。
 
-:::warning Micro SD Card Required
-A Micro SD card must be installed in your device to use standalone Python applications. See [Install Micro SD Card](../Mystrix/InstallMicroSD) for installation instructions.
+:::warning 需要 Micro SD 卡
+使用独立 Python 应用必须在设备中安装Micro SD卡。安装说明请见 [安装Micro SD卡](../Mystrix/InstallMicroSD)。
 :::
 
-## Creating a Standalone Application
+## 创建独立应用
 
-### File Structure
-Place your application files in the device storage:
+### 文件结构
+将应用文件放在设备存储中：
 ```
-/MatrixOS/Applications/<appname>/
+/MatrixOS/Applications/<应用名>/
 ```
 
-Your application folder must contain:
-- Your Python script files (`.py`)
-- An `AppInfo.json` configuration file
+应用文件夹必须包含：
+- Python 脚本文件（`.py`）
+- `AppInfo.json` 配置文件
 
 ### AppInfo.json
 
-The `AppInfo.json` file defines your application's metadata:
+`AppInfo.json` 文件定义应用的元数据：
 
 ```json
 {
@@ -45,19 +45,19 @@ The `AppInfo.json` file defines your application's metadata:
 }
 ```
 
-**Required fields:**
-- `name`: Your application's display name
-- `author`: Your name or organization
-- `color`: RGB color array [R, G, B] for the app icon (0-255)
-- `version`: Application version number
-- `osMinimalVer`: Minimum MatrixOS version required [major, minor, patch]
-- `appMainFile`: The main Python file to execute (can be `.py` for source code or `.py.a` for compiled Python code)
+**必需字段：**
+- `name`: 应用的显示名称
+- `author`: 作者或机构名称
+- `color`: 应用图标的 RGB 颜色数组 [R, G, B]（0-255）
+- `version`: 应用版本号
+- `osMinimalVer`: 需要的最低 Matrix OS 版本 [主版本，次版本，修订版本]
+- `appMainFile`: 要执行的主 Python 文件（可以是源码的 `.py` 或编译后的 `.py.a`）
 
-## Clear Compiled Byte Code
+## 清理编译字节码
 
-Matrix OS will auto pick compiled bytecode over raw .py files. So if you updated the .py file, make sure to delete the `/MatrixOS/Applications/<appname>/pikapython-api` folder to force recompile.
+Matrix OS 会优先使用编译后的字节码而不是原始的 .py 文件。如果更新了 .py 文件，记得删除 `/MatrixOS/Applications/<应用名>/pikapython-api` 文件夹来强制重新编译。
 
-## Example Applications
+## 示例应用
 
-For App examples, see:
+参考应用示例，请见：
 [https://github.com/203Systems/Matrix-OS-Python-App-Examples](https://github.com/203Systems/Matrix-OS-Python-App-Examples)
