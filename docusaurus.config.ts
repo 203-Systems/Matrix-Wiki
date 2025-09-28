@@ -49,7 +49,7 @@ const config: Config = {
           lastVersion: '2.6.0',
           versions: {
               current: {
-                label: 'Latest 🚧',
+                label: '3.0 Beta 🧪',
               },
               '2.6.0': {
                 label: '2.6.0',

@@ -1,8 +1,4 @@
 {
-  "version.label": {
-    "message": "Latest 🚧",
-    "description": "The label for version current"
-  },
   "sidebar.mystrixSidebar.category.Use your Mystrix": {
     "message": "Use your Mystrix",
     "description": "The label for category Use your Mystrix in sidebar mystrixSidebar"
