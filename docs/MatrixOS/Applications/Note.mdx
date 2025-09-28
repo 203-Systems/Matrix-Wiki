@@ -16,7 +16,7 @@ To exit the Note App, enter the [config menu](#config-menu) and hold down the fu
 
 The Note Pad is the main view of the Note App. It displays the current note pad with the selected layout, scale, and mode.
 
-The appearance of the pad will vary depending on the customization options. Refer to [Example Layouts](#example-layouts) to see how the notepad looks with different settings.
+The appearance of the pad will vary depending on the customization options. Refer to [Example Layouts](#example-layouts) to see how the note pad looks with different settings.
 
 Clicking the function key will bring you to the [config menu](#config-menu).
 
@@ -117,7 +117,7 @@ export function ConfigMenu() {
     {
         "name": "Scale Selector",
         "desc": "Select the scale of the active note pad layout (Layout Config Independent)",
-        "link": "#scale-seletor",
+        "link": "#scale-selector",
         "elements": [
             {
                 "pos": [7, 2],
@@ -352,8 +352,8 @@ export function ScaleSelector() {
         ]
     },
     {
-        "name": "Natural Minor",
-        "desc": "Use the Natural Minor scale",
+        "name": "Minor",
+        "desc": "Use the Minor scale",
         "link": "#scale-table",
         "elements": [
             {
@@ -561,8 +561,8 @@ export function ScaleSelector() {
         ]
     },
     {
-        "name": "Phrygian Dominate",
-        "desc": "Use the Phrygian Dominate scale",
+        "name": "Phrygian Dominant",
+        "desc": "Use the Phrygian Dominant scale",
         "link": "#scale-table",
         "elements": [
             {
@@ -731,7 +731,7 @@ export function ScaleSelector() {
 
 | Index | Scale                   | C   | C#  | D   | Eb  | E   | F   | F#  | G   | Ab  | A   | Bb  | B   |
 | ----- | ----------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1     | Natural Minor           | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 1     | Minor           | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
 | 2     | Major                   | X   | X   | X   |     | X   |     |     | X   |     | X   |     |     |
 | 3     | Dorian                  | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
 | 4     | Phrygian                | X   |     | X   | X   |     | X   |     | X   |     | X   |     |     |
@@ -750,7 +750,7 @@ export function ScaleSelector() {
 | 17    | Lydian                  | X   |     | X   |     | X   |     | X   | X   | X   |     | X   |     |
 | 18    | Locrian                 | X   |     |     | X   | X   |     | X   | X   |     | X   |     |     |
 | 19    | Major Pentatonic        | X   |     | X   |     | X   |     |     | X   | X   |     |     |     |
-| 20    | Phrygian Dominate       | X   | X   |     |     | X   | X   |     | X   | X   |     | X   |     |
+| 20    | Phrygian Dominant       | X   | X   |     |     | X   | X   |     | X   | X   |     | X   |     |
 | 21    | Half Whole Diminished   | X   | X   |     | X   | X   |     | X   | X   |     | X   | X   |     |
 | 22    | Mixolydian Bebop        | X   |     | X   |     | X   |     | X   | X   | X   |     | X   |     |
 | 23    | Super Locrian           | X   |     | X   |     | X   |     | X   | X   |     | X   |     |     |
@@ -769,9 +769,10 @@ export function ScaleSelector() {
 
 The Layout Selector allows you to choose between different note pad layout modes:
 
-- **Octave Layout**: Traditional octave-based layout
+- **Octave Layout**: Octave-based layout. Each row will start with the root note. If the scale has more than 8 notes, it will span 2 rows.
 - **Offset Layout**: Customizable offset pattern with configurable X and Y offsets
-- **Piano Layout**: Piano-style key arrangement
+- **Chromatic Layout**: Traditional note layout. Notes are place in order, left to right, bottom to top.
+- **Piano Layout**: Piano style key arrangement
 
 ### Octave Layout Mode
 
@@ -780,7 +781,7 @@ export function LayoutSelectorOctave() {
     const uiElements = [
     {
         "name": "Octave Mode (Selected)",
-        "desc": "Traditional octave-based layout",
+        "desc": "Switch to octave layout mode",
         "elements": [
             {
                 "pos": [2, 0],
@@ -800,7 +801,7 @@ export function LayoutSelectorOctave() {
     },
     {
         "name": "Chromatic Mode",
-        "desc": "Chromatic arrangement",
+        "desc": "Switch to chromatic layout mode",
         "elements": [
             {
                 "pos": [4, 0],
@@ -1058,7 +1059,7 @@ export function LayoutSelectorOffset() {
 
 <LayoutSelectorOffset />
 
-### Chromatoic Layout Mode
+### Chromatic Layout Mode
 
 export function LayoutSelectorChromatic() {
 
@@ -1167,8 +1168,8 @@ export function LayoutSelectorChromatic() {
     }
 ];
 
-    const uiName = "Layout Selector - Octave Mode"
-    const uiDescription = "Octave layout mode for traditional note arrangement"
+    const uiName = "Layout Selector - Chromatic Mode"
+    const uiDescription = "A traditional style layout, note are just layed in a continuous manner from bottol left to top right."
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1185,7 +1186,7 @@ export function LayoutSelectorPiano() {
     const uiElements = [
     {
         "name": "Octave Mode",
-        "desc": "Switch to octave layout",
+        "desc": "Switch to octave layout mode",
         "elements": [
             {
                 "pos": [2, 0],
@@ -1195,7 +1196,7 @@ export function LayoutSelectorPiano() {
     },
     {
         "name": "Offset Mode",
-        "desc": "Switch to offset layout",
+        "desc": "Switch to offset layout mode",
         "elements": [
             {
                 "pos": [3, 0],
@@ -1205,7 +1206,7 @@ export function LayoutSelectorPiano() {
     },
     {
         "name": "Chromatic Mode",
-        "desc": "Switch to chromatic arrangement",
+        "desc": "Switch to chromatic layout mode",
         "elements": [
             {
                 "pos": [4, 0],
@@ -3354,7 +3355,7 @@ export function ControlBar() {
     },
     {
         "name": "Key Control",
-        "desc": "Key control toggle\n\nShift: Scale Selector\n\nink: Inactive\nWhite: Active",
+        "desc": "Key control toggle\n\nShift: Scale Selector\n\nPink: Inactive\nWhite: Active",
         "elements": [
             {
                 "pos": [5, 7],
@@ -3574,7 +3575,7 @@ export function ControlBarChord() {
     },
     {
         "name": "Key Control",
-        "desc": "Key control toggle\n\nShift: Scale Selector\n\nink: Inactive\nWhite: Active",
+        "desc": "Key control toggle\n\nShift: Scale Selector\n\nPink: Inactive\nWhite: Active",
         "elements": [
             {
                 "pos": [5, 7],
@@ -3929,7 +3930,7 @@ export function ControlBarArpeggiator() {
     },
     {
         "name": "Key Control",
-        "desc": "Key control toggle\n\nShift: Scale Selector\n\nink: Inactive\nWhite: Active",
+        "desc": "Key control toggle\n\nShift: Scale Selector\n\nPink: Inactive\nWhite: Active",
         "elements": [
             {
                 "pos": [5, 7],
@@ -3999,7 +4000,7 @@ The key control allows you to toggle scale enforcement and access the scale sele
 - **Change Key**: Select any key in the visualizer to make that the new root key in the primary note pad. 
 
 
-For scale selection options, see [Scale Selector Menu](#scale-selector-menu).
+For scale selection options, see [Scale Selector](#scale-selector).
 
 export function ControlBarKey() {
 
