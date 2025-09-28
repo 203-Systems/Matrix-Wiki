@@ -18,8 +18,7 @@ brew --version
 The Matrix OS codebase is hosted in a Git repository, it also uses the Espressif IoT Development Framework for building and uploading to the Mystrix device. We'll install the dependencies for both by running:
 
 ```bash
-brew install git cmake ninja dfu-util python3
-pip3 install psutil
+brew install git cmake ninja dfu-util python3 psutil
 ```
 
 ## Clone Matrix OS repo

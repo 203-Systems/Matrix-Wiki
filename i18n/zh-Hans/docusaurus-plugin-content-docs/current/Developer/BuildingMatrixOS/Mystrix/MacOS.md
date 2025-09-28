@@ -18,8 +18,7 @@ brew --version
 Matrix OS 代码库托管在 Git 仓库中，它还使用 Espressif IoT 开发框架来构建和上传到魔矩设备。通过运行以下命令安装依赖项：
 
 ```bash
-brew install git cmake ninja dfu-util python3
-pip3 install psutil
+brew install git cmake ninja dfu-util python3 psutil
 ```
 
 ## 克隆 Matrix OS 仓库
