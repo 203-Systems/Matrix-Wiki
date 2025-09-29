@@ -6,19 +6,19 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 # 音符应用
 
-音符应用（V2）作为一个全面的MIDI音符界面，允许用户使用各种布局、音阶、调式和高级功能播放MIDI音符，包括自动和弦、琶音器、分屏界面和可自定义的颜色预设。
+音符应用（V2）是一个功能完整的MIDI音符界面，你可以用它来演奏MIDI音符，支持多种布局、音阶、调式，还有自动和弦、琶音器、分屏显示和颜色自定义等高级功能。
 
-启动后，你将进入[音符板](#音符板)。点击功能键访问[配置菜单](#配置菜单)，再次点击返回[音符板](#音符板)。
+启动后会直接进入[音符板](#音符板)界面。点击功能键可以打开[配置菜单](#配置菜单)，再次点击即可返回[音符板](#音符板)。
 
-要退出音符应用，请进入[配置菜单](#配置菜单)并按住功能键。这将使你返回到[应用启动器](/docs/MatrixOS/ApplicationLauncher)。
+要退出音符应用，先进入[配置菜单](#配置菜单)，然后按住功能键就能返回[应用启动器](/docs/MatrixOS/ApplicationLauncher)。
 
 ## 音符板
 
-音符板是音符应用的主界面。它显示当前音符板，包含所选的布局、音阶和调式。
+音符板是音符应用的主界面，会根据你选择的布局、音阶和调式来显示不同的按键排列。
 
-按键的外观会根据自定义选项而变化。请参阅[示例布局](#示例布局)以了解不同设置下的音符板外观。
+按键的颜色和样式可以自定义。想看看不同设置效果的话，可以查看[示例布局](#示例布局)。
 
-点击功能键将带你进入[配置菜单](#配置菜单)。
+点击功能键可以打开[配置菜单](#配置菜单)。
 
 export function NotePad() {
 
@@ -290,7 +290,7 @@ export function ConfigMenu() {
 ];
 
     const uiName = "配置菜单"
-    const uiDescription = "配置菜单允许你修改音符板布局和其他自定义选项"
+    const uiDescription = "在这里可以调整音符板的布局、音阶、颜色等各种设置"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -303,7 +303,7 @@ export function ConfigMenu() {
 
 ## 音阶选择器
 
-突出显示或限制音符到特定音阶。此设置独立于布局配置。
+可以将音符限制在特定音阶内，或者用颜色高亮显示音阶音符。这个设置和布局选择是分开的。
 
 export function ScaleSelector() {
 
@@ -716,7 +716,7 @@ export function ScaleSelector() {
 ];
 
     const uiName = "音阶选择器"
-    const uiDescription = "音阶选择器允许你选择当前音符板布局的音阶和根音"
+    const uiDescription = "选择当前音符板布局的音阶和根音"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -767,12 +767,12 @@ export function ScaleSelector() {
 
 ## 布局选择器
 
-布局选择器允许你在不同的音符板布局模式之间进行选择：
+可以选择不同的音符板布局模式：
 
 - **八度布局**：基于八度的布局。每一行都从根音开始。如果音阶有超过8个音符，将跨越2行。
-- **偏移布局**：可自定义的偏移模式，具有可配置的X和Y偏移
-- **半音布局**：传统的音符布局。音符按顺序排列，从左到右，从下到上
-- **钢琴布局**：钢琴风格的按键排列
+- **偏移布局**：自定义偏移模式，可配置X和Y偏移
+- **半音布局**：传统音符布局，按半音顺序从左到右、从下到上排列
+- **钢琴布局**：钢琴风格按键排列
 
 ### 八度布局模式
 
@@ -880,7 +880,7 @@ export function LayoutSelectorOctave() {
 ];
 
     const uiName = "布局选择器 - 八度模式"
-    const uiDescription = "八度模式，每一行都从根音开始。"
+    const uiDescription = "每一行都从根音开始的八度模式"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1290,7 +1290,7 @@ export function LayoutSelectorPiano() {
 
 ## MIDI通道
 
-此设置独立于布局配置。
+该设置独立于布局配置。
 
 export function ChannelSelector() {
 
@@ -1367,7 +1367,7 @@ export function ChannelSelector() {
 ];
 
     const uiName = "MIDI通道选择器"
-    const uiDescription = "MIDI通道选择器允许你选择当前音符板布局的MIDI输出通道"
+    const uiDescription = "选择当前音符板布局的MIDI输出通道"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1380,22 +1380,22 @@ export function ChannelSelector() {
 
 ## 琶音器设置
 
-琶音器设置菜单提供对琶音器设置的全面控制。此菜单仅在音符板界面中启用控制栏时可访问。
+可全面控制琶音器设置。仅在音符板界面启用控制栏时可访问。
 
-琶音器设置菜单有7个不同的参数页面，每个都有独特的颜色编码：
+包含7个不同的参数页面，每个都有独特的颜色标识：
 
-- **BPM**（红色）：控制琶音器的节拍/速度
-- **摇摆**（橙色）：调整音符之间的时序摇摆
-- **门限**（黄色）：设置音符持续时间/门限
-- **顺序**（绿色）：选择琶音器模式顺序
-- **步进**（青色）：控制琶音器前进的步数（每次步数偏移后循环#次）
-- **步进偏移**（蓝色）：在每个步骤后添加音高偏移音符
-- **重复**（紫色）：设置模式重复的次数
+- **BPM**（红色）：调节琶音器节拍速度
+- **摇摆**（橙色）：调整音符时序摇摆
+- **门限**（黄色）：设置音符持续时间
+- **顺序**（绿色）：选择琶音模式顺序
+- **步进**（青色）：设置琶音器步进数量
+- **步进偏移**（蓝色）：在每步后添加音高偏移
+- **重复**（紫色）：设置模式重复次数
 
 ### BPM
 
-控制琶音器模式的节拍/速度。<br/>
-BPM（每分钟节拍数）设置决定琶音器循环音符的速度。
+调节琶音模式的节拍速度。<br/>
+BPM（每分钟节拍数）决定琶音器循环音符的速度。
 
 **范围**：20-299 BPM<br/>
 **默认值**：120 BPM
@@ -1608,8 +1608,8 @@ export function ArpConfigBPM() {
 
 ### 摇摆
 
-调整交替音符之间的时序以创建摇摆感觉。<br/>
-摇摆百分比控制每对音符中第二个音符的延迟程度，创造节奏变化。
+调整交替音符的时序来创造摇摆感。<br/>
+摇摆百分比决定每对音符中第二个音符的延迟程度。
 
 **范围**：20-80%<br/>
 **默认值**：50%
@@ -1805,7 +1805,7 @@ export function ArpConfigSwing() {
     ];
 
     const uiName = "琶音器摇摆配置"
-    const uiDescription = "配置琶音器摇摆时序（20-80%）"
+    const uiDescription = "调节琶音器摇摆时序（20-80%）"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1817,7 +1817,7 @@ export function ArpConfigSwing() {
 
 ### 门限
 
-控制每个音符播放的时长，以其完整持续时间的百分比表示。
+控制每个音符的播放时长，以完整持续时间的百分比表示。
 
 **范围**：0-200%（0表示无限长度）<br/>
 **默认值**：100%
@@ -2016,7 +2016,7 @@ export function ArpConfigGate() {
     ];
 
     const uiName = "琶音器门限配置"
-    const uiDescription = "配置音符持续时间（0-200%，0 = 无限延音）"
+    const uiDescription = "调节音符持续时间（0-200%，0=无限延音）"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -2028,9 +2028,9 @@ export function ArpConfigGate() {
 
 ### 顺序
 
-从16种不同选项中选择琶音器模式顺序。
+从16种模式中选择琶音器的演奏顺序。
 
-**顺序类型：**
+**演奏顺序：**
 - **向上** (Up)
 - **向下** (Down)
 - **向上向下** (Up Down)
@@ -2333,7 +2333,7 @@ export function ArpConfigDirection() {
     ];
 
     const uiName = "琶音器顺序配置"
-    const uiDescription = "选择琶音器模式顺序（显示向上）"
+    const uiDescription = "选择琶音器演奏顺序（当前：向上）"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -2345,7 +2345,7 @@ export function ArpConfigDirection() {
 
 ### 步进
 
-控制琶音器进行的序列循环次数，每次循环添加步进偏移量。<br/>
+控制琶音器序列的循环次数，每次循环都会应用步进偏移。<br/>
 
 **范围**：1-16步<br/>
 **默认值**：1
@@ -2538,7 +2538,7 @@ export function ArpConfigStep() {
 
 ### 步进偏移
 
-在琶音器模式中每个步进后添加音高偏移音符。<br/>
+为琶音器序列中的每个步进添加音高偏移。<br/>
 
 **范围**：-48至+48半音（±4八度）<br/>
 **默认值**：12
@@ -2742,7 +2742,7 @@ export function ArpConfigStepOffset() {
 
 ### 重复
 
-设置琶音器模式在停止前重复的次数。
+设置琶音器重复播放的次数。
 
 **范围**：0-100次（0 = 无限）<br/>
 **默认值**：0（无限）
@@ -2958,7 +2958,7 @@ export function ArpConfigRepeat() {
 
 ## 音符板颜色
 
-你可以使用音符板颜色选择器自定义激活的音符板布局的颜色组合。此设置独立于布局配置。
+可使用颜色选择器自定义当前音符板布局的颜色组合。该设置独立于布局配置。
 
 export function NotePadColorSelectorPresetMenu() {
 
@@ -3086,8 +3086,8 @@ export function NotePadColorSelectorPresetMenu() {
         ]
     },
     {
-        "name": "多音颜色",
-        "desc": "选择多音颜色模式",
+        "name": "Poly颜色",
+        "desc": "选择Poly颜色模式",
         "elements": [
             {
                 "pos": [5, 6],
@@ -3108,7 +3108,7 @@ export function NotePadColorSelectorPresetMenu() {
 ];
 
     const uiName = "音符板颜色选择器 - 预设"
-    const uiDescription = "音符板颜色选择器允许你为音符板布局选择颜色预设"
+    const uiDescription = "为音符板布局选择颜色预设"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -3209,7 +3209,7 @@ export function NotePadColorSelectorCustomMenu() {
 ];
 
     const uiName = "音符板颜色选择器 - 自定义"
-    const uiDescription = "音符板颜色选择器允许你自定义音符板布局的颜色组合"
+    const uiDescription = "自定义音符板布局的颜色组合"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -3222,7 +3222,7 @@ export function NotePadColorSelectorCustomMenu() {
 
 ## 分屏模式
 
-分屏模式选择器允许你启用或禁用分屏模式。分屏模式可以设置为无分屏、水平分屏或垂直分屏。
+可选择启用或禁用分屏模式。分屏模式包括：无分屏、水平分屏或垂直分屏。
 
 分屏模式选择器将根据当前的分屏模式显示不同的颜色：
 
@@ -3232,16 +3232,16 @@ export function NotePadColorSelectorCustomMenu() {
 
 ## 控制栏
 
-控制栏在演奏视图中启用时提供对各种控制和效果的快速访问。
+演奏视图中启用控制栏可快速访问各种控制和效果。
 
-每个按钮也都有不同的Shift功能。按住任何八度按钮将启用Shift模式。
+每个按钮都有不同的Shift功能。按住任意八度按钮可启用Shift模式。
 
 功能：
 - **弯音向下** (X=1)：力度映射的弯音向下（Shift：MIDI停止）
 - **弯音向上** (X=2)：力度映射的弯音向上（Shift：MIDI播放）
 - **音符锁定** (X=3)：三种状态的音符延音（Shift：启用切换锁定模式）
-- **和弦** (X=4)：打开和弦控制
-- **琶音器** (X=5)：打开琶音器速度控制（Shift：进入琶音器设置）
+- **和弦** (X=4)：进入和弦控制
+- **琶音器** (X=5)：进入琶音器速度控制（Shift：进入琶音器设置）
 - **调性模式** (X=6)：更改当前布局的调性（Shift：进入音阶选择器）
 - **八度向下和向上** (X=7和8)：按八度移调音符（按住任一作为Shift）
 - **交换布局**：同时点击八度向下+八度向上来交换布局。
@@ -3413,15 +3413,15 @@ export function ControlBar() {
 
 ### 八度控制 / 移调
 
-八度控制允许您按八度向上或向下移调所有音符。这些按钮还用作访问辅助功能的Shift修饰键。
+可按八度向上或向下移调所有音符。这些按钮也用作Shift修饰键来访问辅助功能。
 
 **控制**：
-- **八度向下** (X=7)：降低八度
-- **八度向上** (X=8)：提高八度
+- **八度向下** (X=7)：降低一个八度
+- **八度向上** (X=8)：提高一个八度
 
 **特殊功能**：
-- **按住任一按钮**：激活其他控制的Shift模式
-- **同时点击两个**：在分屏模式中交换主要和次要布局
+- **按住任意按钮**：启用其他控制的Shift模式
+- **同时点击两个**：分屏模式下交换主次布局
 
 **视觉反馈**：
   - **颜色**：主要音符板颜色
@@ -3429,11 +3429,11 @@ export function ControlBar() {
 
 ### 弯音
 
-弯音控制允许您向上或向下弯曲演奏音符的音高。弯音量是力度映射的，这意味着按得更用力会产生更大的弯音。
+可向上或向下弯曲演奏音符的音高。弯音量与力度映射，按得越用力弯音越大。
 
 **按钮**：
-- **弯音向下** (X=0)：向下弯音（红色）
-- **弯音向上** (X=1)：向上弯音（绿色）
+- **弯音向下** (X=0)：音高向下弯曲（红色）
+- **弯音向上** (X=1)：音高向上弯曲（绿色）
 
 **Shift功能**：
 - **Shift + 弯音向下**：MIDI停止命令
@@ -3441,37 +3441,37 @@ export function ControlBar() {
 
 ### 音符锁定
 
-音符锁定允许您保持音符播放而不保持按键按下。该功能有三种模式。
+可保持音符播放而无需持续按住按键。有三种模式。
 
 **按钮**：
-- **点击** (X=2)：在三种模式之间循环
-- **Shift点击**：直接启用切换模式
+- **点击** (X=2)：在三种模式间切换
+- **Shift点击**：直接进入切换模式
 
 **颜色状态**：
-- **黄色**：锁定禁用 - 音符正常播放
-- **白色**：锁定启用 - 按下的音符保持播放
-- **洋红色**：切换模式 - 按键像开关一样工作
+- **黄色**：锁定禁用，音符正常播放
+- **白色**：锁定启用，按下的音符保持播放
+- **洋红色**：切换模式，按键像开关一样
 
 **模式行为**：
 1. **禁用**（黄色）：标准音符播放
-2. **启用**（白色）：所有按下的音符无限延续
-3. **切换**（洋红色）：每个键在开/关状态之间切换
+2. **启用**（白色）：所有按下的音符持续播放
+3. **切换**（洋红色）：每个键在开关状态间切换
 
 ### 和弦控制
 
-和弦控制允许您使用单个音符演奏完整的和弦。激活后，音符板顶部的两行变成和弦类型和转位的控制。
+可使用单个音符演奏完整和弦。激活后，音符板顶部两行变为和弦类型和转位控制。
 
 **按钮**：
-- **点击** (X=3)：开关和弦控制
-- **Shift点击**：锁定当前和弦选择
+- **点击** (X=3)：切换和弦控制
+- **Shift点击**：锁定当前和弦
 
 **颜色状态**：
-- **青色**：和弦控制关闭
-- **白色**：和弦控制开启
+- **青色**：和弦控制已关闭
+- **白色**：和弦控制已开启
 
 **和弦构建控制**：
-- **和弦类型**：大和弦、小和弦、减和弦、增和弦 - 同时只能选一个
-- **多个扩展**：6th、7th、9th - 您可以选择多个自由组合
+- **和弦类型**：大和弦、小和弦、减和弦、增和弦（只能选一个）
+- **扩展音**：6th、7th、9th（可多选组合）
 - **按住组合**：在音符板上演奏时按住一个组合来使用和弦
 - **Shift点击**：锁定和弦类型和扩展
 - **转位**：选择一个转位或在锁定和弦时滑动穿过它们来扫弦。
@@ -3982,10 +3982,10 @@ export function ControlBarArpeggiator() {
 
 ### 音阶控制
 
-音阶控制允许您切换音阶强制并访问音阶选择器。激活时，音符将被限制在选定的音阶内。
+可切换音阶强制并访问音阶选择器。激活时，音符将限制在选定音阶内。
 
 **按钮**：
-- **点击**：开关音阶控制
+- **点击**：切换音阶控制
 - **Shift点击**：进入音阶选择器菜单
 
 **颜色状态**：
@@ -4652,7 +4652,7 @@ export function ExampleLayout4() {
 
 <ExampleLayout4 />
 
-### 示例布局 5 - 八度模式
+### 示例布局 5 - 八度布局
 
 **布局模式**: 八度<br/>
 **颜色预设**: 彩虹<br/>
