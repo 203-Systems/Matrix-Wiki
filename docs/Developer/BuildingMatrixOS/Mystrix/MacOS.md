@@ -63,7 +63,7 @@ python3 $HOME/esp/esp-idf/tools/idf_tools.py install riscv32-esp-elf
    ```bash
    make DEVICE=Mystrix build
    ```
-4. Prepare to upload to your Mystrix device. Make sure your Mystrix is in <DocLink to="/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode">upload mode</DocLink> already.
+4. Prepare to upload to your Mystrix device. Make sure your Mystrix is in <DocLink to="/docs/Mystrix/UpdateMatrixOS#enter-os-update-mode">upload mode</DocLink> already.
 5. Upload the compiled Matrix OS to Mystrix:
    ```bash
    make DEVICE=Mystrix uf2-upload
@@ -77,7 +77,7 @@ Here are some useful build commands you can use in Matrix OS:
 - `clean` - Cleans the build.
 - `fullclean` - Cleans the build more thoroughly. Use this if you encounter undefined references or missing files.
 - `build` - Builds Matrix OS based on the default config (OS/parameter.h).
-- `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see <DocLink to="/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp">Debug Matrix OS</DocLink>).
+- `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see <DocLink to="/docs/Developer/DebugMatrixOSCpp">Debug Matrix OS</DocLink>).
 
 You can chain commands together like:
 ```bash

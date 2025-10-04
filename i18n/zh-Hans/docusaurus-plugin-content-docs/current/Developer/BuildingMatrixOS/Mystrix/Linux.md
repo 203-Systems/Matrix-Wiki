@@ -99,7 +99,7 @@ make --version
    make DEVICE=Mystrix build
    ```
 
-4. 确保魔矩处于<DocLink to="/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode">上传模式</DocLink>以准备上传。
+4. 确保魔矩处于<DocLink to="/docs/Mystrix/UpdateMatrixOS#进入操作系统更新模式">上传模式</DocLink>以准备上传。
 
 5. 安装 `psutil`（只需一次）：
 
@@ -122,7 +122,7 @@ make --version
 - `clean` - 清理构建。
 - `fullclean` - 更彻底地清理构建。如果遇到未定义引用或缺少文件时使用。
 - `build` - 基于默认配置（OS/parameter.h）构建 Matrix OS。
-- `build-release`、`build-rc`、`build-beta`、`build-nightly`、`build-dev` - 以各种模式构建 Matrix OS。`build-dev` 启用 USB 日志记录（参见<DocLink to="/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp">调试 Matrix OS</DocLink>）。
+- `build-release`、`build-rc`、`build-beta`、`build-nightly`、`build-dev` - 以各种模式构建 Matrix OS。`build-dev` 启用 USB 日志记录（参见<DocLink to="/docs/Developer/DebugMatrixOSCpp">调试 Matrix OS</DocLink>）。
 
 可以将命令链接在一起，如：
 ```bash
