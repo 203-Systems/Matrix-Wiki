@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: rgb(235, 235, 235);
   border-radius: 10px;
   overflow: hidden;
@@ -10,14 +10,136 @@
   /* aspect-ratio: */
 }
 
+[data-theme='dark'] .MystrixVisualizer {
+  background-color: rgb(20, 20, 20);
+}
+
+.mystrixContent {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
 @media screen and (max-width: 996px) {
-  .MystrixVisualizer {
+  .mystrixContent {
     flex-direction: column;
   }
 }
 
-[data-theme='dark'] .MystrixVisualizer {
-  background-color: rgb(20, 20, 20);
+/* Top Bar Styles */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(40, 40, 40);
+  color: white;
+  min-height: 36px;
+}
+
+.topBarSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  max-width: 48px;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.topBarSection:first-child:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.topBarSection:first-child:hover::after {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.topBarSection:last-child:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: background-color 0.2s ease;
+}
+
+.topBarSection:last-child:hover::before {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.topBarButton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+
+.topBarSection:first-child::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: opacity 0.2s ease;
+}
+
+.topBarSection:last-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: opacity 0.2s ease;
+}
+
+.topBarTitle {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  flex: 1;
+  margin: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+  letter-spacing: 0.2em;
+  position: relative;
+  min-height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure TextTransition has consistent layout */
+.topBarTitle :global(.text-transition) {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Fix for original react-text-transition positioning */
+.topBarTitle :global(.text-transition) > div {
+  width: 100%;
+  text-align: center;
+}
+
+/* Fix for animated divs inside react-text-transition */
+.topBarTitle :global(.text-transition) > div > div {
+  width: 100%;
+  text-align: center;
 }
 
 /* Container for all elements */

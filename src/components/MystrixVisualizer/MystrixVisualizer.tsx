@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import styles from './styles.module.css';
-import { ArrowRight, Construction } from '@carbon/icons-react';
+import { ArrowRight, Construction, ArrowLeft, List } from '@carbon/icons-react';
 import { presets } from "react-text-transition";
 import TextTransition from "./TextTransition";
+import ReactTextTransition from "react-text-transition";
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 
 
@@ -55,6 +56,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     const [detailButtonColor, setDetailButtonColor] = useState<string>("unset");
     const [displayedName, setDisplayedName] = useState<string>(uiName);
     const [displayedDesc, setDisplayedDesc] = useState<string>(uiDescription);
+    const [isBackButtonHovered, setIsBackButtonHovered] = useState<boolean>(false);
 
 
     const getKeyID = (x: number, y: number) => x + y * 8;
@@ -68,11 +70,6 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
 
         uiElements.forEach((element, index) => {
             if(element.elements === undefined) return;
-
-            // if(!Array.isArray(element.elements)) {
-            // {
-            //     element.elements = [element.elements as uiDisplayElement];
-            // }
 
             element.elements?.forEach((displayElement) => {
                     if (displayElement.pos[0] == "t") {
@@ -204,7 +201,29 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
         </div>
         )}>
         <div className={styles.MystrixVisualizer} onClick={() => {lockSelectedFunction(undefined)}}>
-            
+            <div className={styles.topBar}>
+                <div className={styles.topBarSection}>
+                    <button
+                        className={styles.topBarButton}
+                        onMouseEnter={() => setIsBackButtonHovered(true)}
+                        onMouseLeave={() => setIsBackButtonHovered(false)}
+                    >
+                        <ArrowLeft size={20} />
+                    </button>
+                </div>
+                <div className={styles.topBarTitle}>
+                    <ReactTextTransition springConfig={presets.gentle} inline={false} style={{ width: '100%', textAlign: 'center' }}>
+                        {isBackButtonHovered ? "Go back to Parent UI" : uiName}
+                    </ReactTextTransition>
+                </div>
+                <div className={styles.topBarSection}>
+                    <button className={styles.topBarButton}>
+                        <List size={20} />
+                    </button>
+                </div>
+            </div>
+
+            <div className={styles.mystrixContent}>
             <div className={styles.mystrix}>
             <div className={`${styles.mystrixUnderglow} ${selected_function != undefined ? styles.mystrixUnderglowDim : ''}`}>
                 <div className={styles.mystrixUnderglowRow}>
@@ -354,50 +373,76 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
             />
 
             </div>
-            <div className={styles.functionDisplay}>
-                <div className={styles.functionDisplayWrapper}>
-                    <TextTransition springConfig={{ tension: 150, friction: 24 }} direction="left">
-                        <div className={styles.functionDisplayContent} key={`${displayedName}-${displayedDesc}`}>
-                            <div className={styles.functionNameWrapper}>
-                                <h2 className={styles.functionName}>
-                                    {displayedName}
-                                </h2>
-                            </div>
-                            <div className={styles.functionDesc}>
-                                {displayedDesc}
-                            </div>
-                        </div>
-                    </TextTransition>
-                </div>
-                <button
-                    className={`${styles.functionDetailBtn} ${(selected_function !== undefined && uiElements[selected_function].link !== undefined) ?  '' : styles.functionDetailBtnHidden}`}
-                    style={{ 
-                        backgroundColor: detailButtonColor
-                    }}
-                    onClick={() => {
-                        if (selected_function !== undefined && uiElements[selected_function].link !== undefined)
-                        {
-                            if(uiElements[selected_function].link.startsWith("#"))
-                            {
-                                window.location.hash = "";
-                                window.location.hash = uiElements[selected_function].link;
-                            }
-                            else
-                            {
-                                window.open(uiElements[selected_function].link, "_self");
-                            }
-                        }
-                    }}
-                >   
-                    <div className={styles.functionDetailBtnContent} style={{color: detailButtonColor}}>
-                        <div className={styles.functionDetailBtnText}>DETAILS</div>
-                        <ArrowRight size={28} className={styles.functionDetailBtnArrow}/>
-                    </div>
-                </button>
+            <FunctionDisplaySection
+                displayedName={displayedName}
+                displayedDesc={displayedDesc}
+                selected_function={selected_function}
+                uiElements={uiElements}
+                detailButtonColor={detailButtonColor}
+            />
             </div>
         </div>
     </ErrorBoundary>
   );
 };
+
+// Memoized component to prevent unnecessary re-renders
+const FunctionDisplaySection = memo(({
+    displayedName,
+    displayedDesc,
+    selected_function,
+    uiElements,
+    detailButtonColor
+}: {
+    displayedName: string;
+    displayedDesc: string;
+    selected_function: number | undefined;
+    uiElements: uiElement[];
+    detailButtonColor: string;
+}) => {
+    return (
+        <div className={styles.functionDisplay}>
+            <div className={styles.functionDisplayWrapper}>
+                <TextTransition springConfig={{ tension: 150, friction: 24 }} direction="left">
+                    <div className={styles.functionDisplayContent} key={`${displayedName}-${displayedDesc}`}>
+                        <div className={styles.functionNameWrapper}>
+                            <h2 className={styles.functionName}>
+                                {displayedName}
+                            </h2>
+                        </div>
+                        <div className={styles.functionDesc}>
+                            {displayedDesc}
+                        </div>
+                    </div>
+                </TextTransition>
+            </div>
+            <button
+                className={`${styles.functionDetailBtn} ${(selected_function !== undefined && uiElements[selected_function].link !== undefined) ?  '' : styles.functionDetailBtnHidden}`}
+                style={{
+                    backgroundColor: detailButtonColor
+                }}
+                onClick={() => {
+                    if (selected_function !== undefined && uiElements[selected_function].link !== undefined)
+                    {
+                        if(uiElements[selected_function].link.startsWith("#"))
+                        {
+                            window.location.hash = "";
+                            window.location.hash = uiElements[selected_function].link;
+                        }
+                        else
+                        {
+                            window.open(uiElements[selected_function].link, "_self");
+                        }
+                    }
+                }}
+            >
+                <div className={styles.functionDetailBtnContent} style={{color: detailButtonColor}}>
+                    <div className={styles.functionDetailBtnText}>DETAILS</div>
+                    <ArrowRight size={28} className={styles.functionDetailBtnArrow}/>
+                </div>
+            </button>
+        </div>
+    );
+});
 
 export default MystrixVisualizer;
