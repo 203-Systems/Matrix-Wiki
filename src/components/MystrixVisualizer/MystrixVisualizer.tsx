@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import styles from './styles.module.css';
 import { ArrowRight, Construction, ArrowLeft, List } from '@carbon/icons-react';
 import TextTransition from "./TextTransition";
@@ -392,6 +392,8 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                 lockSelectedFunction={lockSelectedFunction}
                 setIsListViewOpen={setIsListViewOpen}
                 selectHighlightFunction={selectHighlightFunction}
+                keypadFunctions={keypadFunctions}
+                keypadColors={keypadColors}
             />
             </div>
         </div>
@@ -409,7 +411,9 @@ const FunctionDisplaySection = memo(({
     isListViewOpen,
     lockSelectedFunction,
     setIsListViewOpen,
-    selectHighlightFunction
+    selectHighlightFunction,
+    keypadFunctions,
+    keypadColors
 }: {
     displayedName: string;
     displayedDesc: string;
@@ -420,21 +424,27 @@ const FunctionDisplaySection = memo(({
     lockSelectedFunction: (function_id: number, color?: string) => void;
     setIsListViewOpen: (open: boolean) => void;
     selectHighlightFunction: (function_id: number, color?: string) => void;
+    keypadFunctions: (number | undefined)[];
+    keypadColors: (string | undefined)[];
 }) => {
+    const content = useMemo(() => (
+        <div className={styles.functionDisplayContent}>
+            <div className={styles.functionNameWrapper}>
+                <h2 className={styles.functionName}>
+                    {displayedName}
+                </h2>
+            </div>
+            <div className={styles.functionDesc}>
+                {displayedDesc}
+            </div>
+        </div>
+    ), [displayedName, displayedDesc]);
+
     return (
         <div className={styles.functionDisplay}>
             <div className={styles.functionDisplayWrapper}>
                 <TextTransition springConfig={{ tension: 150, friction: 24 }} direction="left">
-                    <div className={styles.functionDisplayContent} key={`${displayedName}-${displayedDesc}`}>
-                        <div className={styles.functionNameWrapper}>
-                            <h2 className={styles.functionName}>
-                                {displayedName}
-                            </h2>
-                        </div>
-                        <div className={styles.functionDesc}>
-                            {displayedDesc}
-                        </div>
-                    </div>
+                    {content}
                 </TextTransition>
             </div>
             <button
@@ -472,7 +482,9 @@ const FunctionDisplaySection = memo(({
                                 onMouseEnter={() => selectHighlightFunction(index)}
                                 onMouseLeave={() => selectHighlightFunction(undefined)}
                                 onClick={(e) => {
-                                    lockSelectedFunction(index);
+                                    const keyID = keypadFunctions.findIndex(funcId => funcId === index);
+                                    const color = keyID !== -1 ? keypadColors[keyID] : undefined;
+                                    lockSelectedFunction(index, color);
                                     setIsListViewOpen(false);
                                     e.stopPropagation();
                                 }}
