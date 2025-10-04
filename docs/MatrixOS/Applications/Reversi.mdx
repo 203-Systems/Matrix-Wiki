@@ -10,6 +10,8 @@ Reversi is a strategy board game for two players, played on an 8x8 board. Player
 
 Learn more about Reversi [here](https://en.wikipedia.org/wiki/Reversi).
 
+Tap the function key to access the config menu from the game view.
+
 ## Game View
 
 export function GameView() {
@@ -88,10 +90,12 @@ export function GameView() {
 
     const uiName = "Game View"
     const uiDescription = "The game view allows you to play the Reversi game. The underglow shows the current player's color."
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -182,10 +186,12 @@ export function ConfigMenu() {
 
     const uiName = "Config Menu"
     const uiDescription = "The config menu allows you to modify settings of the app and the device."
+    const uiParentLink = "#game-view"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }

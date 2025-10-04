@@ -12,6 +12,8 @@ The dice has two modes: dotted dice and number dice.
 
 You can customize the number of faces on the dice (2 to 9 for dot mode, 2 to 99 for number mode) and the color and effect of the animation.
 
+Tap the function key to access the config menu from the dice view.
+
 ## Dice View
 
 ### Dot Mode
@@ -69,10 +71,12 @@ export function DotView() {
 
     const uiName = "Dice View - Dot Mode"
     const uiDescription = "Dot mode displays the dice dots on the screen. You can customize the number of faces from 2 to 9."
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -129,10 +133,12 @@ export function NumberView() {
 
     const uiName = "Dice View - Number Mode"
     const uiDescription = "Number mode displays numerical values on the screen. You can customize the number of faces from 2 to 99."
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -257,10 +263,12 @@ export function ConfigMenu() {
 
     const uiName = "Config Menu"
     const uiDescription = "The config menu allows you to modify customization options."
+    const uiParentLink = "#dice-view"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -353,10 +361,12 @@ export function UnderglowEffect() {
 
     const uiName = "Underglow Effect Menu"
     const uiDescription = "The Underglow Effect Menu allows you to modify underglow effect options."
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }

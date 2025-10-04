@@ -116,14 +116,15 @@ export function KeypadCalibrationMenu() {
         }
     ];
 
-    const uiName = "Device Settings";
-    const uiDescription = "Device Settings contains all the settings specific to Mystrix.";
+    const uiName = "Keypad Calibration Menu";
+    const uiDescription = "Calibrate the force sensitivity of the keypad by adjusting minimal and maximal trigger forces for each key.";
+    const uiParentLink = "/docs/Mystrix/DeviceSettings";
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />;
-
 }
 
 <KeypadCalibrationMenu />

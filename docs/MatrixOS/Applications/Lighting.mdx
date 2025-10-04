@@ -8,6 +8,8 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 The Lighting App transforms your device into a versatile lighting panel that can be used in various environments.
 
+When you first enter the application, you will see the Lighting View. You can tap the function key to enter the config menu.
+
 Holding down the function key in the [config menu](#config-menu) will exit this app and bring you back to the [application launcher](/docs/MatrixOS/ApplicationLauncher).
 
 ## Lighting View
@@ -80,10 +82,12 @@ export function ConfigMenu() {
 
     const uiName = "Config Menu"
     const uiDescription = "The config menu allows you to modify lighting options."
+    const uiParentLink = "#lighting-view"
     return <MystrixVisualizer
     uiName={uiName}
     uiDescription={uiDescription}
     uiElements={uiElements}
+    uiParentLink={uiParentLink}
     />
 
 }
@@ -288,10 +292,12 @@ export function LightingEffect() {
 
     const uiName = "Lighting Effect Menu"
     const uiDescription = "The Lighting Effect Menu allows you to modify lighting effect options."
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }

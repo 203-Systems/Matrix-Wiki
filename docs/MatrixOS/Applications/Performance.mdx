@@ -9,15 +9,19 @@ import PaletteVisualizer from "@site/src/components/PaletteVisualizer/PaletteVis
 
 The Performance App serves as a user canvas for standard MIDI signals.
 
-It can be used for visual performances with Amethyst Player, Ableton Live, or Unipad; as a drum pad in any MIDI-enabled DAW; or as a canvas for your own DAW integration via the standard MIDI protocol.
-
-It sends standard MIDI signals with aftertouch, ensuring compatibility with any DAW that accepts MIDI when used as a drum pad.
-
 When you first enter the application, you will see a blank canvas. You can click or hold the function key to enter the action menu.
 
 To exit the Performance App, enter the action menu and hold down the function key. You will be brought back to the [application launcher](/docs/MatrixOS/ApplicationLauncher). This is the standard method for exiting an app in Matrix OS.
 
 ## Performance Canvas
+
+The Performance Canvas is the main interface where you interact with the grid to send MIDI signals.
+
+It can be used for visual performances with Amethyst Player, Ableton Live, or Unipad; as a drum pad in any MIDI-enabled DAW; or as a canvas for your own DAW integration via the standard MIDI protocol.
+
+The canvas sends standard MIDI signals with aftertouch, ensuring compatibility with any DAW that accepts MIDI when used as a drum pad. Each key on the grid can trigger MIDI notes with velocity and pressure sensitivity.
+
+To access the Action Menu, tap or hold the function key depending on your Menu Lock setting.
 
 ## Action Menu
 
@@ -157,10 +161,12 @@ export function ActionMenu() {
 
     const uiName = "Action Menu"
     const uiDescription = "The action menu allows you to change settings, modify palettes, and send MIDI controls within the Performance App."
+    const uiParentLink = "#performance-canvas"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }

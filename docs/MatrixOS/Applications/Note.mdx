@@ -293,10 +293,12 @@ export function ConfigMenu() {
 
     const uiName = "Config Menu"
     const uiDescription = "The config menu allows you to modify note pad layout and other customization options"
+    const uiParentLink = "#note-pad-play-view"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -566,10 +568,12 @@ export function ScaleSelector() {
 
     const uiName = "Scale Selector"
     const uiDescription = "The Scale Selector allows you to select the scale and root key of the active note pad layout"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -864,10 +868,12 @@ export function ScaleSelectorModernDiatonic() {
 
     const uiName = "Scale Selector - Modern Diatonic Mode"
     const uiDescription = "Modern Diatonic mode allows root offset selection within the selected scale"
+    const uiParentLink = "#scale-selector"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -1199,10 +1205,12 @@ export function ScaleSelectorCustom() {
 
     const uiName = "Scale Selector - Custom Scale"
     const uiDescription = "When a custom scale is selected, you can modify individual notes and delete the scale"
+    const uiParentLink = "#scale-selector"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -1326,10 +1334,12 @@ export function LayoutSelectorOctave() {
 
     const uiName = "Layout Selector - Octave Mode"
     const uiDescription = "Octave layout mode. Each row starts with the root note."
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -1495,10 +1505,12 @@ export function LayoutSelectorOffset() {
 
     const uiName = "Layout Selector - Offset Mode"
     const uiDescription = "Offset layout mode with customizable X and Y offsets"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -1615,10 +1627,12 @@ export function LayoutSelectorChromatic() {
 
     const uiName = "Layout Selector - Chromatic Mode"
     const uiDescription = "A traditional style layout, notes are layed out in a continuous manner from bottom left to top right."
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -1719,10 +1733,12 @@ export function LayoutSelectorPiano() {
 
     const uiName = "Layout Selector - Piano Mode"
     const uiDescription = "Piano layout mode for piano-style key arrangement"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -1813,10 +1829,12 @@ export function ChannelSelector() {
 
     const uiName = "MIDI Channel Selector"
     const uiDescription = "The MIDI Channel Selector allows you to select the MIDI out channel of the active note pad layout"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -2063,10 +2081,12 @@ export function ArpConfigBPM() {
 
     const uiName = "Arpeggiator BPM Configuration"
     const uiDescription = "Configure arpeggiator tempo (20-299 BPM)"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -2286,10 +2306,12 @@ export function ArpConfigSwing() {
 
     const uiName = "Arpeggiator Swing Configuration"
     const uiDescription = "Configure arpeggiator swing timing (20-80%)"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -2517,10 +2539,12 @@ export function ArpConfigGate() {
 
     const uiName = "Arpeggiator Gate Time Configuration"
     const uiDescription = "Configure note duration (0-200%, 0 = infinite sustain)"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -2834,10 +2858,12 @@ export function ArpConfigDirection() {
 
     const uiName = "Arpeggiator Direction Configuration"
     const uiDescription = "Select arpeggiator pattern direction (Up shown)"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -3037,10 +3063,12 @@ export function ArpConfigStep() {
 
     const uiName = "Arpeggiator Step Configuration"
     const uiDescription = "Configure step interval between notes (0-16 semitones)"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -3251,10 +3279,12 @@ export function ArpConfigStepOffset() {
 
     const uiName = "Arpeggiator Step Offset Configuration"
     const uiDescription = "Configure pitch offset for all notes (-48 to +48)"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -3487,10 +3517,12 @@ export function ArpConfigRepeat() {
 
     const uiName = "Arpeggiator Repeat Configuration"
     const uiDescription = "Configure repeat count (0-100 times, 0 = infinite)"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -3649,10 +3681,12 @@ export function NotePadColorSelectorPresetMenu() {
 
     const uiName = "Note Pad Color Selector - Presets"
     const uiDescription = "The Note Pad Color Selector allows you to pick a color preset for the note pad layout"
+    const uiParentLink = "#config-menu"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -3750,10 +3784,12 @@ export function NotePadColorSelectorCustomMenu() {
 
     const uiName = "Note Pad Color Selector - Customize"
     const uiDescription = "The Note Pad Color Selector allows you to customize the color combination of the note pad layout"
+    const uiParentLink = "#note-pad-color-selector---presets"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -3939,10 +3975,12 @@ export function ControlBar() {
 
     const uiName = "Note Pad Control Bar"
     const uiDescription = "Control Bar with pitch bend, playback modes, and octave controls. Hold shift for additional functions on pitch bend buttons."
+    const uiParentLink = "#note-pad-play-view"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -4252,10 +4290,12 @@ export function ControlBarChord() {
 
     const uiName = "Chord Control"
     const uiDescription = "Control bar with Chord Control"
+    const uiParentLink = "#note-pad-play-view"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -4513,10 +4553,12 @@ export function ControlBarArpeggiator() {
 
     const uiName = "Arpeggiator Control"
     const uiDescription = "Control Bar with Arpeggiator Division Control."
+    const uiParentLink = "#note-pad-play-view"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -4735,10 +4777,12 @@ export function ControlBarKey() {
 
     const uiName = "Key Control Bar"
     const uiDescription = "Control Bar with scale visualizer and root key selector active at Y=4-5. Shows current scale pattern and allows root key selection."
+    const uiParentLink = "#note-pad-play-view"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }

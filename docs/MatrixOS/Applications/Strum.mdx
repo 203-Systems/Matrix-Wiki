@@ -12,6 +12,8 @@ Strum is a chord-based musical instrument app inspired by devices like the Omnic
 The Strum app requires the device to be in portrait mode (rotated left or right) to access the touchbars for strumming functionality.
 :::
 
+Tap the function key to access the action menu from the main interface.
+
 ## Main Interface
 
 The Strum app interface is organized into several key areas for chord selection, octave control, and note duration settings.
@@ -181,10 +183,12 @@ export function MainInterface() {
 
     const uiName = "Strum Main Interface"
     const uiDescription = "The main Strum interface allows you to select chords, adjust octave and duration, then strum using the side touchbars."
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -223,10 +227,12 @@ export function ActionMenu() {
 
     const uiName = "Action Menu"
     const uiDescription = "The action menu provides access to system settings and app navigation."
+    const uiParentLink = "#main-interface"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
