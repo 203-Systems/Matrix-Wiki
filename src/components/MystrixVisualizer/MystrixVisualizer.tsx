@@ -203,7 +203,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
             <button onClick={tryAgain}>Try Again!</button>
         </div>
         )}>
-        <div className={styles.MystrixVisualizer} onClick={() => {lockSelectedFunction(undefined)}}>
+        <div className={styles.MystrixVisualizer} >
             <div className={styles.topBar}>
                 <div className={styles.topBarSection}>
                     {uiParentLink && (
@@ -234,7 +234,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                 </div>
             </div>
 
-            <div className={styles.mystrixContent}>
+            <div className={styles.mystrixContent} onClick={() => {lockSelectedFunction(undefined)}}>
             <div className={styles.mystrix}>
             <div className={`${styles.mystrixUnderglow} ${selected_function != undefined ? styles.mystrixUnderglowDim : ''}`}>
                 <div className={styles.mystrixUnderglowRow}>
@@ -464,7 +464,7 @@ const FunctionDisplaySection = memo(({
                     <ArrowRight size={28} className={styles.functionDetailBtnArrow}/>
                 </div>
             </button>
-            <div className={`${styles.elementsList} ${isListViewOpen ? styles.elementsListOpen : ''}`}>
+            <div className={`${styles.elementsList} ${isListViewOpen ? styles.elementsListOpen : ''}`} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.elementsListContent}>
                     {uiElements.map((element, index) => (
                         element.name && (
@@ -473,9 +473,10 @@ const FunctionDisplaySection = memo(({
                                 className={styles.elementsListItem}
                                 onMouseEnter={() => selectHighlightFunction(index)}
                                 onMouseLeave={() => selectHighlightFunction(undefined)}
-                                onClick={() => {
+                                onClick={(e) => {
                                     lockSelectedFunction(index);
                                     setIsListViewOpen(false);
+                                    e.stopPropagation();
                                 }}
                             >
                                 <div className={styles.elementsListItemName}>{element.name}</div>
