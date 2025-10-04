@@ -2,9 +2,11 @@
 sidebar_position: 4
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # Bluetooth MIDI
 
-Mystrix supports Bluetooth MIDI, allowing you to connect your Mystrix wirelessly to your devices. You can toggle Bluetooth MIDI on and off in the [Device Settings](/docs/Mystrix/MystrixSpecific/DeviceSettings).
+Mystrix supports Bluetooth MIDI, allowing you to connect your Mystrix wirelessly to your devices. You can toggle Bluetooth MIDI on and off in the <DocLink to="/docs/Mystrix/MystrixSpecific/DeviceSettings">Device Settings</DocLink>.
 
 ## iOS
 

@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # Welcome to Mystrix
 
 Mystrix is a multipurpose grid controller, designed to be community-centric, highly customizable, and fully open-sourced.
@@ -33,11 +35,11 @@ To install the anti-slip pad, turn the Mystrix face down and peel the clear prot
 
 ### Update to the Latest OS
 
-See [Update Matrix OS](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS) for instructions on how to update your Mystrix to the latest OS. Since Matrix OS is constantly updated, make sure you are on the latest OS and have the latest documentation to start using your Mystrix!
+See <DocLink to="/docs/Mystrix/MystrixSpecific/UpdateMatrixOS">Update Matrix OS</DocLink> for instructions on how to update your Mystrix to the latest OS. Since Matrix OS is constantly updated, make sure you are on the latest OS and have the latest documentation to start using your Mystrix!
 
 ### Start Using Your Mystrix
 
-See the [Usage Examples](/docs/category/usage-examples) section for  what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](/docs/MatrixOS/MatrixOSBasics) has to offer!
+See the <DocLink to="/docs/category/usage-examples">Usage Examples</DocLink> section for  what others are using Mystrix for and how to get started with them, or dive deep into everything <DocLink to="/docs/MatrixOS/MatrixOSBasics">Matrix OS</DocLink> has to offer!
 
 <!-- idea: gif showcasing possibilities -->
 
@@ -50,7 +52,7 @@ You can join the community in various ways:
 - Discord - [203 System](https://discord.gg/rRVCBHHPfw)
 - Reddit - r/Mystrix (Currently banned because u/203Null was hacked, working on restoring that!)
 - GitHub - [Discussion](https://github.com/203-Systems/MatrixOS/discussions)
-- If you have other platform suggestions, leave a comment under this post or [Connect with Us](/docs/Support/ConnectWithUs)
+- If you have other platform suggestions, leave a comment under this post or <DocLink to="/docs/Support/ConnectWithUs">Connect with Us</DocLink>
 <!-- idea: icons? -->
 
 ### Share Your Mystrix

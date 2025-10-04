@@ -2,9 +2,11 @@
 sidebar_position: 4
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # 蓝牙 MIDI
 
-魔矩支持蓝牙 MIDI，允许你将魔矩无线连接到你的设备。你可以在[设备设置](/docs/Mystrix/MystrixSpecific/DeviceSettings)中开启和关闭蓝牙 MIDI。
+魔矩支持蓝牙 MIDI，允许你将魔矩无线连接到你的设备。你可以在<DocLink to="/docs/Mystrix/MystrixSpecific/DeviceSettings">设备设置</DocLink>中开启和关闭蓝牙 MIDI。
 
 ## iOS
 

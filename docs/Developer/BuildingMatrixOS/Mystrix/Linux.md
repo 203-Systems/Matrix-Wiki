@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # Building on Linux
 
 :::warning[Unverified Guide]
@@ -97,7 +99,7 @@ The ESP-IDF (Espressif IoT Development Framework) is required to build and uploa
    make DEVICE=Mystrix build
    ```
 
-4. Prepare for the upload by ensuring your Mystrix is in [upload mode](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode).
+4. Prepare for the upload by ensuring your Mystrix is in <DocLink to="/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode">upload mode</DocLink>.
 
 5. Install `psutil` (only needed once):
 
@@ -120,7 +122,7 @@ Here are some useful build commands you can use in Matrix OS:
 - `clean` - Cleans the build.
 - `fullclean` - Cleans the build more thoroughly. Use this if you encounter undefined references or missing files.
 - `build` - Builds Matrix OS based on the default config (OS/parameter.h).
-- `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see [Debug Matrix OS](/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp)).
+- `build-release`, `build-rc`, `build-beta`, `build-nightly`, `build-dev` - Builds Matrix OS in various modes. `build-dev` enables USB logging (see <DocLink to="/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp">Debug Matrix OS</DocLink>).
 
 You can chain commands together like:
 ```bash

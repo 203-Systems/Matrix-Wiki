@@ -2,11 +2,13 @@
 sidebar_position: 4
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # Unipad
 
 [Unipad](https://play.google.com/store/apps/details?id=com.kimjisub.launchpad&hl=en_US&pli=1) 是由 kimjisub 开发的 Android 应用。
 
-Unipad 4.0 原生支持魔矩。只需将魔矩连接到你的 Android 设备并进入 [Performance 应用](/docs/MatrixOS/Applications/Performance)。
+Unipad 4.0 原生支持魔矩。只需将魔矩连接到你的 Android 设备并进入 <DocLink to="/docs/MatrixOS/Applications/Performance">Performance 应用</DocLink>。
 
 ![Unipad](Unipad.png)
 

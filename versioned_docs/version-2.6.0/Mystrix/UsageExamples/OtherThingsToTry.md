@@ -2,6 +2,8 @@
 sidebar_position: 4
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # Other Things to Try
 
 ## Aura
@@ -17,5 +19,5 @@ The Aura Grid app fully supports Mystrix. Simply open the web page on a [WebMIDI
 ## Want to add your project here?
 
 :::note
-Leave a comment on this page and we will get it added! Alternatively, you can [contact us directly](/docs/Support/ConnectWithUs).
+Leave a comment on this page and we will get it added! Alternatively, you can <DocLink to="/docs/Support/ConnectWithUs">contact us directly</DocLink>.
 :::

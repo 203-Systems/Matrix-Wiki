@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import DocLink from "@site/src/components/DocLink/DocLink";
 
 # 编写 C++ 应用
 
@@ -167,7 +168,7 @@ Color color = Color(0xFFFFFF);
 
 我知道这个宏不是很直观，也不遵循 C 语言在变量创建上的语法。如果你有更好的想法，请告诉我。
 
-For more info on saved variable, see [Saved Variable](/docs/Developer/MatrixOSApplicationCppAPI/Utilities/SavedVariable)
+For more info on saved variable, see <DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/Utilities/SavedVariable">Saved Variable</DocLink>
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
 {`
@@ -508,7 +509,7 @@ Each midi packet consists of:
 
 There are also alternative names for each data bytes for different status type. Like channel, note, velocity, etc. You can access them by calling the function of the same name. See 
 
-The Matrix OS midi system is complex & powerful but very intuitive. You can read more details of Matrix OS midi system in [Matrix OS MIDI API](/docs/Developer/MatrixOSApplicationCppAPI/MIDI)
+The Matrix OS midi system is complex & powerful but very intuitive. You can read more details of Matrix OS midi system in <DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/MIDI">Matrix OS MIDI API</DocLink>
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
 
@@ -586,7 +587,7 @@ It creates a UI object with the name "UI Menu" and the color 0x00FFFF. It create
 
 Finally after the UI object is fully set up, it starts the UI runtime to take over. The code will continue after the UI is exited. If the Exit() function is called in the UI, the code will start in the End() function of the application and then exit.
 
-See the [Matrix OS UI Framework](/docs/Developer/MatrixOSApplicationCppAPI/UI/UIFramework) for more details on how to create UIs and use the UI interface and elements.
+See the <DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/UI/UIFramework">Matrix OS UI Framework</DocLink> for more details on how to create UIs and use the UI interface and elements.
 
 <SyntaxHighlighter language="cpp" style={vscDarkPlus}>
 {`

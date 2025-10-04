@@ -3,6 +3,8 @@ sidebar_position: 4
 draft: true
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # 其他推荐尝试
 
 ## Aura
@@ -18,5 +20,5 @@ Aura Grid 完全支持魔矩。只需在[支持 WebMIDI 的浏览器](https://de
 ## 想要在这里添加你的项目？
 
 :::note
-在本页面留下评论，我们将其添加！您也可以[直接联系我们](/docs/Support/ConnectWithUs)。
+在本页面留下评论，我们将其添加！您也可以<DocLink to="/docs/Support/ConnectWithUs">直接联系我们</DocLink>。
 :::

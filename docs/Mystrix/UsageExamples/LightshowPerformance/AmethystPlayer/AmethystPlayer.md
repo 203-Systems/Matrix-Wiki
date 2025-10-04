@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # Amethyst Player
 
 Amethyst Player is 203 System's in-house web application for performing lightshows.
@@ -15,7 +17,7 @@ Currently, it supports playing Unipad Projects (Unipack) online. You can connect
 ## How to Use
 
 1. Open the website.
-2. Connect your Mystrix and enter the [Performance App](/docs/MatrixOS/Applications/Performance).
+2. Connect your Mystrix and enter the <DocLink to="/docs/MatrixOS/Applications/Performance">Performance App</DocLink>.
 3. Check and configure the device via the USB icon at the bottom of the screen or the bottom of the sidebar.
 
 ![USB Icon](USB.png)

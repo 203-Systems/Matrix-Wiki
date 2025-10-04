@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # Amethyst Player
 
 Amethyst Player 是 203 Systems 的内部网页应用，用于演奏灯光秀表演。
@@ -15,7 +17,7 @@ Amethyst Player 是 203 Systems 的内部网页应用，用于演奏灯光秀表
 ## 使用方法
 
 1. 打开网站。
-2. 连接您的魔矩并进入 [Performance 应用](/docs/MatrixOS/Applications/Performance)。
+2. 连接您的魔矩并进入 <DocLink to="/docs/MatrixOS/Applications/Performance">Performance 应用</DocLink>。
 3. 通过屏幕底部或侧边栏底部的 USB 图标检查和配置设备。
 
 ![USB 图标](USB.png)

@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # 欢迎使用魔矩
 
 魔矩是一款智能矩阵控制器，以社区为中心，高度可定制且完全开源。
@@ -36,7 +38,7 @@ sidebar_position: 1
 - Discord - [203 System](https://discord.gg/rRVCBHHPfw)
 - Reddit - r/Mystrix（目前由于 u/203Null 被盗号而被封禁，还在努力恢复）
 - GitHub - [讨论](https://github.com/203-Systems/MatrixOS/discussions)
-- 如果你有其他平台建议，请在这篇帖子下方留言或[联系我们](/docs/Support/ConnectWithUs)
+- 如果你有其他平台建议，请在这篇帖子下方留言或<DocLink to="/docs/Support/ConnectWithUs">联系我们</DocLink>
 <!-- idea: icons? -->
 
 ### 分享你的魔矩

@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import DocLink from "@site/src/components/DocLink/DocLink";
+
 # 在 Windows 上构建
 
 ## 安装 Git
@@ -84,7 +86,7 @@ ESP-IDF（乐鑫物联网开发框架）是魔矩所用 SOC 的厂商提供的�
 make DEVICE=Mystrix build
 ```
 
-4. 将 MatrixOS 上传到你的魔矩。确保你的魔矩处于[上传模式](/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode)。
+4. 将 MatrixOS 上传到你的魔矩。确保你的魔矩处于<DocLink to="/docs/Mystrix/MystrixSpecific/UpdateMatrixOS#enter-os-update-mode">上传模式</DocLink>。
 
 运行此命令安装 `psutil` Python 包。你只需执行一次：
 
@@ -107,7 +109,7 @@ make DEVICE=Mystrix uf2-upload
 - `clean` - 清理构建。
 - `fullclean` - 更彻底地清理构建。如果遇到未定义引用或缺少文件，请使用此命令。
 - `build` - 基于默认配置构建 Matrix OS（`OS/parameter.h`）。
-- `build-release`、`build-rc`、`build-beta`、`build-nightly`、`build-dev` - 以各种模式构建 Matrix OS。`build-dev` 启用 USB 日志记录（参见[调试 Matrix OS](/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp)）。
+- `build-release`、`build-rc`、`build-beta`、`build-nightly`、`build-dev` - 以各种模式构建 Matrix OS。`build-dev` 启用 USB 日志记录（参见<DocLink to="/docs/Developer/DebugMatrixOS/DebugMatrixOSCpp">调试 Matrix OS</DocLink>）。
 
 你可以将命令链接在一起，如：
 
