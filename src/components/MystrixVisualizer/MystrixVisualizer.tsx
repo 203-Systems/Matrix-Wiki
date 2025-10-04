@@ -3,6 +3,8 @@ import styles from './styles.module.css';
 import { ArrowRight, Construction, ArrowLeft, List } from '@carbon/icons-react';
 import TextTransition from "./TextTransition";
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
+import { useActiveVersion } from '@docusaurus/plugin-content-docs/client';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 
 type position = [number | "t" | "u" | "c", number?];
@@ -44,6 +46,8 @@ interface UIProps {
 }
 
 const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElements, uiParentLink }) => {
+    const activeVersion = useActiveVersion();
+    const { siteConfig } = useDocusaurusContext();
     const [selected_function, setSelectedFunction] = useState<number | undefined>(undefined);
     const [selected_function_locked, setSelectedFunctionLocked] = useState<boolean>(false);
 
@@ -59,6 +63,17 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     const [isListButtonHovered, setIsListButtonHovered] = useState<boolean>(false);
     const [isListViewOpen, setIsListViewOpen] = useState<boolean>(false);
 
+    // Helper function to resolve version-aware links
+    const resolveLink = useCallback((link: string) => {
+        if (!link || link.startsWith('#')) return link;
+
+        // If link starts with /docs, prepend version path
+        if (link.startsWith('/docs') && activeVersion) {
+            return `${activeVersion.path}${link.substring(5)}`; // Remove '/docs' and prepend version path
+        }
+
+        return link;
+    }, [activeVersion]);
 
     const getKeyID = (x: number, y: number) => x + y * 8;
 
@@ -209,7 +224,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                             className={styles.topBarButton}
                             onMouseEnter={() => setIsBackButtonHovered(true)}
                             onMouseLeave={() => setIsBackButtonHovered(false)}
-                            onClick={() => window.open(uiParentLink, "_self")}
+                            onClick={() => window.open(resolveLink(uiParentLink), "_self")}
                         >
                             <ArrowLeft size={20} />
                         </button>
@@ -394,6 +409,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                 selectHighlightFunction={selectHighlightFunction}
                 keypadFunctions={keypadFunctions}
                 keypadColors={keypadColors}
+                resolveLink={resolveLink}
             />
             </div>
         </div>
@@ -413,7 +429,8 @@ const FunctionDisplaySection = memo(({
     setIsListViewOpen,
     selectHighlightFunction,
     keypadFunctions,
-    keypadColors
+    keypadColors,
+    resolveLink
 }: {
     displayedName: string;
     displayedDesc: string;
@@ -426,6 +443,7 @@ const FunctionDisplaySection = memo(({
     selectHighlightFunction: (function_id: number, color?: string) => void;
     keypadFunctions: (number | undefined)[];
     keypadColors: (string | undefined)[];
+    resolveLink: (link: string) => string;
 }) => {
     const content = useMemo(() => (
         <div className={styles.functionDisplayContent}>
@@ -455,14 +473,15 @@ const FunctionDisplaySection = memo(({
                 onClick={() => {
                     if (selected_function !== undefined && uiElements[selected_function].link !== undefined)
                     {
-                        if(uiElements[selected_function].link.startsWith("#"))
+                        const link = uiElements[selected_function].link;
+                        if(link.startsWith("#"))
                         {
                             window.location.hash = "";
-                            window.location.hash = uiElements[selected_function].link;
+                            window.location.hash = link;
                         }
                         else
                         {
-                            window.open(uiElements[selected_function].link, "_self");
+                            window.open(resolveLink(link), "_self");
                         }
                     }
                 }}
