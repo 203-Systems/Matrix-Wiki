@@ -42,9 +42,10 @@ interface UIProps {
   uiName: string;
   uiDescription: string;
   uiElements: uiElement[];
+  uiParentLink?: string;
 }
 
-const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElements }) => {
+const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElements, uiParentLink }) => {
     const [selected_function, setSelectedFunction] = useState<number | undefined>(undefined);
     const [selected_function_locked, setSelectedFunctionLocked] = useState<boolean>(false);
 
@@ -57,6 +58,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     const [displayedName, setDisplayedName] = useState<string>(uiName);
     const [displayedDesc, setDisplayedDesc] = useState<string>(uiDescription);
     const [isBackButtonHovered, setIsBackButtonHovered] = useState<boolean>(false);
+    const [isListButtonHovered, setIsListButtonHovered] = useState<boolean>(false);
 
 
     const getKeyID = (x: number, y: number) => x + y * 8;
@@ -203,21 +205,28 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
         <div className={styles.MystrixVisualizer} onClick={() => {lockSelectedFunction(undefined)}}>
             <div className={styles.topBar}>
                 <div className={styles.topBarSection}>
-                    <button
-                        className={styles.topBarButton}
-                        onMouseEnter={() => setIsBackButtonHovered(true)}
-                        onMouseLeave={() => setIsBackButtonHovered(false)}
-                    >
-                        <ArrowLeft size={20} />
-                    </button>
+                    {uiParentLink && (
+                        <button
+                            className={styles.topBarButton}
+                            onMouseEnter={() => setIsBackButtonHovered(true)}
+                            onMouseLeave={() => setIsBackButtonHovered(false)}
+                            onClick={() => window.open(uiParentLink, "_self")}
+                        >
+                            <ArrowLeft size={20} />
+                        </button>
+                    )}
                 </div>
                 <div className={styles.topBarTitle}>
                     <ReactTextTransition springConfig={presets.gentle} inline={false} style={{ width: '100%', textAlign: 'center' }}>
-                        {isBackButtonHovered ? "Go back to Parent UI" : uiName}
+                        {isBackButtonHovered ? "Go Back to Parent UI" : isListButtonHovered ? "List All Available Controls" : uiName}
                     </ReactTextTransition>
                 </div>
                 <div className={styles.topBarSection}>
-                    <button className={styles.topBarButton}>
+                    <button
+                        className={styles.topBarButton}
+                        onMouseEnter={() => setIsListButtonHovered(true)}
+                        onMouseLeave={() => setIsListButtonHovered(false)}
+                    >
                         <List size={20} />
                     </button>
                 </div>
