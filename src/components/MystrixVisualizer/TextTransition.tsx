@@ -86,11 +86,12 @@ function TextTransition(props: PropsWithChildren<TextTransitionProps>) {
         ...style,
         whiteSpace: inline ? 'nowrap' : 'pre-wrap',
         display: inline ? 'inline-flex' : 'flex',
+        width: '100%',
       }}
     >
       {transitions((styles, item) => (
         <animated.div
-          style={{ ...styles }}
+          style={{ ...styles, width: '100%' }}
           ref={item === children ? currentRef : undefined}
           children={item}
         />
