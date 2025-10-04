@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 import { ArrowRight, Construction } from '@carbon/icons-react';
-import ReactTextTransition, { presets } from "react-text-transition";
+import { presets } from "react-text-transition";
+import TextTransition from "./TextTransition";
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 
 
@@ -52,6 +53,8 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     const [touchbarFunctions, setTouchbarFunctions] = useState<(number | undefined)[]>(Array(32).fill(undefined));
     const [centerKeyFunctions, setCenterKeyFunctions] = useState<(number | undefined)>(undefined);
     const [detailButtonColor, setDetailButtonColor] = useState<string>("unset");
+    const [displayedName, setDisplayedName] = useState<string>(uiName);
+    const [displayedDesc, setDisplayedDesc] = useState<string>(uiDescription);
 
 
     const getKeyID = (x: number, y: number) => x + y * 8;
@@ -179,6 +182,18 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     useEffect(() => {
         constructor();
     }, [uiElements]);
+
+    useEffect(() => {
+        const newName = selected_function !== undefined && uiElements[selected_function]?.name !== undefined
+            ? uiElements[selected_function].name
+            : uiName;
+        const newDesc = selected_function !== undefined && uiElements[selected_function]?.name !== undefined
+            ? (uiElements[selected_function].desc !== undefined ? uiElements[selected_function].desc : "")
+            : uiDescription;
+
+        setDisplayedName(newName);
+        setDisplayedDesc(newDesc);
+    }, [selected_function, uiName, uiDescription]);
 
   return (
     <ErrorBoundary
@@ -340,20 +355,19 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
 
             </div>
             <div className={styles.functionDisplay}>
-                <div className={styles.functionDisplayContent}>
-                    <h2 className={styles.functionName} style={{ position: "absolute"}}>
-                        <ReactTextTransition delay={0} direction='up'>
-                            {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
-                        </ReactTextTransition>
-                    </h2>
-                    <h2 className={styles.functionName} style={{opacity: "0%"}}>
-                            {selected_function !== undefined && uiElements[selected_function].name !== undefined ? uiElements[selected_function].name : uiName}
-                    </h2>
-                    <div className={styles.functionDesc}>
-                        {/* <ReactTextTransition delay={150} direction='up'> */}
-                            {selected_function !== undefined && uiElements[selected_function].name !== undefined ? (uiElements[selected_function].desc !== undefined ? uiElements[selected_function].desc : "") : uiDescription}
-                        {/* </ReactTextTransition> */}
-                    </div>
+                <div className={styles.functionDisplayWrapper}>
+                    <TextTransition springConfig={{ tension: 150, friction: 24 }} direction="left">
+                        <div className={styles.functionDisplayContent} key={`${displayedName}-${displayedDesc}`}>
+                            <div className={styles.functionNameWrapper}>
+                                <h2 className={styles.functionName}>
+                                    {displayedName}
+                                </h2>
+                            </div>
+                            <div className={styles.functionDesc}>
+                                {displayedDesc}
+                            </div>
+                        </div>
+                    </TextTransition>
                 </div>
                 <button
                     className={`${styles.functionDetailBtn} ${(selected_function !== undefined && uiElements[selected_function].link !== undefined) ?  '' : styles.functionDetailBtnHidden}`}
