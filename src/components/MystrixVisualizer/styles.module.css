@@ -31,9 +31,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: rgb(180, 180, 180);
+  color: black;
+  min-height: 36px;
+}
+
+[data-theme='dark'] .topBar {
   background-color: rgb(40, 40, 40);
   color: white;
-  min-height: 36px;
 }
 
 .topBarSection {
@@ -47,8 +52,12 @@
 }
 
 .topBarSection:first-child:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.15);
   transition: background-color 0.2s ease;
+}
+
+[data-theme='dark'] .topBarSection:first-child:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .topBarSection:first-child:hover::after {
@@ -57,8 +66,12 @@
 }
 
 .topBarSection:last-child:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.15);
   transition: background-color 0.2s ease;
+}
+
+[data-theme='dark'] .topBarSection:last-child:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .topBarSection:last-child:hover::before {
@@ -69,7 +82,7 @@
 .topBarButton {
   background: none;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   padding: 6px;
   border-radius: 4px;
@@ -80,7 +93,15 @@
   position: relative;
 }
 
+[data-theme='dark'] .topBarButton {
+  color: white;
+}
+
 .topBarSection:has(.topBarButtonActive) {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .topBarSection:has(.topBarButtonActive) {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -89,11 +110,11 @@
 }
 
 .topBarButtonActive svg {
-  color: black;
+  color: white;
 }
 
 [data-theme='dark'] .topBarButtonActive svg {
-  color: white;
+  color: black;
 }
 
 
@@ -104,8 +125,12 @@
   top: 0;
   height: 100%;
   width: 1px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   transition: opacity 0.2s ease;
+}
+
+[data-theme='dark'] .topBarSection:first-child::after {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .topBarSection:last-child::before {
@@ -115,8 +140,12 @@
   top: 0;
   height: 100%;
   width: 1px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   transition: opacity 0.2s ease;
+}
+
+[data-theme='dark'] .topBarSection:last-child::before {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .topBarTitle {
@@ -128,13 +157,17 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: white;
+  color: black;
   letter-spacing: 0.2em;
   position: relative;
   min-height: 1.2em;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+[data-theme='dark'] .topBarTitle {
+  color: white;
 }
 
 /* Ensure TextTransition has consistent layout */
