@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
 import styles from './styles.module.css';
 import { ArrowRight, Construction, ArrowLeft, List } from '@carbon/icons-react';
 import { presets } from "react-text-transition";
@@ -59,6 +59,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     const [displayedDesc, setDisplayedDesc] = useState<string>(uiDescription);
     const [isBackButtonHovered, setIsBackButtonHovered] = useState<boolean>(false);
     const [isListButtonHovered, setIsListButtonHovered] = useState<boolean>(false);
+    const [isListViewOpen, setIsListViewOpen] = useState<boolean>(false);
 
 
     const getKeyID = (x: number, y: number) => x + y * 8;
@@ -143,8 +144,8 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     }
   };
 
-  const selectHighlightFunction = (function_id: number, color : string = "rgb(60, 60, 60)") => {
-    if (selected_function_locked == false && function_id != undefined) 
+  const selectHighlightFunction = useCallback((function_id: number, color : string = "rgb(60, 60, 60)") => {
+    if (selected_function_locked == false && function_id != undefined)
     {
         setSelectedFunction(function_id);
         console.log("Select Function ID: " + function_id);
@@ -152,13 +153,13 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
             setDetailButtonColor(color);
         }
     }
-    else if (selected_function_locked == false && function_id == undefined) 
+    else if (selected_function_locked == false && function_id == undefined)
     {
         setSelectedFunction(undefined);
     }
-  }
+  }, [selected_function_locked, uiElements]);
 
-  const lockSelectedFunction = (function_id: number, color : string = "rgb(60, 60, 60)") => {
+  const lockSelectedFunction = useCallback((function_id: number, color : string = "rgb(60, 60, 60)") => {
     console.log("Lock Function ID: " + function_id);
     if (selected_function_locked == true && selected_function == function_id) {
         setSelectedFunctionLocked(false);
@@ -176,7 +177,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
         setSelectedFunctionLocked(false);
         setSelectedFunction(undefined);
     }
-  }
+  }, [selected_function_locked, selected_function, uiElements]);
 
     useEffect(() => {
         constructor();
@@ -223,9 +224,10 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                 </div>
                 <div className={styles.topBarSection}>
                     <button
-                        className={styles.topBarButton}
+                        className={`${styles.topBarButton} ${isListViewOpen ? styles.topBarButtonActive : ''}`}
                         onMouseEnter={() => setIsListButtonHovered(true)}
                         onMouseLeave={() => setIsListButtonHovered(false)}
+                        onClick={() => setIsListViewOpen(!isListViewOpen)}
                     >
                         <List size={20} />
                     </button>
@@ -388,6 +390,10 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                 selected_function={selected_function}
                 uiElements={uiElements}
                 detailButtonColor={detailButtonColor}
+                isListViewOpen={isListViewOpen}
+                lockSelectedFunction={lockSelectedFunction}
+                setIsListViewOpen={setIsListViewOpen}
+                selectHighlightFunction={selectHighlightFunction}
             />
             </div>
         </div>
@@ -401,13 +407,21 @@ const FunctionDisplaySection = memo(({
     displayedDesc,
     selected_function,
     uiElements,
-    detailButtonColor
+    detailButtonColor,
+    isListViewOpen,
+    lockSelectedFunction,
+    setIsListViewOpen,
+    selectHighlightFunction
 }: {
     displayedName: string;
     displayedDesc: string;
     selected_function: number | undefined;
     uiElements: uiElement[];
     detailButtonColor: string;
+    isListViewOpen: boolean;
+    lockSelectedFunction: (function_id: number, color?: string) => void;
+    setIsListViewOpen: (open: boolean) => void;
+    selectHighlightFunction: (function_id: number, color?: string) => void;
 }) => {
     return (
         <div className={styles.functionDisplay}>
@@ -450,6 +464,27 @@ const FunctionDisplaySection = memo(({
                     <ArrowRight size={28} className={styles.functionDetailBtnArrow}/>
                 </div>
             </button>
+            <div className={`${styles.elementsList} ${isListViewOpen ? styles.elementsListOpen : ''}`}>
+                <div className={styles.elementsListContent}>
+                    {uiElements.map((element, index) => (
+                        element.name && (
+                            <div
+                                key={index}
+                                className={styles.elementsListItem}
+                                onMouseEnter={() => selectHighlightFunction(index)}
+                                onMouseLeave={() => selectHighlightFunction(undefined)}
+                                onClick={() => {
+                                    lockSelectedFunction(index);
+                                    setIsListViewOpen(false);
+                                }}
+                            >
+                                <div className={styles.elementsListItemName}>{element.name}</div>
+                                {element.desc && <div className={styles.elementsListItemDesc}>{element.desc}</div>}
+                            </div>
+                        )
+                    ))}
+                </div>
+            </div>
         </div>
     );
 });
