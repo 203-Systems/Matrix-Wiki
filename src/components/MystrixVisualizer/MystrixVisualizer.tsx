@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, memo, useCallback } from 'react';
 import styles from './styles.module.css';
 import { ArrowRight, Construction, ArrowLeft, List } from '@carbon/icons-react';
-import { presets } from "react-text-transition";
 import TextTransition from "./TextTransition";
-import ReactTextTransition from "react-text-transition";
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 
 
@@ -218,9 +216,9 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                     )}
                 </div>
                 <div className={styles.topBarTitle}>
-                    <ReactTextTransition springConfig={presets.gentle} inline={false} style={{ width: '100%', textAlign: 'center' }}>
+                    <TextTransition springConfig={{ tension: 200, friction: 22 }} inline={false} style={{ width: '100%', textAlign: 'center' }}>
                         {isBackButtonHovered ? "Go Back to Parent UI" : isListButtonHovered ? "List All Available Controls" : uiName}
-                    </ReactTextTransition>
+                    </TextTransition>
                 </div>
                 <div className={styles.topBarSection}>
                     <button
