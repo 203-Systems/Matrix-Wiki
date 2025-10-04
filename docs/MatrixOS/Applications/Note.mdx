@@ -2035,6 +2035,27 @@ export function ArpConfigBPM() {
                 "color": "#FF0000"
             }
         ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset BPM to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Clock Output",
+        "desc": "Enable MIDI clock sync output",
+        "link": "#clock-sync-output",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#80FF00"
+            }
+        ]
     }
     ];
 
@@ -2048,6 +2069,10 @@ export function ArpConfigBPM() {
 }
 
 <ArpConfigBPM />
+
+#### Clock Sync Output
+
+When enabled, App will outputs MIDI clock sync signals to synchronize external MIDI devices with the set tempo.
 
 ### Swing
 
@@ -2242,6 +2267,16 @@ export function ArpConfigSwing() {
             {
                 "pos": [7, 7],
                 "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset swing to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
             }
         ]
     }
@@ -2453,6 +2488,26 @@ export function ArpConfigGate() {
             {
                 "pos": [7, 7],
                 "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset gate time to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Infinite",
+        "desc": "Set gate time to infinite (sustain)",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#C0C0C0"
             }
         ]
     }
@@ -2965,6 +3020,16 @@ export function ArpConfigStep() {
                 "color": "#00FFFF"
             }
         ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset step interval to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
     }
     ];
 
@@ -3167,6 +3232,16 @@ export function ArpConfigStepOffset() {
             {
                 "pos": [7, 7],
                 "color": "#4000FF"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset step offset to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
             }
         ]
     }
@@ -3383,6 +3458,26 @@ export function ArpConfigRepeat() {
             {
                 "pos": [7, 7],
                 "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset repeat count to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Infinite",
+        "desc": "Set repeat to infinite (loop forever)",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FFFFFF"
             }
         ]
     }
