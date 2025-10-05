@@ -452,5 +452,17 @@
   },
   "homepage.hero.developerAPIButton": {
     "message": "开发者 API"
+  },
+  "mystrixVisualizer.goBack": {
+    "message": "返回上级界面",
+    "description": "Tooltip text for back button in Mystrix Visualizer"
+  },
+  "mystrixVisualizer.listControls": {
+    "message": "列出所有可用控件",
+    "description": "Tooltip text for list button in Mystrix Visualizer"
+  },
+  "mystrixVisualizer.details": {
+    "message": "查看详情",
+    "description": "Button text for details button in Mystrix Visualizer"
   }
 }

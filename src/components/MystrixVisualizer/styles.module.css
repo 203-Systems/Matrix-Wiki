@@ -324,6 +324,12 @@
   letter-spacing: 0.2em;
 }
 
+/* Bolder font for Chinese language */
+html[lang="zh-Hans"] .functionDetailBtnText,
+html[lang="zh-CN"] .functionDetailBtnText {
+  font-weight: 400;
+}
+
 .functionDetailBtnArrow {
   /* Any specific styling for the arrow */
 }

@@ -5,6 +5,7 @@ import TextTransition from "./TextTransition";
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 import { useActiveVersion } from '@docusaurus/plugin-content-docs/client';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Translate, { translate } from '@docusaurus/Translate';
 
 
 type position = [number | "t" | "u" | "c", number?];
@@ -232,7 +233,15 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                 </div>
                 <div className={styles.topBarTitle}>
                     <TextTransition springConfig={{ tension: 200, friction: 22 }} inline={false} style={{ width: '100%', textAlign: 'center' }}>
-                        {isBackButtonHovered ? "Go Back to Parent UI" : isListButtonHovered ? "List All Available Controls" : uiName}
+                        {isBackButtonHovered ? translate({
+                            message: 'Go Back to Parent UI',
+                            id: 'mystrixVisualizer.goBack',
+                            description: 'Tooltip text for back button in Mystrix Visualizer'
+                        }) : isListButtonHovered ? translate({
+                            message: 'List All Available Controls',
+                            id: 'mystrixVisualizer.listControls',
+                            description: 'Tooltip text for list button in Mystrix Visualizer'
+                        }) : uiName}
                     </TextTransition>
                 </div>
                 <div className={styles.topBarSection}>
@@ -487,7 +496,11 @@ const FunctionDisplaySection = memo(({
                 }}
             >
                 <div className={styles.functionDetailBtnContent} style={{color: detailButtonColor}}>
-                    <div className={styles.functionDetailBtnText}>DETAILS</div>
+                    <div className={styles.functionDetailBtnText}>
+                        <Translate id="mystrixVisualizer.details" description="Button text for details button in Mystrix Visualizer">
+                            DETAILS
+                        </Translate>
+                    </div>
                     <ArrowRight size={28} className={styles.functionDetailBtnArrow}/>
                 </div>
             </button>
