@@ -153,10 +153,12 @@ export function ApplicationLauncher() {
 
     const uiName = "应用程序启动器"
     const uiDescription = "应用启动器是 Matrix OS 的主菜单，用户可以在此选择要使用的应用。"
+    const uiParentLink = "#"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -349,10 +351,12 @@ export function ApplicationLauncherEditing() {
 
     const uiName = "应用启动器（编辑模式）"
     const uiDescription = "应用启动器布局编辑模式"
+    const uiParentLink = "#"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -401,10 +405,12 @@ export function ApplicationLauncherFolderEdit() {
 
     const uiName = "文件夹编辑菜单"
     const uiDescription = "编辑文件夹属性 - 更改颜色或删除文件夹"
+    const uiParentLink = "#文件夹管理"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 

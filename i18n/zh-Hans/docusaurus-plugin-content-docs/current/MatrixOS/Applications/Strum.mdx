@@ -12,6 +12,8 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 拨弦应用需要将设备旋转为纵向模式（向左或向右旋转）以访问用于演奏的触摸条功能。
 :::
 
+点击功能键可从主界面访问操作菜单。
+
 ## 主界面
 
 拨弦应用界面分为几个关键区域，包括和弦选择、八度控制和音符时长设置。
@@ -181,10 +183,12 @@ export function MainInterface() {
 
     const uiName = "拨弦App主界面"
     const uiDescription = "拨弦App主界面允许你选择和弦、调整八度和时长，然后使用侧边触摸条进行弹奏。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -212,6 +216,7 @@ export function ActionMenu() {
     {
         "name": "返回拨弦界面或退出应用",
         "desc": "点击返回拨弦界面。长按退出应用。",
+        "link": "#主界面",
         "elements": [
             {
                 "pos": ["c"]
@@ -223,10 +228,12 @@ export function ActionMenu() {
 
     const uiName = "操作菜单"
     const uiDescription = "操作菜单提供对系统设置和应用导航的访问。"
+    const uiParentLink = "#主界面"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }

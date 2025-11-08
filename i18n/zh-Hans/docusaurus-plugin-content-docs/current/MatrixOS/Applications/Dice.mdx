@@ -12,6 +12,8 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 你可以自定义骰子的面数（点数模式为 2 到 9，数字模式为 2 到 99）以及动画的颜色和效果。
 
+点击功能键可从骰子视图访问配置菜单。
+
 ## 骰子视图
 
 ### 点数模式
@@ -58,7 +60,7 @@ export function DotView() {
         {
             "name": "配置菜单",
             "desc": "点击进入配置菜单。",
-            "link": "#config-menu",
+            "link": "#配置菜单",
             "elements": [
                 {
                     "pos": ["c"]
@@ -69,10 +71,12 @@ export function DotView() {
 
     const uiName = "骰子视图 - 点数模式"
     const uiDescription = "点数模式在屏幕上显示骰子点数。你可以自定义面数从 2 到 9。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -118,7 +122,7 @@ export function NumberView() {
         {
             "name": "配置菜单",
             "desc": "点击进入配置菜单。",
-            "link": "#config-menu",
+            "link": "#配置菜单",
             "elements": [
                 {
                     "pos": ["c"]
@@ -129,10 +133,12 @@ export function NumberView() {
 
     const uiName = "骰子视图 - 数字模式"
     const uiDescription = "数字模式在屏幕上显示数值。你可以自定义面数从 2 到 99。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -246,7 +252,7 @@ export function ConfigMenu() {
         {
             "name": "骰子视图或退出应用",
             "desc": "点击返回骰子视图。长按退出应用。",
-            "link": "#dice-view",
+            "link": "#骰子视图",
             "elements": [
                 {
                     "pos": ["c"]
@@ -257,10 +263,12 @@ export function ConfigMenu() {
 
     const uiName = "配置菜单"
     const uiDescription = "配置菜单允许你修改自定义选项。"
+    const uiParentLink = "#骰子视图"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -342,7 +350,7 @@ export function UnderglowEffect() {
         {
             "name": "返回配置菜单",
             "desc": "点击返回配置菜单。",
-            "link": "#config-menu",
+            "link": "#配置菜单",
             "elements": [
                 {
                     "pos": ["c"]
@@ -353,10 +361,12 @@ export function UnderglowEffect() {
 
     const uiName = "底光效果菜单"
     const uiDescription = "底光效果菜单允许你修改底光效果选项。"
+    const uiParentLink = "#配置菜单"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }

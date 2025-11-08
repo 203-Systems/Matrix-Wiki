@@ -20,6 +20,14 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 ## 演出画布
 
+演出画布是主要的交互界面，你可以在这里与网格交互来发送 MIDI 信号。
+
+它可以与 Amethyst Player、Ableton Live 或 Unipad 等配合进行视觉演出；在任何支持 MIDI 的 DAW 中用作打击垫；或通过标准 MIDI 协议与你的 DAW 集成。
+
+画布发送带有触后的标准 MIDI 信号，确保与任何支持 MIDI 的 DAW 完全兼容。网格上的每个按键都可以触发带有力度和压力灵敏度的 MIDI 音符。
+
+要访问操作菜单，根据你的菜单锁定设置，点击或按住功能键。
+
 ## 操作菜单
 
 export function ActionMenu() {
@@ -158,10 +166,12 @@ export function ActionMenu() {
 
     const uiName = "操作菜单"
     const uiDescription = "操作菜单允许你在表演应用中更改设置、修改调色板和发送MIDI控制。"
+    const uiParentLink = "#演出画布"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }

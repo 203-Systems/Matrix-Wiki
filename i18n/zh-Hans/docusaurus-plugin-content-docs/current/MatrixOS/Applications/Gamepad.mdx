@@ -194,8 +194,8 @@ export function GamepadView() {
             ]
         },
         {
-            "name": "Config Menu",
-            "desc": "Tap to enter the config menu.",
+            "name": "配置菜单",
+            "desc": "点击进入配置菜单。",
             "link": "#config-menu",
             "elements": [
                 {
@@ -207,10 +207,12 @@ export function GamepadView() {
 
     const uiName = "游戏手柄视图"
     const uiDescription = "模拟游戏手柄和键盘按键控制。"
+    const uiParentLink = "#"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -307,10 +309,12 @@ export function ConfigMenu() {
 
     const uiName = "配置菜单"
     const uiDescription = "配置菜单允许你修改应用程序和设备的设置。"
+    const uiParentLink = "#"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }

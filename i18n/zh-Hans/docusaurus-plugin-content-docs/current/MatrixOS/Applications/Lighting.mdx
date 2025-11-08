@@ -9,6 +9,8 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 灯光应用将你的设备转变为可以在各种环境中使用的多功能灯光面板。
 
+当你首次进入应用程序时，你将看到灯光视图。你可以点击功能键进入配置菜单。
+
 在[配置菜单](#配置菜单)中长按功能键将退出此应用并返回<DocLink to="/docs/MatrixOS/ApplicationLauncher">应用程序启动器</DocLink>。
 
 ## 灯光视图
@@ -81,10 +83,12 @@ export function ConfigMenu() {
 
     const uiName = "配置菜单"
     const uiDescription = "配置菜单允许你修改灯光选项。"
+    const uiParentLink = "#灯光视图"
     return <MystrixVisualizer
     uiName={uiName}
     uiDescription={uiDescription}
     uiElements={uiElements}
+    uiParentLink={uiParentLink}
     />
 
 }
@@ -278,7 +282,7 @@ export function LightingEffect() {
         {
             "name": "返回配置菜单",
             "desc": "轻触返回配置菜单。",
-            "link": "#config-menu",
+            "link": "#配置菜单",
             "elements": [
                 {
                     "pos": ["c"]
@@ -289,10 +293,12 @@ export function LightingEffect() {
 
     const uiName = "灯光效果菜单"
     const uiDescription = "灯光效果菜单允许你修改灯光效果选项。"
+    const uiParentLink = "#配置菜单"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }

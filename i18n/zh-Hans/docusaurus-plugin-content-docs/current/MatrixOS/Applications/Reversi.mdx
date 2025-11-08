@@ -10,6 +10,8 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 在 [这里](https://en.wikipedia.org/wiki/Reversi) 了解更多关于黑白棋的信息。
 
+点击功能键可从游戏界面访问配置菜单。
+
 ## 游戏界面
 
 export function GameView() {
@@ -88,10 +90,12 @@ export function GameView() {
 
     const uiName = "游戏界面"
     const uiDescription = "游戏界面允许你进行黑白棋游戏。底灯显示当前玩家的颜色。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }
@@ -182,10 +186,12 @@ export function ConfigMenu() {
 
     const uiName = "配置菜单"
     const uiDescription = "配置菜单允许你修改应用和设备的设置。"
+    const uiParentLink = "#游戏界面"
     return <MystrixVisualizer
         uiName={uiName}
         uiDescription={uiDescription}
         uiElements={uiElements}
+        uiParentLink={uiParentLink}
     />
 
 }

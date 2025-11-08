@@ -78,6 +78,7 @@ export function NotePad() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -89,10 +90,12 @@ export function NotePad() {
 
     const uiName = "音符板"
     const uiDescription = "示例音符板界面"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -185,7 +188,7 @@ export function ConfigMenu() {
     },
     {
         "name": "分屏模式",
-        "desc": "循环切换分屏模式（无分屏模式：暗白色，垂直分屏模式：青色，水平分屏模式：紫色）",
+        "desc": "循环切换分屏模式\n\n- 暗白色：关闭\n- 青色：垂直\n- 紫色：水平",
         "link": "#分屏模式",
         "elements": [
             {
@@ -281,6 +284,7 @@ export function ConfigMenu() {
     {
         "name": "音符板或退出应用",
         "desc": "点击返回音符板。按住退出应用",
+        "link": "#音符板",
         "elements": [
             {
                 "pos": ["c"]
@@ -292,10 +296,12 @@ export function ConfigMenu() {
 
     const uiName = "配置菜单"
     const uiDescription = "在这里可以调整音符板的布局、音阶、颜色等各种设置"
+    const uiParentLink = "#音符板"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -718,10 +724,12 @@ export function ScaleSelector() {
 
     const uiName = "音阶选择器"
     const uiDescription = "选择当前音符板布局的音阶和根音"
+    const uiParentLink = "#配置菜单"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
@@ -748,22 +756,622 @@ export function ScaleSelector() {
 | 14    | 托迪音阶 (Todi)                    | X   |     |     |     | X   |     |     | X   | X   |     | X   |     |
 | 15    | 全音音阶 (Whole Tone)              | X   |     | X   |     | X   | X   |     | X   | X   |     |     |     |
 | 16    | 半音音阶 (Chromatic)               | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   |
-| 17    | 利底亚调式 (Lydian)                  | X   |     | X   |     | X   |     | X   | X   | X   |     | X   |     |
-| 18    | 洛克里亚调式 (Locrian)                 | X   |     |     | X   | X   |     | X   | X   |     | X   |     |     |
-| 19    | 大调五声音阶 (Major Pentatonic)        | X   |     | X   |     | X   |     |     | X   | X   |     |     |     |
-| 20    | 弗里吉亚主音调式 (Phrygian Dominant)       | X   | X   |     |     | X   | X   |     | X   | X   |     | X   |     |
-| 21    | 半全减音阶 (Half Whole Diminished)   | X   | X   |     | X   | X   |     | X   | X   |     | X   | X   |     |
-| 22    | 混合利底亚比波普 (Mixolydian Bebop)        | X   |     | X   |     | X   |     | X   | X   |     | X   | X   |     |
-| 23    | 超洛克里亚 (Super Locrian)           | X   |     | X   |     | X   |     | X   | X   |     | X   |     |     |
-| 24    | 平调子 (Hirajoshi)               | X   |     |     |     |     | X   |     | X   | X   |     |     |     |
-| 25    | 陰旋 (In Sen)                  | X   |     |     | X   |     |     | X   | X   |     |     |     |     |
-| 26    | 呂音阶 (Yo Scale)                | X   |     |     |     | X   |     | X   | X   |     |     |     |     |
-| 27    | 岩户 (Iwato)                   | X   |     |     | X   |     |     | X   | X   |     |     |     |     |
-| 28    | 全半音阶 (Whole Half)              | X   |     | X   |     | X   | X   |     | X   |     | X   |     |     |
-| 29    | 比波普小调 (Bebop Minor)             | X   |     | X   | X   |     | X   | X   | X   | X   |     | X   |     |
-| 30    | 大调布鲁斯 (Major Blues)             | X   |     | X   |     | X   |     | X   | X   |     |     | X   |     |
-| 31    | 雲井 (Kumoi)                   | X   |     |     |     |     | X   |     | X   |     | X   |     |     |
-| 32    | 比波普大调 (Bebop Major)             | X   |     | X   |     | X   | X   |     | X   |     | X   | X   |     |
+
+### 现代调式
+
+启用现代调式模式后，你可以在已选定的音阶中选择新的根音。
+
+export function ScaleSelectorModernDiatonic() {
+
+    const uiElements = [
+    {
+        "name": "音阶可视化器和根音选择器",
+        "desc": "选择当前音符板布局的音阶和根音",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "现代调式切换（已激活）",
+        "desc": "现代调式模式已启用",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "小调",
+        "desc": "使用小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "大调",
+        "desc": "使用大调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "多利亚调式",
+        "desc": "使用多利亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "弗里吉亚调式",
+        "desc": "使用弗里吉亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "混合利底亚调式",
+        "desc": "使用混合利底亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "旋律小调上行",
+        "desc": "使用旋律小调上行音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "和声小调",
+        "desc": "使用和声小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "比波普多利亚",
+        "desc": "使用比波普多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "布鲁斯",
+        "desc": "使用布鲁斯音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "小调五声音阶",
+        "desc": "使用小调五声音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "匈牙利小调",
+        "desc": "使用匈牙利小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "乌克兰多利亚",
+        "desc": "使用乌克兰多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "马尔瓦音阶",
+        "desc": "使用马尔瓦音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "托迪音阶",
+        "desc": "使用托迪音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "全音音阶",
+        "desc": "使用全音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "半音音阶",
+        "desc": "使用半音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "自定义音阶槽位",
+        "desc": "选择或创建自定义音阶槽位（共16个）。暗白色=空，亮白色=已选择，黄色=有音阶",
+        "link": "#自定义音阶",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "音阶选择器 - 现代调式模式"
+    const uiDescription = "现代调式模式允许在选定的音阶内选择根音偏移"
+    const uiParentLink = "#音阶选择器"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelectorModernDiatonic />
+
+### 自定义音阶
+
+选择自定义音阶时，音阶修改器将激活，允许你修改音阶中的音符。
+
+自定义音阶始终以C音对齐。因此你可以在根音选择器中更改根音，同时保持自定义音阶。
+
+export function ScaleSelectorCustom() {
+
+    const uiElements = [
+    {
+        "name": "音阶可视化器和根音选择器",
+        "desc": "选择当前音符板布局的音阶和根音",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "现代调式切换",
+        "desc": "在经典和现代调式模式之间切换（影响根音偏移行为）",
+        "link": "#现代调式",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "音阶修改器",
+        "desc": "切换自定义音阶中的单个音符",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 2],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 2],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "删除自定义音阶",
+        "desc": "删除当前选定的自定义音阶",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "小调",
+        "desc": "使用小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "大调",
+        "desc": "使用大调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "多利亚调式",
+        "desc": "使用多利亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "弗里吉亚调式",
+        "desc": "使用弗里吉亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "混合利底亚调式",
+        "desc": "使用混合利底亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "旋律小调上行",
+        "desc": "使用旋律小调上行音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "和声小调",
+        "desc": "使用和声小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "比波普多利亚",
+        "desc": "使用比波普多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "布鲁斯",
+        "desc": "使用布鲁斯音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "小调五声音阶",
+        "desc": "使用小调五声音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "匈牙利小调",
+        "desc": "使用匈牙利小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "乌克兰多利亚",
+        "desc": "使用乌克兰多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "马尔瓦音阶",
+        "desc": "使用马尔瓦音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "托迪音阶",
+        "desc": "使用托迪音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "全音音阶",
+        "desc": "使用全音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "半音音阶",
+        "desc": "使用半音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "自定义音阶槽位",
+        "desc": "自定义音阶槽位，其中一个已选择（白色），一个已创建（黄色），其他未设置",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#FFFFFF"
+            },
+                     {
+                "pos": [1, 6],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "音阶选择器 - 自定义音阶"
+    const uiDescription = "选择自定义音阶时，可以修改单个音符并删除音阶"
+    const uiParentLink = "#音阶选择器"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelectorCustom />
 
 
 ## 布局选择器
@@ -882,10 +1490,12 @@ export function LayoutSelectorOctave() {
 
     const uiName = "布局选择器 - 八度模式"
     const uiDescription = "每一行都从根音开始的八度模式"
+    const uiParentLink = "#配置菜单"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -1051,10 +1661,12 @@ export function LayoutSelectorOffset() {
 
     const uiName = "布局选择器 - 偏移模式"
     const uiDescription = "具有可自定义X和Y偏移的偏移布局模式"
+    const uiParentLink = "#配置菜单"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
     uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 }
 
@@ -3389,6 +4001,7 @@ export function ControlBar() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -3960,6 +4573,7 @@ export function ControlBarArpeggiator() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -4181,6 +4795,7 @@ export function ControlBarKey() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -4236,6 +4851,7 @@ export function ExampleLayout1() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -4321,6 +4937,7 @@ export function ExampleLayout2() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -4430,6 +5047,7 @@ export function ExampleLayout3() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -4632,6 +5250,7 @@ export function ExampleLayout4() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -4711,6 +5330,7 @@ export function ExampleLayout5() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
@@ -5008,6 +5628,7 @@ export function ExampleLayout6() {
     {
         "name": "进入配置菜单",
         "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
                 "pos": ["c"]
