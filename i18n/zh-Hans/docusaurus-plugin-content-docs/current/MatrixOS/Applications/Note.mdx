@@ -4008,7 +4008,6 @@ export function ControlBar() {
             }
         ]
     }
-
 ];
 
     const uiName = "音符板控制栏"
@@ -4137,6 +4136,116 @@ export function ControlBarChord() {
         ]
     },
     {
+        "name": "减和弦",
+        "desc": "选择减和弦",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "小和弦",
+        "desc": "选择小和弦",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "大和弦",
+        "desc": "选择大和弦",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "挂留和弦",
+        "desc": "选择挂留和弦",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "6th扩展",
+        "desc": "添加6th扩展音",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "小7th扩展",
+        "desc": "添加小7th扩展音",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "大7th扩展",
+        "desc": "添加大7th扩展音",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "9th扩展",
+        "desc": "添加9th扩展音",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "转位",
+        "desc": "选择和弦转位",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "size": [4, 1],
+                "color": "#808000"
+            },
+            {
+                "pos": [4, 6],
+                "size": [3, 1],
+                "color": "#808000"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "禁用和弦",
+        "desc": "取消选择所有和弦，仅在和弦启用时亮起",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
         "name": "弯音向下",
         "desc": "弯音向下（力度映射）\n\nShift：MIDI停止",
         "link": "#弯音",
@@ -4225,97 +4334,12 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "大和弦",
-        "desc": "选择大和弦",
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
         "elements": [
             {
-                "pos": [0, 5],
-                "color": "#FFFF00"
-            }
-        ]
-    },
-    {
-        "name": "小和弦",
-        "desc": "选择小和弦",
-        "elements": [
-            {
-                "pos": [1, 5],
-                "color": "#A0A000"
-            }
-        ]
-    },
-    {
-        "name": "减和弦",
-        "desc": "选择减和弦",
-        "elements": [
-            {
-                "pos": [2, 5],
-                "color": "#A0A000"
-            }
-        ]
-    },
-    {
-        "name": "增和弦",
-        "desc": "选择增和弦",
-        "elements": [
-            {
-                "pos": [3, 5],
-                "color": "#A0A000"
-            }
-        ]
-    },
-    {
-        "name": "转位选择器",
-        "desc": "选择和弦转位（根位、第1、第2、第3转位）",
-        "elements": [
-            {
-                "pos": [4, 5],
-                "size": [4, 1],
-                "color": "#808000"
-            },
-            {
-                "pos": [4, 5],
-                "color": "#FFFF00"
-            }
-        ]
-    },
-    {
-        "name": "6th扩展",
-        "desc": "添加6th扩展",
-        "elements": [
-            {
-                "pos": [0, 6],
-                "color": "#00FFFF"
-            }
-        ]
-    },
-    {
-        "name": "7th扩展",
-        "desc": "添加7th扩展",
-        "elements": [
-            {
-                "pos": [1, 6],
-                "color": "#00FFFF"
-            }
-        ]
-    },
-    {
-        "name": "大7th扩展",
-        "desc": "添加大7th扩展",
-        "elements": [
-            {
-                "pos": [2, 6],
-                "color": "#00FFFF"
-            }
-        ]
-    },
-    {
-        "name": "9th扩展",
-        "desc": "添加9th扩展",
-        "elements": [
-            {
-                "pos": [3, 6],
-                "color": "#00FFFF"
+                "pos": ["c"]
             }
         ]
     }
@@ -4597,10 +4621,10 @@ export function ControlBarArpeggiator() {
 
 ### 音阶控制
 
-可切换音阶强制并访问音阶选择器。激活时，音符将限制在选定音阶内。
+音阶控制允许您切换音阶强制并访问音阶选择器。激活时，音符将被限制在选定的音阶内。
 
 **按钮**：
-- **点击**：切换音阶控制
+- **点击**：切换音阶控制开/关
 - **Shift点击**：进入音阶选择器菜单
 
 **颜色状态**：
@@ -4608,7 +4632,7 @@ export function ControlBarArpeggiator() {
 - **白色**：音阶控制开启
 
 **控制**：
-- **更改调性**：在可视化器中选择任何调性，将其设为主要音符板中的新根调性。
+- **更改根音**：在可视化器中选择任何音调，将其设为主要音符板中的新根音。
 
 有关音阶选择选项，请参见[音阶选择器](#音阶选择器)。
 
@@ -4702,6 +4726,17 @@ export function ControlBarKey() {
                 "pos": [5, 5],
                 "size": [2, 1],
                 "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "现代调式切换",
+        "desc": "在经典和现代调式模式之间切换（影响根音偏移行为）",
+        "link": "#现代调式",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#8000FF"
             }
         ]
     },
