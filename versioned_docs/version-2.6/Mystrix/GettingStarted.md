@@ -39,7 +39,7 @@ See <DocLink to="/docs/Mystrix/MystrixSpecific/UpdateMatrixOS">Update Matrix OS<
 
 ### Start Using Your Mystrix
 
-See the <DocLink to="/docs/category/usage-examples">Usage Examples</DocLink> section for  what others are using Mystrix for and how to get started with them, or dive deep into everything <DocLink to="/docs/MatrixOS/MatrixOSBasics">Matrix OS</DocLink> has to offer!
+See the <DocLink to="/docs/Mystrix/UsageExamples/OtherThingsToTry">Usage Examples</DocLink> section for  what others are using Mystrix for and how to get started with them, or dive deep into everything <DocLink to="/docs/MatrixOS/MatrixOSBasics">Matrix OS</DocLink> has to offer!
 
 <!-- idea: gif showcasing possibilities -->
 

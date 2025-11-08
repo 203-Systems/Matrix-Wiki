@@ -25,7 +25,7 @@ See [Update Matrix OS](./UpdateMatrixOS) for instructions on how to update your 
 
 ### Start Using Your Mystrix
 
-See the [Use your Mystrix](../category/use-your-mystrix) section for what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](../MatrixOS/MatrixOSBasics) has to offer!
+See the [Use your Mystrix](./UsageExamples/CustomizableControls/CustomControlMap) section for what others are using Mystrix for and how to get started with them, or dive deep into everything [Matrix OS](../MatrixOS/MatrixOSBasics) has to offer!
 
 <!-- idea: gif showcasing possibilities -->
 
