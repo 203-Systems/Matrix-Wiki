@@ -6,13 +6,13 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 # 骰子应用
 
-骰子应用是一个简单的应用程序，允许你掷骰子。
+骰子应用是个简单的小应用，用来掷骰子。
 
-骰子有两种模式：点数骰子和数字骰子。
+骰子有两种模式：点数模式和数字模式。
 
-你可以自定义骰子的面数（点数模式为 2 到 9，数字模式为 2 到 99）以及动画的颜色和效果。
+你可以设置骰子的面数（点数模式 2～9，数字模式 2～99），也能调动画的颜色和效果。
 
-点击功能键可从骰子视图访问配置菜单。
+在骰子视图里按功能键，可以打开配置菜单。
 
 ## 骰子视图
 
@@ -70,7 +70,7 @@ export function DotView() {
     ];
 
     const uiName = "骰子视图 - 点数模式"
-    const uiDescription = "点数模式在屏幕上显示骰子点数。你可以自定义面数从 2 到 9。"
+    const uiDescription = "点数模式会显示骰子的点数，面数可以设为 2～9。"
     const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
@@ -132,7 +132,7 @@ export function NumberView() {
     ];
 
     const uiName = "骰子视图 - 数字模式"
-    const uiDescription = "数字模式在屏幕上显示数值。你可以自定义面数从 2 到 99。"
+    const uiDescription = "数字模式会显示数值，面数可以设为 2～99。"
     const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
         uiName={uiName}
@@ -174,7 +174,7 @@ export function ConfigMenu() {
         },
         {
             "name": "滚动彩虹模式",
-            "desc": "在滚动骰子时启用彩虹模式。",
+            "desc": "骰子滚动时启用彩虹模式。",
             "elements": [
                 {
                     "pos": [0, 0],
@@ -184,7 +184,7 @@ export function ConfigMenu() {
         },
         {
             "name": "滚动颜色",
-            "desc": "更改骰子滚动时的显示颜色（如果打开滚动彩虹模式，则可以是彩虹效果）。",
+            "desc": "设置骰子滚动时的颜色（开启滚动彩虹模式时会是彩虹效果）。",
             "link": "/docs/MatrixOS/SharedUI/ColorPicker",
             "elements": [
                 {
@@ -196,7 +196,7 @@ export function ConfigMenu() {
         },
         {
             "name": "滚动底光效果",
-            "desc": "更改骰子滚动时的底光效果（如果打开滚动彩虹模式，则可以是彩虹效果）（仅限魔矩 Pro）。",
+            "desc": "设置骰子滚动时的底光效果（开启滚动彩虹模式时会是彩虹效果）（仅限魔矩 Pro）。",
             "link": "#underglow-effect",
             "elements": [
                 {
@@ -207,7 +207,7 @@ export function ConfigMenu() {
         },
         {
             "name": "确认彩虹模式",
-            "desc": "在骰子投掷结果确认后启用彩虹模式。",
+            "desc": "结果确认后启用彩虹模式。",
             "elements": [
                 {
                     "pos": [7, 0],
@@ -217,7 +217,7 @@ export function ConfigMenu() {
         },
         {
             "name": "确认颜色",
-            "desc": "更改骰子投掷结果确认后的显示颜色（如果打开确认彩虹模式，则可以是彩虹效果）。",
+            "desc": "设置结果确认后的颜色（开启确认彩虹模式时会是彩虹效果）。",
             "link": "/docs/MatrixOS/SharedUI/ColorPicker",
             "elements": [
                 {
@@ -229,7 +229,7 @@ export function ConfigMenu() {
         },
         {
             "name": "确认底光效果",
-            "desc": "更改骰子投掷结果确认后的底光效果（如果打开确认彩虹模式，则可以是彩虹效果）（仅限魔矩 Pro）。",
+            "desc": "设置结果确认后的底光效果（开启确认彩虹模式时会是彩虹效果）（仅限魔矩 Pro）。",
             "link": "#underglow-effect",
             "elements": [
                 {
@@ -240,7 +240,7 @@ export function ConfigMenu() {
         },
         {
             "name": "面数",
-            "desc": "更改骰子的面数（配置独立）。",
+            "desc": "设置骰子面数（两种模式独立设置）。",
             "elements": [
                 {
                     "pos": [2, 7],
@@ -262,7 +262,7 @@ export function ConfigMenu() {
     ];
 
     const uiName = "配置菜单"
-    const uiDescription = "配置菜单允许你修改自定义选项。"
+    const uiDescription = "在这里可以调整各种选项。"
     const uiParentLink = "#骰子视图"
     return <MystrixVisualizer
         uiName={uiName}
@@ -277,7 +277,7 @@ export function ConfigMenu() {
 
 ## 底光效果
 
-底光可以在骰子滚动期间或滚动后具有不同的 LED 效果。你可以调整动画效果和效果速度或将其关闭。底光效果仅限魔矩 Pro。
+底光在骰子滚动时或结束后可以显示不同的 LED 效果。你可以选效果、调速度，也可以关掉。底光效果仅限魔矩 Pro。
 
 export function UnderglowEffect() {
 
@@ -323,8 +323,8 @@ export function UnderglowEffect() {
             ]
         },
         {
-            "name": "效果：锂齿",
-            "desc": "将底光效果设置为锂齿。",
+            "name": "效果：锯齿",
+            "desc": "将底光效果设置为锯齿。",
             "elements": [
                 {
                     "pos": [5, 0],
@@ -360,7 +360,7 @@ export function UnderglowEffect() {
     ];
 
     const uiName = "底光效果菜单"
-    const uiDescription = "底光效果菜单允许你修改底光效果选项。"
+    const uiDescription = "在这里可以调整底光效果。"
     const uiParentLink = "#配置菜单"
     return <MystrixVisualizer
         uiName={uiName}
