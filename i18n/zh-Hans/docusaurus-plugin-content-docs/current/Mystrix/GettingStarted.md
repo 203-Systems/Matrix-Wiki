@@ -6,7 +6,7 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 # 欢迎使用魔矩
 
-魔矩是一款智能矩阵控制器，以社区为中心，高度可定制且完全开源。
+魔矩是一款智能矩阵控制器，以社区为中心，具备高度可定制性，并且完全开源。
 
 <!-- idea: very cool intro/hero image here -->
 
@@ -31,7 +31,7 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 ### 加入社区
 
-我们希望建立一个充满活力的用户社区，需要你的帮助！
+我们希望建立一个充满活力的用户社区，也需要你的参与。
 
 你可以通过多种方式加入社区：
 

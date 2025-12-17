@@ -6,7 +6,7 @@ sidebar_position: 0
 
 Matrix OS 是一个跨平台、实时、可扩展的智能操作系统，专为控制器设计。
 
-Matrix OS 以社区为中心，完全开源，可以根据需要自定义或与社区协作增强功能。
+Matrix OS 以社区为中心，完全开源，并可根据需要进行自定义，或与社区协作扩展功能。
 
 ## Matrix OS 开发方式
 
@@ -22,6 +22,6 @@ Matrix OS 以社区为中心，完全开源，可以根据需要自定义或与�
 
 <!-- idea: link to examples -->
 
-- **移植 Matrix OS**：创建自己的 Matrix OS 设备，将 Matrix OS 移植到第三方控制器，或添加对新 SOC 的支持。
+- **移植 Matrix OS**：创建自己的 Matrix OS 设备，将 Matrix OS 移植到第三方控制器，或添加对新 SoC 的支持。
 
 <!-- idea: show examples, if not, POC -->

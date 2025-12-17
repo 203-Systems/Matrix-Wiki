@@ -8,23 +8,23 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 # 表演应用
 
-表演应用作为标准 MIDI 信号的用户操作界面。
+表演应用作为标准MIDI信号的用户操作界面。
 
-它可以与 Amethyst Player、Ableton Live 或 Unipad 等配合进行视觉演出；在任何支持 MIDI 的 DAW 中用作打击垫；或通过标准 MIDI 协议与你的 DAW 集成。
+它可以与 Amethyst Player、Ableton Live 或 Unipad 等配合进行视觉演出；在任何支持MIDI的DAW中用作打击垫；或通过标准MIDI协议与你的DAW集成。
 
-它发送带有触后的标准 MIDI 信号，确保与任何支持 MIDI 的 DAW 完全兼容。
+它发送带有触后的标准MIDI信号，确保与任何支持MIDI的DAW完全兼容。
 
 初次进入应用时，会看到一个空白界面。可点击或按住功能键进入操作菜单。
 
 要退出表演应用，请进入操作菜单并按住功能键。将返回到<DocLink to="/docs/MatrixOS/ApplicationLauncher">应用启动器</DocLink>。这是 Matrix OS 中退出应用的标准方法。
 
-## 演出画布
+## 表演画布
 
-演出画布是主要的交互界面，你可以在这里与网格交互来发送 MIDI 信号。
+表演画布是主要的交互界面，你可以在这里与网格交互来发送MIDI信号。
 
-它可以与 Amethyst Player、Ableton Live 或 Unipad 等配合进行视觉演出；在任何支持 MIDI 的 DAW 中用作打击垫；或通过标准 MIDI 协议与你的 DAW 集成。
+它同样可以与 Amethyst Player、Ableton Live 或 Unipad 等配合进行视觉演出；在任何支持MIDI的DAW中用作打击垫；或通过标准MIDI协议与你的DAW集成。
 
-画布发送带有触后的标准 MIDI 信号，确保与任何支持 MIDI 的 DAW 完全兼容。网格上的每个按键都可以触发带有力度和压力灵敏度的 MIDI 音符。
+画布发送带有触后的标准MIDI信号，确保与任何支持MIDI的DAW完全兼容。网格上的每个按键都可以触发带有力度和压力灵敏度的MIDI音符。
 
 要访问操作菜单，根据你的菜单锁定设置，点击或按住功能键。
 
@@ -154,7 +154,7 @@ export function ActionMenu() {
     },
     {
         "name": "返回或退出应用",
-        "desc": "轻触返回演出画布。长按退出应用。",
+        "desc": "轻触返回演出画布，长按退出应用。",
         "elements": [
             {
                 "pos": ["c"]
@@ -528,7 +528,7 @@ RGB LED颜色批量填充命令用于以更快的方式设置画布上LED的颜�
 
 ### 上传自定义调色板 - 0x41
 
-上传自定义调色板命令用于自定义LED颜色调色板。该过程包括三个子命令（`0x7B`、`0x3D`和`0x7D`），允许初始化、数据上传和完成。命令结构如下：
+上传自定义调色板命令用于自定义LED颜色调色板。该过程包括三个子命令（`0x7B`、`0x3D`和`0x7D`），用于初始化、数据上传和完成。命令结构如下：
 
 命令是：
 
