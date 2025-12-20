@@ -31,7 +31,7 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 ### 加入社区
 
-我们希望建立一个充满活力的用户社区，也需要你的参与。
+我们希望建立一个充满活力的用户社区，这也需要你的参与！
 
 你可以通过多种方式加入社区：
 
