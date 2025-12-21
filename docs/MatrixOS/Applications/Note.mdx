@@ -1855,7 +1855,7 @@ export function ChannelSelector() {
 
 The Arpeggiator Setting Menu provides comprehensive control over the arpeggiator settings. This menu is only accessible when the control bar is enabled in the Play View.
 
-The arpeggiator setting menu has 7 different parameter pages, each with a distinct color coding:
+The arpeggiator setting menu has 8 different parameter pages, each with a distinct color coding:
 
 - **BPM** (Red): Controls the tempo/speed of the arpeggiator
 - **Swing** (Orange): Adjusts the timing swing between notes
@@ -1864,6 +1864,7 @@ The arpeggiator setting menu has 7 different parameter pages, each with a distin
 - **Step** (Cyan): Controls the step the arp will progress (Loop # times with step offset added each loop)
 - **Step Offset** (Blue): Adds pitch offset notes after each step
 - **Repeat** (Magenta): Sets how many times the pattern repeats
+- **Rhythm** (Hot Pink): Euclidean rhythm length and steps
 
 ### BPM
 
@@ -1948,6 +1949,17 @@ export function ArpConfigBPM() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -2193,6 +2205,17 @@ export function ArpConfigSwing() {
         ]
     },
     {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
         "name": "Swing Display",
         "desc": "Shows current swing percentage (50% in this example)",
         "elements": [
@@ -2409,6 +2432,17 @@ export function ArpConfigGate() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -2659,6 +2693,17 @@ export function ArpConfigDirection() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -2965,6 +3010,17 @@ export function ArpConfigStep() {
         ]
     },
     {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
         "name": "Step Display",
         "desc": "Shows current step interval in semitones (1 in this example)",
         "elements": [
@@ -3166,6 +3222,17 @@ export function ArpConfigStepOffset() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -3386,6 +3453,17 @@ export function ArpConfigRepeat() {
         ]
     },
     {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
         "name": "Repeat Display",
         "desc": "Shows current repeat count\n\nShow Inf if set to infinite or 0",
         "elements": [
@@ -3537,6 +3615,215 @@ export function ArpConfigRepeat() {
 }
 
 <ArpConfigRepeat />
+
+### Rhythm
+
+Creates Euclidean rhythm patterns by distributing steps evenly across a cycle length. You can also set a root step that defines the rhythm start.
+
+**Length**: 1-32 steps<br/>
+**Steps**: 1-length hits (capped to length)<br/>
+**Default**: Length 16, Steps 16
+
+export function ArpConfigRhythm() {
+    const uiElements = [
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Page (Selected)",
+        "desc": "Euclidean rhythm configuration page",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FF0040"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Visualizer",
+        "desc": "Length strip showing the total cycle span",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 2],
+                "color": "#800030"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Visualizer - Steps",
+        "desc": "Hit markers showing the selected steps",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [2, 2],
+                "size": [2, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [7, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Visualizer - Root",
+        "desc": "Root marker showing where the cycle starts",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#8000FF"
+            },
+        ]
+    },
+    {
+        "name": "Length -1",
+        "desc": "Decrease rhythm length by 1 step",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Length +1",
+        "desc": "Increase rhythm length by 1 step",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Steps -1",
+        "desc": "Decrease rhythm steps by 1",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Steps +1",
+        "desc": "Increase rhythm steps by 1",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset rhythm length and steps to default values",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Rhythm Configuration"
+    const uiDescription = "Configure Euclidean rhythm length and steps"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigRhythm />
 
 ## Note Pad Color
 
