@@ -9,13 +9,13 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 音符应用（V2）是一个功能完整的MIDI音符界面，你可以用它来演奏MIDI音符，支持多种布局、音阶、调式，还有自动和弦、琶音器、分屏显示和颜色自定义等高级功能。
 
-启动后会直接进入[音符板](#音符板)界面。点击功能键可以打开[配置菜单](#配置菜单)，再次点击即可返回[音符板](#音符板)。
+启动后会直接进入[演奏界面](#演奏界面)界面。点击功能键可以打开[配置菜单](#配置菜单)，再次点击即可返回[演奏界面](#演奏界面)。
 
 要退出音符应用，先进入[配置菜单](#配置菜单)，然后按住功能键就能返回<DocLink to="/docs/MatrixOS/ApplicationLauncher">应用启动器</DocLink>。
 
-## 音符板
+## 演奏界面
 
-音符板是音符应用的主界面，会根据你选择的布局、音阶和调式来显示不同的按键排列。
+演奏界面是音符应用的主界面，会根据你选择的布局、音阶和调式来显示不同的按键排列。
 
 按键的颜色和样式可以自定义。想看看不同设置效果的话，可以查看[示例布局](#示例布局)。
 
@@ -25,8 +25,8 @@ export function NotePad() {
 
     const uiElements = [
     {
-        "name": "音符板",
-        "desc": "示例音符板",
+        "name": "演奏界面",
+        "desc": "示例演奏界面",
         "elements": [
             {
                 "pos": [0, 0],
@@ -88,8 +88,8 @@ export function NotePad() {
 
 ];
 
-    const uiName = "音符板"
-    const uiDescription = "示例音符板界面"
+    const uiName = "演奏界面"
+    const uiDescription = "示例演奏界面"
     const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -120,7 +120,7 @@ export function ConfigMenu() {
     },
     {
         "name": "音阶选择器",
-        "desc": "选择当前音符板布局的音阶（独立于布局配置）",
+        "desc": "选择当前演奏界面布局的音阶（独立于布局配置）",
         "link": "#音阶选择器",
         "elements": [
             {
@@ -131,7 +131,7 @@ export function ConfigMenu() {
     },
     {
         "name": "布局选择器",
-        "desc": "选择音符板的布局模式（八度音程、偏移或钢琴布局）",
+        "desc": "选择演奏界面的布局模式（八度音程、偏移或钢琴布局）",
         "link": "#布局选择器",
         "elements": [
             {
@@ -142,7 +142,7 @@ export function ConfigMenu() {
     },
     {
         "name": "MIDI通道选择器",
-        "desc": "选择当前音符板的MIDI输出通道（独立于布局配置）",
+        "desc": "选择当前演奏界面的MIDI输出通道（独立于布局配置）",
         "link": "#midi通道",
         "elements": [
             {
@@ -153,8 +153,8 @@ export function ConfigMenu() {
     },
     {
         "name": "布局1",
-        "desc": "使用音符板布局1（颜色可能根据布局配置而变化）",
-        "link": "#音符板",
+        "desc": "使用演奏界面布局1（颜色可能根据布局配置而变化）",
+        "link": "#演奏界面",
         "elements": [
             {
                 "pos": [2, 0],
@@ -165,8 +165,8 @@ export function ConfigMenu() {
     },
     {
         "name": "布局2",
-        "desc": "使用音符板布局2（颜色可能根据布局配置而变化）",
-        "link": "#音符板",
+        "desc": "使用演奏界面布局2（颜色可能根据布局配置而变化）",
+        "link": "#演奏界面",
         "elements": [
             {
                 "pos": [4, 0],
@@ -177,8 +177,8 @@ export function ConfigMenu() {
     },
     {
         "name": "颜色选择器",
-        "desc": "更改当前音符板布局的颜色组合（颜色可能根据当前音符板布局配置而变化）",
-        "link": "#音符板颜色",
+        "desc": "更改当前演奏界面布局的颜色组合（颜色可能根据当前演奏界面布局配置而变化）",
+        "link": "#演奏界面颜色",
         "elements": [
             {
                 "pos": [7, 0],
@@ -199,7 +199,7 @@ export function ConfigMenu() {
     },
     {
         "name": "力度敏感度",
-        "desc": "启用或禁用当前音符板布局的力度敏感度（仅限于具有力度敏感按键的设备）",
+        "desc": "启用或禁用当前演奏界面布局的力度敏感度（仅限于具有力度敏感按键的设备）",
         "elements": [
             {
                 "pos": [7, 5],
@@ -209,7 +209,7 @@ export function ConfigMenu() {
     },
     {
         "name": "控制栏",
-        "desc": "在音符板界面中启用或禁用控制栏",
+        "desc": "在演奏界面中启用或禁用控制栏",
         "link": "#控制栏",
         "elements": [
             {
@@ -282,9 +282,9 @@ export function ConfigMenu() {
         ]
     },
     {
-        "name": "音符板或退出应用",
-        "desc": "点击返回音符板。按住退出应用",
-        "link": "#音符板",
+        "name": "演奏界面或退出应用",
+        "desc": "点击返回演奏界面；长按退出应用",
+        "link": "#演奏界面",
         "elements": [
             {
                 "pos": ["c"]
@@ -295,8 +295,8 @@ export function ConfigMenu() {
 ];
 
     const uiName = "配置菜单"
-    const uiDescription = "在这里可以调整音符板的布局、音阶、颜色等各种设置"
-    const uiParentLink = "#音符板"
+    const uiDescription = "在这里可以调整演奏界面的布局、音阶、颜色等各种设置"
+    const uiParentLink = "#演奏界面"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -310,14 +310,14 @@ export function ConfigMenu() {
 
 ## 音阶选择器
 
-可以将音符限制在特定音阶内，或者用颜色高亮显示音阶音符。这个设置和布局选择是分开的。
+可将音符限制在指定音阶内，或用颜色高亮显示音阶音符，该设置与布局选择相互独立。
 
 export function ScaleSelector() {
 
     const uiElements = [
     {
         "name": "音阶可视化器和根音选择器",
-        "desc": "选择当前音符板布局的音阶和根音",
+        "desc": "选择当前演奏界面布局的音阶和根音",
         "elements": [
             {
                 "pos": [1, 1],
@@ -723,7 +723,7 @@ export function ScaleSelector() {
 ];
 
     const uiName = "音阶选择器"
-    const uiDescription = "选择当前音符板布局的音阶和根音"
+    const uiDescription = "选择当前演奏界面布局的音阶和根音"
     const uiParentLink = "#配置菜单"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -766,7 +766,7 @@ export function ScaleSelectorModernDiatonic() {
     const uiElements = [
     {
         "name": "音阶可视化器和根音选择器",
-        "desc": "选择当前音符板布局的音阶和根音",
+        "desc": "选择当前演奏界面布局的音阶和根音",
         "elements": [
             {
                 "pos": [1, 1],
@@ -1038,16 +1038,15 @@ export function ScaleSelectorModernDiatonic() {
 
 ### 自定义音阶
 
-选择自定义音阶时，音阶修改器将激活，允许你修改音阶中的音符。
+选择自定义音阶后，将启用音阶修改器，可以调整音阶包含的音符
 
-自定义音阶始终以C音对齐。因此你可以在根音选择器中更改根音，同时保持自定义音阶。
 
 export function ScaleSelectorCustom() {
 
     const uiElements = [
     {
         "name": "音阶可视化器和根音选择器",
-        "desc": "选择当前音符板布局的音阶和根音",
+        "desc": "选择当前演奏界面布局的音阶和根音",
         "elements": [
             {
                 "pos": [1, 1],
@@ -1376,11 +1375,11 @@ export function ScaleSelectorCustom() {
 
 ## 布局选择器
 
-可以选择不同的音符板布局模式：
+可以选择不同的演奏界面布局模式
 
-- **八度布局**：基于八度的布局。每一行都从根音开始。如果音阶有超过8个音符，将跨越2行。
-- **偏移布局**：自定义偏移模式，可配置X和Y偏移
-- **半音布局**：传统音符布局，按半音顺序从左到右、从下到上排列
+- **八度布局**：基于八度的布局，每一行都从根音开始，如果音阶包含超过 8 个音符，会跨越两行
+- **偏移布局**：自定义偏移模式，可配置 X/Y 偏移
+- **半音布局**：传统音符布局，按半音顺序从左到右，从下到上排列
 - **钢琴布局**：钢琴风格按键排列
 
 ### 八度布局模式
@@ -1429,7 +1428,7 @@ export function LayoutSelectorOctave() {
         ]
     },
     {
-        "name": "八度模式（OCT）",
+        "name": "八度模式（Octave Mode）",
         "desc": "八度模式文本",
         "elements": [
             {
@@ -1563,7 +1562,7 @@ export function LayoutSelectorOffset() {
         ]
     },
     {
-        "name": "Y偏移显示",
+        "name": "Y偏移数值",
         "desc": "显示当前Y偏移值",
         "elements": [
             {
@@ -1593,7 +1592,7 @@ export function LayoutSelectorOffset() {
         ]
     },
     {
-        "name": "X偏移显示",
+        "name": "X偏移数值",
         "desc": "显示当前X偏移值",
         "elements": [
           {
@@ -1718,7 +1717,7 @@ export function LayoutSelectorChromatic() {
         ]
     },
     {
-        "name": "半音模式（CHM）",
+        "name": "半音模式（Chromatic）",
         "desc": "半音模式文本",
         "elements": [
             {
@@ -1782,7 +1781,7 @@ export function LayoutSelectorChromatic() {
 ];
 
     const uiName = "布局选择器 - 半音模式"
-    const uiDescription = "传统风格布局，音符以连续方式从左下到右上排列。"
+    const uiDescription = "传统风格布局，音符以连续方式从左下到右上排列"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1838,7 +1837,7 @@ export function LayoutSelectorPiano() {
         ]
     },
     {
-        "name": "钢琴模式（PIO）",
+        "name": "钢琴模式（Piano）",
         "desc": "钢琴模式文本",
         "elements": [
             {
@@ -1898,19 +1897,19 @@ export function LayoutSelectorPiano() {
 
 ### 强制音阶模式
 
-当启用强制音阶模式时（钢琴模式不可用），仅显示所选音阶中的音符。当禁用时，所有音符都会显示，但不在所选音阶中的音符会变暗。
+启用强制音阶模式时（钢琴模式不可用），仅显示所选音阶内的音符；禁用时显示全部音符，但不在所选音阶内的音符会变暗
 
 
 ## MIDI通道
 
-该设置独立于布局配置。
+该设置与布局配置相互独立
 
 export function ChannelSelector() {
 
     const uiElements = [
     {
         "name": "MIDI通道显示",
-        "desc": "显示当前音符板布局的MIDI输出通道",
+        "desc": "显示当前演奏界面布局的MIDI输出通道",
         "elements": [
             {
                 "pos": [0, 0],
@@ -1953,7 +1952,7 @@ export function ChannelSelector() {
     },
     {
         "name": "MIDI通道选择器",
-        "desc": "选择当前音符板的MIDI输出通道（1～16）",
+        "desc": "选择当前演奏界面的MIDI输出通道（1-16）",
         "elements": [
             {
                 "pos": [0, 6],
@@ -1980,7 +1979,7 @@ export function ChannelSelector() {
 ];
 
     const uiName = "MIDI通道选择器"
-    const uiDescription = "选择当前音符板布局的MIDI输出通道"
+    const uiDescription = "选择当前演奏界面布局的MIDI输出通道"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1993,7 +1992,7 @@ export function ChannelSelector() {
 
 ## 琶音器设置
 
-可全面控制琶音器设置。仅在音符板界面启用控制栏时可访问。
+可全面控制琶音器设置，仅在演奏界面启用控制栏时可访问
 
 包含7个不同的参数页面，每个都有独特的颜色标识：
 
@@ -2007,8 +2006,8 @@ export function ChannelSelector() {
 
 ### BPM
 
-调节琶音模式的节拍速度。<br/>
-BPM（每分钟节拍数）决定琶音器循环音符的速度。
+调节琶音器的节拍速度<br/>
+BPM（每分钟节拍数）决定琶音器循环音符的速度
 
 **范围**：20-299 BPM<br/>
 **默认值**：120 BPM
@@ -2222,7 +2221,7 @@ export function ArpConfigBPM() {
 ### 摇摆
 
 调整交替音符的时序来创造摇摆感。<br/>
-摇摆百分比决定每对音符中第二个音符的延迟程度。
+摇摆百分比决定每对音符中第二个音符的延迟程度
 
 **范围**：20-80%<br/>
 **默认值**：50%
@@ -3569,16 +3568,16 @@ export function ArpConfigRepeat() {
 
 <ArpConfigRepeat />
 
-## 音符板颜色
+## 演奏界面颜色
 
-可使用颜色选择器自定义当前音符板布局的颜色组合。该设置独立于布局配置。
+可使用颜色选择器自定义当前演奏界面布局的颜色组合。该设置独立于布局配置。
 
 export function NotePadColorSelectorPresetMenu() {
 
     const uiElements = [
     {
-        "name": "音符板预览",
-        "desc": "使用所选颜色组合预览激活的音符板布局",
+        "name": "演奏界面预览",
+        "desc": "使用所选颜色组合预览激活的演奏界面布局",
         "elements": [
             {
                 "pos": [0, 0],
@@ -3720,8 +3719,8 @@ export function NotePadColorSelectorPresetMenu() {
 
 ];
 
-    const uiName = "音符板颜色选择器 - 预设"
-    const uiDescription = "为音符板布局选择颜色预设"
+    const uiName = "演奏界面颜色选择器 - 预设"
+    const uiDescription = "为演奏界面布局选择颜色预设"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -3736,8 +3735,8 @@ export function NotePadColorSelectorCustomMenu() {
 
     const uiElements = [
     {
-        "name": "音符板预览",
-        "desc": "使用所选颜色组合预览激活的音符板布局",
+        "name": "演奏界面预览",
+        "desc": "使用所选颜色组合预览激活的演奏界面布局",
         "elements": [
             {
                 "pos": [0, 0],
@@ -3799,8 +3798,8 @@ export function NotePadColorSelectorCustomMenu() {
         ]
     },
     {
-        "name": "音符板颜色",
-        "desc": "选择音符板的颜色",
+        "name": "演奏界面颜色",
+        "desc": "选择演奏界面的颜色",
         "elements": [
             {
                 "pos": [4, 5],
@@ -3821,8 +3820,8 @@ export function NotePadColorSelectorCustomMenu() {
 
 ];
 
-    const uiName = "音符板颜色选择器 - 自定义"
-    const uiDescription = "自定义音符板布局的颜色组合"
+    const uiName = "演奏界面颜色选择器 - 自定义"
+    const uiDescription = "自定义演奏界面布局的颜色组合"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -3845,9 +3844,7 @@ export function NotePadColorSelectorCustomMenu() {
 
 ## 控制栏
 
-演奏视图中启用控制栏可快速访问各种控制和效果。
 
-每个按钮都有不同的Shift功能。按住任意八度按钮可启用Shift模式。
 
 功能：
 - **弯音向下** (X=1)：力度映射的弯音向下（Shift：MIDI停止）
@@ -3857,19 +3854,19 @@ export function NotePadColorSelectorCustomMenu() {
 - **琶音器** (X=5)：进入琶音器速度控制（Shift：进入琶音器设置）
 - **调性模式** (X=6)：更改当前布局的调性（Shift：进入音阶选择器）
 - **八度向下和向上** (X=7和8)：按八度移调音符（按住任一作为Shift）
-- **交换布局**：同时点击八度向下+八度向上来交换布局。
+- **交换布局**：同时按下八度向下 + 八度向上来交换布局
 
-**分屏模式下**：控制栏仅影响主要音符板（垂直分割中的左侧板，水平分割中的顶部板）。但是，您启用的任何模式或效果在切换音符板时都会保持。您可以在一个音符板上配置锁定、和弦或琶音器，然后切换到次要音符板，这些设置将继续独立运行。
+**分屏模式下**：控制栏仅作用于主演奏界面（垂直分屏时为左侧板，水平分屏时为顶部板），你启用的模式或效果在切换演奏界面时会保持，你可以先在主演奏界面上配置锁定、和弦或琶音器，再切换到副演奏界面，这些设置会继续独立运行
 
 :::note
-**非持久性**：控制栏配置（锁定、和弦、琶音器等）不会跨会话保存。当您退出并重新启动音符应用时，所有控制栏设置都将重置为默认状态。
+**非持久性**：控制栏配置（锁定、和弦、琶音器等）不会跨会话保存，退出并重新启动音符应用时，所有控制栏设置都会重置为默认状态
 :::
 
 export function ControlBar() {
 
     const uiElements = [
     {
-        "name": "音符板",
+        "name": "演奏界面",
         "desc": "音符演奏区域",
         "elements": [
             {
@@ -3978,7 +3975,7 @@ export function ControlBar() {
     },
     {
         "name": "八度向下",
-        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主要音符板颜色",
+        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
         "link": "#八度控制--移调",
         "elements": [
             {
@@ -3989,7 +3986,7 @@ export function ControlBar() {
     },
     {
         "name": "八度向上",
-        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主要音符板颜色",
+        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
         "link": "#八度控制--移调",
         "elements": [
             {
@@ -4010,7 +4007,7 @@ export function ControlBar() {
     }
 ];
 
-    const uiName = "音符板控制栏"
+    const uiName = "演奏界面控制栏"
     const uiDescription = "带有弯音、播放模式和八度控制的控制栏。按住Shift以在弯音按钮上获得额外功能。"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -4037,8 +4034,8 @@ export function ControlBar() {
 - **同时点击两个**：分屏模式下交换主次布局
 
 **视觉反馈**：
-  - **颜色**：主要音符板颜色
-  - **渐变**：音符板八度
+  - **颜色**：主演奏界面颜色
+  - **渐变**：演奏界面八度
 
 ### 弯音
 
@@ -4072,7 +4069,7 @@ export function ControlBar() {
 
 ### 和弦控制
 
-可使用单个音符演奏完整和弦。激活后，音符板顶部两行变为和弦类型和转位控制。
+可使用单个音符演奏完整和弦。激活后，演奏界面顶部两行变为和弦类型和转位控制。
 
 **按钮**：
 - **点击** (X=3)：切换和弦控制
@@ -4083,9 +4080,9 @@ export function ControlBar() {
 - **白色**：和弦控制已开启
 
 **和弦构建控制**：
-- **和弦类型**：大和弦、小和弦、减和弦、增和弦（只能选一个）
-- **扩展音**：6th、7th、9th（可多选组合）
-- **按住组合**：在音符板上演奏时按住一个组合来使用和弦
+- **和弦类型**：大和弦、小和弦、减和弦、增和弦（同时只能选择一个）
+- **扩展音**：六和弦扩展，小七和弦扩展，大七和弦扩展，九和弦扩展（可多选组合）
+- **按住组合**：在演奏界面上演奏时按住一个组合来使用和弦
 - **Shift点击**：锁定和弦类型和扩展
 - **转位**：选择一个转位或在锁定和弦时滑动穿过它们来扫弦。
 
@@ -4093,7 +4090,7 @@ export function ControlBarChord() {
 
     const uiElements = [
     {
-        "name": "音符板",
+        "name": "演奏界面",
         "desc": "音符演奏区域",
         "elements": [
             {
@@ -4136,8 +4133,8 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "减和弦",
-        "desc": "选择减和弦",
+        "name": "减三和弦",
+        "desc": "选择减三和弦",
         "elements": [
             {
                 "pos": [0, 5],
@@ -4146,8 +4143,8 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "小和弦",
-        "desc": "选择小和弦",
+        "name": "小三和弦",
+        "desc": "选择小三和弦",
         "elements": [
             {
                 "pos": [1, 5],
@@ -4156,8 +4153,8 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "大和弦",
-        "desc": "选择大和弦",
+        "name": "大三和弦",
+        "desc": "选择大三和弦",
         "elements": [
             {
                 "pos": [2, 5],
@@ -4176,8 +4173,8 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "6th扩展",
-        "desc": "添加6th扩展音",
+        "name": "六和弦",
+        "desc": "增加六和弦扩展音",
         "elements": [
             {
                 "pos": [0, 6],
@@ -4186,8 +4183,8 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "小7th扩展",
-        "desc": "添加小7th扩展音",
+        "name": "小七和弦",
+        "desc": "增加小七和弦扩展音",
         "elements": [
             {
                 "pos": [1, 6],
@@ -4196,8 +4193,8 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "大7th扩展",
-        "desc": "添加大7th扩展音",
+        "name": "大七和弦",
+        "desc": "增加大七和弦扩展音",
         "elements": [
             {
                 "pos": [2, 6],
@@ -4206,8 +4203,8 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "9th扩展",
-        "desc": "添加9th扩展音",
+        "name": "九和弦",
+        "desc": "增加九和弦扩展音",
         "elements": [
             {
                 "pos": [3, 6],
@@ -4359,11 +4356,10 @@ export function ControlBarChord() {
 
 ### 琶音器控制
 
-琶音器控制用于控制琶音器的分拍。让您在演奏时开启和调整琶音器的速度。
+琶音器控制用于设置琶音器的分拍，让你在演奏时快速开启并调整琶音器速度
 
 **按钮**：
 - **点击** (X=5)：开关琶音器控制
-- **Shift点击**：进入完整琶音器设置菜单
 
 **颜色状态**：
 - **青柠色**：琶音器控制关闭
@@ -4379,13 +4375,13 @@ export function ControlBarChord() {
 7. **1/24** (二十四分音符)
 8. **1/32** (三十二分音符)
 
-有关更多琶音器参数，请参见[琶音器设置菜单](#琶音器设置)。
+有关更多琶音器参数，请参考[琶音器设置菜单](#琶音器设置)
 
 export function ControlBarArpeggiator() {
 
     const uiElements = [
     {
-        "name": "音符板",
+        "name": "演奏界面",
         "desc": "音符演奏区域",
         "elements": [
             {
@@ -4574,7 +4570,7 @@ export function ControlBarArpeggiator() {
     },
     {
         "name": "八度向下",
-        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主要音符板颜色",
+        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
         "link": "#八度控制--移调",
         "elements": [
             {
@@ -4585,7 +4581,7 @@ export function ControlBarArpeggiator() {
     },
     {
         "name": "八度向上",
-        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主要音符板颜色",
+        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
         "link": "#八度控制--移调",
         "elements": [
             {
@@ -4608,7 +4604,7 @@ export function ControlBarArpeggiator() {
 ];
 
     const uiName = "琶音器控制"
-    const uiDescription = "带有琶音器分度控制的控制栏。"
+    const uiDescription = "带有琶音器分度控制的控制栏"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -4621,26 +4617,24 @@ export function ControlBarArpeggiator() {
 
 ### 音阶控制
 
-音阶控制允许您切换音阶强制并访问音阶选择器。激活时，音符将被限制在选定的音阶内。
+音阶控制可切换音阶并访问音阶选择器，激活后，音符将被限制在选定的音阶内。
 
 **按钮**：
 - **点击**：切换音阶控制开/关
-- **Shift点击**：进入音阶选择器菜单
 
 **颜色状态**：
 - **粉色**：音阶控制关闭
 - **白色**：音阶控制开启
 
 **控制**：
-- **更改根音**：在可视化器中选择任何音调，将其设为主要音符板中的新根音。
 
-有关音阶选择选项，请参见[音阶选择器](#音阶选择器)。
+有关音阶选择选项，请参见[音阶选择器](#音阶选择器)
 
 export function ControlBarKey() {
 
     const uiElements = [
     {
-        "name": "音符板",
+        "name": "演奏界面",
         "desc": "音符演奏区域",
         "elements": [
             {
@@ -4684,7 +4678,7 @@ export function ControlBarKey() {
     },
     {
         "name": "调性选择器",
-        "desc": "选择主要音符板布局的根调性",
+        "desc": "选择主演奏界面布局的根调性",
         "elements": [
             {
                 "pos": [0, 5],
@@ -4807,7 +4801,7 @@ export function ControlBarKey() {
     },
     {
         "name": "八度向下",
-        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主要音符板颜色",
+        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
         "link": "#八度控制--移调",
         "elements": [
             {
@@ -4818,7 +4812,7 @@ export function ControlBarKey() {
     },
     {
         "name": "八度向上",
-        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主要音符板颜色",
+        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
         "link": "#八度控制--移调",
         "elements": [
             {

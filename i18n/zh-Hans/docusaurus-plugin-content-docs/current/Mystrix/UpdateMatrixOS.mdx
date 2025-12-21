@@ -12,13 +12,13 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 魔矩可以通过两种方式进入操作系统更新模式：
 
 1. 使用<DocLink to="/docs/MatrixOS/SystemSettings">设置菜单</DocLink>左下角的红色按钮。
-2. 在插入魔矩时按住功能键（中间按钮）。（如果无法启动到操作系统，这是备用方法）
+2. 插入魔矩时按住功能键（中间按钮）。（如果无法启动到操作系统，这是备用方法）
 
-应该在魔矩上看到一个箭头。
+此时你会在魔矩上看到一个箭头。
 
-如果箭头是**红色**，表示设备未通过 USB 连接。
+如果箭头是**红色**，表示设备未通过USB连接。
 
-如果箭头是**绿色**，表示设备已通过 USB 连接并准备接收新操作系统。
+如果箭头是**绿色**，表示设备已通过USB连接并准备接收新操作系统。
 
 <!-- this has to be there and not at the top cause than it breaks spaces in the navigation -->
 
@@ -26,7 +26,7 @@ export function ArrowGreen() {
 const uiElements = [
     {
         "name": "箭头",
-        "desc": "如果箭头是绿色，表示设备已通过 USB 连接并准备接收新操作系统；如果箭头是红色，表示设备未通过 USB 连接。",
+        "desc": "如果箭头是绿色，表示设备已通过USB连接并准备接收新操作系统；如果箭头是红色，表示设备未通过USB连接。",
         "elements": [
             {
                 "pos": [3, 2],
@@ -58,11 +58,11 @@ const uiElements = [
 
 你需要一个新的固件文件来更新你的魔矩。你可以在 [Matrix OS GitHub 的发布区](https://github.com/203-Systems/MatrixOS/releases) 找到它们。
 
-魔矩将在你的主机设备上显示为 USB 大容量存储驱动器。只需将所需操作系统的 UF2 文件复制到此驱动器中即可。
+魔矩将在你的主机设备上显示为USB大容量存储驱动器。只需将所需操作系统的UF2文件复制到此驱动器中即可。
 
 ![磁盘](MatrixDisk.png)
 
-你的魔矩应该开始显示蓝色箭头动画。更新完成后，魔矩将自动重启到新操作系统。
+你的魔矩会开始显示蓝色箭头动画。更新完成后，魔矩将自动重启到新操作系统。
 
 :::info[注意]
 如果你使用的是 Mac，你可能会收到魔矩被错误弹出的警告。
@@ -73,5 +73,5 @@ const uiElements = [
 ## 降级 Matrix OS
 
 :::danger[降级 Matrix OS]
-虽然你可以降级 Matrix OS，但这不被推荐，因为降级的操作系统可能会清除所有用户数据。如果你将操作系统降级到与你的设备不兼容的版本，你可能无法启动到操作系统。
+虽然你可以降级 Matrix OS，但并不推荐这样做，因为降级的操作系统可能会清除所有用户数据。如果你将操作系统降级到与你的设备不兼容的版本，你可能无法启动到操作系统。
 :::

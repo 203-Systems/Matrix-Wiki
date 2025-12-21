@@ -2,13 +2,12 @@
 sidebar_position: 10
 ---
 
-
 # Python 应用
 
-Python 应用在你的魔矩设备上直接提供交互式 Python REPL（读取-求值-打印循环）环境。这允许你实时编写和执行 Python 代码，控制 LED，响应按键，并通过 PikaPython 解释器访问所有 Matrix OS API。
+Python 应用在魔矩设备上提供交互式 Python REPL（读取-求值-打印循环）环境。你可以实时编写和执行 Python 代码，控制 LED、响应按键，并通过 PikaPython 解释器访问所有 Matrix OS API。
 
 :::warning 紧急退出
-要退出 Python 应用，长按功能键（中心键）3 秒钟返回主屏幕。此紧急退出方法在所有应用程序中都可以系统级使用。
+要退出 Python 应用，长按功能键（中心键）3 秒钟返回主屏幕。该紧急退出方式在所有应用中均可使用（系统级）。
 :::
 
 ## 功能特性
@@ -32,17 +31,19 @@ Python 应用在你的魔矩设备上直接提供交互式 Python REPL（读取-
 **macOS/Linux 用户：**
 使用内置的 `screen` 命令或其他终端应用程序，如 `minicom`
 2. **配置连接**：
+然后（以 PuTTY 为例）：
+1. **配置连接**：
    - 连接类型：串口
-   - 串口线：你设备的 COM 端口（例如，COM3）
+   - 串口：设备的 COM 端口（例如 COM3）
    - 速度：115200
-3. **重要终端设置**：
-   - 转到 Terminal → 勾选 "Implicit CR in every LF" - **这是正确行结尾所必需的**
-4. **连接**：点击 "打开" 建立连接
+2. **重要终端设置**：
+   - Terminal → 勾选 "Implicit CR in every LF"（正确换行所必需）
+3. **连接**：点击“打开”建立连接
 
 ### 基本使用
 
 1. **进入 Python 应用**：从设备上的应用程序启动器中选择 Python
-2. **开始编码**：REPL 将在你的 PuTTY 终端中显示，准备接受 Python 命令
+2. **开始编码**：REPL 将在你的串口终端中显示，准备接受 Python 命令
 3. **执行代码**：输入 Python 语句并按 Enter 键查看即时结果
 4. **退出**：使用 Python 函数 `exit()` 返回应用程序启动器，或长按中心键 3 秒钟强制退出
 

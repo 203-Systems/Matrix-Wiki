@@ -6,7 +6,7 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 # 自定义控制应用
 
-自定义控制应用是一个强大的工具，允许你为 Matrix OS 设备创建自定义控制界面。你可以使用 [Matrix OS 自定义控制编辑器](https://edit.203.io) 来创建自定义控制界面。
+自定义控制应用是一个强大的工具，用于为 Matrix OS 设备创建自定义控制界面。你可以使用 [Matrix OS 自定义控制编辑器](https://edit.203.io) 来创建自定义控制界面。
 
 :::warning
 文档仍在编写中。
@@ -36,7 +36,7 @@ import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVis
 
 ## 操作菜单
 
-当你在自定义控制界面模式下长按功能键时，你将进入操作菜单，该菜单提供对各种设置和控制的访问。
+在自定义控制界面模式下长按功能键即可进入操作菜单，用于访问各类设置与控制。
 
 export function ActionMenu() {
     const uiElements = [
@@ -62,7 +62,7 @@ export function ActionMenu() {
         },
         {
             "name": "菜单锁定",
-            "desc": "切换锁定/解锁菜单访问",
+            "desc": "切换菜单访问的锁定/解锁",
             "elements": [
                 {
                     "pos": [0, 2],
@@ -72,7 +72,7 @@ export function ActionMenu() {
         },
         {
             "name": "重新加载",
-            "desc": "重新加载当前控制界面配置。（这样图层配置将重置界面的默认值）",
+            "desc": "重新加载当前控制界面配置。（同时将图层配置重置为默认值）",
             "elements": [
                 {
                     "pos": [0, 5],
@@ -115,7 +115,7 @@ export function ActionMenu() {
     ];
 
     const uiName = "自定义控制界面 - 操作菜单"
-    const uiDescription = "操作菜单提供对控制界面设置、图层管理和系统功能的访问。通过长按功能键访问。"
+    const uiDescription = "操作菜单提供对控制界面设置、图层管理和系统功能的访问。可通过长按功能键访问。"
     const uiParentLink = "#"
     return <MystrixVisualizer
     uiName = {uiName}
