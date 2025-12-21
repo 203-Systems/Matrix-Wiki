@@ -54,6 +54,9 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
 
     const [keypadColors, setKeypadColors] = useState<(string | undefined)[]>(Array(64).fill(undefined));
     const [keypadFunctions, setKeypadFunctions] = useState<(number | undefined)[]>(Array(64).fill(undefined));
+    const [keypadFunctionStacks, setKeypadFunctionStacks] = useState<number[][]>(
+        () => Array.from({ length: 64 }, () => [])
+    );
     const [underglowColors, setUnderglowColors] = useState<(string | undefined)[]>(Array(32).fill(undefined));
     const [touchbarFunctions, setTouchbarFunctions] = useState<(number | undefined)[]>(Array(32).fill(undefined));
     const [centerKeyFunctions, setCenterKeyFunctions] = useState<(number | undefined)>(undefined);
@@ -81,6 +84,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
     const constructor = () => {
         const tempKeypadColors: (string | undefined)[] = Array(64).fill(undefined);
         const tempKeypadFunctions: (number | undefined)[] = Array(64).fill(undefined);
+        const tempKeypadFunctionStacks: number[][] = Array.from({ length: 64 }, () => []);
         const tempUnderglowColors: (string | undefined)[] = Array(32).fill(undefined);
         const tempTouchbarFunctions: (number | undefined)[] = Array(32).fill(undefined);
         let tempCenterKeyFunction: (number | undefined) = undefined;
@@ -123,6 +127,9 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                             for (let y = 0; y < displayElement.size[1]; y++) {
                                 const keyID = getKeyID(displayElement.pos[0] as number + x, displayElement.pos[1] + y);
                                 tempKeypadFunctions[keyID] = index;
+                                if (!tempKeypadFunctionStacks[keyID].includes(index)) {
+                                    tempKeypadFunctionStacks[keyID].push(index);
+                                }
                                 if (typeof displayElement.color === "string" || displayElement.color === undefined) {
                                     tempKeypadColors[keyID] = displayElement.color;
                                 }
@@ -138,6 +145,7 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
 
         setKeypadColors(tempKeypadColors);
         setKeypadFunctions(tempKeypadFunctions);
+        setKeypadFunctionStacks(tempKeypadFunctionStacks);
         setUnderglowColors(tempUnderglowColors);
         setTouchbarFunctions(tempTouchbarFunctions);
         setCenterKeyFunctions(tempCenterKeyFunction);
@@ -296,8 +304,11 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                     <div key={y} className={styles.mystrixControlsRow}>
                     {Array.from({ length: 8 }, (_, x) => {
                         let keyColor = keypadColors?.[y * 8 + x]; // Declare keyColor here
-                        let dim = selected_function != undefined && selected_function !== keypadFunctions[y * 8 + x];
-                        let selected = selected_function != undefined && selected_function === keypadFunctions[y * 8 + x];
+                        const keyID = y * 8 + x;
+                        const keyFunctions = keypadFunctionStacks?.[keyID] ?? [];
+                        const isSelected = selected_function != undefined && keyFunctions.includes(selected_function);
+                        let dim = selected_function != undefined && !isSelected;
+                        let selected = isSelected;
 
                         return ( // Return the JSX from the arrow function
                             <div 
@@ -312,8 +323,8 @@ const MystrixVisualizer: React.FC<UIProps> = ({ uiName, uiDescription, uiElement
                                     backgroundColor: keyColor ? keyColor : "rgb(160, 160, 160)", // Corrected closing parenthesis
                                     boxShadow: (keyColor && ! dim) ? `0 0 5px 1px ${keyColor}` : "none", // Corrected closing parenthesis
                                     }}
-                                onMouseEnter={(e) => { selectHighlightFunction(keypadFunctions[y * 8 + x], keyColor);}}
-                                onClick={(e) => { lockSelectedFunction(keypadFunctions[y * 8 + x], keyColor);  e.stopPropagation()}}
+                                onMouseEnter={(e) => { selectHighlightFunction(keypadFunctions[keyID], keyColor);}}
+                                onClick={(e) => { lockSelectedFunction(keypadFunctions[keyID], keyColor);  e.stopPropagation()}}
                                 // i would try to make it so that when you hover over a key it selects the thing so that you can go to details page faster instead of wondeing why it disappears (just a qol thing)
                                 //or alternatively make it so that button presses have more feedback so that you know you pressed it cause you kinda don't see it rn
 
