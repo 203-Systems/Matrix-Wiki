@@ -1,0 +1,256 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Utils API
+
+## Overview
+
+The Utils API in MatrixOS provides utility functions for common operations like string hashing and other helper functions. The Utils API is available as `MatrixOS.Utils` and is imported by default.
+
+*The Python Utils API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Utils.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Utils.pyi"/>.*
+
+---
+
+## `StringHash`
+```python
+def StringHash(text: str) -> int
+```
+
+Generates a hash value from a text string. This is useful for creating consistent numeric identifiers from string data, particularly for NVS storage keys or other identification purposes.
+
+**Parameters:**
+- `text` (`str`): The input string to hash
+
+**Returns:**
+- `int`: Hash value of the input string
+
+**Example:**
+```python
+# Generate hash for NVS key
+app_key = StringHash("MyApplication")
+user_key = StringHash("UserSettings")
+
+print(f"App key: {app_key}")
+print(f"User key: {user_key}")
+
+# Use with NVS storage
+config_hash = StringHash("brightness_config")
+MatrixOS.NVS.SetVariable(config_hash, b"128")
+```
+
+---
+
+## Practical Examples
+
+### NVS Key Generation
+```python
+def create_nv_storage_manager():
+    """Create a storage manager using string-based keys"""
+
+    class StringKeyNVS:
+        def save(self, key_name: str, data: bytes) -> bool:
+            """Save data using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.SetVariable(hash_key, data)
+
+        def load(self, key_name: str) -> bytes:
+            """Load data using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.GetVariable(hash_key)
+
+        def delete(self, key_name: str) -> bool:
+            """Delete data using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.DeleteVariable(hash_key)
+
+        def exists(self, key_name: str) -> bool:
+            """Check if data exists using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.GetSize(hash_key) > 0
+
+    return StringKeyNVS()
+
+# Usage example
+storage = create_nv_storage_manager()
+
+# Save settings with readable names
+storage.save("user_brightness", b"200")
+storage.save("last_used_app", b"Performance")
+storage.save("device_name", b"MyMatrix")
+
+# Load settings
+brightness = storage.load("user_brightness")
+last_app = storage.load("last_used_app")
+
+print(f"Brightness: {brightness.decode()}")
+print(f"Last app: {last_app.decode()}")
+
+# Check existence
+if storage.exists("device_name"):
+    name = storage.load("device_name")
+    print(f"Device name: {name.decode()}")
+```
+
+### Application Namespacing
+```python
+def create_app_namespace(app_name: str):
+    """Create a namespace for application-specific storage"""
+
+    class AppNamespace:
+        def __init__(self, name: str):
+            self.app_name = name
+            self.base_hash = StringHash(f"app_{name}")
+
+        def get_key(self, setting_name: str) -> int:
+            """Generate namespaced key for a setting"""
+            full_key = f"{self.app_name}_{setting_name}"
+            return StringHash(full_key)
+
+        def save_setting(self, name: str, value: str) -> bool:
+            """Save an application setting"""
+            key = self.get_key(name)
+            return MatrixOS.NVS.SetVariable(key, value.encode())
+
+        def load_setting(self, name: str, default: str = "") -> str:
+            """Load an application setting"""
+            key = self.get_key(name)
+            data = MatrixOS.NVS.GetVariable(key)
+            return data.decode() if data else default
+
+        def list_keys_info(self):
+            """Show information about this app's keys"""
+            print(f"App: {self.app_name}")
+            print(f"Base hash: {self.base_hash}")
+
+            settings = ["brightness", "mode", "color", "volume"]
+            for setting in settings:
+                key = self.get_key(setting)
+                exists = MatrixOS.NVS.GetSize(key) > 0
+                status = "✓" if exists else "✗"
+                print(f"  {setting}: {key} {status}")
+
+    return AppNamespace(app_name)
+
+# Usage examples
+sequencer_app = create_app_namespace("Sequencer")
+piano_app = create_app_namespace("Piano")
+
+# Save settings for different apps
+sequencer_app.save_setting("tempo", "120")
+sequencer_app.save_setting("pattern_length", "16")
+
+piano_app.save_setting("octave", "4")
+piano_app.save_setting("velocity", "127")
+
+# Load settings
+tempo = sequencer_app.load_setting("tempo", "100")
+octave = piano_app.load_setting("octave", "3")
+
+print(f"Sequencer tempo: {tempo}")
+print(f"Piano octave: {octave}")
+
+# Show key information
+sequencer_app.list_keys_info()
+piano_app.list_keys_info()
+```
+
+### Hash Consistency Testing
+```python
+def test_hash_consistency():
+    """Test hash function consistency"""
+
+    test_strings = [
+        "Hello World",
+        "MatrixOS",
+        "Python_API",
+        "brightness_setting",
+        "user_config_v2",
+        "",  # Empty string
+        "a",  # Single character
+        "A very long string that contains multiple words and symbols!@#$%^&*()",
+    ]
+
+    print("Hash Consistency Test:")
+    print("=" * 50)
+
+    # Test multiple calls return same hash
+    for test_str in test_strings:
+        hash1 = StringHash(test_str)
+        hash2 = StringHash(test_str)
+        hash3 = StringHash(test_str)
+
+        consistent = (hash1 == hash2 == hash3)
+        status = "✓ PASS" if consistent else "✗ FAIL"
+
+        print(f"'{test_str}' -> {hash1} {status}")
+
+        if not consistent:
+            print(f"  ERROR: Got different hashes: {hash1}, {hash2}, {hash3}")
+
+    # Test different strings produce different hashes
+    print("\nUniqueness Test:")
+    print("-" * 30)
+
+    hashes = {}
+    collisions = 0
+
+    for test_str in test_strings:
+        hash_val = StringHash(test_str)
+        if hash_val in hashes:
+            collisions += 1
+            print(f"COLLISION: '{test_str}' and '{hashes[hash_val]}' both hash to {hash_val}")
+        else:
+            hashes[hash_val] = test_str
+
+    if collisions == 0:
+        print("✓ No collisions detected in test set")
+    else:
+        print(f"✗ {collisions} collisions detected")
+
+    return collisions == 0
+
+# Run consistency test
+test_hash_consistency()
+```
+
+---
+
+## Hash Function Properties
+
+The `StringHash` function provides:
+
+- **Consistency**: Same input always produces same output
+- **Distribution**: Different inputs typically produce different outputs
+- **Fixed Range**: Returns integer values suitable for NVS keys
+- **Fast Computation**: Optimized for real-time usage
+
+### Best Practices
+
+1. **Use Descriptive Keys**: Choose meaningful names for your hash keys
+2. **Namespace Applications**: Include app name in key strings to avoid conflicts
+3. **Version Control**: Include version info in keys when data format changes
+4. **Test for Collisions**: Verify your key names don't produce hash collisions
+
+**Example of good key naming:**
+```python
+# Good: descriptive and namespaced
+user_settings_key = StringHash("MyApp_v2_user_settings")
+brightness_key = StringHash("MyApp_display_brightness")
+
+# Avoid: generic names that might conflict
+generic_key = MatrixOS.Utils.StringHash("settings")  # Too generic
+```
+
+---
+
+## Integration with Other APIs
+
+The Utils API works particularly well with:
+
+- **NVS API**: String-based key generation for storage
+- **Application Framework**: Namespace management
+- **Configuration Systems**: Consistent identifier generation
+
+See the [NVS API documentation](../NVS) for more information on persistent storage.

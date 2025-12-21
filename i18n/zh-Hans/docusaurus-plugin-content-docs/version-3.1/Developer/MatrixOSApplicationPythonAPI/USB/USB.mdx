@@ -1,0 +1,141 @@
+---
+sidebar_position: 7
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# USB API
+
+## 概述
+
+Matrix OS 中的 USB API 提供管理 USB 连接和状态的函数。USB API 可通过 `MatrixOS.USB` 访问，默认已导入。
+
+*Python USB API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_USB.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_USB.pyi"/>。*
+
+---
+
+## `MatrixOS.USB.Connected`
+```python
+def Connected() -> bool
+```
+
+检查设备是否连接到 USB 主机。
+
+**返回值：**
+- `bool`：USB 已连接时返回 True，否则返回 False
+
+**示例：**
+```python
+if MatrixOS.USB.Connected():
+    print("设备已通过 USB 连接")
+else:
+    print("设备未连接到 USB")
+```
+
+---
+
+## USB 状态监控
+
+### 基本连接检查
+```python
+
+def monitor_usb_connection():
+    """监控 USB 连接状态"""
+    last_status = None
+
+    while True:
+        current_status = MatrixOS.USB.Connected()
+
+        if current_status != last_status:
+            if current_status:
+                print("USB 已连接！")
+            else:
+                print("USB 已断开连接！")
+
+            last_status = current_status
+
+        MatrixOS.SYS.DelayMs(1000)  # 每秒检查一次
+
+monitor_usb_connection()
+```
+
+### USB 依赖功能
+```python
+def usb_dependent_task():
+    """需要 USB 连接的功能示例"""
+
+    # 等待 USB 连接
+    print("等待 USB 连接...")
+    while not MatrixOS.USB.Connected():
+        MatrixOS.SYS.DelayMs(100)
+
+    print("USB 已连接！开始依赖 USB 的操作...")
+
+    # 现在可以安全使用依赖 USB 的功能
+    if MatrixOS.HID.Ready():
+        print("HID 可用")
+        # 使用 HID 功能...
+
+    # 继续其他 USB 操作...
+
+usb_dependent_task()
+```
+
+---
+
+## 与其他系统的集成
+
+### USB 和 HID 集成
+```python
+def safe_hid_operations():
+    """在检查 USB 后安全执行 HID 操作"""
+
+    if not MatrixOS.USB.Connected():
+        print("USB 未连接 - HID 操作不可用")
+        return False
+
+    if not MatrixOS.HID.Ready():
+        print("HID 未准备就绪")
+        return False
+
+    # 可以安全使用 HID
+    MatrixOS.HID.Keyboard.Write(KeyboardKeycode.KEY_A)
+    return True
+
+safe_hid_operations()
+```
+
+### 应用逻辑的 USB 状态
+```python
+def adaptive_application():
+    """根据 USB 状态调整行为的应用程序"""
+
+    while True:
+        if MatrixOS.USB.Connected():
+            # USB 模式 - 可以使用 HID，可能有不同行为
+            print("在 USB 模式下运行")
+            # ... USB 特定功能
+
+        else:
+            # 独立模式 - 不同行为
+            print("在独立模式下运行")
+            # ... 独立功能
+
+        MatrixOS.SYS.DelayMs(5000)  # 每 5 秒检查一次
+
+adaptive_application()
+```
+
+
+---
+
+## USB 模式和行为
+
+USB 连接状态影响各种系统行为：
+
+- **HID 功能**：需要活动的 USB 连接
+- **电源管理**：USB 连接可能影响睡眠/电源模式
+- **数据传输**：文件传输模式取决于 USB 连接性
+- **设备识别**：主机操作系统识别取决于 USB 枚举
+- **CDC 通信**：通过 USB 的虚拟串口通信
+
+详细的 USB 模式支持请查看具体的 Matrix OS 配置和设备功能。

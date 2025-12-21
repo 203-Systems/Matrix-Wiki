@@ -1,0 +1,165 @@
+---
+sidebar_position: 8
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# Logging API
+
+## Overview
+
+The Logging API provides a set of functions and macros for logging messages at different levels of severity. The API includes functions for logging error, warning, informational, debug, and verbose messages. The logging level can be set at compile time to control which messages are logged.
+
+The use of logging macro is recommended for performance reasons. The macro will generate no code if the system log level is lower than the level of the message being logged.
+
+The logging functions will generate code regardless of the log level, so they should be used sparingly. In the future there will be a way to change log level at runtime, those functions will be more useful then.
+
+Note: The system log level can be set to debug by using build-dev in build command. All other command has log level None. If you are using build, the default log level in the os/Parameters.h file will be used. (See <DocLink to="/docs/Developer/DebugMatrixOSCpp">Debug Matrix OS</DocLink> for more information.) 
+
+*The header file for this API is part of <GithubLink path="os/MatrixOS.h"/> and the implementation is in <GithubLink path="os/system/Logging.cpp"/>.*
+
+---
+
+## Macro Logging
+
+### `MLOGE`
+```cpp
+#define MLOGE(tag, format, ...)
+```
+
+Logs an error message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_ERROR`.
+
+**Parameters:**
+- `tag`: The tag associated with the log.
+- `format`: The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MLOGW`
+```cpp
+#define MLOGW(tag, format, ...)
+```
+
+Logs a warning message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_WARNING`.
+
+**Parameters:**
+- `tag`: The tag associated with the log.
+- `format`: The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MLOGI`
+```cpp
+#define MLOGI(tag, format, ...)
+```
+
+Logs an informational message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_INFO`.
+
+**Parameters:**
+- `tag`: The tag associated with the log.
+- `format`: The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MLOGD`
+```cpp
+#define MLOGD(tag, format, ...)
+```
+
+Logs a debug message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_DEBUG`.
+
+**Parameters:**
+- `tag`: The tag associated with the log.
+- `format`: The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MLOGV`
+```cpp
+#define MLOGV(tag, format, ...)
+```
+
+Logs a verbose message (macro version). This macro will generate no code if the log level is lower than `LOG_LEVEL_VERBOSE`.
+
+**Parameters:**
+- `tag`: The tag associated with the log.
+- `format`: The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+## Function Logging
+
+### `MatrixOS::Logging::LogError`
+```cpp
+void LogError(const string &tag, const string &format, ...);
+```
+
+Logs an error message.
+
+**Parameters:**
+- `tag` (`const string &`): The tag associated with the log.
+- `format` (`const string &`): The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MatrixOS::Logging::LogWarning`
+```cpp
+void LogWarning(const string &tag, const string &format, ...);
+```
+
+Logs a warning message.
+
+**Parameters:**
+- `tag` (`const string &`): The tag associated with the log.
+- `format` (`const string &`): The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MatrixOS::Logging::LogInfo`
+```cpp
+void LogInfo(const string &tag, const string &format, ...);
+```
+
+Logs an informational message.
+
+**Parameters:**
+- `tag` (`const string &`): The tag associated with the log.
+- `format` (`const string &`): The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MatrixOS::Logging::LogDebug`
+```cpp
+void LogDebug(const string &tag, const string &format, ...);
+```
+
+Logs a debug message.
+
+**Parameters:**
+- `tag` (`const string &`): The tag associated with the log.
+- `format` (`const string &`): The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---
+
+### `MatrixOS::Logging::LogVerbose`
+```cpp
+void LogVerbose(const string &tag, const string &format, ...);
+```
+
+Logs a verbose message.
+
+**Parameters:**
+- `tag` (`const string &`): The tag associated with the log.
+- `format` (`const string &`): The format string for the log message.
+- `...`: Additional arguments for the format string.
+
+---

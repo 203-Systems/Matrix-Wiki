@@ -1,0 +1,500 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# UISelector
+
+## 概述
+
+`UISelector` 组件提供了一个多功能的选择界面，具有多种照明模式和布局方向。它非常适合创建值选择器、级别指示器和交互式控件。
+
+*UISelector 组件实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UISelector.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UISelector.pyi"/>。*
+
+---
+
+## 构造函数
+
+### `MatrixOS.UISelector()`
+```python
+class UISelector(UIComponent):
+    def __init__(self) -> None
+```
+
+创建一个新的选择器组件。
+
+**示例：**
+```python
+selector = UISelector()
+```
+
+---
+
+## 枚举类型
+
+### `UISelectorDirection`
+```python
+class UISelectorDirection:
+    RIGHT_THEN_DOWN: int = 0  # 向右然后向下
+    DOWN_THEN_RIGHT: int = 1  # 向下然后向右
+    LEFT_THEN_DOWN: int = 2   # 向左然后向下
+    DOWN_THEN_LEFT: int = 3   # 向下然后向左
+    UP_THEN_RIGHT: int = 4    # 向上然后向右
+    RIGHT_THEN_UP: int = 5    # 向右然后向上
+    UP_THEN_LEFT: int = 6     # 向上然后向左
+    LEFT_THEN_UP: int = 7     # 向左然后向上
+```
+
+### `UISelectorLitMode`
+```python
+class UISelectorLitMode:
+    LIT_EQUAL: int = 0              # 仅点亮选中的值
+    LIT_LESS_EQUAL_THAN: int = 1    # 点亮所有 <= 选中值的位置
+    LIT_GREATER_EQUAL_THAN: int = 2 # 点亮所有 >= 选中值的位置
+    LIT_ALWAYS: int = 3             # 始终点亮所有位置
+```
+
+---
+
+## 行为函数
+
+### `SetValueFunc`
+```python
+def SetValueFunc(self, getValueFunc: any) -> bool
+```
+
+设置一个函数来获取当前选择器的值。
+
+**参数：**
+- `getValueFunc` (`function`)：返回当前值的函数
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetColorFunc`
+```python
+def SetColorFunc(self, colorFunc: any) -> bool
+```
+
+设置一个函数来确定选择器的颜色。
+
+**参数：**
+- `colorFunc` (`function`)：返回当前颜色的函数
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetIndividualColorFunc`
+```python
+def SetIndividualColorFunc(self, individualColorFunc: any) -> bool
+```
+
+设置一个函数来确定各个位置的颜色。
+
+**参数：**
+- `individualColorFunc` (`function`)：为每个位置返回颜色的函数
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetNameFunc`
+```python
+def SetNameFunc(self, nameFunc: any) -> bool
+```
+
+设置一个函数来确定选择器的名称。
+
+**参数：**
+- `nameFunc` (`function`)：返回当前名称的函数
+
+**返回值：**
+- `bool`：成功时返回 True
+
+---
+
+## 配置方法
+
+### `SetLitMode`
+```python
+def SetLitMode(self, litMode: int) -> bool
+```
+
+设置选择器的照明模式。
+
+**参数：**
+- `litMode` (`int`)：来自 `UISelectorLitMode` 的照明模式
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetDimension`
+```python
+def SetDimension(self, dimension: Dimension) -> bool
+```
+
+设置选择器的大小。
+
+**参数：**
+- `dimension` (`Dimension`)：选择器的尺寸
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetName`
+```python
+def SetName(self, name: str) -> bool
+```
+
+设置选择器的名称。
+
+**参数：**
+- `name` (`str`)：选择器名称
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetCount`
+```python
+def SetCount(self, count: int) -> bool
+```
+
+设置可选择位置的数量。
+
+**参数：**
+- `count` (`int`)：位置数量
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetDirection`
+```python
+def SetDirection(self, direction: int) -> bool
+```
+
+设置选择器的布局方向。
+
+**参数：**
+- `direction` (`int`)：来自 `UISelectorDirection` 的方向
+
+**返回值：**
+- `bool`：成功时返回 True
+
+### `SetColor`
+```python
+def SetColor(self, color: Color) -> bool
+```
+
+设置选择器的基础颜色。
+
+**参数：**
+- `color` (`Color`)：基础颜色
+
+**返回值：**
+- `bool`：成功时返回 True
+
+---
+
+## 回调函数
+
+### `OnChange`
+```python
+def OnChange(self, changeCallback: any) -> bool
+```
+
+设置当选择发生改变时的回调函数。
+
+**参数：**
+- `changeCallback` (`function`)：值改变时调用的函数
+
+**返回值：**
+- `bool`：成功时返回 True
+
+---
+
+## 使用示例
+
+### 基本音量选择器
+```python
+def create_volume_selector():
+    """创建一个水平音量选择器"""
+
+    volume_level = 5  # 当前音量 (0-10)
+    volume_selector = UISelector()
+
+    # 配置选择器
+    volume_selector.SetName("音量")
+    volume_selector.SetCount(11)  # 0-10 级别
+    volume_selector.SetDirection(UISelectorDirection.RIGHT_THEN_DOWN)
+    volume_selector.SetLitMode(UISelectorLitMode.LIT_LESS_EQUAL_THAN)
+    volume_selector.SetDimension(Dimension(8, 1))  # 全宽，1 行
+    volume_selector.SetColor(Color(0, 255, 0))
+
+    # 值函数
+    def get_volume():
+        return volume_level
+
+    # 改变回调
+    def on_volume_change(new_value):
+        nonlocal volume_level
+        volume_level = new_value
+        print(f"音量改变为： {volume_level}")
+
+    volume_selector.SetValueFunc(get_volume)
+    volume_selector.OnChange(on_volume_change)
+
+    ui = UI()
+    ui.AddUIComponent(volume_selector, Point(0, 3))
+
+    return ui, volume_selector
+
+ui, vol_selector = create_volume_selector()
+ui.Start()
+```
+
+### 多色级别指示器
+```python
+def create_level_indicator():
+    """创建一个带有颜色编码的级别指示器"""
+
+    current_level = 0
+    max_level = 16
+    level_selector = UISelector()
+
+    level_selector.SetName("级别")
+    level_selector.SetCount(max_level)
+    level_selector.SetDirection(UISelectorDirection.DOWN_THEN_RIGHT)
+    level_selector.SetLitMode(UISelectorLitMode.LIT_LESS_EQUAL_THAN)
+    level_selector.SetDimension(Dimension(4, 4))
+
+    # 根据级别动态设置颜色
+    def get_level_color():
+        if current_level < 4:
+            return Color(0, 255, 0)    # 绿色 - 低
+        elif current_level < 8:
+            return Color(255, 255, 0)  # 黄色 - 中等
+        elif current_level < 12:
+            return Color(255, 100, 0)  # 橙色 - 高
+        else:
+            return Color(255, 0, 0)    # 红色 - 最大
+
+    # Individual color function for gradient effect
+    def get_individual_colors(position):
+        ratio = position / (max_level - 1)
+        red = int(255 * ratio)
+        green = int(255 * (1 - ratio))
+        return Color(red, green, 0)
+
+    level_selector.SetValueFunc(lambda: current_level)
+    level_selector.SetColorFunc(get_level_color)
+    level_selector.SetIndividualColorFunc(get_individual_colors)
+
+    def on_level_change(new_level):
+        nonlocal current_level
+        current_level = new_level
+        print(f"Level: {current_level}/{max_level}")
+
+    level_selector.OnChange(on_level_change)
+
+    ui = UI()
+    ui.AddUIComponent(level_selector, Point(2, 2))
+
+    return ui, level_selector
+
+ui, level_sel = create_level_indicator()
+ui.Start()
+```
+
+### EQ Band Selector
+```python
+def create_eq_selector():
+    """Create an equalizer-style selector"""
+
+    eq_bands = [0, 2, 5, 8, 5, 3, 1, 0]  # 8 frequency bands
+    current_band = 0
+    eq_selector = UISelector()
+
+    eq_selector.SetName("EQ")
+    eq_selector.SetCount(len(eq_bands))
+    eq_selector.SetDirection(UISelectorDirection.RIGHT_THEN_DOWN)
+    eq_selector.SetLitMode(UISelectorLitMode.LIT_EQUAL)  # Only light selected band
+    eq_selector.SetDimension(Dimension(8, 1))
+
+    # Color based on EQ level
+    def get_eq_color():
+        current_level = eq_bands[current_band]
+        if current_level > 6:
+            return Color(255, 0, 0)    # Red - boost
+        elif current_level > 3:
+            return Color(255, 255, 0)  # Yellow - slight boost
+        elif current_level == 0:
+            return Color(255, 255, 255) # White - flat
+        else:
+            return Color(0, 255, 255)  # Cyan - cut
+
+    # Individual colors show EQ curve
+    def get_band_colors(position):
+        level = eq_bands[position]
+        intensity = (level + 1) * 25  # Scale to 0-255
+        return Color(0, intensity, intensity)
+
+    eq_selector.SetValueFunc(lambda: current_band)
+    eq_selector.SetColorFunc(get_eq_color)
+    eq_selector.SetIndividualColorFunc(get_band_colors)
+
+    def on_band_change(new_band):
+        nonlocal current_band
+        current_band = new_band
+        print(f"Selected band {current_band}: {eq_bands[current_band]} dB")
+
+    eq_selector.OnChange(on_band_change)
+
+    ui = UI()
+    ui.AddUIComponent(eq_selector, Point(0, 3))
+
+    return ui, eq_bands, eq_selector
+
+ui, bands, eq_sel = create_eq_selector()
+ui.Start()
+```
+
+### Pattern Step Sequencer
+```python
+def create_step_sequencer():
+    """Create a 16-step sequencer pattern selector"""
+
+    pattern = [True, False, True, False, True, False, True, False,
+               False, True, False, True, False, True, False, True]
+    current_step = 0
+    playing = False
+
+    step_selector = UISelector()
+    step_selector.SetName("Steps")
+    step_selector.SetCount(16)
+    step_selector.SetDirection(UISelectorDirection.RIGHT_THEN_DOWN)
+    step_selector.SetLitMode(UISelectorLitMode.LIT_ALWAYS)  # Show all steps
+    step_selector.SetDimension(Dimension(8, 2))  # 8x2 grid for 16 steps
+
+    # Color coding for steps
+    def get_step_colors(position):
+        if position == current_step and playing:
+            return Color(255, 255, 255)  # White - current playing step
+        elif pattern[position]:
+            return Color(0, 255, 0)      # Green - active step
+        else:
+            return Color(100, 0, 0)      # Dark red - inactive step
+
+    step_selector.SetValueFunc(lambda: current_step)
+    step_selector.SetIndividualColorFunc(get_step_colors)
+
+    def on_step_change(new_step):
+        nonlocal current_step
+        current_step = new_step
+        # Toggle step on/off
+        pattern[current_step] = not pattern[current_step]
+        print(f"Step {current_step}: {'ON' if pattern[current_step] else 'OFF'}")
+
+    step_selector.OnChange(on_step_change)
+
+    ui = UI()
+    ui.AddUIComponent(step_selector, Point(0, 3))
+
+    return ui, pattern, step_selector
+
+ui, seq_pattern, step_sel = create_step_sequencer()
+ui.Start()
+```
+
+### Dynamic Range Selector
+```python
+def create_range_selector():
+    """Create a selector with dynamic range and labeling"""
+
+    current_value = 50
+    min_value = 0
+    max_value = 100
+    range_selector = UISelector()
+
+    # Dynamic configuration
+    def update_selector_config():
+        range_size = max_value - min_value + 1
+        range_selector.SetCount(min(range_size, 64))  # Limit to grid size
+
+        # Update name with current range
+        range_selector.SetNameFunc(lambda: f"Range {min_value}-{max_value}")
+
+    range_selector.SetDirection(UISelectorDirection.RIGHT_THEN_DOWN)
+    range_selector.SetLitMode(UISelectorLitMode.LIT_LESS_EQUAL_THAN)
+    range_selector.SetDimension(Dimension(8, 8))
+
+    # Normalize value to selector range
+    def get_normalized_value():
+        if max_value == min_value:
+            return 0
+        normalized = (current_value - min_value) / (max_value - min_value)
+        return int(normalized * (range_selector.count - 1))
+
+    # Color based on percentage
+    def get_range_color():
+        percentage = (current_value - min_value) / max(1, max_value - min_value)
+        if percentage < 0.3:
+            return Color(255, 0, 0)      # Red - low
+        elif percentage < 0.7:
+            return Color(255, 255, 0)    # Yellow - medium
+        else:
+            return Color(0, 255, 0)      # Green - high
+
+    range_selector.SetValueFunc(get_normalized_value)
+    range_selector.SetColorFunc(get_range_color)
+
+    def on_range_change(new_position):
+        nonlocal current_value
+        if range_selector.count > 0:
+            ratio = new_position / (range_selector.count - 1)
+            current_value = int(min_value + ratio * (max_value - min_value))
+            print(f"Value: {current_value} ({ratio*100:.1f}%)")
+
+    range_selector.OnChange(on_range_change)
+
+    update_selector_config()
+
+    ui = UI()
+    ui.AddUIComponent(range_selector, Point(0, 0))
+
+    return ui, range_selector
+
+ui, range_sel = create_range_selector()
+ui.Start()
+```
+
+---
+
+## 照明模式示例
+
+### LIT_EQUAL (单选)
+```python
+# 仅显示选中的位置
+selector.SetLitMode(UISelectorLitMode.LIT_EQUAL)
+# 用于：单选按钮、单项选择
+```
+
+### LIT_LESS_EQUAL_THAN (填充模式)
+```python
+# 显示所有不超过选中值的位置
+selector.SetLitMode(UISelectorLitMode.LIT_LESS_EQUAL_THAN)
+# 用于：音量条、进度指示器、级别表
+```
+
+### LIT_GREATER_EQUAL_THAN (反向填充)
+```python
+# 显示选中位置及之后的所有位置
+selector.SetLitMode(UISelectorLitMode.LIT_GREATER_EQUAL_THAN)
+# 用于：倒计时显示、剩余容量
+```
+
+### LIT_ALWAYS (显示所有)
+```python
+# 以不同颜色显示所有位置
+selector.SetLitMode(UISelectorLitMode.LIT_ALWAYS)
+# 用于：模式编辑器、多状态显示
+```
+

@@ -1,0 +1,68 @@
+---
+sidebar_position: 4
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Device Settings
+
+The Device Settings page allows you to configure various hardware aspects of your Mystrix device.
+
+export function DeviceSettings() {
+const uiElements = [
+    {
+        "name": "Bluetooth MIDI",
+        "desc": "Enable or disable Bluetooth MIDI",
+        "link": "/docs/Mystrix/BluetoothMIDI",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#0082FC"
+            }
+        ]
+    },
+    {
+        "name": "Touchbar Toggle",
+        "desc": "Enable or disable the touchbar",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#7957FB"
+            }
+        ]
+    },
+    {
+        "name": "Keypad Calibration",
+        "desc": "(Only on Mystrix Pro) Calibrate Mystrix Pro's keypad",
+        "link": "/docs/Mystrix/KeypadCalibration",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Return to the previous screen",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Device Settings"
+    const uiDescription = "Device Settings contains all the settings for the specific for Mystrix."
+    const uiParentLink = "/docs/MatrixOS/SystemSettings"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<DeviceSettings />

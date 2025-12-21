@@ -1,0 +1,312 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# LED API
+
+## 概述
+
+Matrix OS 中的 LED 系统提供对 8x8 LED 矩阵的控制，支持图层、实时更新和交叉渐变动画。LED API 可通过 `MatrixOS.LED` 访问，默认已导入。
+
+对于某些 LED 函数，可以指定图层 ID。如果不指定图层 ID，API 将使用图层 255（最顶层）。更改仅在调用 `Update()` 时生效。
+
+要立即更新，请写入图层 0（活动缓冲区）。除非使用 `PauseUpdate(True)` 暂停，否则更改会立即渲染。这适用于实时效果但可能导致闪烁。
+
+*Python LED API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_LED.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_LED.pyi"/>。*
+
+## 常量
+
+LED API 使用以下预定义常量：
+
+- `CURRENT_LAYER = 255` - 未指定图层时引用的当前活动图层
+- `CROSSFADE_DURATION = 200` - 默认交叉渐变持续时间（毫秒）
+
+---
+
+## `MatrixOS.LED.NextBrightness`
+```python
+def NextBrightness() -> None
+```
+
+Cycles to the next predefined brightness level for the LEDs.
+
+**Example:**
+```python
+MatrixOS.LED.NextBrightness()
+```
+
+---
+
+## `MatrixOS.LED.SetBrightness`
+```python
+def SetBrightness(brightness: int) -> None
+```
+
+Sets the brightness level of the LEDs.
+
+**Parameters:**
+- `brightness` (`int`): Brightness level (0-255)
+
+**Example:**
+```python
+MatrixOS.LED.SetBrightness(128)  # Set to 50% brightness
+```
+
+---
+
+## `MatrixOS.LED.SetBrightnessMultiplier`
+```python
+def SetBrightnessMultiplier(partition_name: str, multiplier: float) -> bool
+```
+
+Applies a brightness multiplier to a specific LED partition.
+
+**Parameters:**
+- `partition_name` (`str`): Name of the partition to modify
+- `multiplier` (`float`): Brightness multiplier
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+MatrixOS.LED.SetBrightnessMultiplier("keypad", 0.8)  # Set keypad brightness to 0.8x
+```
+
+---
+
+## `MatrixOS.LED.SetColor`
+```python
+def SetColor(xy: Point, color: Color, layer: int = CURRENT_LAYER) -> None
+```
+
+Sets the color of a specific LED at coordinates (x, y).
+
+**Parameters:**
+- `xy` (`Point`): LED coordinates (0-7 for both x and y)
+- `color` (`Color`): Color to set
+- `layer` (`int`, optional): Layer ID to write to (defaults to CURRENT_LAYER)
+
+**Example:**
+```python
+point = Point(2, 3)
+red = Color(255, 0, 0)
+MatrixOS.LED.SetColor(point, red)  # Set LED at (2,3) to red
+```
+
+---
+
+## `MatrixOS.LED.SetColorByID`
+```python
+def SetColorByID(id: int, color: Color, layer: int = CURRENT_LAYER) -> None
+```
+
+Sets the color of an LED by its ID (0-63 for 8x8 matrix).
+
+**Parameters:**
+- `id` (`int`): LED ID (0-63)
+- `color` (`Color`): Color to set
+- `layer` (`int`, optional): Layer ID to write to (defaults to CURRENT_LAYER)
+
+**Example:**
+```python
+MatrixOS.LED.SetColorByID(0, Color(0, 255, 0))  # Set first LED to green
+```
+
+---
+
+## `MatrixOS.LED.Fill`
+```python
+def Fill(color: Color, layer: int = CURRENT_LAYER) -> None
+```
+
+Fills all LEDs with the specified color.
+
+**Parameters:**
+- `color` (`Color`): Color to fill with
+- `layer` (`int`, optional): Layer ID to write to (defaults to CURRENT_LAYER)
+
+**Example:**
+```python
+MatrixOS.LED.Fill(Color(0, 0, 255))  # Fill all LEDs with blue
+```
+
+---
+
+## `MatrixOS.LED.FillPartition`
+```python
+def FillPartition(partition: str, color: Color, layer: int = CURRENT_LAYER) -> bool
+```
+
+Fills a specific LED partition with the specified color.
+
+**Parameters:**
+- `partition` (`str`): Partition name (e.g., "keypad", "function")
+- `color` (`Color`): Color to fill with
+- `layer` (`int`, optional): Layer ID to write to (defaults to CURRENT_LAYER)
+
+**Returns:**
+- `bool`: True if successful
+
+**Example:**
+```python
+MatrixOS.LED.FillPartition("keypad", Color(255, 255, 0))  # Fill keypad with yellow
+```
+
+---
+
+## `MatrixOS.LED.Update`
+```python
+def Update(layer: int = CURRENT_LAYER) -> None
+```
+
+Updates the specified layer, making changes visible on the device.
+
+**Parameters:**
+- `layer` (`int`, optional): Layer ID to update (defaults to CURRENT_LAYER)
+
+**Example:**
+```python
+MatrixOS.LED.Update()  # Update the top layer
+```
+
+---
+
+## `MatrixOS.LED.CurrentLayer`
+```python
+def CurrentLayer() -> int
+```
+
+Returns the current active layer ID.
+
+**Returns:**
+- `int`: Current layer ID
+
+---
+
+## `MatrixOS.LED.CreateLayer`
+```python
+def CreateLayer(crossfade: int = CROSSFADE_DURATION) -> int
+```
+
+Creates a new LED layer with optional crossfade animation.
+
+**Parameters:**
+- `crossfade` (`int`, optional): Crossfade duration in milliseconds (defaults to CROSSFADE_DURATION)
+
+**Returns:**
+- `int`: New layer ID
+
+**Example:**
+```python
+new_layer = MatrixOS.LED.CreateLayer(500)  # Create layer with 500ms crossfade
+```
+
+---
+
+## `MatrixOS.LED.CopyLayer`
+```python
+def CopyLayer(dest: int, src: int) -> None
+```
+
+Copies the contents of one layer to another.
+
+**Parameters:**
+- `dest` (`int`): Destination layer ID
+- `src` (`int`): Source layer ID
+
+---
+
+## `MatrixOS.LED.DestroyLayer`
+```python
+def DestroyLayer(crossfade: int = CROSSFADE_DURATION) -> bool
+```
+
+Destroys the current layer with optional crossfade animation.
+
+**Parameters:**
+- `crossfade` (`int`, optional): Crossfade duration in milliseconds (defaults to CROSSFADE_DURATION)
+
+**Returns:**
+- `bool`: True if successful
+
+---
+
+## `MatrixOS.LED.Fade`
+```python
+def Fade(crossfade: int = CROSSFADE_DURATION) -> None
+```
+
+Applies a fade effect with specified duration.
+
+**Parameters:**
+- `crossfade` (`int`, optional): Fade duration in milliseconds (defaults to CROSSFADE_DURATION)
+
+---
+
+## `MatrixOS.LED.PauseUpdate`
+```python
+def PauseUpdate(pause: bool = True) -> None
+```
+
+Pauses or resumes LED updates.
+
+**Parameters:**
+- `pause` (`bool`, optional): True to pause, False to resume (defaults to True)
+
+**Example:**
+```python
+MatrixOS.LED.PauseUpdate(True)   # Pause updates
+# Make multiple changes...
+MatrixOS.LED.PauseUpdate(False)  # Resume updates
+```
+
+---
+
+## `MatrixOS.LED.GetLEDCount`
+```python
+def GetLEDCount() -> int
+```
+
+Returns the total number of LEDs on the device.
+
+**Returns:**
+- `int`: Number of LEDs (typically 64 for 8x8 matrix)
+
+---
+
+## Layer Management
+
+### Real-time Effects
+For real-time effects like visualizers, write directly to layer 0:
+```python
+# Real-time audio visualizer
+for i in range(64):
+    MatrixOS.LED.SetColorByID(i, Color(intensity, 0, 0))
+# No need to call Update() - changes are immediate
+```
+
+### Smooth Transitions
+For smooth transitions between states, use layers with crossfade:
+```python
+# Create new layer with fade
+new_layer = MatrixOS.LED.CreateLayer(1000)  # 1 second crossfade
+
+# Draw new content
+MatrixOS.LED.Fill(Color(0, 255, 0))
+MatrixOS.LED.Update()
+```
+
+### Batch Updates
+For multiple changes, update them then update:
+```python
+MatrixOS.LED.PauseUpdate(True)
+
+# Make multiple changes
+for x in range(8):
+    for y in range(8):
+        MatrixOS.LED.SetColor(Point(x, y), Color(x*32, y*32, 0))
+
+MatrixOS.LED.Update()
+```

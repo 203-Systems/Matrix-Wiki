@@ -1,0 +1,538 @@
+---
+sidebar_position: 3
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# 系统设置
+
+系统设置用于控制各种系统级功能，例如亮度、旋转、设备特定功能等。
+
+export function SystemSettings() {
+    const uiElements = [
+        {
+            "name": "设备设置",
+            "desc": "进入设备设置",
+            "link": "/docs/Mystrix/DeviceSettings",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "UI 动画",
+            "desc": "开启或关闭UI动画",
+            "elements": [
+                {
+                    "pos": [7, 0],
+                    "color": "#FFFF00"
+                }
+            ]
+        },
+        {
+            "name": "亮度控制",
+            "desc": "点击以循环调节亮度等级。长按进入亮度控制菜单。",
+            "link": "#brightness-control",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "向上旋转",
+            "desc": "此功能当前不可用。",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 2],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "向左旋转",
+            "desc": "将设备顶部旋转至左侧。",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [2, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "向下旋转",
+            "desc": "将设备顶部旋转至底部。",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 5],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "向右旋转",
+            "desc": "将设备顶部旋转至右侧。",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [5, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "USB 存储模式",
+            "desc": "进入USB大容量存储模式（仅在安装SD卡时可用）",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#FF8000"
+                }
+            ]
+        },
+        {
+            "name": "设备ID",
+            "desc": "为设备分配ID。",
+            "link": "#device-id",
+            "elements": [
+                {
+                    "pos": [6, 7],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "恢复出厂设置",
+            "desc": "将设备恢复到出厂设置。",
+            "link": "#factory-reset",
+            "elements": [
+                {
+                    "pos": [0, 6],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "进入更新模式",
+            "desc": "重启设备进入更新模式。",
+            "link": "/docs/Mystrix/UpdateMatrixOS",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Matrix OS 版本",
+            "desc": "查看当前Matrix OS版本。",
+            "elements": [
+                {
+                    "pos": [1, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        },
+        {
+            "name": "设备名称",
+            "desc": "查看设备名称。",
+            "elements": [
+                {
+                    "pos": [2, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        },
+        {
+            "name": "设备序列号",
+            "desc": "查看设备序列号。",
+            "elements": [
+                {
+                    "pos": [3, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        }
+    ];
+
+    const uiName = "系统设置"
+    const uiDescription = "系统设置包括Matrix OS的系统级配置、设备信息等。还有专门的设备设置页面用于设备特定配置。"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<SystemSettings />
+
+## 设备旋转
+
+调整设备方向，使设备顶部朝向指定方向。
+
+:::note
+部分设备控制为非对称设计；当设备处于不同方向时，部分控制可能无法正常工作，或表现会有所差异。
+
+例如，在魔矩的演奏应用中，旋转设备后触摸条映射会发生变化，因为设备仅配备两个触摸条。
+:::
+
+## 亮度控制
+
+你可以点击亮度控制按钮循环调节亮度等级；也可以长按进入亮度控制菜单。
+
+### 亮度控制菜单
+
+亮度控制菜单允许你微调设备亮度，并为不同的 LED 区域设置亮度倍数（如果设备支持）。
+
+export function BrightnessControlMenu() {
+
+    const uiElements = [
+    {
+        "name": "亮度等级显示",
+        "desc": "以百分比显示当前亮度等级。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 0],
+                "size": [3, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2],
+                "color": undefined
+            }
+        ]
+    },
+    {
+        "name": "全局亮度",
+        "desc": "控制系统级亮度等级。（仅在设备具有多个LED区域时显示）",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "LED区域亮度倍数",
+        "desc": "调整不同LED区域的亮度倍数。（仅在设备具有多个LED区域时显示。对于魔矩Pro，这适用于底部灯光）",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            },
+        ]
+    },
+    {
+        "name": "亮度选择器",
+        "desc": "调整亮度。如果选中了LED区域，选择器将调整该区域的倍数。",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "亮度选择器（超频）",
+        "desc": "调整LED亮度超出安全限制。请谨慎使用，因为可能对眼睛有害。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [4, 1],
+                "color": "#C00000"
+            },
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "点击返回上一页面。",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "亮度控制菜单"
+    const uiDescription = "亮度控制菜单允许你微调设备的亮度，并为不同的LED区域设置亮度倍数（如果设备支持的话）。"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<BrightnessControlMenu />
+
+## 恢复出厂设置
+
+将设备重置为出厂设置。
+
+你需要点击绿色按钮确认恢复出厂设置才能继续。
+
+export function FactoryResetConfirmMenu() {
+
+    const uiElements = [
+    {
+        "name": "清除",
+        "desc": "表示你即将对设备执行恢复出厂设置。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [3, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 1],
+                "size": [2, 2],
+                "color": undefined
+            },
+            {
+                "pos": [3, 0],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 3],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [7, 0],
+                "color": undefined
+            },
+            {
+                "pos": [6, 1],
+                "color": undefined
+            },
+            {
+                "pos": [7, 2],
+                "color": undefined
+            },
+            {
+                "pos": [6, 3],
+                "color": undefined
+            },
+        ]
+    },
+    {
+        "name": "取消",
+        "desc": "点击取消恢复出厂设置过程。",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "size": [2, 2],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "确认",
+        "desc": "点击确认恢复出厂设置过程。",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "size": [2, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "点击返回上一页面。",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "恢复出厂设置确认菜单"
+    const uiDescription = "恢复出厂设置确认菜单允许你确认设备的恢复出厂设置。"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<FactoryResetConfirmMenu />
+
+## 设备ID
+
+为设备分配ID。ID将在主机上显示在设备名称之后。当你有多个设备连接到同一主机时，这对识别设备很有用。
+
+如果设置为零，设备ID将不会在主机上显示。
+
+export function DeviceIDSelector() {
+
+    const uiElements = [
+    {
+        "name": "设备ID显示",
+        "desc": "显示当前设备ID号码。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2],
+                "color": undefined
+            },
+        ]
+    },
+    {
+        "name": "-50",
+        "desc": "将设备ID减少50。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "-20",
+        "desc": "将设备ID减少20。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "将设备ID减少5。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "将设备ID减少1。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "将设备ID增加1。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "将设备ID增加5。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "+20",
+        "desc": "将设备ID增加20。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "+50",
+        "desc": "将设备ID增加50。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "点击返回上一页面。",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "设备ID选择器"
+    const uiDescription = "设备ID选择器允许你为设备分配ID。"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<DeviceIDSelector />

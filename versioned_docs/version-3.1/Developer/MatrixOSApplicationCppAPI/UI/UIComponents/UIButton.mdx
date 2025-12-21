@@ -1,0 +1,177 @@
+---
+title: UIButton
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Class: `UIButton`
+
+The `UIButton` class represents a button component in the UI system. It is a specialized subclass of `UIComponent` that supports callbacks for press and hold events, dynamic colors, and customizable sizes.
+
+Use this class to create interactive buttons in your UI.
+
+*The source file for this class is located in <GithubLink path="os/ui/UIComponents/UIButton.h"/>.*
+
+---
+
+## Constructor
+
+### `UIButton`
+
+```cpp
+ UIButton() {}
+```
+
+Creates a new button component. 
+Use the [`setname`](#setname), [`setsize`](#setsize), [`setcolor`](#setcolor)/[`setcolorfunc`](#setcolorfunc), [`onpress`](#onpress), and [`onhold`](#onhold) methods to customize the button.
+
+## Methods
+
+### `GetName`
+```cpp
+virtual string GetName();
+```
+Retrieves the name of the button.
+
+**Returns:**
+- `string`: The name of the button.
+
+---
+
+### `SetName`
+```cpp
+void SetName(string name);
+```
+Sets the name of the button.
+
+**Parameters:**
+- `name` (`string`): The name to assign to the button.
+
+---
+
+### `GetColor`
+```cpp
+virtual Color GetColor();
+```
+Gets the current color of the button. If a color function (`color_func`) is defined, it overrides the static color property.
+
+**Returns:**
+- [`Color`](../../Types/Color/): The button's color.
+
+---
+
+### `SetColor`
+```cpp
+void SetColor(Color color);
+```
+Sets a static color for the button.
+
+**Parameters:**
+- `color` ([`Color`](../../Types/Color/)): The color to assign to the button.
+
+---
+
+### `SetColorFunc`
+```cpp
+void SetColorFunc(std::function<Color()> color_func);
+```
+Assigns a dynamic color function for the button. The function determines the button's color dynamically at runtime.
+
+**Parameters:**
+- `color_func` (`std::function<Color()>`): A function that returns the button's color.
+
+---
+
+### `GetSize`
+```cpp
+virtual Dimension GetSize();
+```
+Gets the size of the button.
+
+**Returns:**
+- [`Dimension`](../../Types/Dimension/): The dimensions (`width` and `height`) of the button.
+
+---
+
+### `SetSize`
+```cpp
+void SetSize(Dimension dimension);
+```
+Sets the size of the button.
+
+**Parameters:**
+- `dimension` ([`Dimension`](../../Types/Dimension/)): The new size of the button.
+
+---
+
+### `PressCallback`
+```cpp
+virtual bool PressCallback();
+```
+Triggers the button's press callback if defined. Override this method to customize the button's press behavior.
+
+**Returns:**
+- `bool`: `true` if a press callback is defined and executed, `false` otherwise.
+
+---
+
+### `OnPress`
+```cpp
+void OnPress(std::function<void()> press_callback);
+```
+Sets a callback function to be executed when the button is pressed.
+
+**Parameters:**
+- `press_callback` (`std::function<void()>`): The function to call on button press.
+
+---
+
+### `HoldCallback`
+```cpp
+virtual bool HoldCallback();
+```
+Triggers the button's hold callback if defined.
+
+**Returns:**
+- `bool`: `true` if a hold callback is defined and executed, `false` otherwise.
+
+---
+
+### `OnHold`
+```cpp
+void OnHold(std::function<void()> hold_callback);
+```
+Sets a callback function to be executed when the button is held.
+
+**Parameters:**
+- `hold_callback` (`std::function<void()>`): The function to call on button hold.
+
+---
+
+### `Render`
+```cpp
+virtual bool Render(Point origin);
+```
+Renders the button on the screen by filling its area with the assigned color.
+
+**Parameters:**
+- `origin` ([`Point`](../../Types/Point/)): The top-left corner of the button's rendering area.
+
+**Returns:**
+- `bool`: `true` if rendering was successful.
+
+---
+
+### `KeyEvent`
+```cpp
+virtual bool KeyEvent(Point xy, KeyInfo* keyInfo);
+```
+Handles key events on the button. Triggers the press or hold callback based on the event type.
+
+**Parameters:**
+- `xy` ([`Point`](../../Types/Point/)): The position of the event relative to the button.
+- `keyInfo` ([`KeyInfo*`](../../Types/KeyInfo/)): Information about the key event.
+
+**Returns:**
+- `bool`: `true` if the event was handled, `false` otherwise.
+
+---

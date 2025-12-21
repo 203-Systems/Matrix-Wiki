@@ -1,0 +1,246 @@
+---
+sidebar_position: 3
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 按键 API
+
+## 概述
+
+Matrix OS 中的按键API系统提供对 8x8 压力敏感键盘输入的访问。它处理按键事件、压力级别以及物理按键和 LED 矩阵之间的坐标映射。按键API可通过 `MatrixOS.KeyPad` 访问，默认已导入。
+
+API 返回包含按键按下、释放和保持状态信息的 `KeyEvent` 对象，以及压力敏感设备的压力数据。
+
+*Python KeyPad API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_MatrixOS.KeyPad.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_MatrixOS.KeyPad.pyi"/>。*
+
+---
+
+## `MatrixOS.KeyPad.Get`
+```python
+def Get(timeout_ms: int = 0) -> any
+```
+
+从输入队列获取下一个按键事件。
+
+**参数：**
+- `timeout_ms` (`int`，可选)：等待输入的超时时间（毫秒）（默认为 0，无超时）
+
+**返回值：**
+- `KeyEvent`：成功时返回按键事件对象
+- `None`：超时或无输入可用时
+
+**示例：**
+```python
+# 等待最多 1 秒输入
+key_event = MatrixOS.KeyPad.Get(1000)
+if key_event is not None:
+    print(f"按键在 ({key_event.xy.x}, {key_event.xy.y}) 被按下")
+```
+
+---
+
+## `MatrixOS.KeyPad.GetKey`
+```python
+def GetKey(keyXY: Point) -> any
+```
+
+通过坐标获取特定按键的当前状态。
+
+**参数：**
+- `keyXY` (`Point`)：按键坐标（x 和 y 均为 0-7）
+
+**返回值：**
+- `KeyInfo`：有效位置时返回按键信息对象
+- `None`：坐标无效时
+
+**示例：**
+```python
+
+key_info = MatrixOS.KeyPad.GetKey(Point(0, 0))
+if key_info is not None:
+    print(f"按键压力：{key_info.pressure}")
+    print(f"按键状态：{key_info.state}")
+```
+
+---
+
+## `MatrixOS.KeyPad.GetKeyByID`
+```python
+def GetKeyByID(keyID: int) -> any
+```
+
+通过 ID 获取特定按键的当前状态。
+
+**参数：**
+- `keyID` (`int`)：按键 ID（8x8 矩阵为 0-63）
+
+**返回值：**
+- `KeyInfo`：有效 ID 时返回按键信息对象
+- `None`：按键 ID 无效时
+
+**示例：**
+```python
+# 获取第一个按键（左上角）的状态
+key_info = MatrixOS.KeyPad.GetKeyByID(0)
+if key_info is not None:
+    if key_info.state == 1:  # 按键被按下
+        print("左上角按键被按下")
+```
+
+---
+
+## `MatrixOS.KeyPad.Clear`
+```python
+def Clear() -> None
+```
+
+清除按键事件队列，丢弃任何待处理事件。
+
+**示例：**
+```python
+MatrixOS.KeyPad.Clear()  # 清除所有待处理的按键事件
+```
+
+---
+
+## `MatrixOS.KeyPad.XY2ID`
+```python
+def XY2ID(xy: Point) -> int
+```
+
+将按键坐标转换为按键 ID。
+
+**参数：**
+- `xy` (`Point`)：按键坐标
+
+**返回值：**
+- `int`：按键 ID（0-63），坐标无效时返回 -1
+
+**示例：**
+```python
+key_id = MatrixOS.KeyPad.XY2ID(Point(2, 3))
+print(f"(2,3) 位置的按键 ID：{key_id}")  # 输出：(2,3) 位置的按键 ID：26
+```
+
+---
+
+## `MatrixOS.KeyPad.ID2XY`
+```python
+def ID2XY(keyID: int) -> any
+```
+
+将按键 ID 转换为坐标。
+
+**参数：**
+- `keyID` (`int`)：按键 ID（0-63）
+
+**返回值：**
+- `Point`：有效 ID 时返回按键坐标
+- `None`：按键 ID 无效时
+
+**示例：**
+```python
+coords = MatrixOS.KeyPad.ID2XY(26)
+if coords is not None:
+    print(f"按键 ID 26 在 ({coords.x}, {coords.y}) 位置")  # 输出：按键 ID 26 在 (2, 3) 位置
+```
+
+---
+
+## 按键事件处理
+
+### 基本事件循环
+```python
+while True:
+    key_event = MatrixOS.KeyPad.Get(100)  # 100毫秒超时
+    if key_event is not None:
+        x, y = key_event.xy.x, key_event.xy.y
+
+        if key_event.state == KeyState.PRESSED:
+            print(f"按键在 ({x}, {y}) 被按下")
+        elif key_event.state == KeyState.RELEASED:
+            print(f"按键在 ({x}, {y}) 被释放")
+        elif key_event.state == KeyState.HOLD:
+            print(f"按键在 ({x}, {y}) 被保持")
+```
+
+### 压力敏感输入
+```python
+# 监控压力级别
+key_event = MatrixOS.KeyPad.Get(1000)
+if key_event is not None:
+    pressure = key_event.pressure
+    if pressure > 200:
+        print("检测到用力按压！")
+    elif pressure > 100:
+        print("中等力度按压")
+    else:
+        print("轻微按压")
+```
+
+### 坐标映射
+```python
+# 在坐标系统之间转换
+
+# 映射 8x8 网格坐标
+for row in range(8):
+    for col in range(8):
+        key_id = MatrixOS.KeyPad.XY2ID(Point(col, row))
+        print(f"位置 ({col}, {row}) = 按键 ID {key_id}")
+
+# 反向映射
+for key_id in range(64):
+    coords = MatrixOS.KeyPad.ID2XY(key_id)
+    if coords is not None:
+        print(f"按键 ID {key_id} = 位置 ({coords.x}, {coords.y})")
+```
+
+### 实时按键状态监控
+```python
+import time
+
+# 监控特定按键
+keys_to_watch = [Point(0, 0), Point(7, 7), Point(3, 3)]
+
+while True:
+    for key_pos in keys_to_watch:
+        key_info = MatrixOS.KeyPad.GetKey(key_pos)
+        if key_info is not None and key_info.state == 1:
+            print(f"({key_pos.x}, {key_pos.y}) 位置的按键被按下，压力为 {key_info.pressure}")
+
+    time.sleep(0.01)  # 10毫秒轮询
+```
+
+---
+
+## 按键状态
+
+`KeyState` 枚举定义了可能的按键状态：
+
+- `KeyState.IDLE` (0)：按键未被按下
+- `KeyState.PRESSED` (1)：按键刚被按下
+- `KeyState.RELEASED` (2)：按键刚被释放
+- `KeyState.HOLD` (3)：按键正在被保持按下
+
+## 坐标系统
+
+键盘使用标准坐标系统：
+- **原点 (0,0)**：左上角
+- **X 轴**：从左到右递增 (0-7)
+- **Y 轴**：从上到下递增 (0-7)
+- **按键 ID**：线性映射，其中 `ID = Y * 8 + X`
+
+## 常量
+
+KeyPad API 使用以下预定义常量：
+
+- `FunctionKeyID = 0` - 指向功能键的默认按键 ID
+
+---
+
+## 性能提示
+
+1. **使用超时**：始终为 `Get()` 指定合理的超时时间以避免阻塞
+2. **清除队列**：在开始新输入模式时使用 `Clear()` 以避免旧事件
+3. **缓存坐标**：为经常访问的按键预计算坐标映射
+4. **批量处理**：在循环中处理多个事件而不是一次一个

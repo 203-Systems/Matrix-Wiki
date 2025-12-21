@@ -1,0 +1,244 @@
+---
+sidebar_position: 3
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# KeyPad API
+
+## Overview
+
+The KeyPad system in MatrixOS provides access to the 8x8 pressure-sensitive keypad input. It handles key events, pressure levels, and coordinate mapping between the physical keys and LED matrix. The KeyPad API is available as `MatrixOS.KeyPad` and is imported by default.
+
+The API returns `KeyEvent` objects containing information about key presses, releases, and hold states, along with pressure data for pressure-sensitive devices.
+
+*The Python KeyPad API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_MatrixOS.KeyPad.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_MatrixOS.KeyPad.pyi"/>.*
+
+## Constants
+
+The KeyPad API uses the following predefined constants:
+
+- `FunctionKeyID = 0` - Refers to the default key ID of the function key
+
+---
+
+## `MatrixOS.KeyPad.Get`
+```python
+def Get(timeout_ms: int = 0) -> any
+```
+
+Gets the next key event from the input queue.
+
+**Parameters:**
+- `timeout_ms` (`int`, optional): Timeout in milliseconds to wait for input (defaults to 0 for no timeout)
+
+**Returns:**
+- `KeyEvent`: Key event object on success
+- `None`: On timeout or no input available
+
+**Example:**
+```python
+# Wait up to 1 second for input
+key_event = MatrixOS.KeyPad.Get(1000)
+if key_event is not None:
+    print(f"Key pressed at ({key_event.xy.x}, {key_event.xy.y})")
+```
+
+---
+
+## `MatrixOS.KeyPad.GetKey`
+```python
+def GetKey(keyXY: Point) -> any
+```
+
+Gets the current state of a specific key by coordinates.
+
+**Parameters:**
+- `keyXY` (`Point`): Key coordinates (0-7 for both x and y)
+
+**Returns:**
+- `KeyInfo`: Key information object if valid position
+- `None`: If invalid coordinates
+
+**Example:**
+```python
+
+key_info = MatrixOS.KeyPad.GetKey(Point(0, 0))
+if key_info is not None:
+    print(f"Key pressure: {key_info.pressure}")
+    print(f"Key state: {key_info.state}")
+```
+
+---
+
+## `MatrixOS.KeyPad.GetKeyByID`
+```python
+def GetKeyByID(keyID: int) -> any
+```
+
+Gets the current state of a specific key by ID.
+
+**Parameters:**
+- `keyID` (`int`): Key ID (0-63 for 8x8 matrix)
+
+**Returns:**
+- `KeyInfo`: Key information object if valid ID
+- `None`: If invalid key ID
+
+**Example:**
+```python
+# Get state of first key (top-left)
+key_info = MatrixOS.KeyPad.GetKeyByID(0)
+if key_info is not None:
+    if key_info.state == 1:  # Key is pressed
+        print("Top-left key is pressed")
+```
+
+---
+
+## `MatrixOS.KeyPad.Clear`
+```python
+def Clear() -> None
+```
+
+Clears the key event queue, discarding any pending events.
+
+**Example:**
+```python
+MatrixOS.KeyPad.Clear()  # Clear all pending key events
+```
+
+---
+
+## `MatrixOS.KeyPad.XY2ID`
+```python
+def XY2ID(xy: Point) -> int
+```
+
+Converts key coordinates to key ID.
+
+**Parameters:**
+- `xy` (`Point`): Key coordinates
+
+**Returns:**
+- `int`: Key ID (0-63), or -1 if invalid coordinates
+
+**Example:**
+```python
+key_id = MatrixOS.KeyPad.XY2ID(Point(2, 3))
+print(f"Key at (2,3) has ID: {key_id}")  # Output: Key at (2,3) has ID: 26
+```
+
+---
+
+## `MatrixOS.KeyPad.ID2XY`
+```python
+def ID2XY(keyID: int) -> any
+```
+
+Converts key ID to coordinates.
+
+**Parameters:**
+- `keyID` (`int`): Key ID (0-63)
+
+**Returns:**
+- `Point`: Key coordinates if valid ID
+- `None`: If invalid key ID
+
+**Example:**
+```python
+coords = MatrixOS.KeyPad.ID2XY(26)
+if coords is not None:
+    print(f"Key ID 26 is at ({coords.x}, {coords.y})")  # Output: Key ID 26 is at (2, 3)
+```
+
+---
+
+## Key Event Handling
+
+### Basic Event Loop
+```python
+while True:
+    key_event = MatrixOS.KeyPad.Get(100)  # 100ms timeout
+    if key_event is not None:
+        x, y = key_event.xy.x, key_event.xy.y
+
+        if key_event.state == KeyState.PRESSED:
+            print(f"Key pressed at ({x}, {y})")
+        elif key_event.state == KeyState.RELEASED:
+            print(f"Key released at ({x}, {y})")
+        elif key_event.state == KeyState.HOLD:
+            print(f"Key held at ({x}, {y})")
+```
+
+### Pressure-Sensitive Input
+```python
+# Monitor pressure levels
+key_event = MatrixOS.KeyPad.Get(1000)
+if key_event is not None:
+    pressure = key_event.pressure
+    if pressure > 200:
+        print("Hard press detected!")
+    elif pressure > 100:
+        print("Medium press")
+    else:
+        print("Light press")
+```
+
+### Coordinate Mapping
+```python
+# Convert between coordinate systems
+
+# Map 8x8 grid coordinates
+for row in range(8):
+    for col in range(8):
+        key_id = MatrixOS.KeyPad.XY2ID(Point(col, row))
+        print(f"Position ({col}, {row}) = Key ID {key_id}")
+
+# Reverse mapping
+for key_id in range(64):
+    coords = MatrixOS.KeyPad.ID2XY(key_id)
+    if coords is not None:
+        print(f"Key ID {key_id} = Position ({coords.x}, {coords.y})")
+```
+
+### Real-time Key State Monitoring
+```python
+import time
+
+# Monitor specific keys
+keys_to_watch = [Point(0, 0), Point(7, 7), Point(3, 3)]
+
+while True:
+    for key_pos in keys_to_watch:
+        key_info = MatrixOS.KeyPad.GetKey(key_pos)
+        if key_info is not None and key_info.state == 1:
+            print(f"Key at ({key_pos.x}, {key_pos.y}) is pressed with pressure {key_info.pressure}")
+
+    time.sleep(0.01)  # 10ms polling
+```
+
+---
+
+## Key States
+
+The `KeyState` enum defines the possible key states:
+
+- `KeyState.IDLE` (0): Key is not pressed
+- `KeyState.PRESSED` (1): Key was just pressed
+- `KeyState.RELEASED` (2): Key was just released
+- `KeyState.HOLD` (3): Key is being held down
+
+## Coordinate System
+
+The keypad uses a standard coordinate system:
+- **Origin (0,0)**: Top-left corner
+- **X-axis**: Increases from left to right (0-7)
+- **Y-axis**: Increases from top to bottom (0-7)
+- **Key IDs**: Linear mapping where `ID = Y * 8 + X`
+
+## Performance Tips
+
+1. **Use timeouts**: Always specify reasonable timeouts for `Get()` to avoid blocking
+2. **Clear queue**: Use `Clear()` when starting new input modes to avoid stale events
+3. **Cache coordinates**: Pre-calculate coordinate mappings for frequently accessed keys
+4. **Batch processing**: Process multiple events in a loop rather than one at a time

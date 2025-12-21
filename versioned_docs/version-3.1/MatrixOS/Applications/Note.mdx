@@ -1,0 +1,5953 @@
+---
+sidebar_position: 2
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# Note App
+
+The Note App (V2) serves as a comprehensive MIDI note interface, allowing users to play MIDI notes with various layouts, scales, modes, and advanced features including auto chords, arpeggiators, split views, and customizable color presets.
+
+Upon launching, you will enter the [note pad](#note-pad). Click the function key to access the [config menu](#config-menu), and click again to return to the [note pad](#note-pad).
+
+To exit the Note App, enter the [config menu](#config-menu) and hold down the function key. This will return you to the <DocLink to="/docs/MatrixOS/ApplicationLauncher">application launcher</DocLink>.
+
+## Note Pad
+
+The Note Pad is the main view of the Note App. It displays the current note pad with the selected layout, scale, and mode.
+
+The appearance of the pad will vary depending on the customization options. Refer to [Example Layouts](#example-layouts) to see how the note pad looks with different settings.
+
+Clicking the function key will bring you to the [config menu](#config-menu).
+
+export function NotePad() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00B0FF"
+            },
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Note Pad" 
+    const uiDescription = "Example Play View"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<NotePad />
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+    {
+        "name": "System Settings",
+        "desc": "Enter the system settings",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Scale Selector",
+        "desc": "Select the scale of the active note pad layout (Layout Config Independent)",
+        "link": "#scale-selector",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#FF0090"
+            }
+        ]
+    },
+    {
+        "name": "Layout Selector",
+        "desc": "Select the layout mode for the note pad (Octave, Offset, or Piano layout)",
+        "link": "#layout-selector",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Channel Selector",
+        "desc": "Select the MIDI out channel of the active note pad (Layout Config Independent)",
+        "link": "#midi-channel",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "Layout 1",
+        "desc": "Use the note pad layout 1 (Color may change based on the layout config)",
+        "link": "#note-pad",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Layout 2",
+        "desc": "Use the note pad layout 2 (Color may change based on the layout config)",
+        "link": "#note-pad",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Color Selector",
+        "desc": "Change the color combination of the active note pad layout (Color may change based on the active note pad layout config)",
+        "link": "#note-pad-color",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Split Mode",
+        "desc": "Cycle through split modes\n\n- Dim White: Off\n- Cyan: Vertical\n- Purple: Horizontal",
+        "link": "#split-mode",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Velocity Sensitivity",
+        "desc": "Enable or disable velocity sensitivity for the active note pad layout. (Device with Force Sensitive Keypad only)",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#00FFB0"
+            }
+        ]
+    },
+    {
+        "name": "Control Bar",
+        "desc": "Enable or disable control bar in Play View",
+        "link": "#control-bar",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "Arpeggiator Settings",
+        "desc": "Enter the Arpeggiator Setting Menu. (Only available if control bar is enabled)",
+        "link": "#arpeggiator-settings",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [1, 4],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "Octave - 1",
+        "desc": "Decrease the Octave. Down to -2",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [2, 1],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "Octave + 1",
+        "desc": "Increase the Octave. Up to 12",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [2, 1],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "Octave",
+        "desc": "Show the current octave. From -2 to 12",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "size": [4, 4],
+            },
+            {
+                "pos": [3, 2],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 3],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Note Pad or Exit App",
+        "desc": "Tap to return to the note pad. Hold to exit the app",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify note pad layout and other customization options"
+    const uiParentLink = "#note-pad-play-view"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ConfigMenu />
+
+## Scale Selector
+
+Highlight or constrain notes to a specific scale. This setting is independent of the layout configuration.
+
+export function ScaleSelector() {
+
+    const uiElements = [
+    {
+        "name": "Scale Visualizer & Root Key Selector",
+        "desc": "Select the scale and root key of the active note pad layout",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Modern Diatonic Toggle",
+        "desc": "Toggle between classic and modern diatonic mode (affects root offset behavior)",
+        "link": "#modern-diatonic",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "Minor",
+        "desc": "Use the Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Major",
+        "desc": "Use the Major scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Dorian",
+        "desc": "Use the Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Phrygian",
+        "desc": "Use the Phrygian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Mixolydian",
+        "desc": "Use the Mixolydian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Melodic Minor Ascending",
+        "desc": "Use the Melodic Minor Ascending scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Harmonic Minor",
+        "desc": "Use the Harmonic Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop Dorian",
+        "desc": "Use the Bebop Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Blues",
+        "desc": "Use the Blues scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Minor Pentatonic",
+        "desc": "Use the Minor Pentatonic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Hungarian Minor",
+        "desc": "Use the Hungarian Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Ukrainian Dorian",
+        "desc": "Use the Ukrainian Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Marva",
+        "desc": "Use the Marva scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Todi",
+        "desc": "Use the Todi scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Whole Tone",
+        "desc": "Use the Whole Tone scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic",
+        "desc": "Use the Chromatic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Custom Scale Slots",
+        "desc": "Select or create custom scale slots (16 total). Dimmed white = empty, bright white = Selected, Yellow = Has scale",
+        "link": "#custom-scale",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Scale Selector"
+    const uiDescription = "The Scale Selector allows you to select the scale and root key of the active note pad layout"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelector />
+
+### Scale Table
+
+| Index | Scale                   | C   | C#  | D   | Eb  | E   | F   | F#  | G   | Ab  | A   | Bb  | B   |
+| ----- | ----------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1     | Natural Minor           | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 2     | Major                   | X   |     | X   |     | X   | X   |     | X   |     | X   |     | X   |
+| 3     | Dorian                  | X   |     | X   | X   |     | X   |     | X   |     | X   | X   |     |
+| 4     | Phrygian                | X   | X   |     | X   |     | X   |     | X   | X   |     | X   |     |
+| 5     | Mixolydian              | X   |     | X   |     | X   | X   |     | X   |     | X   | X   |     |
+| 6     | Melodic Minor Ascending | X   |     | X   | X   |     | X   |     | X   |     | X   |     | X   |
+| 7     | Harmonic Minor          | X   |     | X   | X   |     | X   |     | X   | X   |     |     | X   |
+| 8     | Bebop Dorian            | X   |     | X   | X   |     | X   |     | X   |     | X   | X   | X   |
+| 9     | Blues                   | X   |     |     | X   |     | X   | X   | X   |     |     | X   |     |
+| 10    | Minor Pentatonic        | X   |     |     | X   |     | X   |     | X   |     |     | X   |     |
+| 11    | Hungarian Minor         | X   |     | X   | X   |     |     | X   | X   | X   |     |     | X   |
+| 12    | Ukrainian Dorian        | X   |     | X   | X   |     |     | X   | X   |     | X   | X   |     |
+| 13    | Marva                   | X   | X   |     |     | X   |     | X   |     |     | X   |     | X   |
+| 14    | Todi                    | X   | X   |     | X   |     |     | X   | X   | X   |     | X   |     |
+| 15    | Whole Tone              | X   |     | X   |     | X   |     | X   |     | X   |     | X   |     |
+| 16    | Chromatic               | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   |
+
+### Modern Diatonic
+
+When Modern Diatonic mode is enabled, you can selecte a new root note in the existing selected scale.
+
+export function ScaleSelectorModernDiatonic() {
+
+    const uiElements = [
+    {
+        "name": "Scale Visualizer & Root Key Selector",
+        "desc": "Select the scale and root key of the active note pad layout",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Modern Diatonic Toggle (Active)",
+        "desc": "Modern diatonic mode is enabled",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Minor",
+        "desc": "Use the Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Major",
+        "desc": "Use the Major scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Dorian",
+        "desc": "Use the Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Phrygian",
+        "desc": "Use the Phrygian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Mixolydian",
+        "desc": "Use the Mixolydian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Melodic Minor Ascending",
+        "desc": "Use the Melodic Minor Ascending scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Harmonic Minor",
+        "desc": "Use the Harmonic Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop Dorian",
+        "desc": "Use the Bebop Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Blues",
+        "desc": "Use the Blues scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Minor Pentatonic",
+        "desc": "Use the Minor Pentatonic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Hungarian Minor",
+        "desc": "Use the Hungarian Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Ukrainian Dorian",
+        "desc": "Use the Ukrainian Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Marva",
+        "desc": "Use the Marva scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Todi",
+        "desc": "Use the Todi scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Whole Tone",
+        "desc": "Use the Whole Tone scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic",
+        "desc": "Use the Chromatic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Custom Scale Slots",
+        "desc": "Select or create custom scale slots (16 total). Dimmed white = empty, bright white = Selected, Yellow = Has scale",
+        "link": "#custom-scale",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Scale Selector - Modern Diatonic Mode"
+    const uiDescription = "Modern Diatonic mode allows root offset selection within the selected scale"
+    const uiParentLink = "#scale-selector"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelectorModernDiatonic />
+
+### Custom Scale
+
+When a custom scale is selected, the Scale Modifier becomes active allowing you to modify the notes in the scale.
+
+The custom scale is always C aligned. So you can make a scale and still change root key in the root key selector.
+
+export function ScaleSelectorCustom() {
+
+    const uiElements = [
+    {
+        "name": "Scale Visualizer & Root Key Selector",
+        "desc": "Select the scale and root key of the active note pad layout",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Modern Diatonic Toggle",
+        "desc": "Toggle between classic and modern diatonic mode (affects root offset behavior)",
+        "link": "#modern-diatonic",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "Scale Modifier",
+        "desc": "Toggle individual notes in the custom scale",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 2],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 2],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Delete Custom Scale",
+        "desc": "Delete the currently selected custom scale",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Minor",
+        "desc": "Use the Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Major",
+        "desc": "Use the Major scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Dorian",
+        "desc": "Use the Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Phrygian",
+        "desc": "Use the Phrygian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Mixolydian",
+        "desc": "Use the Mixolydian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Melodic Minor Ascending",
+        "desc": "Use the Melodic Minor Ascending scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Harmonic Minor",
+        "desc": "Use the Harmonic Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop Dorian",
+        "desc": "Use the Bebop Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Blues",
+        "desc": "Use the Blues scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Minor Pentatonic",
+        "desc": "Use the Minor Pentatonic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Hungarian Minor",
+        "desc": "Use the Hungarian Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Ukrainian Dorian",
+        "desc": "Use the Ukrainian Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Marva",
+        "desc": "Use the Marva scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Todi",
+        "desc": "Use the Todi scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Whole Tone",
+        "desc": "Use the Whole Tone scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic",
+        "desc": "Use the Chromatic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Custom Scale Slots",
+        "desc": "Custom scale slots with one selected (white), one created (yellow) and others not set",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#FFFFFF"
+            },
+                     {
+                "pos": [1, 6],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Scale Selector - Custom Scale"
+    const uiDescription = "When a custom scale is selected, you can modify individual notes and delete the scale"
+    const uiParentLink = "#scale-selector"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelectorCustom />
+
+
+## Layout Selector
+
+The Layout Selector allows you to choose between different note pad layout modes:
+
+- **Octave Layout**: Octave-based layout. Each row will start with the root note. If the scale has more than 8 notes, it will span 2 rows.
+- **Offset Layout**: Customizable offset pattern with configurable X and Y offsets
+- **Chromatic Layout**: Traditional note layout. Notes are placed in order, left to right, bottom to top.
+- **Piano Layout**: Piano style key arrangement
+
+### Octave Layout Mode
+
+export function LayoutSelectorOctave() {
+
+    const uiElements = [
+    {
+        "name": "Octave Mode (Selected)",
+        "desc": "Switch to octave layout mode",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Offset Mode",
+        "desc": "Switch to offset layout mode",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic Mode",
+        "desc": "Switch to chromatic layout mode",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode",
+        "desc": "Switch to piano layout mode",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Octave Mode (OCT)",
+        "desc": "Octave Mode Text",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+                "size": [1, 2],
+            },
+            {
+                "pos": [3, 2],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 3],
+                "size": [1, 2],
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 3],
+                "color": "#FFFF00"
+            },
+        ]
+    },
+    {
+        "name": "Enforce Scale",
+        "desc": "Toggle to enforce scale mode",
+        "link": "#enforce-scale-mode",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Return",
+        "desc": "Return to the previous menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Layout Selector - Octave Mode"
+    const uiDescription = "Octave layout mode. Each row starts with the root note."
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<LayoutSelectorOctave />
+
+### Offset Layout Mode
+
+export function LayoutSelectorOffset() {
+
+    const uiElements = [
+    {
+        "name": "Octave Mode",
+        "desc": "Switch to octave layout mode",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Offset Mode (Selected)",
+        "desc": "Customizable offset pattern layout",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic Mode",
+        "desc": "Chromatic arrangement",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode",
+        "desc": "Switch to piano layout mode",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Y Offset Selector",
+        "desc": "Select the vertical offset between rows",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Y Offset Display",
+        "desc": "Shows the current Y offset value",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "size": [3, 4],
+                "color": undefined
+            },
+            {
+                "pos": [2, 2],
+                "size": [3, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 5],
+                "size": [3, 1],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "X Offset Display",
+        "desc": "Shows the current X offset value",
+        "elements": [
+          {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": undefined
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "X Offset Selector",
+        "desc": "Select the horizontal offset between rows",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 7],
+                "size": [5, 1],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Enforce Scale",
+        "desc": "Toggle to enforce scale mode",
+        "link": "#enforce-scale-mode",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Return",
+        "desc": "Return to the previous menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Layout Selector - Offset Mode"
+    const uiDescription = "Offset layout mode with customizable X and Y offsets"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<LayoutSelectorOffset />
+
+### Chromatic Layout Mode
+
+export function LayoutSelectorChromatic() {
+
+    const uiElements = [
+    {
+        "name": "Octave Mode",
+        "desc": "Traditional octave-based layout",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Offset Mode",
+        "desc": "Switch to offset layout mode",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic Mode (Selected)",
+        "desc": "Chromatic arrangement",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode",
+        "desc": "Switch to piano layout mode",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic Mode (CHM)",
+        "desc": "Chromatic Mode Text",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 2],
+                "size": [2, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+                "size": [1, 2],
+            },
+            {
+                "pos": [2, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 4],
+                "size": [1, 2],
+            },
+        ]
+    },
+    {
+        "name": "Enforce Scale",
+        "desc": "Toggle to enforce scale mode",
+        "link": "#enforce-scale-mode",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Return",
+        "desc": "Return to the previous menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Layout Selector - Chromatic Mode"
+    const uiDescription = "A traditional style layout, notes are layed out in a continuous manner from bottom left to top right."
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<LayoutSelectorChromatic />
+
+### Piano Layout Mode
+
+export function LayoutSelectorPiano() {
+
+    const uiElements = [
+    {
+        "name": "Octave Mode",
+        "desc": "Switch to octave layout mode",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Offset Mode",
+        "desc": "Switch to offset layout mode",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic Mode",
+        "desc": "Switch to chromatic layout mode",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode (Selected)",
+        "desc": "Piano keyboard mode",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Piano Mode (PIO)",
+        "desc": "Piano Mode Text",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 2],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 2],
+                "size": [2, 3],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+            },
+            {
+                "pos": [4, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2],
+            },
+        ]
+    },
+    {
+        "name": "Return",
+        "desc": "Return to the previous menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Layout Selector - Piano Mode"
+    const uiDescription = "Piano layout mode for piano-style key arrangement"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<LayoutSelectorPiano />
+
+### Enforce Scale Mode
+
+When Enforce Scale mode is enabled (not available for Piano Mode), only notes in the selected scale will be shown. When disabled, all notes will be shown, but notes that are not in the selected scale will be dimmed.
+
+
+## MIDI Channel
+
+This setting is layout config independent.
+
+export function ChannelSelector() {
+
+    const uiElements = [
+    {
+        "name": "MIDI Channel Display",
+        "desc": "Displays the MIDI out channel of the active note pad layout",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Channel Selector",
+        "desc": "Selects the MIDI out channel of the active note pad (1 ~ 16)",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#48C000"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#60FF00"
+            }
+
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "MIDI Channel Selector"
+    const uiDescription = "The MIDI Channel Selector allows you to select the MIDI out channel of the active note pad layout"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ChannelSelector />
+
+## Arpeggiator Settings
+
+The Arpeggiator Setting Menu provides comprehensive control over the arpeggiator settings. This menu is only accessible when the control bar is enabled in the Play View.
+
+The arpeggiator setting menu has 8 different parameter pages, each with a distinct color coding:
+
+- **BPM** (Red): Controls the tempo/speed of the arpeggiator
+- **Swing** (Orange): Adjusts the timing swing between notes
+- **Gate** (Yellow): Sets the note duration/gate time
+- **Direction** (Green): Selects the arpeggiator pattern direction
+- **Step** (Cyan): Controls the step the arp will progress (Loop # times with step offset added each loop)
+- **Step Offset** (Blue): Adds pitch offset notes after each step
+- **Repeat** (Magenta): Sets how many times the pattern repeats
+- **Rhythm** (Hot Pink): Euclidean rhythm length and steps
+
+### BPM
+
+Controls the tempo/speed of the arpeggiator pattern.<br/>
+The BPM (Beats Per Minute) setting determines how fast the arpeggiator cycles through notes. 
+
+**Range**: 20-299 BPM<br/>
+**Default**: 120 BPM
+
+export function ArpConfigBPM() {
+    const uiElements = [
+    {
+        "name": "BPM Page (Selected)",
+        "desc": "BPM configuration page",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
+        "name": "BPM Display",
+        "desc": "Shows current BPM value (120 in this example)",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [1, 2],
+                "size": [1, 4],
+                "color": "#FF0000"
+            },
+            {
+                "pos": [3, 2],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 3],
+            },
+            {
+                "pos": [4, 4],
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FF0000"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2],
+            },
+        ]
+    },
+    {
+        "name": "-25",
+        "desc": "Decrease BPM by 25",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "Decrease BPM by 10",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D80000"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "Decrease BPM by 5",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B80000"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "Decrease BPM by 1",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A00000"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "Increase BPM by 1",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A00000"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "Increase BPM by 5",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B80000"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "Increase BPM by 10",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D80000"
+            }
+        ]
+    },
+    {
+        "name": "+25",
+        "desc": "Increase BPM by 25",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset BPM to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Clock Output",
+        "desc": "Enable MIDI clock sync output",
+        "link": "#clock-sync-output",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#80FF00"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator BPM Configuration"
+    const uiDescription = "Configure arpeggiator tempo (20-299 BPM)"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigBPM />
+
+#### Clock Sync Output
+
+When enabled, App will outputs MIDI clock sync signals to synchronize external MIDI devices with the set tempo.
+
+### Swing
+
+Adjusts the timing between alternating notes to create a swing feel.<br/>
+Swing percentage controls how much the second note of each pair is delayed, creating rhythm variations.
+
+**Range**: 20-80%<br/>
+**Default**: 50%
+
+export function ArpConfigSwing() {
+    const uiElements = [
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Page (Selected)",
+        "desc": "Swing configuration page",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
+        "name": "Swing Display",
+        "desc": "Shows current swing percentage (50% in this example)",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [3, 2],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 3],
+            },
+            {
+                "pos": [3, 4],
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FF8000"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2]
+            },
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "Decrease swing by 10%",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "Decrease swing by 5%",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D86800"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "Decrease swing by 2%",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B85800"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "Decrease swing by 1%",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A05000"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "Increase swing by 1%",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A05000"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "Increase swing by 2%",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B85800"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "Increase swing by 5%",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D86800"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "Increase swing by 10%",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset swing to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Swing Configuration"
+    const uiDescription = "Configure arpeggiator swing timing (20-80%)"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigSwing />
+
+### Gate Time
+
+Controls how long each note plays as a percentage of its full duration.
+
+**Range**: 0-200% (0 for infinite length)<br/>
+**Default**: 100%
+
+export function ArpConfigGate() {
+    const uiElements = [
+    {
+        "name": "Gate Page (Selected)",
+        "desc": "Gate time configuration page",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
+        "name": "Gate Display",
+        "desc": "Shows current gate time percentage\n\nShow Inf if set to infinite or 0",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [1, 2],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [2, 2],
+                "size": [3, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [1, 2]
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2]
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "Decrease gate time by 10%",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "Decrease gate time by 5%",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D8D800"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "Decrease gate time by 2%",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B8B800"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "Decrease gate time by 1%",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "Increase gate time by 1%",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "Increase gate time by 2%",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B8B800"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "Increase gate time by 5%",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D8D800"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "Increase gate time by 10%",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset gate time to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Infinite",
+        "desc": "Set gate time to infinite (sustain)",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#C0C0C0"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Gate Time Configuration"
+    const uiDescription = "Configure note duration (0-200%, 0 = infinite sustain)"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigGate />
+
+### Direction
+
+Selects the arpeggiator pattern direction from 16 different options.
+
+**Directions:**
+- Up
+- Down
+- Up Down
+- Down Up
+- Up & Down
+- Down & Up
+- Random
+- Play Order
+- Converge
+- Diverge
+- Con & Diverge
+- Div & Converge
+- Pinky Up
+- Pinky Up Down
+- Thumb Up
+- Thumb Up Down
+
+**Default**: Up
+
+export function ArpConfigDirection() {
+    const uiElements = [
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Page (Selected)",
+        "desc": "Direction configuration page",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
+        "name": "Direction Visualizer",
+        "desc": "Visual representation of the selected arpeggiator direction pattern\n\nWhite shows next repeated sequences\n\nShows Rnd in Random Mode\n\nShows ORd in Play Order mode",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 5],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [6, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [7, 2],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Up",
+        "desc": "Select Up pattern",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Down",
+        "desc": "Select Down pattern",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Up Down",
+        "desc": "Select Up Down pattern",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Down Up",
+        "desc": "Select Down Up pattern",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Up & Down",
+        "desc": "Select Up & Down pattern",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Down & Up",
+        "desc": "Select Down & Up pattern",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Random",
+        "desc": "Select Random pattern",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Play Order",
+        "desc": "Select Play Order pattern",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Converge",
+        "desc": "Select Converge pattern",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Diverge",
+        "desc": "Select Diverge pattern",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Con & Diverge",
+        "desc": "Select Con & Diverge pattern",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Div & Converge",
+        "desc": "Select Div & Converge pattern",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Pinky Up",
+        "desc": "Select Pinky Up pattern",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Pinky Up Down",
+        "desc": "Select Pinky Up Down pattern",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Thumb Up",
+        "desc": "Select Thumb Up pattern",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Thumb Up Down",
+        "desc": "Select Thumb Up Down pattern",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#008000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Direction Configuration"
+    const uiDescription = "Select arpeggiator pattern direction (Up shown)"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigDirection />
+
+### Step
+
+Controls how many loops of the sequence with step offset the arpeggiator will perform.<br/>
+
+**Range**: 1-16 steps<br/>
+**Default**: 1
+
+export function ArpConfigStep() {
+    const uiElements = [
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Page (Selected)",
+        "desc": "Step interval configuration page",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
+        "name": "Step Display",
+        "desc": "Shows current step interval in semitones (1 in this example)",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [7, 2],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "Decrease step interval by 10 semitones",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "Decrease step interval by 5 semitones",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "Decrease step interval by 2 semitones",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "Decrease step interval by 1 semitone",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "Increase step interval by 1 semitone",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "Increase step interval by 2 semitones",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "Increase step interval by 5 semitones",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "Increase step interval by 10 semitones",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset step interval to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Step Configuration"
+    const uiDescription = "Configure step interval between notes (0-16 semitones)"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigStep />
+
+### Step Offset
+
+Adds pitch offset notes after each step progression in the arpeggiator pattern.<br/>
+
+**Range**: -48 to +48 semitones (±4 octaves)<br/>
+**Default**: 12
+
+export function ArpConfigStepOffset() {
+    const uiElements = [
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Page (Selected)",
+        "desc": "Step offset configuration page",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#4000FF"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Display",
+        "desc": "Shows current step offset value (0 in this example, no negative sign)",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [4, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 4],
+                "color": "#4000FF"
+            },
+            {
+                "pos": [6, 3],
+            },
+            {
+                "pos": [7, 4],
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "Decrease step offset by 10 semitones",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#4000FF"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "Decrease step offset by 5 semitones",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#3600D8"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "Decrease step offset by 2 semitones",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#2E00B8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "Decrease step offset by 1 semitone",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#2800A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "Increase step offset by 1 semitone",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#2800A0"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "Increase step offset by 2 semitones",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#2E00B8"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "Increase step offset by 5 semitones",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#3600D8"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "Increase step offset by 10 semitones",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#4000FF"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset step offset to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Step Offset Configuration"
+    const uiDescription = "Configure pitch offset for all notes (-48 to +48)"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigStepOffset />
+
+### Repeat
+
+Sets how many times the arpeggiator pattern repeats before stopping.
+
+**Range**: 0-100 times (0 = infinite)<br/>
+**Default**: 0 (infinite)
+
+export function ArpConfigRepeat() {
+    const uiElements = [
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Page (Selected)",
+        "desc": "Repeat count configuration page",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Setting",
+        "desc": "Switch to Rhythm configuration page",
+        "link": "#rhythm",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Display",
+        "desc": "Shows current repeat count\n\nShow Inf if set to infinite or 0",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [1, 2],
+                "size": [1, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 3],
+                "size": [3, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 4],
+                "size": [1, 2],
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "Decrease repeat count by 10",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "Decrease repeat count by 5",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D800D8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "Decrease repeat count by 1",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B800B8"
+            }
+        ]
+    },
+    {
+        "name": "Fine -1",
+        "desc": "Fine decrease repeat count by 1",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A000A0"
+            }
+        ]
+    },
+    {
+        "name": "Fine +1",
+        "desc": "Fine increase repeat count by 1",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A000A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "Increase repeat count by 1",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B800B8"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "Increase repeat count by 5",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D800D8"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "Increase repeat count by 10",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset repeat count to default value",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Infinite",
+        "desc": "Set repeat to infinite (loop forever)",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Repeat Configuration"
+    const uiDescription = "Configure repeat count (0-100 times, 0 = infinite)"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigRepeat />
+
+### Rhythm
+
+Creates Euclidean rhythm patterns by distributing steps evenly across a cycle length. You can also set a root step that defines the rhythm start.
+
+**Length**: 1-32 steps<br/>
+**Steps**: 1-length hits (capped to length)<br/>
+**Default**: Length 16, Steps 16
+
+export function ArpConfigRhythm() {
+    const uiElements = [
+    {
+        "name": "BPM Setting",
+        "desc": "Switch to BPM configuration page",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Swing Setting",
+        "desc": "Switch to Swing configuration page",
+        "link": "#swing",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "Gate Time Setting",
+        "desc": "Switch to Gate Time configuration page",
+        "link": "#gate-time",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "Direction Setting",
+        "desc": "Switch to Direction configuration page",
+        "link": "#direction",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "Step Setting",
+        "desc": "Switch to Step configuration page",
+        "link": "#step",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "Step Offset Setting",
+        "desc": "Switch to Step Offset configuration page",
+        "link": "#step-offset",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "Repeat Setting",
+        "desc": "Switch to Repeat configuration page",
+        "link": "#repeat",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Page (Selected)",
+        "desc": "Euclidean rhythm configuration page",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FF0040"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Visualizer",
+        "desc": "Length strip showing the total cycle span",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 2],
+                "color": "#800030"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Visualizer - Steps",
+        "desc": "Hit markers showing the selected steps",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [2, 2],
+                "size": [2, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [7, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Rhythm Visualizer - Root",
+        "desc": "Root marker showing where the cycle starts",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#8000FF"
+            },
+        ]
+    },
+    {
+        "name": "Length -1",
+        "desc": "Decrease rhythm length by 1 step",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Length +1",
+        "desc": "Increase rhythm length by 1 step",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Steps -1",
+        "desc": "Decrease rhythm steps by 1",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Steps +1",
+        "desc": "Increase rhythm steps by 1",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Reset",
+        "desc": "Reset rhythm length and steps to default values",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "Arpeggiator Rhythm Configuration"
+    const uiDescription = "Configure Euclidean rhythm length and steps"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ArpConfigRhythm />
+
+## Note Pad Color
+
+You can customize the color combination of the active note pad layout using the Note Pad Color Selector. This setting is independent of the layout configuration.
+
+export function NotePadColorSelectorPresetMenu() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad Preview",
+        "desc": "Preview of the active note pad layout with the selected color combination",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset Menu (Current)",
+        "desc": "Select colors from preset",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Custom Color Menu",
+        "desc": "Modify the colors",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "White Out of Scale mode",
+        "desc": "Make out of scales keys dim white instead of dimmed color",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset 1",
+        "desc": "Select color preset 1",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset 2",
+        "desc": "Select color preset 2",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset 3",
+        "desc": "Select color preset 3",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset 4",
+        "desc": "Select color preset 4",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C06090"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset 5",
+        "desc": "Select color preset 5",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#60C000"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset 6",
+        "desc": "Select color preset 6",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Rainbow Color",
+        "desc": "Select rainbow color mode",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#C00000"
+            }
+        ]
+    },
+    {
+        "name": "Poly Color",
+        "desc": "Select poly color mode",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#502AC0"
+            }
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Note Pad Color Selector - Presets"
+    const uiDescription = "The Note Pad Color Selector allows you to pick a color preset for the note pad layout"
+    const uiParentLink = "#config-menu"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<NotePadColorSelectorPresetMenu />
+
+export function NotePadColorSelectorCustomMenu() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad Preview",
+        "desc": "Preview of the active note pad layout with the selected color combination",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "Color Preset Menu",
+        "desc": "Select colors from presets",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#c0c0c0"
+            }
+        ]
+    },
+    {
+        "name": "Custom Color Menu (Current)",
+         "desc": "Modify the colors",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "White Out of Scale mode",
+        "desc": "Make out of scales keys dim white instead of dimmed color",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Root Key Color",
+        "desc": "Select the color of the root key",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "size": [2, 2],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "Note Pad Color",
+        "desc": "Select the color of the note pad",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "size": [2, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Note Pad Color Selector - Customize"
+    const uiDescription = "The Note Pad Color Selector allows you to customize the color combination of the note pad layout"
+    const uiParentLink = "#note-pad-color-selector---presets"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<NotePadColorSelectorCustomMenu />
+
+## Split Mode
+
+The Split Mode Selector allows you to enable or disable split mode. Split mode can be set to no split, horizontal split, or vertical split.
+
+The Split Mode Selector will display different colors based on the current split mode:
+
+- **No split mode**: Dim White
+- **Vertical split mode**: Cyan
+- **Horizontal split mode**: Purple
+
+## Control Bar
+
+The Control Bar provides quick access to various controls and effect when enabled in the Play View. 
+
+Each button have different shift feature as well. Holding any of the octave button will enable shift mode.
+
+Features:
+- **Pitch Bend Down** (X=1): Velocity-mapped pitch bend down (Shift: MIDI Stop)
+- **Pitch Bend Up** (X=2): Velocity-mapped pitch bend up (Shift: MIDI Play)
+- **Note Latch** (X=3): Note sustain with three states (Shift: Enable Toggle Latch Mode)
+- **Chord** (X=4): Open Chord Control
+- **Arpeggiator** (X=5): Open Arpeggiator Speed Control (Shift: Enter Arpeggiator Setting)
+- **Key Mode** (X=6): Change the key of current layout (Shift: Enter Scale Selector)
+- **Octave Down & Up** (X=7 & 8): Transpose notes by octave (Hold any as Shift)
+- **Swap Layout**: Tap Octave Down + Octave Up together to swap layout.
+
+**Split View Behavior**: The control bar only affects the primary note pad (left pad in vertical split, top pad in horizontal split). However, any modes or effects you enable will persist when switching between pads. You can configure latch, chord, or arpeggiator on one pad, then switch to the secondary pad and those settings will continue to function independently.
+
+:::note
+**Non-Persistent**: Control bar configurations (latch, chord, arpeggiator, etc.) are not saved across sessions. When you exit and restart the Note App, all control bar settings will reset to their default states.
+:::
+
+export function ControlBar() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Note Playing Area",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Down",
+        "desc": "Pitch bend down (velocity mapped)\n\nShift: MIDI Stop",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Up",
+        "desc": "Pitch bend up (velocity mapped)\n\nShift: MIDI Play",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Note latch toggle\n\nShift: Toggle Mode\n\nYellow: Disabled\nWhite: Enabled\nMagenta: Toggle mode",
+        "link": "#note-latch",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Chord Control",
+        "desc": "Chord control toggle\n\nCyan: Inactive\nWhite: Active",
+        "link": "#chord-control",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Arpeggiator Control",
+        "desc": "Arpeggiator control toggle\n\nShift: Arpeggiator Setting\n\nLime: Inactive\nWhite: Active",
+        "link": "#arpeggiator-control",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "Key Control",
+        "desc": "Key control toggle\n\nShift: Scale Selector\n\nPink: Inactive\nWhite: Active",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "Octave Down",
+        "desc": "Decrease octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave Up",
+        "desc": "Increase octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Note Pad Control Bar"
+    const uiDescription = "Control Bar with pitch bend, playback modes, and octave controls. Hold shift for additional functions on pitch bend buttons."
+    const uiParentLink = "#note-pad-play-view"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ControlBar />
+
+
+
+### Octave Control / Shift
+
+Octave controls allow you to transpose all notes up or down by octaves. These buttons also serve as the shift modifier for accessing secondary functions.
+
+**Controls**:
+- **Octave Down** (X=7): Decrease octave
+- **Octave Up** (X=8): Increase octave
+
+**Special Functions**:
+- **Hold Either Button**: Activates shift mode for other controls
+- **Tap Both Together**: Swap between primary and secondary layouts in split view
+
+**Visual Feedback**:
+  - **Color**: Primary Note Pad Color
+  - **Gradient**: Note Pad Octave
+
+### Pitch Bend
+
+The pitch bend controls allow you to bend the pitch of playing notes up or down. The amount of bend is velocity-mapped, meaning pressing harder creates a larger pitch bend.
+
+**Controls**:
+- **Pitch Bend Down** (X=1): Bends pitch down (red button)
+- **Pitch Bend Up** (X=2): Bends pitch up (green button)
+- **Shift + Pitch Bend Down**: Send MIDI Stop command
+- **Shift + Pitch Bend Up**: Send MIDI Play command
+
+### Note Latch
+
+Note Latch keeps the notes you pressed sustained after release. If you hold multiple keys, they will all be sustained. When a new note is pressed after you've released all previously latched notes, all notes will be freed and the new note will be latched.
+
+**Controls**:
+- **Tap** (X=3): Toggle Latch Enable
+- **Shift Tap**: Enable Toggle Latch mode
+
+**Color States**:
+- **Yellow** (Default): Latch disabled - notes stop when released
+- **White**: Latch enabled - notes sustain until cleared
+- **Magenta**: Toggle mode - each press on note pad toggles note on/off
+
+To clear all latched notes, turn off the note latch.
+
+### Chord Control
+
+Chord control transforms single note presses into full chords, allowing you to play complex harmonies with individual keys. The chords automatically adapt to your selected scale and root note.
+
+**Controls Bar Button**:
+- **Tap** (X=4): Open chord selector interface
+- **Shift Tap**: Toggle chord toggle mode
+
+**Color States**:
+- **Cyan**: Chord control closed
+- **White**: Chord control active
+
+**Chord Building Control**:
+- **Base**: Major, Minor, Diminished, or Suspended. You can select from one of them
+- **Multiple extensions**: 6th, 7th, 9th - You can select multiple to combine freely
+- **Hold Combo**: Hold a combo to chord while you perform on the note pad
+- **Shift Tap**: Latch chord types and extensions
+- **Inversion**: Select an inversion or slide across them when chord is latched to strum.
+- **Disable**: Tap to remove all selected chords (You can also shift tap Base or Extension selector to remove all chords)
+
+export function ControlBarChord() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Note Playing Area",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "Diminished",
+        "desc": "Select Diminished Chord",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Minor",
+        "desc": "Select Minor Chord",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Major",
+        "desc": "Select Major Chord",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Suspended",
+        "desc": "Select Suspended Chord",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "6th Extension",
+        "desc": "Add 6th Extension",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Minor 7th Extension",
+        "desc": "Add Minor 7th Extension",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Major 7th Extension",
+        "desc": "Add Major 7th Extension",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "9th Extension",
+        "desc": "Add 9th Extension",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Inversion",
+        "desc": "Select chord inversion",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "size": [4, 1],
+                "color": "#808000"
+            },
+            {
+                "pos": [4, 6],
+                "size": [3, 1],
+                "color": "#808000"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Disable Chord",
+        "desc": "Unselect all chords, only lit if chord is enabled",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Down",
+        "desc": "Pitch bend down (velocity mapped)\n\nShift: MIDI Stop",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Up",
+        "desc": "Pitch bend up (velocity mapped)\n\nShift: MIDI Play",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Note latch toggle\n\nShift: Toggle Mode\n\nYellow: Disabled\nWhite: Enabled\nMagenta: Toggle mode",
+        "link": "#note-latch",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Chord Control (Enabled)",
+        "desc": "Chord control toggle\n\nCyan: Inactive\nWhite: Active",
+        "link": "#chord-control",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Arpeggiator Control",
+        "desc": "Arpeggiator control toggle\n\nShift: Arpeggiator Setting\n\nLime: Inactive\nWhite: Active",
+        "link": "#arpeggiator-control",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "Key Control",
+        "desc": "Key control toggle\n\nShift: Scale Selector\n\nPink: Inactive\nWhite: Active",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "Octave Down",
+        "desc": "Decrease octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave Up",
+        "desc": "Increase octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "Chord Control"
+    const uiDescription = "Control bar with Chord Control"
+    const uiParentLink = "#note-pad-play-view"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ControlBarChord />
+
+### Arpeggiator Control
+
+The arpeggiator control controls the division of the arpeggiator. Allow you to turn on and adjust speed of the Arpeggiator while you perform.
+
+**Button**:
+- **Tap** (X=5): Toggle arpeggiator control on/off
+- **Shift Tap**: Enter full arpeggiator settings menu
+
+**Color States**:
+- **Lime** (#80FF00): Arpeggiator control closed
+- **White**: Arpeggiator control opened
+
+**Arpeggiator Division Values**:
+1. **Off**
+2. **1/4** (Quarter note)
+3. **1/6** (Sixth note)
+4. **1/8** (Eighth note)
+5. **1/12** (Twelfth note)
+6. **1/16** (Sixteenth note)
+7. **1/24** (Twenty-fourth note)
+8. **1/32** (Thirty-second note)
+
+For more arpeggiator parameters, see [Arpeggiator Setting Menu](#arpeggiator-setting-menu).
+
+export function ControlBarArpeggiator() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Note Playing Area",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "Off",
+        "desc": "Arpeggiator off",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "1/4 Division",
+        "desc": "Quarter note division",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/6 Division",
+        "desc": "Sixth note division",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/8 Division",
+        "desc": "Eighth note division",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/12 Division",
+        "desc": "Twelfth note division",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/16 Division",
+        "desc": "Sixteenth note division",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/24 Division",
+        "desc": "Twenty-fourth note division",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/32 Division",
+        "desc": "Thirty-second note division",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Down",
+        "desc": "Pitch bend down (velocity mapped)\n\nShift: MIDI Stop",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Up",
+        "desc": "Pitch bend up (velocity mapped)\n\nShift: MIDI Play",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Note latch toggle\n\nShift: Toggle Mode\n\nYellow: Disabled\nWhite: Enabled\nMagenta: Toggle mode",
+        "link": "#note-latch",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Chord Control",
+        "desc": "Chord control toggle\n\nCyan: Inactive\nWhite: Active",
+        "link": "#chord-control",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Arpeggiator Control",
+        "desc": "Arpeggiator control toggle\n\nShift: Arpeggiator Setting\n\nLime: Inactive\nWhite: Active",
+        "link": "#arpeggiator-control",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Key Control",
+        "desc": "Key control toggle\n\nShift: Scale Selector\n\nPink: Inactive\nWhite: Active",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "Octave Down",
+        "desc": "Decrease octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave Up",
+        "desc": "Increase octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Arpeggiator Control"
+    const uiDescription = "Control Bar with Arpeggiator Division Control."
+    const uiParentLink = "#note-pad-play-view"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ControlBarArpeggiator />
+
+### Key Control
+
+The key control allows you to toggle scale enforcement and access the scale selector. When active, notes will be constrained to the selected scale.
+
+**Button**:
+- **Tap**: Toggle Key Control on/off
+- **Shift Tap**: Enter scale selector menu
+
+**Color States**:
+- **Pink**: Key control closed
+- **White**: Key control open
+
+**Control**:
+- **Change Key**: Select any key in the visualizer to make that the new root key in the primary note pad. 
+
+
+For scale selection options, see [Scale Selector](#scale-selector).
+
+export function ControlBarKey() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Note Playing Area",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "Key Selector",
+        "desc": "Select the root key of the primary note pad layout",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [8, 2],
+            },
+            {
+                "pos": [1, 6],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 5],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 5],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 6],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 6],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 5],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Modern Diatonic Toggle",
+        "desc": "Toggle between classic and modern diatonic mode (affects root offset behavior)",
+        "link": "#modern-diatonic",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Down",
+        "desc": "Pitch bend down (velocity mapped)\n\nShift: MIDI Stop",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Pitch Bend Up",
+        "desc": "Pitch bend up (velocity mapped)\n\nShift: MIDI Play",
+        "link": "#pitch-bend",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Note Latch",
+        "desc": "Note latch toggle\n\nShift: Toggle Mode\n\nYellow: Disabled\nWhite: Enabled\nMagenta: Toggle mode",
+        "link": "#note-latch",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Chord Control",
+        "desc": "Chord control toggle\n\nCyan: Inactive\nWhite: Active",
+        "link": "#chord-control",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Arpeggiator Control",
+        "desc": "Arpeggiator control toggle\n\nShift: Arpeggiator Setting\n\nLime: Inactive\nWhite: Active",
+        "link": "#arpeggiator-control",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "Key Control",
+        "desc": "Key control toggle\n\nShift: Scale Selector\n\nPink: Inactive\nWhite: Active",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave Down",
+        "desc": "Decrease octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave Up",
+        "desc": "Increase octave\n\nHold: Shift\n\nShift: Swap Layout\n\nColor: Primary note pad color",
+        "link": "#octave-control",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Key Control Bar"
+    const uiDescription = "Control Bar with scale visualizer and root key selector active at Y=4-5. Shows current scale pattern and allows root key selection."
+    const uiParentLink = "#note-pad-play-view"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ControlBarKey />
+
+## Example Layouts
+
+### Example Layout 1 - Scale Folded Layout
+
+**Layout Mode**: Octave<br/>
+**Enforce Scale**: On
+
+export function ExampleLayout1() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 1",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 8],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Example Layout 1 - Scale"
+    const uiDescription = "Layout Mode: Octave\n\nEnforce Scale: On"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout1 />
+
+### Example Layout 2 - Isomorphic Layout
+
+**Layout Mode**: Offset<br/>
+**X Offset**: 1<br/>
+**Y Offset**: 3<br/>
+**Enforce Scale**: On
+
+export function ExampleLayout2() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 2",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Example Layout 2 - Isomorphic " 
+    const uiDescription = "Layout Mode: Offset\n\nX Offset: 1\n\nY Offset: 3\n\nEnforce Scale: On"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout2 />
+
+### Example Layout 3 - Chromatic Layout
+
+**Layout Mode**: Chromatic<br/>
+**Enforce Scale**: Off
+
+export function ExampleLayout3() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 3",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [1, 6],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 4],
+                "color": undefined
+            },
+            ,
+            {
+                "pos": [3, 4],
+                "size": [1, 4],
+                "color": undefined
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [6, 7],
+                "size": [1, 1],
+                "color": undefined
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [7, 6],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 3],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [6, 1],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00FF00"
+            },
+
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Example Layout 3 - Chromatic"
+    const uiDescription = "Layout Mode: Chromatic\n\nEnforce Scale: Off"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout3 />
+
+### Example Layout 4 - Piano Layout
+
+**Layout Mode**: Piano<br/>
+**Scale**: C Minor<br/>
+
+export function ExampleLayout4() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 4 - Piano",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 2],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 2],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 4],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 5],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 7],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 6],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 6],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 6],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 7],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 6],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 5],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Example Layout 4 - Piano"
+    const uiDescription = "Layout Mode: Piano\n\nScale: C Minor"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout4 />
+
+### Example Layout 5 - Octave Layout
+
+**Layout Mode**: Octave<br/>
+**Color Preset**: Rainbow<br/>
+**Scale**: C Major<br/>
+
+export function ExampleLayout5() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 5 - Octave Layout",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF0000"
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 8],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 8],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [3, 0],
+                "size": [1, 8],
+                "color": "#00FF80"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 8],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [1, 8],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 8],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Example Layout 5 - Octave"
+    const uiDescription = "Layout Mode: Octave\n\nColor Preset: Rainbow\n\nScale: C Major"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout5 />
+
+### Example Layout 6 - Poly Playground
+
+**Mode**: Offset<br/>
+**Color Preset**: Poly Color<br/>
+**X Offset**: 2<br/>
+**Y Offset**: 3<br/>
+**Scale**: Chromatic<br/>
+
+export function ExampleLayout6() {
+
+    const uiElements = [
+    {
+        "name": "Note Pad",
+        "desc": "Example Note Pad Layout 6 - Poly Playground",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [2, 1],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [5, 1],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [6, 1],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [7, 1],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [1, 2],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [7, 2],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [3, 3],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [4, 3],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [5, 3],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [6, 3],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [0, 4],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [1, 4],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [3, 4],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [4, 4],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [7, 4],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [0, 5],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [3, 5],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [5, 5],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [6, 5],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [7, 5],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [1, 6],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [2, 6],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [3, 6],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [5, 6],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [6, 6],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [7, 6],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [1, 7],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [2, 7],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [3, 7],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [4, 7],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [5, 7],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [6, 7],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#FFFB00"
+            }
+        ]
+    },
+    {
+        "name": "Enter Config Menu",
+        "desc": "Tap to enter the config menu",
+        "link": "#config-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Example Layout 6 - Poly Playground"
+    const uiDescription = "Layout Mode: Poly Playground\n\nMode: Offset\n\nColor Preset: Poly Color\n\nX Offset: 2\n\nY Offset: 3\n\nScale: Chromatic"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout6 />

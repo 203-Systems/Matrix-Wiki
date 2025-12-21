@@ -1,0 +1,381 @@
+---
+sidebar_position: 3
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Dimension
+
+## 概述
+
+`Dimension` 类表示包含宽度和高度的 2D 尺寸结构。它用于 Matrix OS 框架内的布局操作、大小计算和空间操作。
+
+*Dimension 类实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_Dimension.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Dimension.pyi"/>。*
+
+---
+
+## `Dimension(*val)`
+```python
+class Dimension:
+    def __init__(self, *val) -> None
+```
+
+使用各种输入格式创建尺寸：
+- **0 个参数**：零尺寸 (0, 0)
+- **1 个参数**：从原始字节
+- **2 个参数**：宽度和高度
+
+**参数：**
+- `*val`：根据所需构造函数的可变参数
+
+**示例：**
+```python
+# 创建零尺寸
+zero_dim = Dimension()
+
+# 从宽度和高度创建尺寸
+size = Dimension(8, 8)  # 8x8 尺寸
+
+# 从原始字节创建（高级用法）
+raw_dim = Dimension(0x00080008)  # 打包的宽度/高度
+```
+
+---
+
+## Getter Methods
+
+### `X`
+```python
+def X(self) -> int
+```
+
+Gets the X component (width) of the dimension.
+
+**Returns:**
+- `int`: The width value
+
+**Example:**
+```python
+dim = Dimension(8, 6)
+width = dim.X()  # Returns 8
+```
+
+### `Y`
+```python
+def Y(self) -> int
+```
+
+Gets the Y component (height) of the dimension.
+
+**Returns:**
+- `int`: The height value
+
+**Example:**
+```python
+dim = Dimension(8, 6)
+height = dim.Y()  # Returns 6
+```
+
+---
+
+## Setter Methods
+
+### `SetX`
+```python
+def SetX(self, x: int) -> None
+```
+
+Sets the X component (width) of the dimension.
+
+**Parameters:**
+- `x` (`int`): New width value
+
+**Example:**
+```python
+dim = Dimension(8, 6)
+dim.SetX(10)  # Dimension is now (10, 6)
+```
+
+### `SetY`
+```python
+def SetY(self, y: int) -> None
+```
+
+Sets the Y component (height) of the dimension.
+
+**Parameters:**
+- `y` (`int`): New height value
+
+**Example:**
+```python
+dim = Dimension(8, 6)
+dim.SetY(4)  # Dimension is now (8, 4)
+```
+
+---
+
+## Methods
+
+### `Contains`
+```python
+def Contains(self, point: Point) -> bool
+```
+
+Checks if a point is contained within this dimension (from origin).
+
+**Parameters:**
+- `point` (`Point`): Point to check
+
+**Returns:**
+- `bool`: True if point is within dimension bounds
+
+**Example:**
+```python
+dim = Dimension(8, 8)
+point1 = Point(3, 4)  # Inside
+point2 = Point(10, 2)  # Outside
+
+if dim.Contains(point1):
+    print("Point is within dimension")
+```
+
+### `Area`
+```python
+def Area(self) -> int
+```
+
+Calculates the area of the dimension.
+
+**Returns:**
+- `int`: Area (width × height)
+
+**Example:**
+```python
+dim = Dimension(4, 6)
+area = dim.Area()  # Returns 24
+```
+
+---
+
+## Operators
+
+### `__add__`
+```python
+def __add__(self, other: Dimension) -> Dimension
+```
+
+Adds two dimensions component-wise.
+
+**Parameters:**
+- `other` (`Dimension`): Dimension to add
+
+**Returns:**
+- `Dimension`: New dimension with added components
+
+**Example:**
+```python
+dim1 = Dimension(3, 4)
+dim2 = Dimension(2, 1)
+result = dim1 + dim2  # Dimension(5, 5)
+```
+
+### `__eq__`
+```python
+def __eq__(self, other: Dimension) -> bool
+```
+
+Checks if two dimensions are equal.
+
+**Parameters:**
+- `other` (`Dimension`): Dimension to compare
+
+**Returns:**
+- `bool`: True if dimensions are equal
+
+**Example:**
+```python
+dim1 = Dimension(8, 8)
+dim2 = Dimension(8, 8)
+if dim1 == dim2:
+    print("Dimensions are equal")
+```
+
+### `__bool__`
+```python
+def __bool__(self) -> bool
+```
+
+Checks if dimension is non-zero (truthy).
+
+**Returns:**
+- `bool`: True if dimension has non-zero area
+
+**Example:**
+```python
+dim1 = Dimension(0, 0)
+dim2 = Dimension(4, 4)
+
+if not dim1:
+    print("Zero dimension")
+
+if dim2:
+    print("Non-zero dimension")
+```
+
+---
+
+## Usage Examples
+
+### Basic Dimension Operations
+```python
+# Create dimensions
+grid_size = Dimension(8, 8)
+button_size = Dimension(2, 2)
+zero_size = Dimension()
+
+# Get components
+width = grid_size.X()
+height = grid_size.Y()
+print(f"Grid size: {width}x{height}")
+
+# Calculate area
+total_area = grid_size.Area()
+button_area = button_size.Area()
+print(f"Grid has {total_area} pixels, button has {button_area}")
+
+# Check containment
+center_point = Point(4, 4)
+edge_point = Point(7, 7)
+outside_point = Point(10, 10)
+
+print(f"Center point in grid: {grid_size.Contains(center_point)}")
+print(f"Edge point in grid: {grid_size.Contains(edge_point)}")
+print(f"Outside point in grid: {grid_size.Contains(outside_point)}")
+```
+
+### Layout Calculations
+```python
+def fits_in_grid(item_size, grid_size):
+    """Check if item fits in grid"""
+    return (item_size.X() <= grid_size.X() and
+            item_size.Y() <= grid_size.Y())
+
+def calculate_max_items(item_size, grid_size):
+    """Calculate maximum items that fit in grid"""
+    items_x = grid_size.X() // item_size.X()
+    items_y = grid_size.Y() // item_size.Y()
+    return items_x * items_y
+
+def get_centered_position(item_size, grid_size):
+    """Get position to center item in grid"""
+    x = (grid_size.X() - item_size.X()) // 2
+    y = (grid_size.Y() - item_size.Y()) // 2
+    return Point(x, y)
+
+# Usage examples
+grid = Dimension(8, 8)
+button = Dimension(2, 2)
+
+if fits_in_grid(button, grid):
+    max_buttons = calculate_max_items(button, grid)
+    center_pos = get_centered_position(button, grid)
+    print(f"Can fit {max_buttons} buttons")
+    print(f"Centered button at ({center_pos.X()}, {center_pos.Y()})")
+```
+
+### Dimension Arithmetic
+```python
+# Combine dimensions
+total_size = Dimension(4, 4) + Dimension(2, 2)  # Results in (6, 6)
+
+# Create different sized areas
+small_area = Dimension(2, 2)
+medium_area = Dimension(4, 4)
+large_area = Dimension(6, 6)
+
+areas = [small_area, medium_area, large_area]
+for i, area in enumerate(areas):
+    print(f"Area {i+1}: {area.X()}x{area.Y()} = {area.Area()} pixels")
+
+# Check if dimensions are meaningful
+empty_dim = Dimension(0, 0)
+valid_dim = Dimension(4, 4)
+
+print(f"Empty dimension is truthy: {bool(empty_dim)}")
+print(f"Valid dimension is truthy: {bool(valid_dim)}")
+```
+
+### Boundary Checking
+```python
+def check_all_corners(dimension):
+    """Check if all corner points are contained"""
+    corners = [
+        Point(0, 0),  # Top-left
+        Point(dimension.X()-1, 0),  # Top-right
+        Point(0, dimension.Y()-1),  # Bottom-left
+        Point(dimension.X()-1, dimension.Y()-1)  # Bottom-right
+    ]
+
+    for i, corner in enumerate(corners):
+        contained = dimension.Contains(corner)
+        print(f"Corner {i+1} ({corner.X()}, {corner.Y()}): {contained}")
+
+def get_valid_points(dimension):
+    """Get all valid points within dimension"""
+    points = []
+    for y in range(dimension.Y()):
+        for x in range(dimension.X()):
+            point = Point(x, y)
+            if dimension.Contains(point):
+                points.append(point)
+    return points
+
+# Test with 8x8 grid
+grid_dim = Dimension(8, 8)
+check_all_corners(grid_dim)
+
+# Get all valid points (useful for iteration)
+valid_points = get_valid_points(Dimension(3, 3))
+print(f"3x3 dimension has {len(valid_points)} valid points")
+```
+
+---
+
+## Common Patterns
+
+### Grid Size Constants
+```python
+# Standard grid sizes
+MATRIX_8X8 = Dimension(8, 8)
+MATRIX_4X4 = Dimension(4, 4)
+MATRIX_2X2 = Dimension(2, 2)
+
+# UI component sizes
+BUTTON_SMALL = Dimension(1, 1)
+BUTTON_MEDIUM = Dimension(2, 1)
+BUTTON_LARGE = Dimension(3, 2)
+
+# Layout areas
+FULL_GRID = Dimension(8, 8)
+HALF_GRID = Dimension(4, 8)
+QUARTER_GRID = Dimension(4, 4)
+```
+
+### Size Validation
+```python
+def is_valid_dimension(dim, max_dim=Dimension(8, 8)):
+    """Validate dimension against maximum size"""
+    return (dim.X() > 0 and dim.Y() > 0 and
+            dim.X() <= max_dim.X() and dim.Y() <= max_dim.Y())
+
+def clamp_dimension(dim, max_dim=Dimension(8, 8)):
+    """Clamp dimension to valid range"""
+    x = max(1, min(max_dim.X(), dim.X()))
+    y = max(1, min(max_dim.Y(), dim.Y()))
+    return Dimension(x, y)
+
+# Example usage
+test_dim = Dimension(10, 12)
+if not is_valid_dimension(test_dim):
+    clamped = clamp_dimension(test_dim)
+    print(f"Clamped {test_dim.X()}x{test_dim.Y()} to {clamped.X()}x{clamped.Y()}")
+```

@@ -46,10 +46,14 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/203-Systems/Matrix-Wiki/tree/master/',
-          lastVersion: 'current',
+          lastVersion: '3.1',
           versions: {
               current: {
+                label: 'Matrix OS 3.2 Beta',
+              },
+              '3.1': {
                 label: 'Matrix OS 3.1',
+                banner: 'none',
               },
               '3.0': {
                 label: 'Matrix OS 3.0',

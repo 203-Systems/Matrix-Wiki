@@ -1,0 +1,199 @@
+---
+sidebar_position: 7
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# 黑白棋应用
+
+黑白棋是一款双人策略棋盘游戏，在 8x8 的棋盘上进行。玩家轮流在棋盘上放置棋子，棋子正面显示自己的颜色。每次落子后，任何被新落子的棋子与当前玩家另一枚棋子在同一直线上夹住的对方棋子，都会翻转为当前玩家的颜色。
+
+在 [这里](https://en.wikipedia.org/wiki/Reversi) 了解更多关于黑白棋的信息。
+
+在游戏界面点击功能键即可打开配置菜单。
+
+## 游戏界面
+
+export function GameView() {
+
+    const uiElements = [
+        {
+            "name": "玩家1棋子",
+            "desc": "游戏开始时，每位玩家在棋盘中央各有2枚棋子。",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "color": "#00FFFF"
+                },
+                {
+                    "pos": [4, 4],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "玩家2棋子",
+            "desc": "游戏开始时，每位玩家在棋盘中央各有2枚棋子。",
+            "elements": [
+                {
+                    "pos": [3, 4],
+                    "color": "#FF00FF"
+                },
+                {
+                    "pos": [4, 3],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "可能的放置位置",
+            "desc": "显示下一步棋子的可能放置位置。",
+            "elements": [
+                {
+                    "pos": [4, 2],
+                    "color": "#00c0c0"
+                },
+                {
+                    "pos": [5, 3],
+                    "color": "#00c0c0"
+                },
+                {
+                    "pos": [2, 4],
+                    "color": "#00c0c0"
+                },
+                {
+                    "pos": [3, 5],
+                    "color": "#00c0c0"
+                }
+            ]
+        },
+        {
+            "elements": [
+                {
+                    "pos": ["u", 0],
+                    "size": 32,
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "配置菜单",
+            "desc": "点击进入配置菜单。",
+            "link": "#config-menu",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "游戏界面"
+    const uiDescription = "游戏界面允许你进行黑白棋游戏。底灯显示当前玩家的颜色。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+        uiParentLink={uiParentLink}
+    />
+
+}
+
+<GameView />
+
+## 配置菜单
+
+export function ConfigMenu() {
+
+    const uiElements = [
+        {
+            "name": "玩家1颜色",
+            "desc": "点击选择玩家1的颜色。",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "size": [8, 1],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "玩家1先手",
+            "desc": "切换玩家1是否先走。",
+            "elements": [
+                {
+                    "pos": [7, 6],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "玩家2颜色",
+            "desc": "点击选择玩家2的颜色。",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "size": [8, 1],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "玩家2先手",
+            "desc": "切换玩家2是否先走。",
+            "elements": [
+                {
+                    "pos": [0, 1],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "重置游戏",
+            "desc": "将游戏重置为初始状态。",
+            "elements": [
+                {
+                    "pos": [7, 3],
+                    "size": [1, 2],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "放置提示",
+            "desc": "切换放置提示的显示。",
+            "elements": [
+                {
+                    "pos": [0, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "返回或退出应用",
+            "desc": "点击返回棋盘。长按退出应用。",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "配置菜单"
+    const uiDescription = "配置菜单允许你修改应用和设备的设置。"
+    const uiParentLink = "#游戏界面"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+        uiParentLink={uiParentLink}
+    />
+
+}
+
+<ConfigMenu />

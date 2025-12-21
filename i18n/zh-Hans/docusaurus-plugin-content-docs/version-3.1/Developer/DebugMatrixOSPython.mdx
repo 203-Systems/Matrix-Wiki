@@ -1,0 +1,243 @@
+---
+sidebar_position: 6
+---
+
+# 调试 Python 应用
+
+## Python 应用调试概述
+
+在 Matrix OS 中调试 Python 应用主要使用 print 语句。由于 Python 应用运行在 PikaPython 解释器中，print 函数是理解程序流程和变量状态的主要工具。
+
+## Print 调试
+
+print 函数是 Matrix OS Python 应用的主要调试工具。合理使用 print 语句可以帮助理解程序流程和变量状态。
+
+### 基本用法
+```python
+def my_function():
+    print("Starting function")
+
+    # 代码内容
+    result = some_calculation()
+    print(f"Calculation result: {result}")
+
+    return result
+
+# 调试变量值
+value = 42
+print(f"Debug: value = {value}")
+```
+
+### 跟踪程序流程
+```python
+def complex_operation():
+    print("Step 1: Initializing")
+    # 初始化代码
+
+    print("Step 2: Processing data")
+    # 处理代码
+
+    print("Step 3: Finalizing")
+    # 完成代码
+
+    print("Operation complete")
+```
+
+### 调试变量
+```python
+# 打印变量类型和值
+my_variable = 123
+print(f"Variable type: {type(my_variable)}, value: {my_variable}")
+
+# 打印多个值
+x, y = 5, 10
+print(f"Coordinates: x={x}, y={y}")
+
+# 打印列表/数组内容
+my_list = [1, 2, 3, 4, 5]
+print(f"List contents: {my_list}")
+```
+
+### 调试循环
+```python
+# 跟踪循环迭代
+for i in range(5):
+    print(f"Loop iteration: {i}")
+    # 循环代码
+
+# 调试 while 循环
+counter = 0
+while counter < 3:
+    print(f"While loop: counter = {counter}")
+    counter += 1
+```
+
+### 调试函数
+```python
+def calculate(a, b):
+    print(f"Function called with a={a}, b={b}")
+    result = a + b
+    print(f"Returning result: {result}")
+    return result
+
+# 调用函数
+answer = calculate(3, 4)
+print(f"Final answer: {answer}")
+```
+
+### 调试 Matrix OS API 调用
+```python
+# 调试 LED 操作
+print("Setting LED color")
+MatrixOS.LED.SetColor(Point(3, 3), Color(255, 0, 0), 255)
+print("LED color set, updating display")
+MatrixOS.LED.Update(255)
+print("Display updated")
+
+# 调试按键事件
+key_event = MatrixOS.KeyPad.Get(1000)
+if key_event is not None:
+    print(f"Key pressed at position ({key_event.xy.x}, {key_event.xy.y})")
+else:
+    print("No key pressed")
+
+# 调试计时
+start_time = MatrixOS.SYS.Millis()
+# 代码内容
+end_time = MatrixOS.SYS.Millis()
+print(f"Operation took {end_time - start_time} milliseconds")
+```
+
+### 调试条件逻辑
+```python
+def check_value(value):
+    print(f"Checking value: {value}")
+
+    if value < 0:
+        print("Value is negative")
+    elif value == 0:
+        print("Value is zero")
+    else:
+        print("Value is positive")
+
+    return value
+```
+
+### 格式化输出
+```python
+# 使用分隔符增加清晰度
+print("=" * 30)
+print("Starting Debug Section")
+print("=" * 30)
+
+# 格式化数字
+value = 3.14159
+print(f"Pi value: {value:.2f}")  # 保留两位小数
+
+# 对齐输出
+for i in range(3):
+    print(f"Item {i:2d}: {'Active' if i > 0 else 'Inactive'}")
+```
+
+## Print 调试最佳实践
+
+1. **描述清晰**: 让 print 消息清楚明了
+   ```python
+   # 好的做法
+   print(f"Processing key at position ({x}, {y})")
+
+   # 不太有用
+   print("here")
+   ```
+
+2. **包含上下文**: 显示代码执行的位置
+   ```python
+   print("MainLoop: Checking for key events")
+   ```
+
+3. **显示变量状态**: 包含相关变量值
+   ```python
+   print(f"LED brightness set to {brightness}/255")
+   ```
+
+4. **格式统一**: 让输出易于阅读
+   ```python
+   print(f"[INFO] System ready")
+   print(f"[ERROR] Failed to initialize")
+   print(f"[DEBUG] Variable x = {x}")
+   ```
+
+5. **跟踪进出**: 显示函数开始和结束
+   ```python
+   def my_function():
+       print(">>> Entering my_function")
+       # 函数代码
+       print("<<< Exiting my_function")
+   ```
+
+## 完整调试示例
+
+这是一个展示有效 print 调试的实际例子：
+
+```python
+def interactive_app():
+    """包含完整 print 调试的示例应用"""
+
+    print("=" * 40)
+    print("Application Starting")
+    print("=" * 40)
+
+    # 初始化
+    print("Initializing LED display...")
+    MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+    MatrixOS.LED.Update(0)
+    print("LED display initialized")
+
+    # 主循环
+    print("Entering main loop")
+    loop_count = 0
+
+    while loop_count < 10:
+        print(f"\n--- Loop iteration {loop_count} ---")
+
+        # 检查输入
+        print("Checking for key press...")
+        key_event = MatrixOS.KeyPad.Get(100)
+
+        if key_event is not None:
+            x = key_event.xy.x
+            y = key_event.xy.y
+            print(f"Key detected at ({x}, {y})")
+
+            # 处理按键
+            if key_event.info.state == 1:
+                print(f"  Key pressed - lighting LED")
+                MatrixOS.LED.SetColor(Point(x, y), Color(255, 0, 0), 255)
+                MatrixOS.LED.Update(255)
+            elif key_event.info.state == 2:
+                print(f"  Key released - turning off LED")
+                MatrixOS.LED.SetColor(Point(x, y), Color(0, 0, 0), 0)
+                MatrixOS.LED.Update(0)
+        else:
+            print("No key press detected")
+
+        loop_count += 1
+        print(f"Loop {loop_count} complete")
+
+    print("\n" + "=" * 40)
+    print("Application Ending")
+    print("=" * 40)
+
+# 运行应用
+interactive_app()
+```
+
+## 有效 Print 调试技巧
+
+- **从简单开始**: 一次添加一个 print 来定位问题
+- **完成后清理**: 修复问题后清理调试 print
+- **使用有意义的标签**: 让每个 print 的含义清晰明确
+- **注意时序**: 过多 print 可能影响程序时序
+- **控制输出频率**: 避免在快速循环中输出过多信息
+
+记住：Print 调试简单但强大。合理放置的 print 语句能快速展示程序运行情况，帮助定位问题所在。

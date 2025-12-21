@@ -1,0 +1,67 @@
+---
+sidebar_position: 5
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# MIDI API
+
+## 概述
+Matrix OS 的 MIDI 系统复杂且强大。它允许你向不同的已注册 MIDI 端口或同时向多个 MIDI 端口发送和接收 MIDI 消息，包括系统独占（SysEx）消息。
+
+你甚至可以在线程上创建虚拟端口来与你的应用程序通信。
+
+有关 MIDI 数据包和端口结构的更多信息，请参阅 [MIDI 数据包](./Types/MidiPacket/) 和 [MIDI 端口](./Utilities/MidiPort/) 文档。
+
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/MIDI.cpp"/>。*
+
+---
+
+## `MatrixOS::MIDI::Get`
+```cpp
+bool Get(MidiPacket* midiPacketDest, uint16_t timeout_ms = 0);
+```
+
+检索下一个可用的 MIDI 数据包。如果没有数据包可用，函数将等待指定的超时时间。
+
+MIDI 数据包的源在数据包的 `port` 字段中。
+
+**参数：**
+- `midiPacketDest` ([`MidiPacket*`](./Types/MidiPacket/))：用于存储检索到的 MIDI 数据包的指针。
+- `timeout_ms` (`uint16_t`，可选)：等待 MIDI 数据包的最大时间（以毫秒为单位）。默认值为 `0`。
+
+**返回值：**
+- `bool`：如果成功检索到 MIDI 数据包则返回 `true`，否则返回 `false`。
+
+---
+
+## `MatrixOS::MIDI::Send`
+```cpp
+bool Send(MidiPacket midiPacket, uint16_t timeout_ms = 0);
+```
+
+发送 MIDI 数据包。数据包将被发送到数据包中指定的端口。
+
+**参数：**
+- `midiPacket` ([`MidiPacket`](./Types/MidiPacket/))：要发送的 MIDI 数据包。
+- `timeout_ms` (`uint16_t`，可选)：发送操作的最大等待时间（以毫秒为单位）。默认值为 `0`。
+
+**返回值：**
+- `bool`：如果 MIDI 数据包发送成功则返回 `true`，否则返回 `false`。
+
+---
+
+## `MatrixOS::MIDI::SendSysEx`
+```cpp
+bool SendSysEx(uint16_t port, uint16_t length, uint8_t* data, bool includeMeta = true);
+```
+
+发送系统独占（SysEx）MIDI 消息缓冲区。可选择性地包含正确的 SysEx 头和结尾。
+
+**参数：**
+- `port` (`uint16_t`)：用于发送 SysEx 消息的 MIDI 端口。
+- `length` (`uint16_t`)：SysEx 数据的长度。
+- `data` (`uint8_t*`)：指向要发送的 SysEx 数据的指针。
+- `includeMeta` (`bool`，可选)：是否包含默认的 SysEx 头和结尾。默认值为 `true`。如果为 false，数据必须包含 SysEx 头和结尾。
+
+**返回值：**
+- `bool`：如果 SysEx 消息发送成功则返回 `true`，否则返回 `false`。

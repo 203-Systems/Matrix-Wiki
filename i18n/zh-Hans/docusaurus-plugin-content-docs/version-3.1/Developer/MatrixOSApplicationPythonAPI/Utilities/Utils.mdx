@@ -1,0 +1,256 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 工具 API
+
+## 概述
+
+MatrixOS 的工具 API 提供了常用操作的实用函数，比如字符串哈希和其他辅助功能。工具 API 可通过 `MatrixOS.Utils` 访问，默认已导入。
+
+*Python 工具 API 实现在 <GithubLink path="Applications/Python/PikaPython/MatrixOS_Utils.py"/>，类型提示在 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Utils.pyi"/>。*
+
+---
+
+## `StringHash`
+```python
+def StringHash(text: str) -> int
+```
+
+从文本字符串生成哈希值。这对于从字符串数据创建一致的数字标识符很有用，特别适用于 NVS 存储键或其他识别目的。
+
+**参数：**
+- `text` (`str`)：要哈希的输入字符串
+
+**返回值：**
+- `int`：输入字符串的哈希值
+
+**Example:**
+```python
+# Generate hash for NVS key
+app_key = StringHash("MyApplication")
+user_key = StringHash("UserSettings")
+
+print(f"App key: {app_key}")
+print(f"User key: {user_key}")
+
+# Use with NVS storage
+config_hash = StringHash("brightness_config")
+MatrixOS.NVS.SetVariable(config_hash, b"128")
+```
+
+---
+
+## 实际示例
+
+### NVS 键生成
+```python
+def create_nv_storage_manager():
+    """Create a storage manager using string-based keys"""
+
+    class StringKeyNVS:
+        def save(self, key_name: str, data: bytes) -> bool:
+            """Save data using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.SetVariable(hash_key, data)
+
+        def load(self, key_name: str) -> bytes:
+            """Load data using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.GetVariable(hash_key)
+
+        def delete(self, key_name: str) -> bool:
+            """Delete data using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.DeleteVariable(hash_key)
+
+        def exists(self, key_name: str) -> bool:
+            """Check if data exists using a string key name"""
+            hash_key = StringHash(key_name)
+            return MatrixOS.NVS.GetSize(hash_key) > 0
+
+    return StringKeyNVS()
+
+# Usage example
+storage = create_nv_storage_manager()
+
+# Save settings with readable names
+storage.save("user_brightness", b"200")
+storage.save("last_used_app", b"Performance")
+storage.save("device_name", b"MyMatrix")
+
+# Load settings
+brightness = storage.load("user_brightness")
+last_app = storage.load("last_used_app")
+
+print(f"Brightness: {brightness.decode()}")
+print(f"Last app: {last_app.decode()}")
+
+# Check existence
+if storage.exists("device_name"):
+    name = storage.load("device_name")
+    print(f"Device name: {name.decode()}")
+```
+
+### 应用命名空间
+```python
+def create_app_namespace(app_name: str):
+    """Create a namespace for application-specific storage"""
+
+    class AppNamespace:
+        def __init__(self, name: str):
+            self.app_name = name
+            self.base_hash = StringHash(f"app_{name}")
+
+        def get_key(self, setting_name: str) -> int:
+            """Generate namespaced key for a setting"""
+            full_key = f"{self.app_name}_{setting_name}"
+            return StringHash(full_key)
+
+        def save_setting(self, name: str, value: str) -> bool:
+            """Save an application setting"""
+            key = self.get_key(name)
+            return MatrixOS.NVS.SetVariable(key, value.encode())
+
+        def load_setting(self, name: str, default: str = "") -> str:
+            """Load an application setting"""
+            key = self.get_key(name)
+            data = MatrixOS.NVS.GetVariable(key)
+            return data.decode() if data else default
+
+        def list_keys_info(self):
+            """Show information about this app's keys"""
+            print(f"App: {self.app_name}")
+            print(f"Base hash: {self.base_hash}")
+
+            settings = ["brightness", "mode", "color", "volume"]
+            for setting in settings:
+                key = self.get_key(setting)
+                exists = MatrixOS.NVS.GetSize(key) > 0
+                status = "✓" if exists else "✗"
+                print(f"  {setting}: {key} {status}")
+
+    return AppNamespace(app_name)
+
+# Usage examples
+sequencer_app = create_app_namespace("Sequencer")
+piano_app = create_app_namespace("Piano")
+
+# Save settings for different apps
+sequencer_app.save_setting("tempo", "120")
+sequencer_app.save_setting("pattern_length", "16")
+
+piano_app.save_setting("octave", "4")
+piano_app.save_setting("velocity", "127")
+
+# Load settings
+tempo = sequencer_app.load_setting("tempo", "100")
+octave = piano_app.load_setting("octave", "3")
+
+print(f"Sequencer tempo: {tempo}")
+print(f"Piano octave: {octave}")
+
+# Show key information
+sequencer_app.list_keys_info()
+piano_app.list_keys_info()
+```
+
+### 哈希一致性测试
+```python
+def test_hash_consistency():
+    """Test hash function consistency"""
+
+    test_strings = [
+        "Hello World",
+        "MatrixOS",
+        "Python_API",
+        "brightness_setting",
+        "user_config_v2",
+        "",  # Empty string
+        "a",  # Single character
+        "A very long string that contains multiple words and symbols!@#$%^&*()",
+    ]
+
+    print("Hash Consistency Test:")
+    print("=" * 50)
+
+    # Test multiple calls return same hash
+    for test_str in test_strings:
+        hash1 = StringHash(test_str)
+        hash2 = StringHash(test_str)
+        hash3 = StringHash(test_str)
+
+        consistent = (hash1 == hash2 == hash3)
+        status = "✓ PASS" if consistent else "✗ FAIL"
+
+        print(f"'{test_str}' -> {hash1} {status}")
+
+        if not consistent:
+            print(f"  ERROR: Got different hashes: {hash1}, {hash2}, {hash3}")
+
+    # Test different strings produce different hashes
+    print("\nUniqueness Test:")
+    print("-" * 30)
+
+    hashes = {}
+    collisions = 0
+
+    for test_str in test_strings:
+        hash_val = StringHash(test_str)
+        if hash_val in hashes:
+            collisions += 1
+            print(f"COLLISION: '{test_str}' and '{hashes[hash_val]}' both hash to {hash_val}")
+        else:
+            hashes[hash_val] = test_str
+
+    if collisions == 0:
+        print("✓ No collisions detected in test set")
+    else:
+        print(f"✗ {collisions} collisions detected")
+
+    return collisions == 0
+
+# Run consistency test
+test_hash_consistency()
+```
+
+---
+
+## 哈希函数特性
+
+`StringHash` 函数提供：
+
+- **一致性**：相同输入总是产生相同输出
+- **分布性**：不同输入通常产生不同输出
+- **固定范围**：返回适用于 NVS 键的整数值
+- **快速计算**：针对实时使用进行了优化
+
+### 最佳实践
+
+1. **使用描述性键名**：为哈希键选择有意义的名称
+2. **应用命名空间**：在键字符串中包含应用名以避免冲突
+3. **版本控制**：当数据格式变更时在键中包含版本信息
+4. **测试冲突**：验证你的键名不会产生哈希冲突
+
+**Example of good key naming:**
+```python
+# Good: descriptive and namespaced
+user_settings_key = StringHash("MyApp_v2_user_settings")
+brightness_key = StringHash("MyApp_display_brightness")
+
+# Avoid: generic names that might conflict
+generic_key = StringHash("settings")  # Too generic
+```
+
+---
+
+## 与其他 API 的集成
+
+工具 API 特别适用于：
+
+- **NVS API**：为存储生成基于字符串的键
+- **应用框架**：命名空间管理
+- **配置系统**：生成一致的标识符
+
+查看 [NVS API 文档](../NVS) 了解持久化存储的更多信息。

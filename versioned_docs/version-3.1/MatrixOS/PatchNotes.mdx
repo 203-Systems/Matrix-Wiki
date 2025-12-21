@@ -1,0 +1,230 @@
+---
+sidebar_position: 2
+---
+
+# Patch Notes
+
+## Update Matrix
+For updating Matrix OS. See [Update Matrix OS](../Mystrix/UpdateMatrixOS)
+
+## Matrix OS 3.1 - Smooth Grooving
+*Released: November 25th, 2025*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V3.1.0)
+
+Matrix OS 3.1 is a minor feature update with more focus on stability and bug fixes.
+
+- **Euclidean Rhythm**: You can now set a Euclidean Rhythm for Note App arpeggiator
+- **QoL & UI Update**: Some minor QoL update and UI changes in Note App
+- **Bug Fixes & Stability Improvement**: A lot of bug fixes that make the OS and MIDI system a lot more stable
+
+## Matrix OS 3.0 - Make Some Noise, Shape It Your Way
+*Released: November 8th, 2025*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V3.0.0)
+
+Matrix OS 3.0 brings long awaited Python application support, file system capabilities, and super enhanced Note App with powerful new musical features.
+
+### New Features
+- **Python Application Support** : Write your own apps directly in Python
+- **Python REPL**: Interactive Python shell for real-time coding and experimenting.
+- **Matrix OS File System API**: File system for applications to use
+- **Micro SD Support**: Load APP from Micro SD cards
+- **USB Mass Storage Mode**: Access your SD card from your computer
+- **Note App V2**: Complete rewrite with modern interface, new layouts, and expressive features
+- **Note App V2 - Control Bar**: New controls bar for pitchbend, transpose control, octave, swap layout, and set of features
+- **Note App V2 - Note Latch**: Latch note with one toggle
+- **Note App V2 - Chord Mode**: Perform chord using a key combo
+- **Note App V2 - Arpeggiator**: Advanced arpeggiator with multiple modes and configurations
+- **Note App V2 - Custom Scale**: Build your own scales
+- **Note App V2 - Diatonic Scale**: Play in scale with modern diatonic options
+- **Note App V2 - MIDI Clock Out**: Send MIDI clock sync to external hardware and DAWs
+- **Lighting App BPM Sync**: Synchronize lighting effect to BPM for audio-visual scenario
+- **Fast Text Scroll System**: Advance mode for faster text scroll, making you recall function quickly
+- **Customizable Application Launcher**: Create sections, rearrange, and hide apps from your application launcher
+- **C++ Application Repo Linking**: Matrix OS now can link and compile user app from remote repo by just adding a line in application list
+
+### Improvements
+- **Enhanced LED performance**: Reduced glitching and improved visual quality
+- **Faster and smoother UI transitions**: Better user experience throughout the system
+- **Improved system responsiveness**: Overall stability and performance enhancements
+- **Numerous system-wide refinements**: Better reliability across all applications
+
+### Bug Fixes
+- **Resolved Note App display and control inconsistencies**: Better user interface behavior
+- **General stability fixes**: Across all apps for improved reliability
+
+### Changes
+- **System-wide UI rework**: A lot of APP got their UI tweaked, most noticeable one is that brightness control and rotation control will be in system setting only now.
+- **Poly Playground App removed**: Fully integrated into Note App V2
+
+---
+
+## Matrix OS 2.6 - Control More, Customize More, Play More
+*Released: April 26, 2025*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.6.0)
+
+New Matrix OS brings powerful new tools, optimizations, and fun features to further unleash the potential of Mystrix!
+
+### New Features
+- **Custom Control Map App**: Super powerful, live configurable customizable control surface. Customize yours using edit.203.io
+- **Poly Playground App**: Inspired by Poly Playground iOS app (Demo; merged into Note App V2 in Matrix OS 2.7)
+- **Strum App Beta** 🪕: Play your Mystrix like an Omnichord using the 2 touch strips
+- **System-level SysEx and HID APIs**: Beta feature for advanced integrations
+- **Auto Note Off**: Note App and Performance App action menus now auto-send all notes off signal (CC 123)
+
+### Improvements
+- **Mystrix Standard Keypad Driver**: Enhanced responsiveness and accuracy
+- **General Device Optimization**: Smoother and more responsive system-wide performance
+
+### Bug Fixes
+- Fixed Mystrix touchbar toggle state not saving correctly
+- Fixed Reversi Game App visual updates
+- Fixed Reversi Game App reset logic
+- Fixed Mystrix Pro pre-KC batch device config not loading correctly
+
+### Known Issues
+- Custom Control Map App currently only sends SysEx via USB MIDI port 1
+- Strum App will crash if Mystrix is not facing up or down
+
+## Matrix OS 2.5 - Taste of Matrix OS
+*Released: October 25, 2024*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.5)
+
+Added many useful, cool, or random features to the OS. It's a great showcase of what Matrix OS & Mystrix is capable of.
+
+### New Features
+- **System Global Animation**: Toggleable system-wide animations
+- **Companion App Integration**: BitFocus Companion support
+- **Game Pad App**: Demo for customizable keymap functionality
+- **Dice App**: Digital dice roller
+- **Reversi Game App**: Classic board game implementation
+- **Performance App Touch Combo Key**: Enhanced performance controls
+- **Better LED Subsystem**: Dithering support for smoother gradients
+- **LED Partition**: Adjustable brightness multiplier for Mystrix Pro Underglow
+- **Dual MIDI Port**: Apollo Studio connectivity without special drivers
+- **Enhanced Underglow**: Boot animation and Note App note view
+- **Toggle Button Feedback**: Shows On/Off in text scroll
+- **Mystrix Pro Keypad User Calibration**: Custom sensitivity adjustment
+- **Note App Vertical Split**: Split pad vertically for dual zones
+- **Performance App Palettes**: 4 customizable color palettes
+
+### Updates
+- **Lighting App V2**: Major update with new features
+
+### Improvements
+- **Color Picker UI**: Enhanced user interface
+- **Keypad Driver**: Better performance for Mystrix Standard & Pro
+- **LED Brightness Steps**: More granular control
+- **Bluetooth Secure Connection**: Windows and Android support (via @M4kI9H7)
+
+### Bug Fixes
+- Fixed apps out of order in App Launcher
+- Fixed memory leaks
+- Fixed Performance App Flicker Reduction Toggle
+- Fixed Note App overlap default value display
+- Fixed issue sending special MIDI packets
+
+### Changes
+- **Device Naming**: Now shows Mystrix / Mystrix Pro in device name
+- **Device Settings Page**: New dedicated page for device-specific settings
+
+### Removed
+- **Performance App Compatibility Mode**: Unipad now supports Mystrix natively
+
+## Matrix OS 2.4.1 - Production Matrix Support
+*Released: July 9, 2023*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.4.1)
+
+### New Features
+- **Production Hardware Support**: Matrix & Matrix Pro (Rev C) now supported
+
+### Improvements
+- **Reworked Keypad Driver**: Enhanced driver for Matrix devices
+
+## Matrix OS 2.4 - Apollo Studio Support
+*Released: January 21, 2023*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.4)
+
+### New Features
+- **MIDI SysEx Support**: Full SysEx implementation (USB MIDI only)
+- **Apollo Studio Integration**: Experimental Performance Mode support
+
+### Bug Fixes
+- Fixed USB MIDI on macOS
+
+### Improvements
+- **USB MIDI Driver**: Enhanced performance
+- **LED Backend**: Improved stability
+
+## Matrix OS 2.3
+*Released: December 26, 2022*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.3)
+
+### Changes
+- **ESP-IDF V5.0**: Rebased Matrix OS for ESP32 family on latest framework
+- **High-Performance Keypad Driver**: Enabled for Matrix Pro
+
+### Bug Fixes
+- Fixed LEDs not appearing at lowest brightness setting
+
+## Matrix OS 2.2.1
+*Released: December 1, 2022*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.2.1)
+
+### Bug Fixes
+- Fixed keypad velocity remap calculation
+
+## Matrix OS 2.2
+*Released: December 1, 2022*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.2)
+
+### New Features
+- **Piano & Scale App**: Musical keyboard application
+
+### Changes
+- **Default Boot**: OS now boots into Application Launcher by default
+- **Brightness Range**: Fine tune menu changed from 0-255 to 0-100
+- **OS Kernel Overhaul**: Complete rewrite of kernel and UI framework
+- **Matrix Pro Underglow**: Increased brightness multiplier
+
+## Matrix OS 2.1.1
+*Released: October 17, 2022*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.1.1)
+
+### Changes
+- **Velocity Calibration**: Matrix Pro custom velocity sensing no longer requires reboot (reverting to default still requires reboot)
+
+### Bug Fixes
+- Fixed velocity curve remapping
+- Fixed Velocity Sensitivity toggle
+- Fixed incorrect UI names
+- Fixed UI elements leaking long press input to base UI
+
+## Matrix OS 2.1 - The "Should Been the Launch Version" Update
+*Released: October 6, 2022*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.1)
+
+### New Features
+- **Device ID System**: Unique device identification
+- **Brightness Control Menu**: Dedicated brightness adjustment interface
+- **Matrix Pro Velocity Sensitivity Recalibration**: Custom velocity response tuning
+
+### Bug Fixes
+- Fixed Unipad support (via compatibility mode)
+
+## Matrix OS 2.0 - First Stable Release
+*Released: Augest 13, 2022*
+
+[Download (GitHub)](https://github.com/203-Systems/MatrixOS/releases/tag/V2.0)
+
+Initial stable release of Matrix OS 2.0.

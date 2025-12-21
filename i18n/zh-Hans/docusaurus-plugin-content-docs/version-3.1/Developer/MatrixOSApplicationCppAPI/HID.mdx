@@ -1,0 +1,469 @@
+---
+sidebar_position: 6
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink'
+
+# HID API
+
+## 概述
+`HID` 命名空间提供控制各种人机接口设备（HID）外设的 API，如键盘、鼠标、游戏手柄等。还包括原始 HID 通信支持。
+
+与 MIDI 系统不同，HID 系统更加直接，无需用户管理端口。来自不同源设备的所有输入都混合在一起，作为单一流发送给应用程序，所有出站消息都发送到所有端点。（如需更复杂的路由功能，请告诉我，我会考虑添加支持。）
+
+**此 API 仅支持 USB HID，目前不支持蓝牙 HID。**
+
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/HID/"/>。*
+
+---
+
+## `Keyboard`
+
+### `MatrixOS::HID::Keyboard::Write`
+```cpp
+bool Write(KeyboardKeycode k);
+```
+
+写入键盘按键事件。
+
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要写入的按键。
+
+**返回值：**
+- `bool`：成功写入事件返回 `true`，否则返回 `false`。
+
+---
+
+### `MatrixOS::HID::Keyboard::Press`
+```cpp
+bool Press(KeyboardKeycode k);
+```
+
+按下键盘按键。
+
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要按下的按键。
+
+**返回值：**
+- `bool`：成功按下按键返回 `true`，否则返回 `false`。
+
+---
+
+### `MatrixOS::HID::Keyboard::Release`
+```cpp
+bool Release(KeyboardKeycode k);
+```
+
+释放键盘按键。
+
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要释放的按键。
+
+**返回值：**
+- `bool`：成功释放按键返回 `true`，否则返回 `false`。
+
+---
+
+### `MatrixOS::HID::Keyboard::Remove`
+```cpp
+bool Remove(KeyboardKeycode k);
+```
+
+从活动按键列表中移除按键事件。
+
+**参数：**
+- `k` ([`KeyboardKeycode`](./Types/HIDSpecs#enum-keyboardkeycode))：要移除的按键。
+
+**返回值：**
+- `bool`：成功移除按键返回 `true`，否则返回 `false`。
+
+---
+
+### `MatrixOS::HID::Keyboard::ReleaseAll`
+```cpp
+void ReleaseAll(void);
+```
+
+释放所有已按下的键盘按键。
+
+---
+
+## `Mouse`
+
+### `MatrixOS::HID::Mouse::Click`
+```cpp
+void Click(MouseKeycode b = MOUSE_LEFT);
+```
+
+模拟鼠标点击。
+
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要点击的按钮。默认值为 `MOUSE_LEFT`。
+
+---
+
+### `MatrixOS::HID::Mouse::Press`
+```cpp
+void Press(MouseKeycode b = MOUSE_LEFT);
+```
+
+按下鼠标按钮。
+
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要按下的按钮。默认值为 `MOUSE_LEFT`。
+
+---
+
+### `MatrixOS::HID::Mouse::Release`
+```cpp
+void Release(MouseKeycode b = MOUSE_LEFT);
+```
+
+释放鼠标按钮。
+
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要释放的按钮。默认值为 `MOUSE_LEFT`。
+
+---
+
+### `MatrixOS::HID::Mouse::ReleaseAll`
+```cpp
+void ReleaseAll(void);
+```
+
+释放所有鼠标按钮。
+
+---
+
+### `MatrixOS::HID::Mouse::Move`
+```cpp
+void Move(signed char x, signed char y, signed char wheel = 0);
+```
+
+移动鼠标光标。
+
+**参数：**
+- `x` (`signed char`)：水平移动。
+- `y` (`signed char`)：垂直移动。
+- `wheel` (`signed char`，可选)：滚轮移动。默认值为 `0`。
+
+---
+
+## `Touch`
+
+### `MatrixOS::HID::Touch::Click`
+```cpp
+void Click(MouseKeycode b = MOUSE_LEFT);
+```
+
+在触控模式下模拟鼠标点击。
+
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要点击的按钮。默认值为 `MOUSE_LEFT`。
+
+---
+
+### `MatrixOS::HID::Touch::Press`
+```cpp
+void Press(MouseKeycode b = MOUSE_LEFT);
+```
+
+在触控模式下按下鼠标按钮。
+
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要按下的按钮。默认值为 `MOUSE_LEFT`。
+
+---
+
+### `MatrixOS::HID::Touch::Release`
+```cpp
+void Release(MouseKeycode b = MOUSE_LEFT);
+```
+
+在触控模式下释放鼠标按钮。
+
+**参数：**
+- `b` ([`MouseKeycode`](./Types/HIDSpecs#enum-mousekeycode)，可选)：要释放的按钮。默认值为 `MOUSE_LEFT`。
+
+---
+
+### `MatrixOS::HID::Touch::MoveTo`
+```cpp
+void MoveTo(signed char x, signed char y, signed char wheel = 0);
+```
+
+在触控模式下将光标移动到绝对位置。
+
+**参数：**
+- `x` (`signed char`)：水平位置。
+- `y` (`signed char`)：垂直位置。
+- `wheel` (`signed char`，可选)：滚轮移动。默认值为 `0`。
+
+---
+
+### `MatrixOS::HID::Touch::Move`
+```cpp
+void Move(signed char x, signed char y, signed char wheel = 0);
+```
+
+在触控模式下相对于当前位置移动光标。
+
+**参数：**
+- `x` (`signed char`)：水平移动。
+- `y` (`signed char`)：垂直移动。
+- `wheel` (`signed char`，可选)：滚轮移动。默认值为 `0`。
+
+---
+
+## `Gamepad`
+
+### `MatrixOS::HID::Gamepad::Press`
+```cpp
+void Press(GamepadKeycode b);
+```
+
+按下游戏手柄按钮。
+
+**参数：**
+- `b` ([`GamepadKeycode`](./Types/HIDSpecs#enum-gamepadkeycode))：要按下的按钮。
+
+---
+
+### `MatrixOS::HID::Gamepad::Release`
+```cpp
+void Release(GamepadKeycode b);
+```
+
+释放游戏手柄按钮。
+
+**参数：**
+- `b` ([`GamepadKeycode`](./Types/HIDSpecs#enum-gamepadkeycode))：要释放的按钮。
+
+---
+
+### `MatrixOS::HID::Gamepad::ReleaseAll`
+```cpp
+void ReleaseAll(void);
+```
+
+释放所有已按下的游戏手柄按钮。
+
+---
+
+### `MatrixOS::HID::Gamepad::Buttons`
+```cpp
+void Buttons(uint32_t b);
+```
+
+设置所有游戏手柄按钮的状态。
+
+**参数：**
+- `b` (`uint32_t`)：表示所有按钮状态的位掌码。
+
+---
+
+### `MatrixOS::HID::Gamepad::XAxis`
+```cpp
+void XAxis(int8_t a);
+```
+
+设置游戏手柄的 X 轴值。
+
+**参数：**
+- `a` (`int8_t`)：X 轴的值（范围：-128 到 127）。
+
+---
+
+### `MatrixOS::HID::Gamepad::YAxis`
+```cpp
+void YAxis(int8_t a);
+```
+
+设置游戏手柄的 Y 轴值。
+
+**参数：**
+- `a` (`int8_t`)：Y 轴的值（范围：-128 到 127）。
+
+---
+
+### `MatrixOS::HID::Gamepad::ZAxis`
+```cpp
+void ZAxis(int8_t a);
+```
+
+设置游戏手柄的 Z 轴值。
+
+**参数：**
+- `a` (`int8_t`)：Z 轴的值（范围：-128 到 127）。
+
+---
+
+### `MatrixOS::HID::Gamepad::RXAxis`
+```cpp
+void RXAxis(int8_t a);
+```
+
+设置游戏手柄右侧 X 轴的值。
+
+**参数：**
+- `a` (`int8_t`)：右侧 X 轴的值（范围：-128 到 127）。
+
+---
+
+### `MatrixOS::HID::Gamepad::RYAxis`
+```cpp
+void RYAxis(int8_t a);
+```
+
+设置游戏手柄右侧 Y 轴的值。
+
+**参数：**
+- `a` (`int8_t`)：右侧 Y 轴的值（范围：-128 到 127）。
+
+---
+
+### `MatrixOS::HID::Gamepad::RZAxis`
+```cpp
+void RZAxis(int8_t a);
+```
+
+设置游戏手柄右侧 Z 轴的值。
+
+**参数：**
+- `a` (`int8_t`)：右侧 Z 轴的值（范围：-128 到 127）。
+
+---
+
+### `MatrixOS::HID::Gamepad::DPad`
+```cpp
+void DPad(GamepadDPadDirection d);
+```
+
+设置方向键方向。
+
+**参数：**
+- `d` ([`GamepadDPadDirection`](./Types/HIDSpecs#enum-gamepaddpaddirection))：方向键的方向。
+
+---
+
+## `Consumer`
+
+### `MatrixOS::HID::Consumer::Write`
+```cpp
+void Write(ConsumerKeycode c);
+```
+
+写入消费者控制按键事件。
+
+**参数：**
+- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode))：要写入的消费者控制按键。
+
+---
+
+### `MatrixOS::HID::Consumer::Press`
+```cpp
+void Press(ConsumerKeycode c);
+```
+
+按下消费者控制按键。
+
+**参数：**
+- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode))：要按下的消费者控制按键。
+
+---
+
+### `MatrixOS::HID::Consumer::Release`
+```cpp
+void Release(ConsumerKeycode c);
+```
+
+释放消费者控制按键。
+
+**参数：**
+- `c` ([`ConsumerKeycode`](./Types/HIDSpecs#enum-consumerkeycode))：要释放的消费者控制按键。
+
+---
+
+### `MatrixOS::HID::Consumer::ReleaseAll`
+```cpp
+void ReleaseAll(void);
+```
+
+释放所有已按下的消费者控制按键。
+
+---
+
+## `System`
+
+### `MatrixOS::HID::System::Write`
+```cpp
+void Write(SystemKeycode s);
+```
+
+写入系统控制按键事件。
+
+**参数：**
+- `s` ([`SystemKeycode`](./Types/HIDSpecs#enum-systemkeycode))：要写入的系统按键。
+
+---
+
+### `MatrixOS::HID::System::Press`
+```cpp
+void Press(SystemKeycode s);
+```
+
+按下系统控制按键。
+
+**参数：**
+- `s` ([`SystemKeycode`](./Types/HIDSpecs#enum-systemkeycode))：要按下的系统按键。
+
+---
+
+### `MatrixOS::HID::System::Release`
+```cpp
+void Release(void);
+```
+
+释放上一个按下的系统控制按键。
+
+---
+
+### `MatrixOS::HID::System::ReleaseAll`
+```cpp
+void ReleaseAll(void);
+```
+
+释放所有已按下的系统控制按键。
+
+---
+
+## `RawHID`
+
+### `MatrixOS::HID::RawHID::Get`
+```cpp
+size_t Get(uint8_t** report, uint32_t timeout_ms = 0);
+```
+
+从报告 ID 255 获取 16 字节的 HID 报告。
+
+**参数：**
+- `report` (`uint8_t**`)：用于存储获取的报告的指针。
+- `timeout_ms` (`uint32_t`，可选)：获取报告的超时时间（毫秒）。默认值为 `0`。
+
+**返回值：**
+- `size_t`：获取的报告大小。
+
+---
+
+### `MatrixOS::HID::RawHID::Send`
+```cpp
+bool Send(const vector<uint8_t>& report);
+```
+
+从报告 ID 255 发送原始 HID 报告。最大报告大小为 16 字节（额外的字节将用零填充）。
+
+**参数：**
+- `report` (`const vector<uint8_t>&`)：要发送的报告。
+
+**返回值：**
+- `bool`：成功发送报告返回 `true`，否则返回 `false`。
+```

@@ -1,0 +1,147 @@
+---
+title: Dimension
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 类：`Dimension`
+
+`Dimension` 类表示二维尺寸或大小，提供了面积计算和比较等操作的实用函数。
+
+*该类的源文件位于 <GithubLink path="os/framework/Dimension.h"/>*
+
+---
+
+## 构造函数
+
+### 默认构造函数
+```cpp
+Dimension();
+```
+
+将尺寸初始化为 `(0, 0)`。
+
+---
+
+### 从 `x` 和 `y` 创建
+```cpp
+Dimension(int16_t x, int16_t y);
+```
+
+从单独的 `x` 和 `y` 值构造尺寸。
+
+**参数：**
+- `x` (`int16_t`)：宽度。
+- `y` (`int16_t`)：高度。
+
+---
+
+### 从原始 32 位值创建
+```cpp
+Dimension(uint32_t rawByte);
+```
+
+从 32 位原始值构造尺寸。
+
+**参数：**
+- `rawByte` (`uint32_t`)：编码 `x` 和 `y` 的原始数据。高 16 位表示 `x`，低 16 位表示 `y`。
+
+---
+
+## 成员函数
+
+### `Contains`
+```cpp
+bool Contains(Point point);
+```
+
+检查点是否在尺寸范围内。
+
+**参数：**
+- `point` ([`Point`](./Point/))：要检查的点。
+
+**返回值：**
+- `bool`：如果点在尺寸范围内则返回 `true`，否则返回 `false`。
+
+---
+
+### `Area`
+```cpp
+uint32_t Area();
+```
+
+计算尺寸的面积。
+
+**返回值：**
+- `uint32_t`：面积，计算为 `x * y`。
+
+---
+
+## 运算符
+
+### 加法
+```cpp
+Dimension operator+(const Dimension& cp) const;
+```
+
+将两个尺寸相加。
+
+**参数：**
+- `cp` (`const Dimension&`)：要相加的其他尺寸。
+
+**返回值：**
+- `Dimension`：加法结果的新尺寸。
+
+---
+
+### 不等于比较
+```cpp
+bool operator!=(const Dimension& cp) const;
+```
+
+检查两个尺寸是否不相等。
+
+**参数：**
+- `cp` (`const Dimension&`)：要比较的其他尺寸。
+
+**返回值：**
+- `bool`：如果尺寸不相等则返回 `true`，否则返回 `false`。
+
+---
+
+### 小于比较
+```cpp
+bool operator<(const Dimension& cp) const;
+```
+
+比较两个尺寸。首先比较 `x`，如果相等，则比较 `y`。
+
+**参数：**
+- `cp` (`const Dimension&`)：要比较的其他尺寸。
+
+**返回值：**
+- `bool`：如果当前尺寸更小则返回 `true`，否则返回 `false`。
+
+---
+
+### 转换为 `bool`
+```cpp
+operator bool();
+```
+
+检查尺寸是否为非零。
+
+**返回值：**
+- `bool`：如果 `x` 和 `y` 都为非零则返回 `true`，否则返回 `false`。
+
+---
+
+### 转换为 `uint32_t`
+```cpp
+operator uint32_t();
+```
+
+将尺寸转换为 32 位原始值。
+
+**返回值：**
+- `uint32_t`：尺寸的原始表示。高 16 位表示 `x`，低 16 位表示 `y`。
+``` 

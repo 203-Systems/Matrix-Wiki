@@ -1,0 +1,150 @@
+---
+title: MidiPort
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 类：`MidiPort`
+
+`MidiPort` 类提供了管理 MIDI 端口的功能，包括打开、关闭、发送和接收 MIDI 数据包。它是 Matrix OS MIDI 系统的一部分。
+
+*该工具的源文件位于 <GithubLink path="os/framework/MidiPort.h"/>*
+
+---
+
+## 成员变量
+
+### `name`
+```cpp
+string name;
+```
+
+MIDI 端口的名称。
+
+---
+
+### `id`
+```cpp
+uint16_t id = MIDI_PORT_INVALID;
+```
+
+MIDI 端口的 ID。默认值为 `MIDI_PORT_INVALID`。- 有关更多信息，请参阅 [MidiPacket](../Types/MidiPacket.mdx#emidiportid)。
+
+---
+
+## 构造函数
+
+### 默认构造函数
+```cpp
+MidiPort();
+```
+
+创建一个未初始化的 `MidiPort`。
+
+---
+
+### 带名称和 ID 的构造函数
+```cpp
+MidiPort(string name, uint16_t id, uint16_t queue_size = 64);
+```
+
+创建一个具有指定名称和 ID 的 `MidiPort`。
+
+**参数：**
+- `name` (`string`)：MIDI 端口的名称。
+- `id` (`uint16_t`)：要分配给 MIDI 端口的 ID。
+- `queue_size` (`uint16_t`，可选)：MIDI 缓冲区的大小。默认值为 `64`。
+
+---
+
+### 带名称和端口类的构造函数
+```cpp
+MidiPort(string name, EMidiPortID port_class, uint16_t queue_size = 64);
+```
+
+创建一个具有指定名称和端口类的 `MidiPort`。
+
+**参数：**
+- `name` (`string`)：MIDI 端口的名称。
+- `port_class` ([`EMidiPortID`](../Types/MidiPacket.mdx#emidiportid))：端口类标识符。
+- `queue_size` (`uint16_t`，可选)：MIDI 缓冲区的大小。默认值为 `64`。
+
+---
+
+### 析构函数
+```cpp
+~MidiPort();
+```
+
+关闭 MIDI 端口并释放资源。
+
+---
+
+## 成员函数
+
+### `Open`
+```cpp
+uint16_t Open(uint16_t id, uint16_t queue_size = 64, uint16_t id_range = 1);
+```
+
+使用指定的 ID 打开 MIDI 端口。
+
+**参数：**
+- `id` (`uint16_t`)：要使用的基础 ID。
+- `queue_size` (`uint16_t`，可选)：MIDI 缓冲区的大小。默认值为 `64`。
+- `id_range` (`uint16_t`，可选)：检查可用性的 ID 范围。默认值为 `1`。
+
+**返回值：**
+- `uint16_t`：分配的端口 ID，如果无法打开端口则返回 `MIDI_PORT_INVALID`。
+
+---
+
+### `Close`
+```cpp
+void Close();
+```
+
+关闭 MIDI 端口并释放资源。
+
+---
+
+### `SetName`
+```cpp
+void SetName(string name);
+```
+
+设置 MIDI 端口的名称。
+
+**参数：**
+- `name` (`string`)：MIDI 端口的新名称。
+
+---
+
+### `Get`
+```cpp
+bool Get(MidiPacket* midipacket_dest, uint32_t timeout_ms = 0);
+```
+
+从端口缓冲区检索 MIDI 数据包。
+
+**参数：**
+- `midipacket_dest` (`MidiPacket*`)：用于存储检索到的 MIDI 数据包的指针。
+- `timeout_ms` (`uint32_t`，可选)：超时时间（以毫秒为单位）。默认值为 `0`。
+
+**返回值：**
+- `bool`：如果成功检索到数据包则返回 `true`，否则返回 `false`。
+
+---
+
+### `Send`
+```cpp
+bool Send(MidiPacket midipacket, uint32_t timeout_ms = 0);
+```
+
+从端口发送 MIDI 数据包。数据包将被发送到数据包中指定的端口。
+
+**参数：**
+- `midipacket` (`MidiPacket`)：要发送的 MIDI 数据包。
+- `timeout_ms` (`uint32_t`，可选)：超时时间（以毫秒为单位）。默认值为 `0`。
+
+**返回值：**
+- `bool`：如果数据包发送成功则返回 `true`，否则返回 `false`。

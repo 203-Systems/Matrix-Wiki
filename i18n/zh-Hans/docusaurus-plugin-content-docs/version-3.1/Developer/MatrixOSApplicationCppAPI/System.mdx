@@ -1,0 +1,111 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 系统 API
+
+## 概述
+
+系统 API 提供与 Matrix OS 系统交互的功能，如重启设备、打开设置菜单和旋转界面等。
+
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/System.cpp"/>。*
+
+---
+
+## `MatrixOS::SYS::Millis`
+```cpp
+uint32_t Millis(void);
+```
+
+返回设备启动后的毫秒数。可用于时间跟踪或延迟。
+
+**返回值：**
+- `uint32_t`：自启动以来经过的毫秒数。
+
+---
+
+## `MatrixOS::SYS::DelayMs`
+```cpp
+void DelayMs(uint32_t intervalMs);
+```
+
+暂停执行指定的时间。
+
+**参数：**
+- `intervalMs` (`uint32_t`)：延迟的毫秒数。
+
+---
+
+## `MatrixOS::SYS::Reboot`
+```cpp
+void Reboot(void);
+```
+
+重启设备。
+
+---
+
+## `MatrixOS::SYS::Bootloader`
+```cpp
+void Bootloader(void);
+```
+
+将设备重启到引导加载程序模式。
+
+---
+
+## `MatrixOS::SYS::OpenSetting`
+```cpp
+void OpenSetting(void);
+```
+
+打开 Matrix OS 设置菜单。
+
+---
+
+## `MatrixOS::SYS::Rotate`
+```cpp
+void Rotate(EDirection rotation, bool absolute = false);
+```
+
+将界面或特定组件向给定方向旋转。
+
+**参数：**
+- `rotation` ([`EDirection`](./Types/EDirection/))：旋转方向。
+- `absolute` (`bool`，可选)：旋转是否应为绝对旋转（从顶部位置开始）。默认为 `false`。
+
+---
+
+## `MatrixOS::SYS::ExecuteAPP`
+```cpp
+void ExecuteAPP(string author, string app_name);
+```
+
+启动指定的应用程序。
+
+**参数：**
+- `author` (string)：应用程序的作者。
+- `app_name` (string)：应用程序的名称。
+
+---
+
+## `MatrixOS::SYS::ExitAPP`
+```cpp
+void ExitAPP(void);
+```
+
+退出当前运行的应用程序并返回到应用程序启动器。
+
+---
+
+## `MatrixOS::SYS::ErrorHandler`
+```cpp
+void ErrorHandler(string error = "");
+```
+
+处理错误并记录指定的错误消息。
+
+**参数：**
+- `error` (string，可选)：要处理的错误消息。默认为空字符串。
+```

@@ -1,0 +1,365 @@
+---
+sidebar_position: 7
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# RawHID API
+
+## Overview
+
+The HID RawHID interface provides custom communication protocols for applications that need specialized HID functionality beyond standard keyboard, mouse, and gamepad interfaces. This allows for bidirectional communication and application-specific messaging.
+
+*The Python HID RawHID API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_HID_RawHID.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_HID_RawHID.pyi"/>.*
+
+---
+
+### `MatrixOS.HID.RawHID.Get`
+```python
+def Get(timeout_ms: int = 0) -> bytes
+```
+
+Receives raw HID data from the host.
+
+**Parameters:**
+- `timeout_ms` (`int`, optional): Timeout in milliseconds to wait for data (defaults to 0 for no timeout)
+
+**Returns:**
+- `bytes`: Received raw HID data, or empty bytes if no data available
+
+**Example:**
+```python
+if MatrixOS.HID.Ready():
+    # Wait up to 100ms for HID data
+    data = MatrixOS.HID.RawHID.Get(100)
+    if data:
+        print(f"Received {len(data)} bytes: {data.hex()}")
+```
+
+---
+
+### `MatrixOS.HID.RawHID.Send`
+```python
+def Send(report: bytes) -> bool
+```
+
+Sends raw HID data to the host.
+
+**Parameters:**
+- `report` (`bytes`): Raw HID report data to send
+
+**Returns:**
+- `bool`: True if sent successfully, False on error
+
+**Example:**
+```python
+if MatrixOS.HID.Ready():
+    # Send custom HID report
+    report_data = bytes([0x01, 0x02, 0x03, 0x04])
+    success = MatrixOS.HID.RawHID.Send(report_data)
+    if success:
+        print("HID report sent successfully")
+```
+
+---
+
+## RawHID Concepts
+
+### Custom HID Reports
+RawHID allows sending and receiving custom HID reports that don't fit standard HID device classes:
+
+- **Custom Input Reports**: Device to host communication
+- **Custom Output Reports**: Host to device communication
+- **Feature Reports**: Bidirectional configuration data
+
+### Data Protocols
+- **Binary Data**: Raw byte transmission
+- **Structured Messages**: Protocol-specific data formats
+- **Command/Response**: Request-response communication patterns
+
+---
+
+## Example Implementation
+
+```python
+def rawhid_communication_example():
+    """Example RawHID communication interface"""
+
+    def send_custom_message(message_type, data):
+        """Send a custom message via RawHID"""
+        # This would depend on actual RawHID implementation
+        print(f"Sending RawHID message: Type {message_type}, Data: {data}")
+
+    def handle_rawhid_input():
+        """Handle incoming RawHID data"""
+        # This would depend on actual RawHID implementation
+        print("Checking for RawHID input...")
+
+    message_types = {
+        0: "status_request",
+        1: "led_control",
+        2: "config_update",
+        3: "sensor_data"
+    }
+
+    print("RawHID Communication Interface")
+    print("Press keys to send different message types")
+
+    # Display message types
+    for key_id, msg_type in message_types.items():
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+        MatrixOS.LED.SetColor(xy, Color(0, 100, 200), 100)
+
+    MatrixOS.LED.Update(255)
+
+    while True:
+        if not MatrixOS.HID.Ready():
+            print("HID not ready, retrying...")
+            MatrixOS.SYS.DelayMs(1000)
+            continue
+
+        # Check for incoming data
+        handle_rawhid_input()
+
+        # Handle key input for sending messages
+        key_event = MatrixOS.KeyPad.Get(100)
+        if key_event is not None:
+            key_id = key_event.ID()
+            key_info = key_event.KeyInfo()
+
+            if key_info.Active() and key_id in message_types:
+                msg_type = message_types[key_id]
+
+                # Prepare sample data based on message type
+                if msg_type == "status_request":
+                    data = {"uptime": MatrixOS.SYS.Millis()}
+                elif msg_type == "led_control":
+                    data = {"pattern": "rainbow", "brightness": 255}
+                elif msg_type == "config_update":
+                    data = {"setting": "auto_brightness", "value": True}
+                elif msg_type == "sensor_data":
+                    data = {"temperature": 25.5, "humidity": 60}
+
+                send_custom_message(key_id, data)
+
+                # Visual feedback
+                xy = MatrixOS.KeyPad.ID2XY(key_id)
+                MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+                MatrixOS.LED.Update(255)
+                MatrixOS.SYS.DelayMs(200)
+                MatrixOS.LED.SetColor(xy, Color(0, 100, 200), 100)
+                MatrixOS.LED.Update(255)
+
+rawhid_communication_example()
+```
+
+---
+
+## Advanced RawHID Examples
+
+### Data Logger Interface
+```python
+def rawhid_data_logger():
+    """RawHID-based data logging interface"""
+
+    log_buffer = []
+    max_buffer_size = 100
+
+    def add_log_entry(entry_type, data):
+        """Add entry to log buffer"""
+        timestamp = MatrixOS.SYS.Millis()
+        entry = {
+            "timestamp": timestamp,
+            "type": entry_type,
+            "data": data
+        }
+
+        log_buffer.append(entry)
+
+        # Maintain buffer size
+        if len(log_buffer) > max_buffer_size:
+            log_buffer.pop(0)
+
+        print(f"Log entry added: {entry_type}")
+
+    def send_log_data():
+        """Send log data via RawHID"""
+        if log_buffer:
+            # In actual implementation, this would send via RawHID
+            print(f"Sending {len(log_buffer)} log entries via RawHID")
+            # Could implement chunked transmission for large logs
+        else:
+            print("No log data to send")
+
+    log_types = {
+        8: "key_press",
+        9: "system_event",
+        10: "error_event",
+        16: "send_logs"
+    }
+
+    print("RawHID Data Logger")
+    print("Generate log entries and send via RawHID")
+
+    # Display log type options
+    for key_id, log_type in log_types.items():
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+        if log_type == "send_logs":
+            color = Color(255, 255, 0)  # Yellow for send
+        else:
+            color = Color(0, 255, 100)  # Green for log types
+        MatrixOS.LED.SetColor(xy, color, 150)
+
+    MatrixOS.LED.Update(255)
+
+    while True:
+        if MatrixOS.HID.Ready():
+            key_event = MatrixOS.KeyPad.Get(100)
+            if key_event is not None:
+                key_id = key_event.ID()
+                key_info = key_event.KeyInfo()
+
+                if key_info.Active() and key_id in log_types:
+                    log_type = log_types[key_id]
+
+                    if log_type == "send_logs":
+                        send_log_data()
+                    else:
+                        # Generate sample log data
+                        sample_data = {
+                            "key_press": {"key_id": key_id, "velocity": key_info.Velocity()},
+                            "system_event": {"event": "mode_change", "new_mode": "logging"},
+                            "error_event": {"error": "test_error", "severity": "low"}
+                        }
+
+                        add_log_entry(log_type, sample_data.get(log_type, {}))
+
+                    # Visual feedback
+                    xy = MatrixOS.KeyPad.ID2XY(key_id)
+                    MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+                    MatrixOS.LED.Update(255)
+                    MatrixOS.SYS.DelayMs(150)
+
+                    # Restore color
+                    if log_type == "send_logs":
+                        color = Color(255, 255, 0)
+                    else:
+                        color = Color(0, 255, 100)
+                    MatrixOS.LED.SetColor(xy, color, 150)
+                    MatrixOS.LED.Update(255)
+
+rawhid_data_logger()
+```
+
+### Custom Control Protocol
+```python
+def rawhid_control_protocol():
+    """Custom control protocol via RawHID"""
+
+    device_state = {
+        "mode": "normal",
+        "brightness": 128,
+        "pattern": "solid",
+        "color": [255, 0, 0]
+    }
+
+    def send_state_update():
+        """Send current device state via RawHID"""
+        # In actual implementation, this would serialize and send state
+        print("Sending device state update:")
+        for key, value in device_state.items():
+            print(f"  {key}: {value}")
+
+    def process_control_command(command, value):
+        """Process incoming control command"""
+        if command == "set_brightness":
+            device_state["brightness"] = max(0, min(255, value))
+        elif command == "set_mode":
+            device_state["mode"] = value
+        elif command == "set_pattern":
+            device_state["pattern"] = value
+        elif command == "set_color":
+            device_state["color"] = value
+
+        print(f"Command processed: {command} = {value}")
+        send_state_update()
+
+    controls = {
+        0: ("brightness_up", lambda: device_state["brightness"] + 32),
+        1: ("brightness_down", lambda: device_state["brightness"] - 32),
+        2: ("toggle_mode", lambda: "demo" if device_state["mode"] == "normal" else "normal"),
+        3: ("cycle_pattern", lambda: {"solid": "fade", "fade": "pulse", "pulse": "solid"}[device_state["pattern"]]),
+        8: ("red_color", lambda: [255, 0, 0]),
+        9: ("green_color", lambda: [0, 255, 0]),
+        10: ("blue_color", lambda: [0, 0, 255]),
+        16: ("send_state", None)
+    }
+
+    print("RawHID Control Protocol")
+    print("Control device state via custom HID protocol")
+
+    # Display controls
+    for key_id, (name, _) in controls.items():
+        xy = MatrixOS.KeyPad.ID2XY(key_id)
+        if "color" in name:
+            color = Color(255, 100, 0)  # Orange for color controls
+        elif "brightness" in name:
+            color = Color(255, 255, 0)  # Yellow for brightness
+        else:
+            color = Color(0, 200, 255)  # Cyan for other controls
+        MatrixOS.LED.SetColor(xy, color, 100)
+
+    MatrixOS.LED.Update(255)
+
+    while True:
+        if MatrixOS.HID.Ready():
+            key_event = MatrixOS.KeyPad.Get(100)
+            if key_event is not None:
+                key_id = key_event.ID()
+                key_info = key_event.KeyInfo()
+
+                if key_info.Active() and key_id in controls:
+                    name, value_func = controls[key_id]
+
+                    if name == "send_state":
+                        send_state_update()
+                    else:
+                        new_value = value_func()
+                        process_control_command(name, new_value)
+
+                    # Visual feedback
+                    xy = MatrixOS.KeyPad.ID2XY(key_id)
+                    MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
+                    MatrixOS.LED.Update(255)
+                    MatrixOS.SYS.DelayMs(200)
+
+                    # Restore color
+                    if "color" in name:
+                        color = Color(255, 100, 0)
+                    elif "brightness" in name:
+                        color = Color(255, 255, 0)
+                    else:
+                        color = Color(0, 200, 255)
+                    MatrixOS.LED.SetColor(xy, color, 100)
+                    MatrixOS.LED.Update(255)
+
+rawhid_control_protocol()
+```
+
+---
+
+## Integration Considerations
+
+### Host Application Requirements
+When using RawHID, the host application must:
+
+- Support custom HID device classes
+- Handle custom HID reports
+- Implement the corresponding protocol on the host side
+- Manage device enumeration and communication
+
+### Development Workflow
+1. **Define Protocol**: Specify message formats and communication patterns
+2. **Implement Device Side**: Create MatrixOS RawHID implementation
+3. **Implement Host Side**: Create corresponding host application
+4. **Test Communication**: Verify bidirectional communication works correctly
+5. **Handle Edge Cases**: Implement error recovery and edge case handling

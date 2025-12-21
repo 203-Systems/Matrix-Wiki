@@ -1,0 +1,652 @@
+---
+sidebar_position: 1
+---
+
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# 编写 C++ 应用
+
+## 原生应用系统概述
+
+在 Matrix OS 中，原生 (C++) 应用程序将在设备上作为操作系统中的独立线程运行，并可以访问系统 API、设备级低级 API 和任何第三方库。这对性能很有好处，但对可移植性和共享性不太友好。（提示提示）
+
+应用程序代码类似于 Arduino，你将有一个用户定义的 Setup() 函数用于应用程序初始化，一个用户定义的 Loop() 函数作为应用程序代码的无限循环。此外，你还将有一个用户定义的 End() 函数用于应用程序结束，以及一个可以调用以退出应用程序的 Exit() 函数。
+
+## 可用 API
+
+- Matrix OS C++ API - Matrix OS 提供的 API，它们是最容易使用的，提供最佳的可移植性和内存安全性（据说如此）。
+- 设备层 API - 设备层提供的 API。Matrix OS API 很大程度上是对这些 API 的封装，你应该使用 Matrix OS API。对于一些尚未添加到 Matrix OS API 中的特殊设备功能，可能会有一些非标准 API。
+- FreeRTOS API - Matrix OS 运行在 FreeRTOS 上，你也可以使用 FreeRTOS API 来创建线程和跨线程通信。
+- 你希望使用的任何第三方 C/C++ 库 - 你应该能够将它们包含在应用程序文件夹中并使用它们。
+
+:::warning[不稳定的 API 和构建系统]
+由于该项目仍在发展中，我无法保证 API 会保持不变。经常会有很多新用法需要新的 API 和对现有 API 的更改。你的代码会出现问题，但我不知道何时以及如何出现。我会尽可能地保持向后兼容性，但不会试图拯救明显糟糕的设计。
+
+Matrix OS 构建系统可能很快会进行大修，以便更智能地知道要编译什么和不编译什么。你的代码可能需要稍作更改以适应它，但这应该不会很困难，并且会有迁移指南。
+:::
+
+## 示例应用
+
+我们使用 Matrix OS 中的示例应用作为例子来解释应用程序是如何工作的。你可以在 [Matrix OS 仓库](https://github.com/203Null/MatrixOS/tree/WiFi-Example/applications/Example) 找到源代码
+
+
+### 头文件
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus} showLineNumbers>
+{`
+#pragma once
+
+#include "MatrixOS.h"
+#include "applications/Application.h"
+#include "applications/BrightnessControl/BrightnessControl.h" 
+
+class ExampleAPP : public Application {
+ public:
+  static Application_Info info;
+
+  void Setup() override;
+  void Loop() override;
+  void End() override;
+
+
+
+  // Wanna make your number and color saves between restarts? Comment out the define below. 
+  // This macro change the code that will the color variable to a saved variable
+  // And replace part of the code to support it
+
+  // #define EXAMPLEAPP_SAVED_VAR
+
+#ifndef EXAMPLEAPP_SAVED_VAR
+  uint8_t number = 0;
+  Color color = Color(0xFFFFFF);
+#else
+  CreateSavedVar("Example", number, uint8_t, 0);
+  CreateSavedVar("Example", color, Color, Color(0xFFFFFF));
+  
+  // Namespace (This namespace only applies to this application. So even if two different applications have the same variable name, they won't conflict)， variable name (no ""), variable type, default value
+  // And then just use the variable as a normal variable. The value will be saved & loaded automatically!
+  // However, not all variable type and operator is supported. If that is the case, you have to get the variable via .Get() and .Set()
+  // For more, see /os/framework/SavedVariable.h
+  #endif
+
+  void UIMenu();
+  void KeyEventHandler(uint16_t KeyID, KeyInfo* keyInfo);
+  void MidiEventHandler(MidiPacket midiPacket);
+};
+
+// Meta data about this application
+inline Application_Info ExampleAPP::info = {
+    .name = "Example",
+    .author = "203 Systems",
+    .color = Color(0xFFFFFF),
+    .version = 1,
+    .visibility = true,
+};
+
+// Register this Application to the OS (Use the class name of your application as the variable)
+REGISTER_APPLICATION(ExampleAPP);
+`}
+</SyntaxHighlighter>
+
+#### 详细分解
+
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+#include "MatrixOS.h"
+`} 
+</SyntaxHighlighter>
+
+这包含了 MatrixOS.h 文件，其中包含了 Matrix OS 提供的所有框架、类型和 API。
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+#include "applications/Application.h"" 
+`}
+</SyntaxHighlighter>
+
+这包含了 Application.h 文件，它是所有应用程序的基类。它为应用程序提供了基本结构。
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+#include "applications/BrightnessControl/BrightnessControl.h" 
+`}
+</SyntaxHighlighter>
+
+这包含了 BrightnessControl.h 文件，它是一个用于亮度控制的外部 UI。这表明你可以包含来自其他应用程序的 UI 或 UI 元素。（尽管不推荐这样做）
+
+
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+class ExampleAPP : public Application {
+public:
+static Application_Info info;
+
+void Setup() override;
+void Loop() override;
+void End() override;
+`}
+</SyntaxHighlighter>
+
+这是 ExampleAPP 类的类定义。它继承自 Application 类，后者是所有应用程序的基类。
+Application_Info info 是一个静态变量，包含应用程序的元数据。它包括应用程序的名称、作者、颜色、版本和可见性。（更多信息请参见下文）
+
+它还定义了对 Application 类中 Setup()、Loop() 和 End() 函数的重写。（如果你不需要它们，可以删除它们并不重写它们。它们默认情况下不会做任何事情）
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+uint8_t number = 0;
+Color color = Color(0xFFFFFF);
+`}
+</SyntaxHighlighter>
+这是 number 和 color 变量的变量定义。它们被应用程序用于在运行时存储数字和颜色。
+
+:::warning[仅限本地变量]
+确保你的所有变量都在类内。如果你在类外部定义它们，它们将成为全局变量，并且内存不会被操作系统管理。这将导致即使应用程序没有运行时也会占用内存。
+:::
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+  CreateSavedVar("Example", number, uint8_t, 0);
+  CreateSavedVar("Example", color, Color, Color(0xFFFFFF))
+`}
+</SyntaxHighlighter>
+如果你希望在重启之间保存你的变量，可以使用 CreateSavedVar() 宏。
+这是 number 和 color 变量的保存变量定义。它们被应用程序用于在重启之间存储数字和颜色。
+
+宏定义为 CreateSavedVar(命名空间字符串、变量名称、变量类型、默认值)。
+- 命名空间字符串是应用程序的名称。它用于在不同应用程序之间分隔保存的变量。（从技术上讲，你可以使用相同的命名空间来访问另一个应用程序的保存变量，但不推荐这样做）
+- 变量名称是变量的名称。它用于在保存变量中标识变量。你也使用此名称在代码中访问变量。
+- 变量类型是变量的类型。它用于确定变量的大小以及如何保存/加载它。
+- 默认值是变量的默认值。如果变量尚未保存，它用于初始化变量。
+
+在大多数情况下，当你访问变量时，你可以像普通变量一样使用变量名。值将自动保存和加载！对于原始类型，你也能够在算术运算中使用它。
+如果你有一个复杂变量，你可能需要使用 .Get() 来获得指向变量的指针，修改它，然后使用 .Save() 来保存它。
+
+我知道这个宏不是很直观，也不遵循 C 语言在变量创建上的语法。如果你有更好的想法，请告诉我。
+
+For more info on saved variable, see <DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/Utilities/SavedVariable">Saved Variable</DocLink>
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+  void UIMenu();
+  void KeyEventHandler(uint16_t KeyID, KeyInfo* keyInfo);
+  void MidiEventHandler(MidiPacket midiPacket);
+`}
+</SyntaxHighlighter>
+
+This is the function definition of the UIMenu(), KeyEventHandler(), and MidiEventHandler() functions. They are used by the application to handle UI, key, and MIDI events. We will explain them in the source file section.
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+inline Application_Info ExampleAPP::info = {
+    .name = "Example",
+    .author = "203 Systems",
+    .color = Color(0xFFFFFF),
+    .version = 1,
+    .visibility = true,
+};
+`}
+</SyntaxHighlighter>
+
+This is the meta data of the application. It is used by the OS to display information about the application. It includes the name, author, color, version, and visibility of the application.
+
+- Name - The name of the application. It is used to identify the application in the OS. (System will refer to the application by this name)
+- Author - The author of the application. It is used to create namespaced between different authors. (So two applications with the same name but different authors won't conflict)
+- Color - The color of the application. It is used to identify the application in the UI. (The color will be used in the UI to represent the application)
+- Version - The version of the application. It is used to identify the version of the application. (The OS does not make use of this yet, but it will be helpful for APPs to keep track of their version and update it's NVS)
+- Visibility - The visibility of the application. It is used to determine if the application is visible in the UI. (If the application is not visible, it will not be shown in the UI, but they can still be launched by ExecuteAPP() function.)
+
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+REGISTER_APPLICATION(ExampleAPP);
+`}
+</SyntaxHighlighter>
+
+Registrating the application to the OS. (The OS will know about the application and will be able to launch it)
+
+### Source File
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus} showLineNumbers>
+{`
+#include "Example.h"
+#include "ui/UI.h" // Include the UI Framework
+
+// Run once
+void ExampleAPP::Setup() {
+  MLOGI("Example", "Example Started");
+}
+
+// Run in a loop after Setup()
+void ExampleAPP::Loop() {
+  // Set up key event handler
+  struct KeyEvent keyEvent; // Variable for the latest key event to be stored at
+  while (MatrixOS::KEYPAD::Get(&keyEvent)) // While there is still keyEvent in the queue
+  { KeyEventHandler(keyEvent.id, &keyEvent.info); } // Handle them
+
+struct MidiPacket midiPacket; // Variable for the latest midi packet to be stored at
+  while (MatrixOS::MIDI::Get(&midiPacket)) // While there is still midi packet in the queue
+  { MidiEventHandler(midiPacket); } // Handle them
+}
+
+// Handle the key event from the OS
+void ExampleAPP::KeyEventHandler(uint16_t keyID, KeyInfo* keyInfo) {
+  Point xy = MatrixOS::KEYPAD::ID2XY(keyID);  // Trying to get the XY coordination of the KeyID
+  if (xy)                                     // IF XY is valid, means it is a key on the grid
+  {
+    MLOGD("Example", "Key %d %d %d", xy.x, xy.y, keyInfo->state); // Print the key event to the debug log
+    if (keyInfo->state == PRESSED)            // Key is pressed
+    {
+      MatrixOS::LED::SetColor(xy, color, 0);      // Set the LED color to a color. Last 0 means writes to the active layer (255 writes to the active layer as well but do not trigger auto update.)
+    }
+    else if (keyInfo->state == RELEASED)
+    {
+      MatrixOS::LED::SetColor(xy, 0x000000, 0);  // Set the LED to off
+    }
+  }
+  else                          // XY Not valid,
+  {
+    if (keyID == FUNCTION_KEY)  // FUNCTION_KEY is pre defined by the device, as the keyID for the system function key
+    {
+      UIMenu();                 // Open UI Menu
+    }
+  }
+}
+
+void ExampleAPP::MidiEventHandler(MidiPacket midiPacket) {
+  // Echo back the midi packet to the source
+  MatrixOS::MIDI::Send(midiPacket);
+
+  //Midi Packet has port, status, and data
+  // Port shows where this midi signal is from (USB, Bluetooth, RTPMIDI, HWPort, etc)
+  // When sending midi packets. This is also where the midi signal will be sent to
+  // See EMidiStatus enum in /os/framework/midiPacket.h for all the midi status
+  // 0x0 sends to all first of available ports
+  // Status is the midi status (NoteOn, NoteOff, ControlChange, etc)
+  // See EMidiStatus enum in /os/framework/midiPacket.h for all the midi status
+
+  // Wanna do more with the packet? Here's a example parser
+
+  /*
+  switch (midiPacket.status)
+  {
+    case NoteOn:
+    case ControlChange:
+      NoteHandler(midiPacket.channel(), midiPacket.note(), midiPacket.velocity());
+      break;
+    case NoteOff:
+      NoteHandler(midiPacket.channel(), midiPacket.note(), 0);
+      break;
+    case SysExData:
+    case SysExEnd:
+      SysExHandler(midiPacket);
+      break;
+    default:
+      break;
+  }
+  */
+}
+
+void ExampleAPP::UIMenu() {
+  // Matrix OS Debug Log, sent to hardware UART and USB CDC
+  MLOGI("Example", "Enter UI Menu");
+
+  // Create a UI Object
+  // UI Name, Color (as the text scroll color). and new led layer (Set as true, the UI will render on a new led layer. Persevere what was rendered before after UI exits)
+  UI menu("UI Menu", Color(0x00FFFF), true);
+
+  // Create an UI element
+  UIButton numberSelector;
+  numberSelector.SetName("Number Selector");  // Name of this UI element
+  numberSelector.SetColor(Color(0xFF0000));  // Color of the UI element
+  numberSelector.OnPress([&]() -> void {     // Callback function when the button is pressed
+    number = MatrixOS::UIInterface::NumberSelector8x8(number, 0xFF0000, "Number", 0, 100);  // Current Number, color, low range, high range
+    // EXAMPLEAPP_SAVED_VAR does not affect this code
+    // For most value types, the saved variable wrapper library requires no changes to code!
+  });
+  // Add the UI element to the UI object to top left conner
+  menu.AddUIComponent(numberSelector, Point(0, 0));
+
+  // Create an dynamic colored button
+  UIButton colorSelector;
+  colorSelector.SetName("Color Selector");  // Name of this UI element
+  colorSelector.SetColorFunc([&]() -> Color { return color; });  // Use the color variable as the color of this UI element
+  colorSelector.OnPress([&]() -> void {  // Callback function when the button is pressed
+    #ifndef EXAMPLEAPP_SAVED_VAR
+    MatrixOS::UIInterface::ColorPicker(color);  // References to the color variable. The color variable will be updated by the ColorPicker function. Return true if color is changed, false if not.
+    #else
+    MatrixOS::UIInterface::ColorPicker(color.value);  // Get the actual value from the saved variable wrapper library
+    color.Set(color.value);  // Save the new variable
+    // The saved variable wrapper doesn't implicitly convert to the references type.
+    // This way you know you have to get the references manually and set the value back to the saved variable manually.
+    #endif
+  });
+  colorSelector.OnHold([&]() -> void {  // Optional Callback function for hold down. Reset color to default white.
+    color = 0xFFFFFF;
+  });
+
+  // Add the UI element to the UI object to top right conner
+  menu.AddUIComponent(colorSelector, Point(Device::x_size - 1, 0));
+
+  // A large button that cycles though the brightness of the device
+  UIButton brightnessBtn;
+  brightnessBtn.SetName("Brightness"); // Name
+  brightnessBtn.SetColor(Color(0xFFFFFF)); // Color
+  brightnessBtn.SetSize(Dimension(2, 2)); // Size of the button
+  brightnessBtn.OnPress([&]() -> void { MatrixOS::LED::NextBrightness(); }); // Function to call when the button is pressed
+  brightnessBtn.OnHold([&]() -> void {BrightnessControl().Start(); }); // Function to call when the button is hold down
+
+  // Place this button in the center of the device
+  menu.AddUIComponent(brightnessBtn, Point((Device::x_size - 1) / 2, (Device::y_size - 1) / 2));
+
+  // Set a key event handler for the UI object
+  // By default, the UI exits after the function key is PRESSED.
+  // Since this is the main UI for this application. 
+  // We want to exit the application when the function key is hold down,
+  // and exit the UI is released (but before the hold down time threshold)
+
+  // First, disable the default exit behavior 
+  menu.AllowExit(false);
+
+  // Second, set the key event handler to match the intended behavior
+  menu.SetKeyEventHandler([&](KeyEvent* keyEvent) -> bool {
+    // If function key is hold down. Exit the application
+    if (keyEvent->id == FUNCTION_KEY)
+    {
+        if(keyEvent->info.state == HOLD)
+        {
+            Exit();  // Exit the application.
+
+            return true;  // Block UI from to do anything with FN, basically this function control the life cycle of the UI. This is not really needed as the application exits after
+                            // Exit();
+        }
+        else if(keyEvent->info.state == RELEASED)
+        {
+            menu.Exit(); // Exit the UI
+            return true; // Block UI from to do anything with FN, basically this function control the life cycle of the UI
+        }
+    }
+    return false; // Nothing happened. Let the UI handle the key event
+  });
+
+  // The UI object is now fully set up. Let the UI runtime to start and take over.
+  menu.Start();
+  // Once the UI is exited (Not the application exit!), the code will continue here.
+  // If Exit() is called in UI. The code will start in the End() of this application and then exit.
+
+ // See /os/framework/ui/UI.h for more UI Framework API
+ // See /os/framework/ui/UIComponents.h for more UI Components
+ // See /os/framework/ui/UIInterface.h for more UI built in UI Interface
+
+ // You can also create your own UI Components and UI Interfaces for your own application.
+ // You can see the Note application for an example of how to do that. (Note Pad. Octave Shifter. Scales, ScaleVisualizer...)
+
+
+  MLOGI("Example", "Exited UI Menu");
+}
+
+void ExampleAPP::End() {
+  MLOGI("Example", "Example Exited");
+}
+`}
+</SyntaxHighlighter>
+
+#### Break Down
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+#include "Example.h"
+#include "ui/UI.h" // Include the UI Framework
+`}
+</SyntaxHighlighter>
+
+This includes the Example.h file, which includes the header file of the application. 
+It also includes the UI.h file, which includes the Matrix OS UI framework. (Why does it need to include the UI framework separately? The default UI framework is not a part of the Matrix OS kernal but it's separate, built in library. You are welcome to make your own UI framework or use a third party one if there is one)
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+void ExampleAPP::Setup() {
+    MLOGI("Example", "Example Started");
+}
+`}
+</SyntaxHighlighter>
+
+This is the Setup() function of the application. It is called once when the application is launched. It is used to initialize the application.
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+void ExampleAPP::Loop() {
+    // Set up key event handler
+    struct KeyEvent keyEvent; // Variable for the latest key event to be stored at
+    while (MatrixOS::KEYPAD::Get(&keyEvent)) // While there is still keyEvent in the queue
+    { KeyEventHandler(keyEvent.id, &keyEvent.info); } // Handle them
+
+    struct MidiPacket midiPacket; // Variable for the latest midi packet to be stored at
+
+    while (MatrixOS::MIDI::Get(&midiPacket)) // While there is still midi packet in the queue
+    { MidiEventHandler(midiPacket); } // Handle them
+}
+`}
+</SyntaxHighlighter>
+
+This is the Loop() function of the application. It is called in a loop after the Setup() function. It is used to run the main logic of the application.
+In this case, it is looping to check if there is any key or MIDI event in the queue and handle them until the queue is empty.
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+void ExampleAPP::KeyEventHandler(uint16_t keyID, KeyInfo* keyInfo) {
+    Point xy = MatrixOS::KEYPAD::ID2XY(keyID);  // Trying to get the XY coordination of the KeyID
+    if (xy)                                     // IF XY is valid, means it is a key on the grid
+    {
+      MLOGD("Example", "Key %d %d %d", xy.x, xy.y, keyInfo->state); // Print the key event to the debug log
+      if (keyInfo->state == PRESSED)            // Key is pressed
+      {
+        MatrixOS::LED::SetColor(xy, color, 0);      // Set the LED color to a color. Last 0 means writes to the active layer (255 writes to the active layer as well but do not trigger auto update.)
+      }
+      else if (keyInfo->state == RELEASED)
+      {
+        MatrixOS::LED::SetColor(xy, 0x000000, 0);  // Set the LED to off
+      }
+    }
+    else                          // XY Not valid,
+    {
+      if (keyID == FUNCTION_KEY)  // FUNCTION_KEY is pre defined by the device, as the keyID for the system function key
+      {
+        UIMenu();                 // Open UI Menu
+      }
+    }
+}
+`}
+</SyntaxHighlighter>
+
+This is the KeyEventHandler() function of the application. It is called when there is a key event. It is used to handle the key event.
+
+It sets the LED color of the key to the color variable when the key is pressed. It sets the LED color of the key to off when the key is released. It opens the UI menu when the function key is pressed.
+
+You will get a keyID as the id of the key of the event, and a KeyInfo struct as the information of the key event. The KeyInfo struct contains the state of the key event (PRESSED, HOLD, AFTERTOUCH, RELEASED) and the value of the key event.
+
+You can use the MatrixOS API KEYPAD::ID2XY(id) to get the XY coordination of the keyID. If the bool(xy) == false or xy == Point.Invalid(), then the keyID is not a key on the grid. (It's a key with ID only). 
+
+FUNCTION_KEY is an function key ID provided by device layer. In the case of Mystrix, it is the center key. All Mystrix OS device are required to have a FUNCTION_KEY or equivalent method of evoking it.
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+void ExampleAPP::MidiEventHandler(MidiPacket midiPacket) {
+    MatrixOS::MIDI::Send(midiPacket);
+
+    switch (midiPacket.status)
+    {
+      case NoteOn:
+      case ControlChange:
+        NoteHandler(midiPacket.channel(), midiPacket.note(), midiPacket.velocity());
+        break;
+      case NoteOff:
+        NoteHandler(midiPacket.channel(), midiPacket.note(), 0);
+        break;
+      case SysExData:
+      case SysExEnd:
+        SysExHandler(midiPacket);
+        break;
+      default:
+        break;
+    }
+}
+`}
+</SyntaxHighlighter>
+
+This is the MidiEventHandler() function of the application. It is called when there is a MIDI event. It is used to handle the MIDI event.
+
+First, it sends the MIDI packet back to the source. Then, it parses the MIDI packet and calls the corresponding handler function based on the status of the MIDI packet.
+
+Each midi packet consists of:
+- port - Where the MIDI signal is from (See EMidiPortID in MidiPacket.h). It indicates where the MIDI signal is from (USB, Bluetooth, RTPMIDI, HWPort, etc). When sending MIDI packets, this is also where the MIDI signal will be sent to. In this case, if a midi is coming from USB and it will be send back to USB. If a midi is coming from Bluetooth, it will be send back to Bluetooth. You can also send to multiple source by setting the port to EMidiPortID::MIDI_PORT_EACH_CLASS (send to first of each port type) or EMidiPortID::MIDI_PORT_ALL (send to all ports).
+- status - The MIDI status (See EMidiStatus in MidiPacket.h). It indicates the type of the MIDI signal. In this case, it will call the NoteHandler() function if the status is NoteOn or ControlChange, and call the SysExHandler() function if the status is SysExData or SysExEnd.
+- data - 3 byte of data. Contents of this data depends on the status. For example, if the status is NoteOn, the first byte is the channel, the second byte is the note, and the third byte is the velocity.
+
+There are also alternative names for each data bytes for different status type. Like channel, note, velocity, etc. You can access them by calling the function of the same name. See 
+
+The Matrix OS midi system is complex & powerful but very intuitive. You can read more details of Matrix OS midi system in <DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/MIDI">Matrix OS MIDI API</DocLink>
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+
+
+{`
+void ExampleAPP::UIMenu() {
+  MLOGI("Example", "Enter UI Menu");
+
+  UI menu("UI Menu", Color(0x00FFFF), true);
+
+  UIButton numberSelector;
+  numberSelector.SetName("Number Selector");
+  numberSelector.SetColor(Color(0xFF0000));
+  numberSelector.OnPress([&]() -> void {
+    number = MatrixOS::UIInterface::NumberSelector8x8(number, 0xFF0000, "Number", 0, 100);
+  });
+
+  menu.AddUIComponent(numberSelector, Point(0, 0));
+
+  UIButton colorSelector;
+  colorSelector.SetName("Color Selector");
+  colorSelector.SetColorFunc([&]() -> Color { return color; });
+  colorSelector.OnPress([&]() -> void {
+    #ifndef EXAMPLEAPP_SAVED_VAR
+    MatrixOS::UIInterface::ColorPicker(color);
+    #else
+    MatrixOS::UIInterface::ColorPicker(color.value);
+    color.Set(color.value);
+    #endif
+  });
+  colorSelector.OnHold([&]() -> void {
+    color = 0xFFFFFF;
+  });
+
+  menu.AddUIComponent(colorSelector, Point(Device::x_size - 1, 0));
+
+  UIButton brightnessBtn;
+  brightnessBtn.SetName("Brightness");
+  brightnessBtn.SetColor(Color(0xFFFFFF));
+  brightnessBtn.SetSize(Dimension(2, 2));
+  brightnessBtn.OnPress([&]() -> void { MatrixOS::LED::NextBrightness(); });
+  brightnessBtn.OnHold([&]() -> void {BrightnessControl().Start(); });
+
+  menu.AllowExit(false);
+
+  menu.SetKeyEventHandler([&](KeyEvent* keyEvent) -> bool {
+    if (keyEvent->id == FUNCTION_KEY)
+    {
+        if(keyEvent->info.state == HOLD)
+        {
+            Exit();
+            return true;
+        }
+        else if(keyEvent->info.state == RELEASED)
+        {
+            menu.Exit();
+            return true;
+        }
+    }
+    return false;
+  });
+
+  menu.Start();
+
+  MLOGI("Example", "Exited UI Menu");
+}
+`}
+
+
+</SyntaxHighlighter>
+
+This is the UIMenu() function of the application. It is called when the function key is pressed. It is used to open the UI menu of the application.
+
+It creates a UI object with the name "UI Menu" and the color 0x00FFFF. It creates a number selector button, a color selector button, and a brightness button. It sets the callback functions for the buttons and adds them to the UI object.
+
+Finally after the UI object is fully set up, it starts the UI runtime to take over. The code will continue after the UI is exited. If the Exit() function is called in the UI, the code will start in the End() function of the application and then exit.
+
+See the <DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/UI/UIFramework">Matrix OS UI Framework</DocLink> for more details on how to create UIs and use the UI interface and elements.
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+void ExampleAPP::End() {
+  MLOGI("Example", "Example Exited");
+}
+`}
+</SyntaxHighlighter>
+
+This is the End() function of the application. It is called when the application is exited. It is used to clean up the application.
+
+## Add the Application to the OS
+
+To add the application to the OS, you need to add the application to the applications list in your device layer files. For Mystrix, the application list is the /devices/MatrixBlock6/Applications.h file.
+
+<SyntaxHighlighter language="cpp" style={vscDarkPlus}>
+{`
+#pragma once
+
+// SYSTEM_APPLICATION
+#include "applications/Shell/Shell.h"
+#include "applications/Performance/Performance.h"
+#include "applications/Note/Note.h"
+#include "applications/REDACTED/REDACTED.h"
+#include "applications/Companion/Companion.h"
+
+// USER APPLICATION
+#include "applications/Lighting/Lighting.h"
+#include "applications/Dice/Dice.h"
+#include "applications/Gamepad/Gamepad.h"
+#include "applications/Example/Example.h" // <- Add your application here
+#include "applications/Reversi/Reversi.h"
+
+// BOOT ANIMATION
+#include "applications/Mystrix/MystrixBoot/MystrixBoot.h"
+
+// DEVICE APPLICATION
+#include "applications/Mystrix/FactoryMenu/FactoryMenu.h"
+#include "applications/Mystrix/ForceCalibration/ForceCalibration.h"
+
+#define OS_SHELL APPID("203 Systems", "Shell")
+#define DEFAULT_BOOTANIMATION APPID("203 Systems", "Mystrix Boot")
+`}
+</SyntaxHighlighter>
+
+Add your application to the USER APPLICATION section of the file. Simply include the header file of your application. (In this case, it is "applications/Example/Example.h")
+
+In the Matrix OS application launcher, the order of the applications in the list is the order they will be displayed in the UI. You can change the order of the applications by changing the order of the applications in the file.
+
+
+## Your Application as Submodule
+
+You can create your Application in it's own repository and include it as a submodule in the Matrix OS repository. This way, you can develop your application separately and different builds can include it as external module.
+
+We are also working on standardized this process so you can easily include your application in the Matrix OS build system. We might also release an webapp that can help you create a Matrix OS build with different applications you want to include!
+
+## Things to Note
+
+- Make sure all your variables are within the class. If you define them outside of the class, they will be global variables and the memory will not be managed by the OS. This will cause memory to be taken even if the application is not running.
+- If you use dynamic memory allocation, make sure to free the memory when the application is exiting. The OS can only recycle the static memory in the application stack, not the dynamic memory that you or your variables allocated.
+- If you used anything advanced, like threads, mutex, etc or hardware changes like peripheral configuration and start up. Make sure to clean them up or undo them when the application is exiting.
+

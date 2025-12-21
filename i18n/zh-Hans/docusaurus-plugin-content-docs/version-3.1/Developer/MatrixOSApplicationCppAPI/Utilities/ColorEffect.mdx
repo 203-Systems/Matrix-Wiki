@@ -1,0 +1,184 @@
+---
+title: Color Effects 
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Namespace `ColorEffects`
+
+The `ColorEffects` namespace provides utility functions for generating dynamic lighting effects such as rainbow, breathing, strobe, and other color modulation effects based on time and phase offsets.
+
+
+*The source file for those utilities are located in <GithubLink path="os/framework/ColorEffects.h"/>*
+
+---
+
+## `ColorEffect::Rainbow`
+```cpp
+Color Rainbow(uint16_t period = 1000, int32_t offset = 0);
+```
+Generates a rainbow color effect that cycles through the hue spectrum over the specified period.
+
+**Parameters:**
+- `period` (`uint16_t`, optional): The duration of the full color cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the starting hue. Defaults to `0`.
+
+**Returns:**
+- `Color`: The current color in the rainbow cycle.
+
+---
+
+## `ColorEffect::Breath`
+```cpp
+uint8_t Breath(uint16_t period = 1000, int32_t offset = 0);
+```
+Generates a brightness value that smoothly transitions in a sinusoidal pattern (breathing effect).
+
+**Parameters:**
+- `period` (`uint16_t`, optional): The duration of the breathing cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the breathing phase. Defaults to `0`.
+
+**Returns:**
+- `uint8_t`: The brightness value (0-255).
+
+---
+
+## `ColorEffect::ColorBreath`
+```cpp
+Color ColorBreath(Color color, uint16_t period = 1000, int32_t offset = 0);
+```
+Applies a breathing effect to a specific color by modulating its brightness.
+
+**Parameters:**
+- `color` (`Color`): The base color.
+- `period` (`uint16_t`, optional): The duration of the breathing cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the breathing phase. Defaults to `0`.
+
+**Returns:**
+- `Color`: The modulated color with the breathing effect applied.
+
+---
+
+## `ColorEffect::BreathLowBound`
+```cpp
+uint8_t BreathLowBound(uint8_t lowBound = 32, uint16_t period = 1000, int32_t offset = 0);
+```
+Generates a breathing effect with a minimum brightness value.
+
+**Parameters:**
+- `lowBound` (`uint8_t`, optional): The minimum brightness value. Defaults to `32`.
+- `period` (`uint16_t`, optional): The duration of the breathing cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the breathing phase. Defaults to `0`.
+
+**Returns:**
+- `uint8_t`: The brightness value (0-255).
+
+---
+
+## `ColorEffect::ColorBreathLowBound`
+```cpp
+Color ColorBreathLowBound(Color color, uint8_t lowBound = 64, uint16_t period = 1000, int32_t offset = 0);
+```
+Applies a breathing effect to a color, ensuring a minimum brightness value.
+
+**Parameters:**
+- `color` (`Color`): The base color.
+- `lowBound` (`uint8_t`, optional): The minimum brightness value. Defaults to `64`.
+- `period` (`uint16_t`, optional): The duration of the breathing cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the breathing phase. Defaults to `0`.
+
+**Returns:**
+- `Color`: The modulated color with the breathing effect applied.
+
+---
+
+## `ColorEffect::Strobe`
+```cpp
+uint8_t Strobe(uint16_t period = 1000, int32_t offset = 0);
+```
+Generates a strobe effect by alternating between full brightness and off states.
+
+**Parameters:**
+- `period` (`uint16_t`, optional): The duration of one strobe cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the strobe phase. Defaults to `0`.
+
+**Returns:**
+- `uint8_t`: The brightness value (0 or 255).
+
+---
+
+## `ColorEffect::ColorStrobe`
+```cpp
+Color ColorStrobe(Color color, uint16_t period = 1000, int32_t offset = 0);
+```
+Applies a strobe effect to a specific color.
+
+**Parameters:**
+- `color` (`Color`): The base color.
+- `period` (`uint16_t`, optional): The duration of one strobe cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the strobe phase. Defaults to `0`.
+
+**Returns:**
+- `Color`: The modulated color with the strobe effect applied.
+
+---
+
+## `ColorEffect::Saw`
+```cpp
+uint8_t Saw(uint16_t period = 1000, int32_t offset = 0);
+```
+Generates a sawtooth waveform for brightness, cycling from 0 to 255 linearly.
+
+**Parameters:**
+- `period` (`uint16_t`, optional): The duration of one sawtooth cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the phase. Defaults to `0`.
+
+**Returns:**
+- `uint8_t`: The brightness value (0-255).
+
+---
+
+## `ColorEffect::ColorSaw`
+```cpp
+Color ColorSaw(Color color, uint16_t period = 1000, int32_t offset = 0);
+```
+Applies a sawtooth waveform to the brightness of a specific color.
+
+**Parameters:**
+- `color` (`Color`): The base color.
+- `period` (`uint16_t`, optional): The duration of one sawtooth cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the phase. Defaults to `0`.
+
+**Returns:**
+- `Color`: The modulated color with the sawtooth effect applied.
+
+---
+
+## `ColorEffect::Triangle`
+```cpp
+uint8_t Triangle(uint16_t period = 1000, int32_t offset = 0);
+```
+Generates a triangle waveform for brightness, cycling up and down between 0 and 255.
+
+**Parameters:**
+- `period` (`uint16_t`, optional): The duration of one triangle cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the phase. Defaults to `0`.
+
+**Returns:**
+- `uint8_t`: The brightness value (0-255).
+
+---
+
+## `ColorEffect::ColorTriangle`
+```cpp
+Color ColorTriangle(Color color, uint16_t period = 1000, int32_t offset = 0);
+```
+Applies a triangle waveform to the brightness of a specific color.
+
+**Parameters:**
+- `color` (`Color`): The base color.
+- `period` (`uint16_t`, optional): The duration of one triangle cycle in milliseconds. Defaults to `1000ms`.
+- `offset` (`int32_t`, optional): An offset to adjust the phase. Defaults to `0`.
+
+**Returns:**
+- `Color`: The modulated color with the triangle effect applied.
+```

@@ -1,0 +1,103 @@
+---
+title: UIItemSelector
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Class: `UIItemSelector`
+
+The `UIItemSelector` class represents a versatile item selection component for UI systems. It displays a grid of selectable items, supports callback functions for item selection, and optionally displays item names during hold events.
+
+*The source file for this class is located in <GithubLink path="os/ui/UIComponents/UIItemSelector.h"/>.*
+
+---
+
+## Constructor
+
+### `UIItemSelector`
+```cpp
+UIItemSelector(Dimension dimension, Color color, T* output, uint16_t count, T* items, string* names = nullptr, std::function<void(T)> callback = nullptr);
+```
+
+Creates a new item selector UI component.
+
+**Template Parameter:**
+- `T`: The data type of the selectable items.
+
+**Parameters:**
+- `dimension` ([`Dimension`](../../Types/Dimension/)): The grid size of the item selector.
+- `color` [`Color`](../../Types/Color/): The color for the selector.
+- `output` (`T*`): Pointer to the variable that will store the selected item.
+- `count` (`uint16_t`): The number of items in the selector.
+- `items` (`T*`): Pointer to the array of items.
+- `names` (`string*`, optional): Pointer to an array of item names. Defaults to `nullptr`.
+- `callback` (`std::function<void(T)>`, optional): A callback function invoked when an item is selected. Defaults to `nullptr`.
+
+---
+
+## Methods
+
+### `GetColor`
+```cpp
+virtual Color GetColor();
+```
+Retrieves the color of the selector. 
+
+**Returns:**
+- [`Color`](../../Types/Color/): The color of the selector.
+
+---
+
+### `SetColor`
+```cpp
+void SetColor(Color color);
+```
+Sets the color of the selector. 
+
+**Parameters:**
+- `color` [`Color`](../../Types/Color/): The new color for the selector.
+
+---
+
+### `GetSize`
+```cpp
+virtual Dimension GetSize();
+```
+Calculates the dimensions of the selector grid. Override this method to provide custom dimensions.
+
+**Returns:**
+- [`Dimension`](../../Types/Dimension/): The dimensions (`width` and `height`) of the selector.
+
+---
+
+### `Render`
+```cpp
+virtual bool Render(Point origin);
+```
+Renders the selector grid, highlighting the selected item and dimming unselected items. Override this method to customize the rendering behavior.
+
+**Parameters:**
+- `origin` ([`Point`](../../Types/Point/)): The top-left corner of the rendering area.
+
+**Returns:**
+- `bool`: `true` if rendering was successful.
+
+---
+
+### `KeyEvent`
+```cpp
+virtual bool KeyEvent(Point xy, KeyInfo* keyInfo);
+```
+Handles key events for selecting items and optionally displaying their names. Override this method to customize the item selection behavior.
+
+**Parameters:**
+- `xy` ([`Point`](../../Types/Point/)): The position of the event relative to the selector grid.
+- `keyInfo` ([`KeyInfo*`](../../Types/KeyInfo/)): Information about the key event.
+
+**Behavior:**
+- **Pressed**: Selects the item at the event position and invokes the callback, if defined.
+- **Released**: Selects the item and invokes the callback if `names` is provided.
+- **Hold**: Displays the item's name in a scrolling text format if `names` is defined.
+
+**Returns:**
+- `bool`: `true` if the event was handled, `false` otherwise.
+

@@ -1,0 +1,244 @@
+---
+title: Color
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 类：`Color`
+
+`Color` 类提供处理 RGBW 颜色、缩放亮度和颜色格式转换的方法。
+
+*该类的头文件位于 <GithubLink path="os/framework/Color.h"/>，实现位于 <GithubLink path="os/framework/Color.cpp"/>。*
+
+---
+
+## 构造函数
+
+### 默认构造函数
+```cpp
+Color();
+```
+
+默认构造函数。将颜色初始化为黑色（R = 0, G = 0, B = 0, W = 0）。
+
+---
+
+### 从 32 位 WRGB 创建
+```cpp
+Color(uint32_t WRGB);
+```
+
+使用 32 位 WRGB 值构造颜色。
+
+**参数：**
+- `WRGB` (`uint32_t`)：包含 W、R、G、B 分量的 32 位值。
+
+---
+
+### 从 R、G、B、W 创建
+```cpp
+Color(uint8_t nR, uint8_t nG, uint8_t nB, uint8_t nW = 0);
+```
+
+使用单独的 RGBW 值构造颜色。如果未指定，W 默认为 0。
+
+**参数：**
+- `nR` (`uint8_t`)：红色分量。
+- `nG` (`uint8_t`)：绿色分量。
+- `nB` (`uint8_t`)：蓝色分量。
+- `nW` (`uint8_t`，可选）：白色分量。默认为 `0`。
+
+---
+
+## 成员函数
+
+### `Update`
+```cpp
+virtual void Update();
+```
+
+用于更新颜色的虚拟方法。可以在派生类中重写。
+
+---
+
+### `RGB`
+```cpp
+uint32_t RGB(uint8_t brightness = 255);
+```
+
+返回经亮度缩放的 RGB 值，作为 32 位整数。
+
+**参数：**
+- `brightness` (`uint8_t`，可选）：亮度缩放（0-255）。默认为 `255`。
+
+**返回值：**
+- `uint32_t`：缩放后的 RGB 值。
+
+---
+
+### `GRB`
+```cpp
+uint32_t GRB(uint8_t brightness = 255);
+```
+
+返回经亮度缩放的 GRB 值，作为 32 位整数。
+
+**参数：**
+- `brightness` (`uint8_t`，可选）：亮度缩放（0-255）。默认为 `255`。
+
+**返回值：**
+- `uint32_t`：缩放后的 GRB 值。
+
+---
+
+### `Scale`
+```cpp
+Color Scale(uint8_t scale);
+```
+
+按指定的系数缩放颜色。
+
+**参数：**
+- `scale` (`uint8_t`)：缩放系数（0-255）。
+
+**返回值：**
+- `Color`：缩放后的颜色。
+
+---
+
+### `Dim`
+```cpp
+Color Dim(uint8_t scale = COLOR_LOW_STATE_SCALE);
+```
+
+按指定的系数调暗颜色。
+
+**参数：**
+- `scale` (`uint8_t`，可选）：调暗系数。默认为 `COLOR_LOW_STATE_SCALE`。
+
+**返回值：**
+- `Color`：调暗后的颜色。
+
+---
+
+### `DimIfNot`
+```cpp
+Color DimIfNot(bool not_dim = false, uint8_t scale = COLOR_LOW_STATE_SCALE);
+```
+
+按条件调暗颜色。这对于传入一个布尔值来决定是否应该调暗颜色很有用，比如禁用的 UI 元素。
+
+**参数：**
+- `not_dim` (`bool`，可选）：如果为 `true`，颜色不会被调暗。默认为 `false`。
+- `scale` (`uint8_t`，可选）：调暗系数。默认为 `COLOR_LOW_STATE_SCALE`。
+
+**返回值：**
+- `Color`：结果颜色。
+
+---
+
+### `Gamma`
+```cpp
+Color Gamma();
+```
+
+对颜色应用伽玛校正。
+
+**返回值：**
+- `Color`：伽玛校正后的颜色。
+
+---
+
+### `Color::scale8`
+```cpp
+static uint8_t scale8(uint8_t i, uint8_t scale);
+```
+
+使用 8 位系数缩放值。
+
+**参数：**
+- `i` (`uint8_t`)：要缩放的值。
+- `scale` (`uint8_t`)：缩放系数。
+
+**返回值：**
+- `uint8_t`：缩放后的值。
+
+---
+
+### `Color::scale8_video`
+```cpp
+static uint8_t scale8_video(uint8_t i, uint8_t scale);
+```
+
+使用 8 位系数缩放值，确保除非输入为零，否则结果永远不为零。
+
+**参数：**
+- `i` (`uint8_t`)：要缩放的值。
+- `scale` (`uint8_t`)：缩放系数。
+
+**返回值：**
+- `uint8_t`：缩放后的值。
+
+---
+
+### `Color::HsvToRgb`
+```cpp
+static Color HsvToRgb(float h, float s, float v);
+```
+
+将 HSV 值转换为 RGB 颜色。
+
+**参数：**
+- `h` (`float`)：色相（0-360）。
+- `s` (`float`)：饱和度（0-1）。
+- `v` (`float`)：明度（0-1）。
+
+**返回值：**
+- `Color`：RGB 颜色。
+
+---
+
+### `Color::RgbToHsv`
+```cpp
+static void RgbToHsv(Color rgb, float* h, float* s, float* v);
+```
+
+将 RGB 颜色转换为 HSV。
+
+**参数：**
+- `rgb` (`Color`)：RGB 颜色。
+- `h` (`float*`)：存储色相的指针。
+- `s` (`float*`)：存储饱和度的指针。
+- `v` (`float*`)：存储明度的指针。
+
+---
+
+### `Color::Crossfade`
+```cpp
+static Color Crossfade(Color color1, Color color2, Fract16 ratio);
+```
+
+在两个颜色之间进行渐变。
+
+**参数：**
+- `color1` (`Color`)：起始颜色。
+- `color2` (`Color`)：结束颜色。
+- `ratio` (`Fract16`)：渐变比例（0-65535）。
+
+**返回值：**
+- `Color`：结果颜色。
+
+---
+
+## 运算符
+
+### 转换为 `bool`
+```cpp
+operator bool();
+```
+
+检查颜色是否为非零。
+
+**返回值：**
+- `bool`：如果任何分量（R、G、B 或 W）为非零则返回 `true`，否则返回 `false`。
+
+---

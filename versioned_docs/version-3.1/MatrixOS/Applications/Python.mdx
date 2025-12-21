@@ -1,0 +1,77 @@
+---
+sidebar_position: 10
+---
+
+
+# Python App
+
+The Python app provides an interactive Python REPL (Read-Eval-Print Loop) environment directly on your Mystrix device. This allows you to write and execute Python code in real-time, control LEDs, respond to keypresses, and access all MatrixOS APIs through the PikaPython interpreter.
+
+:::warning Emergency Exit
+To exit the Python app, hold down the Function Key (center key) for 3 seconds to return to the home screen. This emergency exit method works system-wide across all applications.
+:::
+
+## Features
+
+- **Interactive Python REPL**: Write and execute Python code line by line
+- **MatrixOS API Access**: Control LEDs, read keypads, send MIDI, use HID functions
+- **Persistent Session**: Variables and functions remain in memory during your session
+- **Real-time Feedback**: See immediate results from your code on the device
+- **Educational Tool**: Perfect for learning Python and exploring MatrixOS capabilities
+
+
+## Getting Started
+
+### Connecting via Serial Terminal
+
+To use the Python REPL, you'll need a serial terminal application:
+
+**Windows Users:**
+1. **Download PuTTY**: Get PuTTY from [https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+
+**macOS/Linux Users:**
+Use the built-in `screen` command or other terminal applications like `minicom`
+2. **Configure Connection**:
+   - Connection type: Serial
+   - Serial line: Your device's COM port (e.g., COM3)
+   - Speed: 115200
+3. **Important Terminal Settings**:
+   - Go to Terminal → check "Implicit CR in every LF" - **This is required for proper line endings**
+4. **Connect**: Click "Open" to establish the connection
+
+### Basic Usage
+
+1. **Enter the Python App**: Select Python from the application launcher on your device
+2. **Start Coding**: The REPL will appear in your PuTTY terminal, ready to accept Python commands
+3. **Execute Code**: Type Python statements and press Enter to see immediate results
+4. **Exit**: Use python function `exit()` to return to application launcher, or hold the center key for 3 seconds to force exit
+
+### Quick Examples
+
+#### LED Control
+```python
+# Turn on an LED at position (3, 3) with red color
+MatrixOS.LED.SetColor(Point(3, 3), Color(255, 0, 0), 255)
+MatrixOS.LED.Update(255)
+
+# Fill all LEDs with blue
+MatrixOS.LED.Fill(Color(0, 0, 255), 255)
+MatrixOS.LED.Update(255)
+
+# Clear all LEDs
+MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+MatrixOS.LED.Update(0)
+```
+
+#### Keypad Input
+```python
+while True:
+    event = MatrixOS.KeyPad.Get()
+    if event != None and event.State() == MatrixOS.KeyState.PRESSED:
+        print(f"Key pressed at ({event.xy.x}, {event.xy.y})")
+```
+
+
+## Available APIs
+
+For detailed documentation on all available Python APIs, see [Python Application Development](../../Developer/PythonApplication).

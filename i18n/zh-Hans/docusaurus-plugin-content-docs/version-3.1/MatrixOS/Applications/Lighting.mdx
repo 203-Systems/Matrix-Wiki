@@ -1,0 +1,306 @@
+---
+sidebar_position: 3
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# 灯光应用
+
+灯光应用将你的设备转变为可以在各种环境中使用的多功能灯光面板。
+
+首次进入应用时，你会看到灯光视图，可以点击功能键进入配置菜单。
+
+在[配置菜单](#配置菜单)中长按功能键将退出此应用并返回<DocLink to="/docs/MatrixOS/ApplicationLauncher">应用启动器</DocLink>。
+
+## 灯光视图
+
+灯光视图是灯光应用的主界面。它显示当前的灯光效果和颜色。
+
+点击功能键可进入[配置菜单](#配置菜单)。
+
+## 配置菜单
+
+export function ConfigMenu() {
+
+    const uiElements = [
+    {
+        "name": "RGB模式",
+        "desc": "切换到RGB模式。",
+        "link": "#rgb-mode",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "色温模式",
+        "desc": "切换到色温模式。",
+        "link": "#temperature-mode",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "效果和BPM",
+        "desc": "更改灯光视图的效果和BPM。",
+        "link": "#lighting-effect",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "颜色选择器",
+        "desc": "更改灯光视图的颜色（RGB模式）或色温（色温模式）。",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "灯光视图或退出应用",
+        "desc": "轻触返回灯光视图。长按退出应用。",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "配置菜单"
+    const uiDescription = "配置菜单允许你修改灯光选项。"
+    const uiParentLink = "#灯光视图"
+    return <MystrixVisualizer
+    uiName={uiName}
+    uiDescription={uiDescription}
+    uiElements={uiElements}
+    uiParentLink={uiParentLink}
+    />
+
+}
+
+<ConfigMenu />
+
+## RGB模式
+
+在RGB模式下，你可以通过<DocLink to="/docs/MatrixOS/SharedUI/ColorPicker">选色器</DocLink>将灯光视图的颜色设为任意颜色。
+
+## 色温模式
+
+在色温模式下，你可以将灯光视图的颜色设置为对应色温的颜色，颜色会根据你设置的色温变化。
+
+选择器界面与<DocLink to="/docs/MatrixOS/SharedUI/ColorPicker">选色器</DocLink>类似，但色相选择器被色温选择器取代，并且没有饱和度选择器。
+
+## 灯光效果
+
+export function LightingEffect() {
+
+    const uiElements = [
+        {
+            "name": "效果：静态",
+            "desc": "将灯光效果设置为静态（无效果）。",
+            "elements": [
+                {
+                    "pos": [2, 0],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "效果：呼吸",
+            "desc": "将灯光效果设置为呼吸效果。",
+            "elements": [
+                {
+                    "pos": [3, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "效果：闪烁",
+            "desc": "将灯光效果设置为闪烁效果。",
+            "elements": [
+                {
+                    "pos": [4, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "效果：镂齿",
+            "desc": "将灯光效果设置为镂齿效果。",
+            "elements": [
+                {
+                    "pos": [5, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "BPM显示和点拍器",
+            "desc": "显示当前BPM值。点击此显示器根据你的点拍节奏更新BPM。",
+            "elements": [
+                {
+                    "pos": [0, 2],
+                    "size": [8, 4],
+                    "color": undefined
+                },
+                {
+                    "pos": [0, 2],
+                    "size": [3, 1],
+                    "color": "#FF00FF"
+                },
+                {
+                    "pos": [1, 3],
+                    "size": [1, 3],
+                    "color": "#FF00FF"
+                },
+                {
+                    "pos": [3, 2],
+                    "size": [1, 4],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [4, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [4, 4],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [5, 2],
+                    "size": [1, 4],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [6, 2],
+                    "size": [1, 4],
+                    "color": "#FF00FF"
+                },
+                {
+                    "pos": [7, 2],
+                    "size": [1, 2],
+                    "color": "#FF00FF"
+                },
+            ]
+        },
+        {
+            "name": "减50",
+            "desc": "将BPM减少50。",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "减20",
+            "desc": "将BPM减少20。",
+            "elements": [
+                {
+                    "pos": [1, 7],
+                    "color": "#D800D8"
+                }
+            ]
+        },
+        {
+            "name": "减5",
+            "desc": "将BPM减少5。",
+            "elements": [
+                {
+                    "pos": [2, 7],
+                    "color": "#B800B8"
+                }
+            ]
+        },
+        {
+            "name": "减1",
+            "desc": "将BPM减少1。",
+            "elements": [
+                {
+                    "pos": [3, 7],
+                    "color": "#A000A0"
+                }
+            ]
+        },
+        {
+            "name": "加1",
+            "desc": "将BPM增加1。",
+            "elements": [
+                {
+                    "pos": [4, 7],
+                    "color": "#A000A0"
+                }
+            ]
+        },
+        {
+            "name": "加5",
+            "desc": "将BPM增加5。",
+            "elements": [
+                {
+                    "pos": [5, 7],
+                    "color": "#B800B8"
+                }
+            ]
+        },
+        {
+            "name": "加20",
+            "desc": "将BPM增加20。",
+            "elements": [
+                {
+                    "pos": [6, 7],
+                    "color": "#D800D8"
+                }
+            ]
+        },
+        {
+            "name": "加50",
+            "desc": "将BPM增加50。",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "返回配置菜单",
+            "desc": "轻触返回配置菜单。",
+            "link": "#配置菜单",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "灯光效果菜单"
+    const uiDescription = "灯光效果菜单允许你修改灯光效果选项。"
+    const uiParentLink = "#配置菜单"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+        uiParentLink={uiParentLink}
+    />
+
+}
+
+<LightingEffect />

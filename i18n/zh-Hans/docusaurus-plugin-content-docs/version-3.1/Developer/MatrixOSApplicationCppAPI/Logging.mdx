@@ -1,0 +1,165 @@
+---
+sidebar_position: 8
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# 日志 API
+
+## 概述
+
+日志 API 提供了一套用于记录不同严重级别消息的函数和宏。该 API 包括记录错误、警告、信息、调试和详细消息的函数。日志级别可以在编译时设置，以控制记录哪些消息。
+
+推荐使用日志宏，这是出于性能考虑。如果系统日志级别低于要记录消息的级别，宏将不生成任何代码。
+
+日志函数无论日志级别如何都会生成代码，因此应谨慎使用。未来会有在运行时更改日志级别的方法，届时这些函数会更有用。
+
+注意：可以通过在构建命令中使用 build-dev 将系统日志级别设置为调试。所有其他命令的日志级别为 None。如果使用 build，将使用 os/Parameters.h 文件中的默认日志级别。（详情请参阅 <DocLink to="/docs/Developer/DebugMatrixOSCpp/">调试 Matrix OS</DocLink>。）
+
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/Logging.cpp"/>。*
+
+---
+
+## 宏日志
+
+### `MLOGE`
+```cpp
+#define MLOGE(tag, format, ...)
+```
+
+记录错误消息（宏版本）。如果日志级别低于 `LOG_LEVEL_ERROR`，此宏将不生成任何代码。
+
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MLOGW`
+```cpp
+#define MLOGW(tag, format, ...)
+```
+
+记录警告消息（宏版本）。如果日志级别低于 `LOG_LEVEL_WARNING`，此宏将不生成任何代码。
+
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MLOGI`
+```cpp
+#define MLOGI(tag, format, ...)
+```
+
+记录信息消息（宏版本）。如果日志级别低于 `LOG_LEVEL_INFO`，此宏将不生成任何代码。
+
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MLOGD`
+```cpp
+#define MLOGD(tag, format, ...)
+```
+
+记录调试消息（宏版本）。如果日志级别低于 `LOG_LEVEL_DEBUG`，此宏将不生成任何代码。
+
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MLOGV`
+```cpp
+#define MLOGV(tag, format, ...)
+```
+
+记录详细消息（宏版本）。如果日志级别低于 `LOG_LEVEL_VERBOSE`，此宏将不生成任何代码。
+
+**参数：**
+- `tag`：与日志关联的标签。
+- `format`：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+## 函数日志
+
+### `MatrixOS::Logging::LogError`
+```cpp
+void LogError(const string &tag, const string &format, ...);
+```
+
+记录错误消息。
+
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MatrixOS::Logging::LogWarning`
+```cpp
+void LogWarning(const string &tag, const string &format, ...);
+```
+
+记录警告消息。
+
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MatrixOS::Logging::LogInfo`
+```cpp
+void LogInfo(const string &tag, const string &format, ...);
+```
+
+记录信息消息。
+
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MatrixOS::Logging::LogDebug`
+```cpp
+void LogDebug(const string &tag, const string &format, ...);
+```
+
+记录调试消息。
+
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---
+
+### `MatrixOS::Logging::LogVerbose`
+```cpp
+void LogVerbose(const string &tag, const string &format, ...);
+```
+
+记录详细消息。
+
+**参数：**
+- `tag` (`const string &`)：与日志关联的标签。
+- `format` (`const string &`)：日志消息的格式字符串。
+- `...`：格式字符串的附加参数。
+
+---

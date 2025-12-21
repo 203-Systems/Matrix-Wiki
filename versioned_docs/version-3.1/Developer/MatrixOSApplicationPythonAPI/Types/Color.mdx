@@ -1,0 +1,534 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Color
+
+## Overview
+
+The `Color` class represents RGB color values for LED control. Colors can be created using individual RGB values or hexadecimal notation.
+
+*The Color class is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_Color.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_Color.pyi"/>.*
+
+---
+
+## `Color(*val)`
+```python
+class Color:
+    def __init__(self, *val) -> None
+```
+
+Creates a color using various input formats:
+- **0 arguments**: Creates black color (0, 0, 0)
+- **1 argument**: WRGB hexadecimal color value
+- **3 arguments**: R, G, B values (0-255)
+- **4 arguments**: R, G, B, W values (0-255)
+
+**Parameters:**
+- `*val`: Variable arguments depending on desired constructor
+
+**Examples:**
+```python
+# Create black color (default)
+black = Color()
+
+# Create colors using RGB values
+red = Color(255, 0, 0)
+green = Color(0, 255, 0)
+blue = Color(0, 0, 255)
+
+# Create color using WRGB hex value
+purple = Color(0xFF00FF)
+yellow = Color(0xFFFF00)
+
+# Create RGBW color
+warm_white = Color(255, 255, 255, 128)  # RGB + white component
+```
+
+---
+
+## Static Factory Methods
+
+### `FromRGB`
+```python
+def FromRGB(r: int, g: int, b: int) -> Color
+```
+
+Creates a color from RGB values.
+
+**Parameters:**
+- `r` (`int`): Red component (0-255)
+- `g` (`int`): Green component (0-255)
+- `b` (`int`): Blue component (0-255)
+
+**Returns:**
+- `Color`: New color instance
+
+**Example:**
+```python
+red = Color.FromRGB(255, 0, 0)
+```
+
+### `FromRGBW`
+```python
+def FromRGBW(r: int, g: int, b: int, w: int) -> Color
+```
+
+Creates a color from RGBW values.
+
+**Parameters:**
+- `r` (`int`): Red component (0-255)
+- `g` (`int`): Green component (0-255)
+- `b` (`int`): Blue component (0-255)
+- `w` (`int`): White component (0-255)
+
+**Returns:**
+- `Color`: New color instance
+
+**Example:**
+```python
+warm_white = Color.FromRGBW(255, 255, 255, 128)
+```
+
+### `FromHex`
+```python
+def FromHex(wrgb: int) -> Color
+```
+
+Creates a color from a hexadecimal WRGB value.
+
+**Parameters:**
+- `wrgb` (`int`): Hexadecimal color value
+
+**Returns:**
+- `Color`: New color instance
+
+**Example:**
+```python
+blue = Color.FromHex(0x0000FF)
+```
+
+---
+
+## Getter Methods
+
+### `R`
+```python
+def R(self) -> int
+```
+
+Gets the red component of the color.
+
+**Returns:**
+- `int`: Red component value (0-255)
+
+### `G`
+```python
+def G(self) -> int
+```
+
+Gets the green component of the color.
+
+**Returns:**
+- `int`: Green component value (0-255)
+
+### `B`
+```python
+def B(self) -> int
+```
+
+Gets the blue component of the color.
+
+**Returns:**
+- `int`: Blue component value (0-255)
+
+### `W`
+```python
+def W(self) -> int
+```
+
+Gets the white component of the color (for RGBW LEDs).
+
+**Returns:**
+- `int`: White component value (0-255)
+
+### `RGB`
+```python
+def RGB(self) -> int
+```
+
+Gets the color as a packed RGB integer.
+
+**Returns:**
+- `int`: Packed RGB value
+
+### `WRGB`
+```python
+def WRGB(self) -> int
+```
+
+Gets the color as a packed WRGB integer.
+
+**Returns:**
+- `int`: Packed WRGB value
+
+---
+
+## Setter Methods
+
+### `SetR`
+```python
+def SetR(self, r: int) -> None
+```
+
+Sets the red component of the color.
+
+**Parameters:**
+- `r` (`int`): Red component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetR(255)  # Color is now (255, 150, 200)
+```
+
+### `SetG`
+```python
+def SetG(self, g: int) -> None
+```
+
+Sets the green component of the color.
+
+**Parameters:**
+- `g` (`int`): Green component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetG(255)  # Color is now (100, 255, 200)
+```
+
+### `SetB`
+```python
+def SetB(self, b: int) -> None
+```
+
+Sets the blue component of the color.
+
+**Parameters:**
+- `b` (`int`): Blue component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetB(255)  # Color is now (100, 150, 255)
+```
+
+### `SetW`
+```python
+def SetW(self, w: int) -> None
+```
+
+Sets the white component of the color (for RGBW LEDs).
+
+**Parameters:**
+- `w` (`int`): White component value (0-255)
+
+**Example:**
+```python
+color = Color(100, 150, 200)
+color.SetW(128)  # Adds white component for RGBW LEDs
+```
+
+---
+
+## Color Manipulation Methods
+
+### `Scale`
+```python
+def Scale(self, factor: float) -> Color
+```
+
+Scales the color intensity by a factor.
+
+**Parameters:**
+- `factor` (`float`): Scaling factor (0.0 to 1.0+)
+
+**Returns:**
+- `Color`: New scaled color
+
+**Example:**
+```python
+color = Color(255, 128, 64)
+dimmed = color.Scale(0.5)  # Half brightness
+```
+
+### `Dim`
+```python
+def Dim(self, factor: float) -> Color
+```
+
+Dims the color by a factor.
+
+**Parameters:**
+- `factor` (`float`): Dimming factor (0.0 to 1.0)
+
+**Returns:**
+- `Color`: New dimmed color
+
+**Example:**
+```python
+color = Color(255, 128, 64)
+dimmed = color.Dim(0.8)  # 80% of original brightness
+```
+
+### `DimIfNot`
+```python
+def DimIfNot(self, not_dim: bool, factor: float) -> Color
+```
+
+Conditionally dims the color based on a boolean condition.
+
+**Parameters:**
+- `not_dim` (`bool`): If True, don't dim; if False, apply dimming
+- `factor` (`float`): Dimming factor (0.0 to 1.0)
+
+**Returns:**
+- `Color`: Original or dimmed color based on condition
+
+**Example:**
+```python
+color = Color(255, 128, 64)
+result = color.DimIfNot(False, 0.5)  # Will be dimmed
+result = color.DimIfNot(True, 0.5)   # Will not be dimmed
+```
+
+---
+
+## Comparison Operators
+
+### `__eq__`
+```python
+def __eq__(self, other: Color) -> bool
+```
+
+Checks if two colors are equal.
+
+**Example:**
+```python
+color1 = Color(255, 0, 0)
+color2 = Color(255, 0, 0)
+if color1 == color2:
+    print("Colors are equal")
+```
+
+### `__ne__`
+```python
+def __ne__(self, other: Color) -> bool
+```
+
+Checks if two colors are not equal.
+
+**Example:**
+```python
+color1 = Color(255, 0, 0)
+color2 = Color(0, 255, 0)
+if color1 != color2:
+    print("Colors are different")
+```
+
+---
+
+## Predefined Colors
+
+### Basic Colors
+```python
+# Primary colors
+red = Color(255, 0, 0)
+green = Color(0, 255, 0)
+blue = Color(0, 0, 255)
+
+# Secondary colors
+cyan = Color(0, 255, 255)
+magenta = Color(255, 0, 255)
+yellow = Color(255, 255, 0)
+
+# Grayscale
+white = Color(255, 255, 255)
+gray = Color(128, 128, 128)
+black = Color(0, 0, 0)
+```
+
+### Color Palette Examples
+```python
+# Rainbow colors for effects
+rainbow_colors = [
+    Color(255, 0, 0),    # Red
+    Color(255, 127, 0),  # Orange
+    Color(255, 255, 0),  # Yellow
+    Color(0, 255, 0),    # Green
+    Color(0, 0, 255),    # Blue
+    Color(75, 0, 130),   # Indigo
+    Color(148, 0, 211),  # Violet
+]
+
+# Use colors with LED API
+for i, color in enumerate(rainbow_colors):
+    point = Point(i, 0)
+    MatrixOS.LED.SetColor(point, color)
+
+MatrixOS.LED.Update()
+```
+
+---
+
+## Color Utilities
+
+### HSV to RGB Conversion
+```python
+def hsv_to_color(h, s, v):
+    """Convert HSV to RGB Color (simplified)"""
+    # Simplified HSV to RGB conversion
+    h = h % 360
+    s = max(0, min(1, s))
+    v = max(0, min(1, v))
+
+    c = v * s
+    x = c * (1 - abs((h / 60) % 2 - 1))
+    m = v - c
+
+    if h < 60:
+        r, g, b = c, x, 0
+    elif h < 120:
+        r, g, b = x, c, 0
+    elif h < 180:
+        r, g, b = 0, c, x
+    elif h < 240:
+        r, g, b = 0, x, c
+    elif h < 300:
+        r, g, b = x, 0, c
+    else:
+        r, g, b = c, 0, x
+
+    r = int((r + m) * 255)
+    g = int((g + m) * 255)
+    b = int((b + m) * 255)
+
+    return Color(r, g, b)
+
+# Create rainbow using HSV
+def create_rainbow_strip(length):
+    """Create a rainbow color strip"""
+    colors = []
+    for i in range(length):
+        hue = (i * 360) // length
+        colors.append(hsv_to_color(hue, 1.0, 1.0))
+    return colors
+
+rainbow = create_rainbow_strip(8)
+for i, color in enumerate(rainbow):
+    MatrixOS.LED.SetColor(Point(i, 0), color)
+```
+
+### Color Manipulation
+```python
+def dim_color(color, factor):
+    """Dim a color by a factor (0.0 to 1.0)"""
+    # Use the built-in Dim method
+    return color.Dim(factor)
+
+def blend_colors(color1, color2, ratio):
+    """Blend two colors with given ratio (0.0 = color1, 1.0 = color2)"""
+    r = int(color1.R() * (1 - ratio) + color2.R() * ratio)
+    g = int(color1.G() * (1 - ratio) + color2.G() * ratio)
+    b = int(color1.B() * (1 - ratio) + color2.B() * ratio)
+    return Color(r, g, b)
+
+def create_gradient(start_color, end_color, steps):
+    """Create color gradient between two colors"""
+    gradient = []
+    for i in range(steps):
+        ratio = i / (steps - 1) if steps > 1 else 0
+        # Simplified interpolation
+        r = int(start_color.R() * (1 - ratio) + end_color.R() * ratio)
+        g = int(start_color.G() * (1 - ratio) + end_color.G() * ratio)
+        b = int(start_color.B() * (1 - ratio) + end_color.B() * ratio)
+        gradient.append(Color(r, g, b))
+    return gradient
+```
+
+---
+
+## Usage Examples
+
+### LED Grid Effects
+```python
+def fill_with_color(color):
+    """Fill entire grid with a color"""
+    MatrixOS.LED.Fill(color)
+    MatrixOS.LED.Update()
+
+def checkerboard_pattern(color1, color2):
+    """Create checkerboard pattern"""
+    for y in range(8):
+        for x in range(8):
+            if (x + y) % 2 == 0:
+                color = color1
+            else:
+                color = color2
+            MatrixOS.LED.SetColor(Point(x, y), color)
+    MatrixOS.LED.Update()
+
+def rainbow_spiral():
+    """Create rainbow spiral effect"""
+    colors = create_rainbow_strip(64)
+
+    # Spiral pattern coordinates
+    spiral_coords = []  # Implementation would create spiral coordinates
+
+    for i, coord in enumerate(spiral_coords):
+        if i < len(colors):
+            MatrixOS.LED.SetColor(coord, colors[i])
+
+    MatrixOS.LED.Update()
+
+# Usage
+fill_with_color(Color(0, 100, 200))
+checkerboard_pattern(Color(255, 0, 0), Color(0, 0, 255))
+```
+
+### Dynamic Color Generation
+```python
+def generate_random_color():
+    """Generate a random color"""
+    import random
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    return Color(r, g, b)
+
+def temperature_to_color(temp):
+    """Convert temperature to color (blue=cold, red=hot)"""
+    # Normalize temperature to 0-1 range
+    normalized = max(0, min(1, temp))
+
+    if normalized < 0.5:
+        # Blue to cyan
+        r = 0
+        g = int(normalized * 2 * 255)
+        b = 255
+    else:
+        # Cyan to red
+        r = int((normalized - 0.5) * 2 * 255)
+        g = int((1 - normalized) * 2 * 255)
+        b = 0
+
+    return Color(r, g, b)
+
+# Usage
+random_color = generate_random_color()
+hot_color = temperature_to_color(0.8)  # Hot = reddish
+cold_color = temperature_to_color(0.2)  # Cold = bluish
+```
+

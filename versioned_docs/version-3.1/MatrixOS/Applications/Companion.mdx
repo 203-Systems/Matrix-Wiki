@@ -1,0 +1,65 @@
+---
+sidebar_position: 4
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Companion App
+
+The Companion App is used to connect with [Bitfocus Companion](https://bitfocus.io/companion/) to enable advanced and powerful control over various devices.
+
+:::info
+Mystrix integration has been available since the 3.4.0 release of the [Bitfocus Companion](https://bitfocus.io/companion/).
+:::
+
+## Companion View
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+    {
+        "name": "System Settings",
+        "desc": "Enter the system settings.",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Companion View or Exit App",
+        "desc": "Tap to return to the Companion View. Hold to exit the app.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify settings of the app and the device."
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName={uiName}
+    uiDescription={uiDescription}
+    uiElements={uiElements}
+    uiParentLink={uiParentLink}
+    />
+
+}
+
+<ConfigMenu />
+
+## Set Up Companion
+
+See the guide on how to set up the Companion app provided by Bitfocus [here](https://user.bitfocus.io/docs/companion).
+
+:::note Work In Progress
+A guide on how to set up the Companion app specifically with Mystrix, including a Mystrix-optimized template, will be provided soon.
+:::

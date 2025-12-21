@@ -1,0 +1,303 @@
+---
+title: UI Framework
+sidebar_position: 0
+---
+
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# UI Framework
+
+The UI framework provides a set of classes and utilities for creating interactive user interfaces (GUIs) on Matrix OS.
+
+*The header file for this framework is located in <GithubLink path="os/ui/UI.h"/> and the implementation is in <GithubLink path="os/ui/UI.cpp"/>.*
+
+---
+ 
+## Overview
+
+The UI framework provides a default way for creating user interfaces with customizable components, event handling, and rendering. It supports features like layered rendering, custom key event handling, and modular setup.
+
+You can add different UI components into the UI framework to create a user interface. The UI framework will manage the rendering and interaction of these components. 
+
+Additionally, there are some pre made UI interfaces that you can use directly, like color picker, number selector, text scroll, etc. See the <DocLink to="/docs/category/utilities">UI Utilities</DocLink> documentation for more information.
+
+---
+
+## Key Features
+- Customizable rendering and update rate.
+- Modular setup with function hooks for setup, loop, pre-render, post-render, and end tasks.
+- Support for layered UI components.
+- Event-driven design for handling key events.
+
+---
+
+## Basic Usage
+
+1. Create a UI object. with a name and color (used for text scroll color). Optionally, you can make the UI render on a new LED layer, useful if you want to preserve the previous display state. - [Constructor](#constructor)
+
+2. Create UI components (buttons, sliders, etc.) and add them to the UI object. - [AddUIComponent()](#adduicomponent)
+
+3. Start the UI object. - [Start()](#start)
+
+Optionally, you can customize the UI behavior by setting key event handlers, function hooks, and refresh rate, etc. - [Event Handling Methods](#event-handling-methods), [Function Hook Setters Methods](#function-hook-setters-methods), [Utilities Methods](#utilities-methods)
+
+## Example
+
+Part of the Example app
+```cpp
+// Create a UI Object
+  // UI Name, Color (as the text scroll color). and new led layer (Set as true, the UI will render on a new led layer. Persevere what was rendered before after UI exits)
+  UI menu("UI Menu", Color(0x00FFFF), true);
+
+  // Create an UI element
+  UIButton numberSelector;
+  numberSelector.SetName("Number Selector");  // Name of this UI element
+  numberSelector.SetColor(Color(0xFF0000));  // Color of the UI element
+  numberSelector.OnPress([&]() -> void {     // Callback function when the button is pressed
+    number = MatrixOS::UIInterface::NumberSelector8x8(number, 0xFF0000, "Number", 0, 100);  // Current Number, color, low range, high range
+    // EXAMPLEAPP_SAVED_VAR does not affect this code
+    // For most value types, the saved variable wrapper library requires no changes to code!
+  });
+  // Add the UI element to the UI object to top left conner
+  menu.AddUIComponent(numberSelector, Point(0, 0));
+
+  // Create an dynamic colored button
+  UIButton colorSelector;
+  colorSelector.SetName("Color Selector");  // Name of this UI element
+  colorSelector.SetColorFunc([&]() -> Color { return color; });  // Use the color variable as the color of this UI element
+  colorSelector.OnPress([&]() -> void {  // Callback function when the button is pressed
+    #ifndef EXAMPLEAPP_SAVED_VAR
+    MatrixOS::UIInterface::ColorPicker(color);  // References to the color variable. The color variable will be updated by the ColorPicker function. Return true if color is changed, false if not.
+    #else
+    MatrixOS::UIInterface::ColorPicker(color.value);  // Get the actual value from the saved variable wrapper library
+    color.Set(color.value);  // Save the new variable
+    // The saved variable wrapper doesn't implicitly convert to the references type.
+    // This way you know you have to get the references manually and set the value back to the saved variable manually.
+    #endif
+  });
+  colorSelector.OnHold([&]() -> void {  // Optional Callback function for hold down. Reset color to default white.
+    color = 0xFFFFFF;
+  });
+
+  // Add the UI element to the UI object to top right conner
+  menu.AddUIComponent(colorSelector, Point(Device::x_size - 1, 0));
+
+  // A large button that cycles though the brightness of the device
+  UIButton brightnessBtn;
+  brightnessBtn.SetName("Brightness"); // Name
+  brightnessBtn.SetColor(Color(0xFFFFFF)); // Color
+  brightnessBtn.SetSize(Dimension(2, 2)); // Size of the button
+  brightnessBtn.OnPress([&]() -> void { MatrixOS::LED::NextBrightness(); }); // Function to call when the button is pressed
+  brightnessBtn.OnHold([&]() -> void {BrightnessControl().Start(); }); // Function to call when the button is hold down
+
+  // Place this button in the center of the device
+  menu.AddUIComponent(brightnessBtn, Point((Device::x_size - 1) / 2, (Device::y_size - 1) / 2));
+
+  // Set a key event handler for the UI object
+  // By default, the UI exits after the function key is PRESSED.
+  // Since this is the main UI for this application. 
+  // We want to exit the application when the function key is hold down,
+  // and exit the UI is released (but before the hold down time threshold)
+
+  // First, disable the default exit behavior 
+  menu.AllowExit(false);
+
+  // Second, set the key event handler to match the intended behavior
+  menu.SetKeyEventHandler([&](KeyEvent* keyEvent) -> bool {
+    // If function key is hold down. Exit the application
+    if (keyEvent->id == FUNCTION_KEY)
+    {
+        if(keyEvent->info.state == HOLD)
+        {
+            Exit();  // Exit the application.
+
+            return true;  // Block UI from to do anything with FN, basically this function control the life cycle of the UI. This is not really needed as the application exits after
+                            // Exit();
+        }
+        else if(keyEvent->info.state == RELEASED)
+        {
+            menu.Exit(); // Exit the UI
+            return true; // Block UI from to do anything with FN, basically this function control the life cycle of the UI
+        }
+    }
+    return false; // Nothing happened. Let the UI handle the key event
+  });
+
+  // The UI object is now fully set up. Let the UI runtime to start and take over.
+  menu.Start();
+  // Once the UI is exited (Not the application exit!), the code will continue here.
+  // If Exit() is called in UI. The code will start in the End() of this application and then exit.
+```
+
+## Constructor
+
+### `UI`
+```cpp
+UI();
+UI(string name, Color color = Color(0xFFFFFF), bool newLedLayer = true);
+```
+
+Creates a new UI instance.
+
+**Parameters:**
+- `name` (`string`): The name of the UI.
+- `color` ([`Color`](../Types/Color/), optional): The name color. Default is white (`0xFFFFFF`).
+- `newLedLayer` (`bool`, optional): If `true`, creates a new LED layer. Default is `true`.
+
+---
+
+### Lifecycle Methods
+
+#### `Start`
+```cpp
+void Start();
+```
+Starts the UI.
+
+---
+
+#### `Exit`
+```cpp
+void Exit();
+```
+Exits the UI. You can call this from a UI component event handler to exit the UI.
+
+---
+
+## Component Management Methods
+
+### `AddUIComponent`
+```cpp
+void AddUIComponent(UIComponent* uiComponent, Point xy);
+```
+Adds a UI component to the UI.
+
+**Parameters:**
+- `uiComponent` (<DocLink to="/docs/category/ui-components">`UIComponent*`</DocLink>): The component to add.
+- `xy` (`Point`): The position of the component.
+
+---
+
+### `ClearUIComponents`
+```cpp
+void ClearUIComponents();
+```
+Removes all UI components.
+
+---
+
+## Event Handling Methods
+
+### `SetKeyEventHandler`
+```cpp
+void SetKeyEventHandler(std::function<bool(KeyEvent*)> key_event_handler);
+```
+Sets the custom key event handler. This will be called before the default key event handling. If the handler returns `true`, the default key event handling will be skipped.
+
+**Parameters:**
+- `key_event_handler` (`std::function<bool(KeyEvent*)>`): The handler function.
+
+---
+
+## Function Hook Setters Methods
+
+### `SetSetupFunc`
+```cpp
+void SetSetupFunc(std::function<void()> setup_func);
+```
+
+Sets the optional setup function hook. This function is called once when the UI is started.
+
+**Parameters:**
+- `setup_func` (`std::function<void()>`): The setup function.
+
+---
+
+### `SetLoopFunc`
+```cpp
+void SetLoopFunc(std::function<void()> loop_func);
+```
+
+Sets the optional loop function hook. This function is called repeatedly during the UI loop.
+
+This happens before the pre-render function. The difference is that the loop function is called before cleaning the display buffer.
+
+**Parameters:**
+- `loop_func` (`std::function<void()>`): The loop function.
+
+---
+
+### `SetEndFunc`
+```cpp
+void SetEndFunc(std::function<void()> end_func);
+```
+
+Sets the optional end function hook. This function is called when the UI is exited. 
+
+**Parameters:**
+- `end_func` (`std::function<void()>`): The end function.
+
+---
+
+### `SetPreRenderFunc`
+```cpp
+void SetPreRenderFunc(std::function<void()> pre_render_func);
+```
+
+Sets the optional pre-render function hook. This function is called before rendering. Similar to the loop function, but after cleaning the display buffer, so you can render some background before the UI components.
+
+**Parameters:**
+- `pre_render_func` (`std::function<void()>`): The pre-render function.
+
+---
+
+### `SetPostRenderFunc`
+```cpp
+void SetPostRenderFunc(std::function<void()> post_render_func);
+```
+
+Sets the optional post-render function hook. This function is called after rendering. You can use this function to render some overlay on top of the UI components.
+
+**Parameters:**
+- `post_render_func` (`std::function<void()>`): The post-render function.
+
+---
+
+## Utilities Methods
+
+### `SetFPS`
+```cpp
+void SetFPS(uint16_t fps);
+```
+Sets the update rate of the UI.
+
+**Parameters:**
+- `fps` (`uint16_t`): Frames per second.
+
+---
+
+### `AllowExit`
+```cpp
+void AllowExit(bool allow);
+```
+Enables or disables the ability to exit the UI by pressing the function key. 
+
+By default, press the function key wull exit the UI. This function allows you to customize the exit behavior.
+
+For example. If you want to exit the application when the function key is hold down, and exit the UI is released (but before the hold down time threshold).
+
+**Parameters:**
+- `allow` (`bool`): If `true`, allows exiting the UI.
+
+---
+
+## Static Methods
+
+### `CleanUpUIs`
+```cpp
+static void CleanUpUIs();
+```
+Cleans up all registered UIs. This is privately used mostly to free up all UIs when the application exits.
+
+---

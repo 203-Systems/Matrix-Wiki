@@ -1,0 +1,242 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# TextScroll
+
+## 概述
+
+`TextScroll` 实用程序在 LED 矩阵上提供滚动文字显示功能。它可以通过在屏幕上滚动来显示比显示宽度更长的文本。
+
+*TextScroll 实用程序实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>。*
+
+---
+
+## `TextScroll`
+```python
+def TextScroll(text: str, color: Color, speed: int, loop: bool) -> None
+```
+
+在 LED 矩阵上显示滚动文字。
+
+**参数：**
+- `text` (`str`)：要显示和滚动的文字
+- `color` (`Color`)：文字的颜色
+- `speed` (`int`)：滚动速度（数值越高 = 越快）
+- `loop` (`bool`)：是否连续循环文字
+
+**示例：**
+```python
+# 显示滚动文字
+MatrixOS.UIUtility.TextScroll("你好，Matrix OS！", Color(255, 255, 0), 5, True)
+
+# 不同颜色的一次性滚动
+MatrixOS.UIUtility.TextScroll("欢迎", Color(0, 255, 0), 3, False)
+```
+
+---
+
+## 使用示例
+
+### 基本文字滚动
+```python
+def show_welcome_message():
+    """显示欢迎信息"""
+    welcome_text = "欢迎使用 Matrix OS Python！"
+    MatrixOS.UIUtility.TextScroll(welcome_text, Color(0, 255, 255), 4, False)
+
+def show_status_loop():
+    """显示连续的状态信息"""
+    status_text = "系统状态：正常 - 温度：25℃ - 电池：85%"
+    MatrixOS.UIUtility.TextScroll(status_text, Color(0, 255, 0), 3, True)
+
+# 使用
+show_welcome_message()
+MatrixOS.SYS.DelayMs(3000)  # 等待欢迎信息结束
+show_status_loop()
+```
+
+### Dynamic Text Display
+```python
+def display_sensor_data():
+    """Display real-time sensor data"""
+
+    def get_sensor_reading():
+        # Simulate sensor reading
+        import random
+        return random.randint(20, 30)
+
+    while True:
+        temperature = get_sensor_reading()
+        humidity = random.randint(40, 60)
+
+        data_text = f"Temp: {temperature}C  Humidity: {humidity}%  "
+
+        # Choose color based on temperature
+        if temperature > 25:
+            text_color = Color(255, 100, 0)  # Orange for warm
+        elif temperature < 22:
+            text_color = Color(0, 100, 255)  # Blue for cool
+        else:
+            text_color = Color(0, 255, 0)    # Green for normal
+
+        MatrixOS.UIUtility.TextScroll(data_text, text_color, 4, False)
+        MatrixOS.SYS.DelayMs(5000)  # Update every 5 seconds
+
+display_sensor_data()
+```
+
+### Interactive Text Notifications
+```python
+def notification_system():
+    """Simple notification system with different priorities"""
+
+    notifications = [
+        {"text": "INFO: System started successfully", "color": Color(0, 255, 0), "speed": 3},
+        {"text": "WARNING: Low battery detected", "color": Color(255, 255, 0), "speed": 4},
+        {"text": "ERROR: Connection failed", "color": Color(255, 0, 0), "speed": 5},
+        {"text": "UPDATE: New features available", "color": Color(0, 255, 255), "speed": 3}
+    ]
+
+    for notification in notifications:
+        print(f"Showing: {notification['text']}")
+        MatrixOS.UIUtility.TextScroll(
+            notification["text"],
+            notification["color"],
+            notification["speed"],
+            False
+        )
+        MatrixOS.SYS.DelayMs(1000)  # Brief pause between notifications
+
+notification_system()
+```
+
+### Application Information Display
+```python
+def show_app_info():
+    """Display application information"""
+    app_info = {
+        "name": "Matrix Python Demo",
+        "version": "1.0.0",
+        "author": "Matrix Developer",
+        "description": "Demonstrating Python UI utilities"
+    }
+
+    # Show each piece of information
+    info_items = [
+        f"App: {app_info['name']}",
+        f"Version: {app_info['version']}",
+        f"By: {app_info['author']}",
+        f"Info: {app_info['description']}"
+    ]
+
+    colors = [
+        Color(255, 255, 255),  # White for name
+        Color(0, 255, 255),    # Cyan for version
+        Color(255, 255, 0),    # Yellow for author
+        Color(255, 0, 255)     # Magenta for description
+    ]
+
+    for i, (text, color) in enumerate(zip(info_items, colors)):
+        MatrixOS.UIUtility.TextScroll(text, color, 4, False)
+        if i < len(info_items) - 1:  # Don't delay after last item
+            MatrixOS.SYS.DelayMs(500)
+
+show_app_info()
+```
+
+---
+
+## 速度指南
+
+### 推荐的速度值
+- **1-2**：非常慢，适用于重要信息
+- **3-4**：正常阅读速度，适用于一般文字
+- **5-6**：快速，适用于通知
+- **7+**：非常快，适用于跑马灯或警报
+
+### Speed Selection Tips
+```python
+def get_appropriate_speed(text_length, importance):
+    """Calculate appropriate scroll speed based on content"""
+
+    # Base speed on text length
+    if text_length < 20:
+        base_speed = 3
+    elif text_length < 50:
+        base_speed = 4
+    else:
+        base_speed = 5
+
+    # Adjust for importance
+    if importance == "critical":
+        return min(7, base_speed + 2)  # Faster for critical
+    elif importance == "info":
+        return max(2, base_speed - 1)  # Slower for info
+    else:
+        return base_speed
+
+# Usage examples
+error_speed = get_appropriate_speed(25, "critical")    # Result: 5
+info_speed = get_appropriate_speed(15, "info")         # Result: 2
+normal_speed = get_appropriate_speed(30, "normal")     # Result: 4
+```
+
+---
+
+## 文字格式化技巧
+
+### 字符考虑
+```python
+def format_text_for_scroll(text):
+    """为最佳滚动显示格式化文字"""
+
+    # 添加间距以提高可读性
+    formatted_text = f"  {text}  "
+
+    # 必要时替换问题字符
+    replacements = {
+        '"': "'",   # 使用单引号替代双引号
+        '&': "和", # 替换和号
+        '%': "百分比"  # 太宽时替换百分比
+    }
+
+    for old, new in replacements.items():
+        formatted_text = formatted_text.replace(old, new)
+
+    return formatted_text
+
+# Example usage
+original = 'Status: "Good" & 85% battery'
+formatted = format_text_for_scroll(original)
+MatrixOS.UIUtility.TextScroll(formatted, Color(0, 255, 0), 4, True)
+```
+
+### Message Composition
+```python
+def create_status_message():
+    """Create a comprehensive status message"""
+
+    # Gather system information
+    uptime = MatrixOS.SYS.Millis() // 1000  # Convert to seconds
+    uptime_min = uptime // 60
+
+    # USB status
+    usb_status = "Connected" if MatrixOS.USB.Connected() else "Disconnected"
+
+    # Compose message
+    status_parts = [
+        f"Uptime: {uptime_min}min",
+        f"USB: {usb_status}",
+        "System: OK"
+    ]
+
+    full_message = " | ".join(status_parts)
+    return full_message
+
+# Display status
+status_msg = create_status_message()
+MatrixOS.UIUtility.TextScroll(status_msg, Color(255, 255, 255), 4, True)
+```
+

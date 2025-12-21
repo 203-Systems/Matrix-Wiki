@@ -1,0 +1,270 @@
+---
+sidebar_position: 4
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# MIDI API
+
+## Overview
+
+The MIDI system in MatrixOS provides communication with external MIDI devices and software. It supports standard MIDI messages, SysEx data, and handles multiple MIDI ports. The MIDI API is available as `MatrixOS.MIDI` and is imported by default.
+
+*The Python MIDI API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_MIDI.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_MIDI.pyi"/>.*
+
+---
+
+## `MatrixOS.MIDI.Get`
+```python
+def Get(timeout_ms: int = 0) -> any
+```
+
+Receives the next MIDI packet from the input queue.
+
+**Parameters:**
+- `timeout_ms` (`int`, optional): Timeout in milliseconds to wait for MIDI data (defaults to 0 for no timeout)
+
+**Returns:**
+- `MidiPacket`: MIDI packet object on success
+- `None`: On timeout or no data available
+
+**Example:**
+```python
+# Wait up to 1 second for MIDI input
+midi_packet = MatrixOS.MIDI.Get(1000)
+if midi_packet is not None:
+    print(f"Received MIDI: Status={midi_packet.status}, Data1={midi_packet.data1}")
+```
+
+---
+
+## `MatrixOS.MIDI.Send`
+```python
+def Send(packet: MidiPacket, timeout_ms: int = 0) -> bool
+```
+
+Sends a MIDI packet to the output.
+
+**Parameters:**
+- `packet` (`MidiPacket`): MIDI packet to send
+- `timeout_ms` (`int`, optional): Timeout in milliseconds for send operation (defaults to 0 for no timeout)
+
+**Returns:**
+- `bool`: True if sent successfully, False on timeout or error
+
+**Example:**
+```python
+
+# Create a Note On message (C4, velocity 127)
+packet = MidiPacket()
+packet.status = 0x90  # Note On, channel 1
+packet.data1 = 60     # C4 (middle C)
+packet.data2 = 127    # Velocity
+packet.port = 0       # MIDI port 0
+
+# Send with 100ms timeout
+success = MatrixOS.MIDI.Send(packet, 100)
+if success:
+    print("MIDI note sent successfully")
+```
+
+---
+
+## `MatrixOS.MIDI.SendSysEx`
+```python
+def SendSysEx(port: int, length: int, data: bytes, include_meta: bool = False) -> bool
+```
+
+Sends System Exclusive (SysEx) MIDI data.
+
+**Parameters:**
+- `port` (`int`): MIDI port to send on
+- `length` (`int`): Length of SysEx data
+- `data` (`bytes`): SysEx data bytes
+- `include_meta` (`bool`, optional): Whether to include SysEx meta bytes (F0/F7) (defaults to False)
+
+**Returns:**
+- `bool`: True if sent successfully
+
+**Example:**
+```python
+# Send device inquiry SysEx message
+sysex_data = bytes([0xF0, 0x7E, 0x00, 0x06, 0x01, 0xF7])
+success = MatrixOS.MIDI.SendSysEx(0, len(sysex_data), sysex_data, False)
+if success:
+    print("SysEx sent successfully")
+```
+
+---
+
+## MIDI Packet Structure
+
+The `MidiPacket` class provides setter and getter methods for accessing packet data:
+
+```python
+# Create a packet and set values using setter methods
+packet = MidiPacket()
+packet.SetStatus(0x90)     # MIDI status byte
+packet.SetNote(60)         # Note number (C4)
+packet.SetVelocity(127)    # Velocity
+packet.SetChannel(0)       # Channel (0-15)
+
+# Read values using getter methods
+status = packet.Status()
+note = packet.Note()
+velocity = packet.Velocity()
+channel = packet.Channel()
+port = packet.Port()
+```
+
+### Common MIDI Messages
+
+#### Note On/Off
+```python
+# Note On (Channel 1, C4, Velocity 100) - using factory method
+packet = MidiPacket()
+note_on = packet.NoteOn(0, 60, 100)  # Channel 0, C4, Velocity 100
+MatrixOS.MIDI.Send(note_on, 100)
+
+# Note Off (Channel 1, C4) - using factory method
+packet2 = MidiPacket()
+note_off = packet2.NoteOff(0, 60, 0)  # Channel 0, C4, Release velocity 0
+MatrixOS.MIDI.Send(note_off, 100)
+
+# Alternative: Manual construction using setters
+manual_packet = MidiPacket()
+manual_packet.SetStatus(0x90)  # Note On
+manual_packet.SetChannel(0)    # Channel 1
+manual_packet.SetNote(60)      # C4
+manual_packet.SetVelocity(100) # Velocity
+MatrixOS.MIDI.Send(manual_packet, 100)
+```
+
+#### Control Change
+```python
+# Modulation wheel (CC1) to 50% - using factory method
+packet = MidiPacket()
+cc_packet = packet.ControlChange(0, 1, 64)  # Channel 0, CC1, Value 64
+MatrixOS.MIDI.Send(cc_packet, 100)
+
+# Alternative: Manual construction
+manual_cc = MidiPacket()
+manual_cc.SetStatus(0xB0)      # Control Change
+manual_cc.SetChannel(0)        # Channel 1
+manual_cc.SetController(1)     # CC number (Modulation)
+manual_cc.SetValue(64)         # Value (0-127, 64 = 50%)
+MatrixOS.MIDI.Send(manual_cc, 100)
+```
+
+#### Program Change
+```python
+# Change to program 5 - using factory method
+packet = MidiPacket()
+pc_packet = packet.ProgramChange(0, 4)  # Channel 0, Program 4 (program 5)
+MatrixOS.MIDI.Send(pc_packet, 100)
+
+# Alternative: Manual construction
+manual_pc = MidiPacket()
+manual_pc.SetStatus(0xC0)  # Program Change
+manual_pc.SetChannel(0)    # Channel 1
+manual_pc.SetNote(4)       # Program number (0-127, 4 = program 5)
+MatrixOS.MIDI.Send(manual_pc, 100)
+```
+
+---
+
+## MIDI Input Processing
+
+### Basic MIDI Monitor
+```python
+import MatrixOS.MIDI as MIDI
+
+def midi_monitor():
+    while True:
+        packet = MIDI.Get(100)  # 100ms timeout
+        if packet is not None:
+            status = packet.status & 0xF0  # Message type
+            channel = packet.status & 0x0F  # Channel (0-15)
+
+            if status == 0x90:  # Note On
+                print(f"Note On: Ch{channel+1}, Note{packet.data1}, Vel{packet.data2}")
+            elif status == 0x80:  # Note Off
+                print(f"Note Off: Ch{channel+1}, Note{packet.data1}")
+            elif status == 0xB0:  # Control Change
+                print(f"CC: Ch{channel+1}, CC{packet.data1}, Val{packet.data2}")
+
+midi_monitor()
+```
+
+### MIDI Thru Processing
+```python
+def midi_thru_with_transpose(semitones):
+    """MIDI thru with note transposition"""
+    while True:
+        packet = MIDI.Get(10)
+        if packet is not None:
+            status = packet.status & 0xF0
+
+            # Transpose note messages
+            if status in [0x80, 0x90]:  # Note On/Off
+                new_note = packet.data1 + semitones
+                if 0 <= new_note <= 127:  # Valid MIDI range
+                    packet.data1 = new_note
+                    MIDI.Send(packet, 10)
+            else:
+                # Pass through other messages unchanged
+                MIDI.Send(packet, 10)
+
+# Transpose up one octave
+midi_thru_with_transpose(12)
+```
+
+---
+
+## MIDI Ports
+
+MatrixOS supports multiple MIDI ports for different connections:
+
+- **Port 0**: Primary MIDI port (typically USB MIDI)
+- **Port 1-15**: Additional ports (device dependent)
+
+### Sending to Specific Ports
+```python
+# Send to different ports
+packet = MidiPacket()
+packet.status = 0x90
+packet.data1 = 60
+packet.data2 = 127
+
+# Send to USB MIDI
+packet.port = 0
+MIDI.Send(packet, 100)
+
+# Send to DIN MIDI (if available)
+packet.port = 1
+MIDI.Send(packet, 100)
+```
+
+---
+
+## Performance Tips
+
+1. **Use appropriate timeouts**: Balance responsiveness with CPU usage
+2. **Handle None returns**: Always check for None when calling `Get()`
+3. **Batch operations**: Process multiple MIDI events in a loop
+4. **Port management**: Use the correct port for your target device
+5. **SysEx handling**: Use `SendSysEx()` for large data transfers
+
+---
+
+## MIDI Status Bytes Reference
+
+| Message Type | Status Range | Description |
+|--------------|--------------|-------------|
+| Note Off | 0x80-0x8F | Note release |
+| Note On | 0x90-0x9F | Note press |
+| Aftertouch | 0xA0-0xAF | Key pressure |
+| Control Change | 0xB0-0xBF | Continuous controllers |
+| Program Change | 0xC0-0xCF | Patch/program selection |
+| Channel Pressure | 0xD0-0xDF | Channel-wide pressure |
+| Pitch Bend | 0xE0-0xEF | Pitch wheel |
+| System | 0xF0-0xFF | System messages/SysEx |

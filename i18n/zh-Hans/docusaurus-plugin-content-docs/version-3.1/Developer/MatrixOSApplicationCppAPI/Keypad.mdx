@@ -1,0 +1,108 @@
+---
+sidebar_position: 3
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 键盘 API
+
+## 概述
+
+键盘 API 提供与设备键盘或其他输入类型（旋钮、传感器、触摸条）交互的功能。它允许你检索按键事件、获取按键信息，以及在按键位置和 ID 之间转换。
+
+[KeyInfo](./Types/KeyEvent/) API 将来可能会有一些变化，以支持复杂的动态输入类型。
+
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/KeyPad.cpp"/>。*
+
+---
+
+## `MatrixOS::KEYPAD::Get`
+```cpp
+bool Get([`KeyEvent`](./Types/KeyEvent/)* keyEvent_dest, uint32_t timeout_ms = 0);
+```
+
+获取下一个可用的按键事件。如果没有事件可用，函数将等待指定的超时时间。
+
+**参数：**
+- `keyEvent_dest` ([`KeyEvent`](./Types/KeyEvent/)*)：用于存储检索到的按键事件的目标指针。
+- `timeout_ms` (`uint32_t`，可选)：等待事件的最大时间（以毫秒为单位）。默认值为 `0`。
+
+**返回值：**
+- `bool`：如果检索到按键事件则返回 `true`，否则返回 `false`。
+
+---
+
+## `MatrixOS::KEYPAD::GetKey`（按位置）
+```cpp
+[`KeyInfo`](./Types/KeyInfo/)* GetKey(Point keyXY);
+```
+
+获取位于指定位置的按键的信息。
+
+**参数：**
+- `keyXY` ([`Point`](./Types/Point/))：按键的位置。
+
+**返回值：**
+- [`KeyInfo*`](./Types/KeyInfo/)：指向按键信息的指针。如果未找到按键则返回 `nullptr`。
+
+---
+
+## `MatrixOS::KEYPAD::GetKey`（按 ID）
+```cpp
+[`KeyInfo`](./Types/KeyInfo/)* GetKey(uint16_t keyID);
+```
+
+获取具有指定 ID 的按键的信息。
+
+**参数：**
+- `keyID` (`uint16_t`)：按键的 ID。
+
+**返回值：**
+- [`KeyInfo*`](./Types/KeyInfo/)：指向按键信息的指针。如果未找到按键则返回 `nullptr`。
+
+---
+
+## `MatrixOS::KEYPAD::Clear`
+```cpp
+void Clear();
+```
+
+清除当前按键状态并抑制所有按键的后续事件（例如 `Release`、`Hold`），直到它们的下一个 `Press` 事件。
+
+---
+
+## `MatrixOS::KEYPAD::ClearList`
+```cpp
+void ClearList();
+```
+
+清除当前的 `KeyEvent` 队列。调用此函数后，队列中将不再有任何事件。
+
+---
+
+## `MatrixOS::KEYPAD::XY2ID`
+```cpp
+uint16_t XY2ID(Point xy);
+```
+
+将按键位置转换为对应的按键 ID。
+
+**参数：**
+- `xy` ([`Point`](./Types/Point/))：按键的位置。
+
+**返回值：**
+- `uint16_t`：与位置关联的按键 ID。如果指定位置没有分配按键 ID 则返回 `UINT16_MAX`。
+
+---
+
+## `MatrixOS::KEYPAD::ID2XY`
+```cpp
+Point ID2XY(uint16_t keyID);
+```
+
+将按键 ID 转换为对应的位置。
+
+**参数：**
+- `keyID` (`uint16_t`)：按键的 ID。
+
+**返回值：**
+- [`Point`](./Types/Point/)：按键的位置。如果找不到指定 ID 的位置则返回 `Point::Invalid()`。你可以使用 bool(Point) 来检查点是否有效。

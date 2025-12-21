@@ -1,0 +1,128 @@
+---
+sidebar_position: 8
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# 自定义控制应用
+
+自定义控制应用是一个强大的工具，用于为 Matrix OS 设备创建自定义控制界面。你可以使用 [Matrix OS 自定义控制编辑器](https://edit.203.io) 来创建自定义控制界面。
+
+:::warning
+文档仍在编写中。
+
+大多数功能都很容易理解，但有些可能需要额外的说明。
+
+- 操作驱动颜色将颜色与操作状态关联。在 MIDI 中，如果你选择切换选项，当切换处于"开启"位置时，将使用操作驱动颜色的颜色1。
+
+**还有一些错误将在发布前修复。例如，SysEx 目前无法正常工作。**
+:::
+
+## 网页编辑器
+
+你可以使用 [Matrix OS 自定义控制界面编辑器](https://edit.203.io) 创建自定义控制界面。
+
+你可以为按键分配操作和效果。你还可以为单个按键分配多个操作，它们将按顺序执行。
+
+![编辑器](editor.png)
+
+### 操作
+
+操作是按键动作可以执行的单一操作。
+
+### 效果
+
+效果是在执行操作时在按键上显示的视觉反馈。它可以通过按键操作或其他事件触发。
+
+## 操作菜单
+
+在自定义控制界面模式下长按功能键即可进入操作菜单，用于访问各类设置与控制。
+
+export function ActionMenu() {
+    const uiElements = [
+        {
+            "name": "激活的图层",
+            "desc": "显示控制界面中当前激活的图层。（示例可视化显示界面中有4个图层，图层1-3已启用，图层4已禁用。显示图层3的效果，可触发图层3的操作和任何更低的启用图层）",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "size": [8, 2],
+                    "color": "#C0C0C0"
+                },
+                {
+                    "pos": [0, 0],
+                    "size": [3, 1],
+                    "color": "#00FFFF"
+                },
+                {
+                    "pos": [3, 0],
+                    "color": "#00C0C0"
+                }
+            ]
+        },
+        {
+            "name": "菜单锁定",
+            "desc": "切换菜单访问的锁定/解锁",
+            "elements": [
+                {
+                    "pos": [0, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "重新加载",
+            "desc": "重新加载当前控制界面配置。（同时将图层配置重置为默认值）",
+            "elements": [
+                {
+                    "pos": [0, 5],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "系统设置",
+            "desc": "打开系统设置菜单",
+            "link": "/docs/MatrixOS/SystemSettings",
+            "elements": [
+                {
+                    "pos": [7, 5],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "图层穿透",
+            "desc": "配置哪些图层允许操作穿透。（示例可视化显示界面中有3个图层，图层1禁用了穿透，图层2已启用。因此在图层3的空白位置进行操作将触发图层1的操作）",
+            "elements": [
+                  {
+                    "pos": [0, 6],
+                    "size": [8, 2],
+                    "color": "#C0C0C0"
+                },
+                {
+                    "pos": [2, 6],
+                    "size": [2, 1],
+                    "color": "#C000C0"
+                },
+                {
+                    "pos": [0, 6],
+                    "size": [2, 1],
+                    "color": "#FF00FF"
+                }
+            ]
+        }
+    ];
+
+    const uiName = "自定义控制界面 - 操作菜单"
+    const uiDescription = "操作菜单提供对控制界面设置、图层管理和系统功能的访问。可通过长按功能键访问。"
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ActionMenu />

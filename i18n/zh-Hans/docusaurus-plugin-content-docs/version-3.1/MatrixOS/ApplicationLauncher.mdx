@@ -1,0 +1,417 @@
+---
+sidebar_position: 2
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# 应用启动器
+
+:::warning
+应用启动器的布局可以自定义。可视化器里的视图可能和你设备上看到的不完全一样。
+:::
+
+应用启动器是 Matrix OS 的主菜单，用户可以在此选择要使用的应用。
+
+应用启动器顶部显示可用应用，底部左侧为应用目录选择，右侧为<DocLink to="/docs/MatrixOS/SystemSettings">系统设置</DocLink>。
+
+
+export function ApplicationLauncher() {
+
+    const uiElements = [
+    {
+        "name": "表演应用",
+        "desc": "进入表演应用",
+        "link": "/docs/MatrixOS/Applications/Performance",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "音符应用",
+        "desc": "进入音符应用",
+        "link": "/docs/MatrixOS/Applications/Note",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Companion 应用",
+        "desc": "进入 Companion 应用",
+        "link": "/docs/MatrixOS/Applications/Companion",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#0000FF"
+            }
+        ]
+    },
+        {
+        "name": "自定义控制应用",
+        "desc": "进入自定义控制应用",
+        "link": "/docs/MatrixOS/Applications/CustomControlMap",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "灯光应用",
+        "desc": "进入灯光应用",
+        "link": "/docs/MatrixOS/Applications/Lighting",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "骰子应用",
+        "desc": "进入骰子应用",
+        "link": "/docs/MatrixOS/Applications/Dice",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#FFA500"
+            }
+        ]
+    },
+    {
+        "name": "黑白棋应用",
+        "desc": "进入黑白棋应用",
+        "link": "/docs/MatrixOS/Applications/Reversi",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#00C000"
+            }
+        ]
+    },
+    {
+        "name": "拨弦应用",
+        "desc": "进入拨弦应用",
+        "link": "/docs/MatrixOS/Applications/Strum",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FF80FF"
+            }
+        ]
+    },
+    {
+        "name": "Python 应用",
+        "desc": "进入 Python 应用",
+        "link": "/docs/MatrixOS/Applications/Python",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#4995d0"
+            }
+        ]
+    },
+    {
+        "name": "应用文件夹 1",
+        "desc": "可自定义的应用文件夹 1",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "系统设置",
+        "desc": "进入系统设置",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "自定义布局",
+        "desc": "长按按键，自定义你的应用启动器布局。",
+        "link": "#customize-layout",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "应用启动器"
+    const uiDescription = "应用启动器是 Matrix OS 的主菜单，用户可以在此选择要使用的应用。"
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ApplicationLauncher />
+
+## 自定义布局
+
+你可以自定义应用启动器的布局，按你的习惯来摆放应用。包括：
+
+- **选择应用**：点击应用以选择它（它会变亮，其他应用变暗）。点击空白区域取消选择。
+### 应用管理
+- **移动应用**：选中一个应用后，点另一个应用就能交换位置。
+- **放进文件夹**：选中应用后，点一个文件夹就能把它放进去。
+- **隐藏应用**：把不常用的应用从启动器里隐藏起来。
+
+### 文件夹管理
+- **创建文件夹**：空的文件夹插槽会有呼吸动画，点一下就能新建文件夹。
+- **自定义文件夹**：长按现有文件夹可：
+  - 更改文件夹颜色
+  - 删除文件夹（里面的应用会回到文件夹 1）
+- **整理应用**：在不同文件夹之间移动应用，让启动器更整齐。
+
+export function ApplicationLauncherEditing() {
+
+    const uiElements = [
+    {
+        "name": "表演应用（已选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择表演应用",
+        "link": "/docs/MatrixOS/Applications/Performance",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "音符应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择音符应用",
+        "link": "/docs/MatrixOS/Applications/Note",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "Companion 应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择 Companion 应用",
+        "link": "/docs/MatrixOS/Applications/Companion",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#0000C0"
+            }
+        ]
+    },
+        {
+        "name": "自定义控制应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择自定义控制应用",
+        "link": "/docs/MatrixOS/Applications/CustomControlMap",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "灯光应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择灯光应用",
+        "link": "/docs/MatrixOS/Applications/Lighting",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "骰子应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择骰子应用",
+        "link": "/docs/MatrixOS/Applications/Dice",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C07E00"
+            }
+        ]
+    },
+    {
+        "name": "黑白棋应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择黑白棋应用",
+        "link": "/docs/MatrixOS/Applications/Reversi",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#009000"
+            }
+        ]
+    },
+    {
+        "name": "拨弦应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择拨弦应用",
+        "link": "/docs/MatrixOS/Applications/Strum",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#C060C0"
+            }
+        ]
+    },
+    {
+        "name": "Python 应用（未选中）",
+        "desc": "已选中应用时：与当前选中的应用交换位置。\n未选中应用时：选择 Python 应用",
+        "link": "/docs/MatrixOS/Applications/Python",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#36709C"
+            }
+        ]
+    },
+    {
+        "name": "应用文件夹1（当前）",
+        "desc": "应用文件夹1 - 已创建并已选中。（长按编辑颜色或删除文件夹）",
+        "link": "#folder-editing",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "应用文件夹2（未选中）",
+        "desc": "应用文件夹2 - 已创建但未选中。（长按编辑颜色或删除文件夹）",
+        "link": "#folder-editing",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "应用文件夹3 ~ 6（未创建）",
+        "desc": "应用文件夹未创建。点击任意一个来创建。",
+        "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [4, 1],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "隐藏应用文件夹",
+        "desc": "隐藏应用文件夹 - 把应用移到这里就会隐藏",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "退出自定义",
+        "desc": "点击退出编辑。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "退出自定义",
+        "desc": "按功能键退出编辑。",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    },
+];
+
+    const uiName = "应用启动器（编辑模式）"
+    const uiDescription = "应用启动器布局编辑模式"
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ApplicationLauncherEditing />
+
+### 文件夹编辑
+
+长按已有文件夹会弹出这个菜单，你可以改颜色或直接删除。删除后，里面的应用会回到主启动器。
+
+export function ApplicationLauncherFolderEdit() {
+
+    const uiElements = [
+    {
+        "name": "更改颜色",
+        "desc": "更改文件夹颜色",
+        "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 3],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "删除文件夹",
+        "desc": "删除这个文件夹（其中的应用将返回到主启动器）",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "size": [4, 1],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "返回到应用启动器",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "文件夹编辑菜单"
+    const uiDescription = "编辑文件夹 - 更改颜色或删除"
+    const uiParentLink = "#文件夹管理"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<ApplicationLauncherFolderEdit />
