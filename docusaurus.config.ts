@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: '203 Systems',
+  title: 'Project Matrix Wiki',
   favicon: 'img/favicon.png',
 
   // Set the production url of your site here

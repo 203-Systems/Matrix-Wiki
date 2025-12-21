@@ -21,7 +21,6 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Project Matrix Wiki`}
       description="Wiki and Documentations of everything 203 Systems">
       <main>
       <div className={styles.background_container}>
