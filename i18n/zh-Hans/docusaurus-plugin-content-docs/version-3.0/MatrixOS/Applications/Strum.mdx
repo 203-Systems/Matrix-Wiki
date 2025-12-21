@@ -1,0 +1,262 @@
+---
+sidebar_position: 9
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# 拨弦应用
+
+拨弦应用是一个基于和弦的乐器应用，灵感来自 Omnichord 等设备。你可以选择和弦并使用魔矩设备左右两侧的触摸条来演奏。
+
+:::note 需要设备旋转
+拨弦应用需要将设备旋转为纵向模式（向左或向右旋转）以访问用于演奏的触摸条功能。
+:::
+
+点击功能键可从主界面访问操作菜单。
+
+## 主界面
+
+拨弦应用界面分为几个关键区域，包括和弦选择、八度控制和音符时长设置。
+
+export function MainInterface() {
+
+    const uiElements = [
+    {
+        "name": "和弦可视化器",
+        "desc": "所选和弦的可视化表示，显示音符和根音。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#8000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#8000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#8000C0"
+            },
+            {
+                "pos": [2, 1],
+                "color": "#C000FF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#C000FF"
+            },
+        ]
+    },
+    {
+        "name": "八度移调器",
+        "desc": "调整和弦八度的控制器。",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#0080FF"
+            }
+
+        ]
+    },
+    {
+        "name": "时长修改器",
+        "desc": "调整演奏时音符时长的控制器。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#C0C000"
+            },
+            {
+                "pos": [3, 3],
+                "size": [5, 1],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "大三和弦",
+        "desc": "选择大三和弦类型。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "小三和弦",
+        "desc": "选择小三和弦类型。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C05000"
+            }
+        ]
+    },
+    {
+        "name": "大七和弦",
+        "desc": "选择大七和弦类型。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#C09000"
+            }
+        ]
+    },
+    {
+        "name": "小七和弦",
+        "desc": "选择小七和弦类型。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "增三和弦",
+        "desc": "选择增三和弦类型。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00C070"
+            }
+        ]
+    },
+    {
+        "name": "减三和弦",
+        "desc": "选择减三和弦类型。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#0080C0"
+            }
+        ]
+    },
+    {
+        "name": "左侧触摸条",
+        "desc": "用于弹奏和弦的左侧触摸条。",
+        "elements": [
+            {
+                "pos": ["l", 0],
+                "size": 8,
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "右侧触摸条",
+        "desc": "用于弹奏和弦的右侧触摸条。",
+        "elements": [
+            {
+                "pos": ["r", 0],
+                "size": 8,
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "操作菜单",
+        "desc": "点击功能键进入操作菜单。",
+        "link": "#action-menu",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "拨弦应用主界面"
+    const uiDescription = "拨弦应用主界面允许你选择和弦、调整八度和时长，然后使用侧边触摸条进行弹奏。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<MainInterface />
+
+## 操作菜单
+
+操作菜单提供对系统设置和应用配置的访问。
+
+export function ActionMenu() {
+
+    const uiElements = [
+    {
+        "name": "系统设置",
+        "desc": "进入系统设置。",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "返回拨弦界面或退出应用",
+        "desc": "点击返回拨弦界面。长按退出应用。",
+        "link": "#主界面",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "操作菜单"
+    const uiDescription = "操作菜单提供对系统设置和应用导航的访问。"
+    const uiParentLink = "#主界面"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ActionMenu />
+
+## 使用方法
+
+### 开始使用
+1. **设备方向**：将设备旋转为纵向模式（向左或向右）以访问触摸条
+2. **和弦选择**：点击底部行的任意和弦按钮来选择所需的和弦类型
+3. **八度调节**：使用八度移调器（第2行）调整音高范围
+4. **时长控制**：使用时长修改器（第3行）设置音符长度
+
+### 弹奏
+- **左侧触摸条**：在左侧触摸条上触摸并拖拽来弹奏和弦
+- **右侧触摸条**：在右侧触摸条上触摸并拖拽来弹奏和弦
+- **和弦可视化**：顶部区域显示所选和弦的音符和根音
+
+### 可用的和弦类型
+- **大三和弦**：基本大三和弦 (1-3-5)
+- **小三和弦**：基本小三和弦 (1-♭3-5)
+- **大七和弦**：带大七度的大三和弦 (1-3-5-7)
+- **小七和弦**：带小七度的小三和弦 (1-♭3-5-♭7)
+- **增三和弦**：增三和弦 (1-3-#5)
+- **减三和弦**：减三和弦 (1-♭3-♭5)

@@ -1,0 +1,413 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# ColorEffects
+
+## Overview
+
+The ColorEffects API provides utility functions for generating dynamic lighting effects such as rainbow, breathing, strobe, and other color modulation effects based on time and phase offsets. Access these functions through `ColorEffects`.
+
+*The Python ColorEffects API is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_ColorEffects.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_ColorEffects.pyi"/>.*
+
+---
+
+## Color Generation Effects
+
+### `ColorEffects.Rainbow`
+```python
+def Rainbow(period: int = 1000, offset: int = 0) -> Color
+```
+
+Generates a rainbow color effect that cycles through the hue spectrum over the specified period.
+
+**Parameters:**
+- `period` (`int`, optional): Duration of the full color cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the starting hue. Defaults to `0`
+
+**Returns:**
+- `Color`: The current color in the rainbow cycle
+
+**Example:**
+```python
+# Basic rainbow effect
+rainbow_color = ColorEffects.Rainbow()
+MatrixOS.LED.Fill(rainbow_color)
+MatrixOS.LED.Update()
+
+# Faster rainbow with offset
+fast_rainbow = ColorEffects.Rainbow(500, 100)
+MatrixOS.LED.SetColor(Point(0, 0), fast_rainbow)
+```
+
+---
+
+## Brightness Modulation Effects
+
+### `ColorEffects.Breath`
+```python
+def Breath(period: int = 1000, offset: int = 0) -> int
+```
+
+Generates a brightness value that smoothly transitions in a sinusoidal pattern (breathing effect).
+
+**Parameters:**
+- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+
+**Returns:**
+- `int`: The brightness value (0-255)
+
+**Example:**
+```python
+# Create breathing effect
+brightness = ColorEffects.Breath(2000)  # 2-second cycle
+MatrixOS.LED.Fill(Color(255, 0, 0), brightness)
+MatrixOS.LED.Update(brightness)
+```
+
+---
+
+### `ColorEffects.BreathLowBound`
+```python
+def BreathLowBound(low_bound: int = 64, period: int = 1000, offset: int = 0) -> int
+```
+
+Generates a breathing effect with a minimum brightness value.
+
+**Parameters:**
+- `low_bound` (`int`, optional): Minimum brightness value. Defaults to `64`
+- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+
+**Returns:**
+- `int`: The brightness value (low_bound to 255)
+
+**Example:**
+```python
+# Breathing effect that never goes completely dark
+brightness = ColorEffects.BreathLowBound(100, 1500)
+MatrixOS.LED.Fill(Color(0, 255, 0), brightness)
+```
+
+---
+
+### `ColorEffects.Strobe`
+```python
+def Strobe(period: int = 1000, offset: int = 0) -> int
+```
+
+Generates a strobe effect by alternating between full brightness and off states.
+
+**Parameters:**
+- `period` (`int`, optional): Duration of one strobe cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the strobe phase. Defaults to `0`
+
+**Returns:**
+- `int`: The brightness value (0 or 255)
+
+**Example:**
+```python
+# Fast strobe effect
+brightness = ColorEffects.Strobe(200)  # 200ms cycles
+MatrixOS.LED.Fill(Color(255, 255, 255), brightness)
+```
+
+---
+
+### `ColorEffects.Saw`
+```python
+def Saw(period: int = 1000, offset: int = 0) -> int
+```
+
+Generates a sawtooth waveform for brightness, cycling from 0 to 255 linearly.
+
+**Parameters:**
+- `period` (`int`, optional): Duration of one sawtooth cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+
+**Returns:**
+- `int`: The brightness value (0-255)
+
+**Example:**
+```python
+# Sawtooth brightness ramp
+brightness = ColorEffects.Saw(3000)  # 3-second ramp up
+MatrixOS.LED.Fill(Color(0, 0, 255), brightness)
+```
+
+---
+
+### `ColorEffects.Triangle`
+```python
+def Triangle(period: int = 1000, offset: int = 0) -> int
+```
+
+Generates a triangle waveform for brightness, cycling up and down between 0 and 255.
+
+**Parameters:**
+- `period` (`int`, optional): Duration of one triangle cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+
+**Returns:**
+- `int`: The brightness value (0-255)
+
+**Example:**
+```python
+# Triangle wave brightness
+brightness = ColorEffects.Triangle(2000)
+MatrixOS.LED.Fill(Color(255, 255, 0), brightness)
+```
+
+---
+
+## Color Modulation Effects
+
+### `ColorEffects.ColorBreath`
+```python
+def ColorBreath(color: Color, period: int = 1000, offset: int = 0) -> Color
+```
+
+Applies a breathing effect to a specific color by modulating its brightness.
+
+**Parameters:**
+- `color` (`Color`): The base color
+- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+
+**Returns:**
+- `Color`: The modulated color with the breathing effect applied
+
+**Example:**
+```python
+base_color = Color(255, 0, 0)  # Red
+breathing_red = ColorEffects.ColorBreath(base_color, 1500)
+MatrixOS.LED.Fill(breathing_red)
+```
+
+---
+
+### `ColorEffects.ColorBreathLowBound`
+```python
+def ColorBreathLowBound(color: Color, low_bound: int = 64, period: int = 1000, offset: int = 0) -> Color
+```
+
+Applies a breathing effect to a color, ensuring a minimum brightness value.
+
+**Parameters:**
+- `color` (`Color`): The base color
+- `low_bound` (`int`, optional): Minimum brightness value. Defaults to `64`
+- `period` (`int`, optional): Duration of the breathing cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the breathing phase. Defaults to `0`
+
+**Returns:**
+- `Color`: The modulated color with the breathing effect applied
+
+**Example:**
+```python
+base_color = Color(0, 255, 255)  # Cyan
+subtle_breath = ColorEffects.ColorBreathLowBound(base_color, 128, 2000)
+MatrixOS.LED.Fill(subtle_breath)
+```
+
+---
+
+### `ColorEffects.ColorStrobe`
+```python
+def ColorStrobe(color: Color, period: int = 1000, offset: int = 0) -> Color
+```
+
+Applies a strobe effect to a specific color.
+
+**Parameters:**
+- `color` (`Color`): The base color
+- `period` (`int`, optional): Duration of one strobe cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the strobe phase. Defaults to `0`
+
+**Returns:**
+- `Color`: The modulated color with the strobe effect applied
+
+**Example:**
+```python
+base_color = Color(255, 0, 255)  # Magenta
+strobe_magenta = ColorEffects.ColorStrobe(base_color, 300)
+MatrixOS.LED.Fill(strobe_magenta)
+```
+
+---
+
+### `ColorEffects.ColorSaw`
+```python
+def ColorSaw(color: Color, period: int = 1000, offset: int = 0) -> Color
+```
+
+Applies a sawtooth waveform to the brightness of a specific color.
+
+**Parameters:**
+- `color` (`Color`): The base color
+- `period` (`int`, optional): Duration of one sawtooth cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+
+**Returns:**
+- `Color`: The modulated color with the sawtooth effect applied
+
+**Example:**
+```python
+base_color = Color(255, 255, 0)  # Yellow
+saw_yellow = ColorEffects.ColorSaw(base_color, 2500)
+MatrixOS.LED.Fill(saw_yellow)
+```
+
+---
+
+### `ColorEffects.ColorTriangle`
+```python
+def ColorTriangle(color: Color, period: int = 1000, offset: int = 0) -> Color
+```
+
+Applies a triangle waveform to the brightness of a specific color.
+
+**Parameters:**
+- `color` (`Color`): The base color
+- `period` (`int`, optional): Duration of one triangle cycle in milliseconds. Defaults to `1000ms`
+- `offset` (`int`, optional): Offset to adjust the phase. Defaults to `0`
+
+**Returns:**
+- `Color`: The modulated color with the triangle effect applied
+
+**Example:**
+```python
+base_color = Color(0, 255, 0)  # Green
+triangle_green = ColorEffects.ColorTriangle(base_color, 1800)
+MatrixOS.LED.Fill(triangle_green)
+```
+
+---
+
+## Usage Examples
+
+### Dynamic Rainbow Grid
+```python
+def rainbow_grid():
+    """Create a rainbow effect across the LED grid"""
+
+    while True:
+        for x in range(8):
+            for y in range(8):
+                # Create phase offset based on position
+                offset = (x + y) * 125  # 125ms offset per step
+
+                rainbow_color = ColorEffects.Rainbow(2000, offset)
+                MatrixOS.LED.SetColor(Point(x, y), rainbow_color)
+
+        MatrixOS.LED.Update()
+        MatrixOS.SYS.DelayMs(50)
+
+rainbow_grid()
+```
+
+### Multi-Effect Combination
+```python
+def combined_effects():
+    """Combine multiple color effects"""
+
+    base_colors = [
+        Color(255, 0, 0),    # Red
+        Color(0, 255, 0),    # Green
+        Color(0, 0, 255),    # Blue
+        Color(255, 255, 0)   # Yellow
+    ]
+
+    while True:
+        for i, base_color in enumerate(base_colors):
+            row = i * 2  # Use two rows per color
+
+            # Row 1: Breathing effect
+            breath_color = ColorEffects.ColorBreath(base_color, 3000, i * 750)
+            for x in range(8):
+                MatrixOS.LED.SetColor(Point(x, row), breath_color)
+
+            # Row 2: Strobe effect
+            if row + 1 < 8:
+                strobe_color = ColorEffects.ColorStrobe(base_color, 1000, i * 250)
+                for x in range(8):
+                    MatrixOS.LED.SetColor(Point(x, row + 1), strobe_color)
+
+        MatrixOS.LED.Update()
+        MatrixOS.SYS.DelayMs(50)
+
+combined_effects()
+```
+
+### Music-Reactive Effects
+```python
+def music_visualizer():
+    """Simple music-reactive lighting using effects"""
+
+    # Simulate audio intensity (in real application, this would come from audio input)
+    import random
+
+    base_color = Color(255, 100, 0)  # Orange
+
+    while True:
+        # Simulate varying audio levels
+        audio_level = random.randint(0, 100)
+
+        if audio_level > 80:
+            # High energy - fast strobe
+            effect_color = ColorEffects.ColorStrobe(base_color, 100)
+        elif audio_level > 50:
+            # Medium energy - breathing
+            effect_color = ColorEffects.ColorBreath(base_color, 500)
+        elif audio_level > 20:
+            # Low energy - slow triangle
+            effect_color = ColorEffects.ColorTriangle(base_color, 2000)
+        else:
+            # Silence - dim breath
+            effect_color = ColorEffects.ColorBreathLowBound(base_color, 32, 4000)
+
+        MatrixOS.LED.Fill(effect_color)
+        MatrixOS.LED.Update()
+        MatrixOS.SYS.DelayMs(50)
+
+music_visualizer()
+```
+
+### Time-Based Color Zones
+```python
+def time_zones():
+    """Different effects for different grid zones"""
+
+    while True:
+        current_time = MatrixOS.SYS.Millis()
+
+        # Top section: Rainbow
+        for x in range(8):
+            for y in range(2):
+                offset = x * 100
+                rainbow = ColorEffects.Rainbow(4000, offset)
+                MatrixOS.LED.SetColor(Point(x, y), rainbow)
+
+        # Middle section: Breathing colors
+        colors = [Color(255, 0, 0), Color(0, 255, 0), Color(0, 0, 255)]
+        for x in range(8):
+            for y in range(2, 6):
+                color_idx = (x + y) % len(colors)
+                base_color = colors[color_idx]
+                breath_color = ColorEffects.ColorBreath(base_color, 2000, x * 200)
+                MatrixOS.LED.SetColor(Point(x, y), breath_color)
+
+        # Bottom section: Sawtooth white
+        for x in range(8):
+            for y in range(6, 8):
+                brightness = ColorEffects.Saw(3000, x * 100)
+                white_color = Color(255, 255, 255).Scale(brightness / 255.0)
+                MatrixOS.LED.SetColor(Point(x, y), white_color)
+
+        MatrixOS.LED.Update()
+        MatrixOS.SYS.DelayMs(50)
+
+time_zones()
+```
+

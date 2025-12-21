@@ -1,0 +1,204 @@
+---
+sidebar_position: 2
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# LED API
+
+## 概述
+
+Matrix OS 中的 LED 系统非常强大，支持不同图层、自定时更新和交叉渐变动画。
+
+对于某些 LED API，你可以指定图层 ID。如果不指定图层 ID，API 将使用 255，表示最顶层。
+
+在对图层进行更改后，只有通过使用 Update() 才能生效并渲染到设备上。
+
+但是，你可以通过写入图层 0（即活动缓冲区）来立即使更改生效。你的更改将立即渲染到设备上。（除非你通过 `PauseUpdate(true)` 暂停更新）
+这对于灯光秀等实时渲染很有用，但可能会导致闪烁和撕裂。而且，除非你先将图层 0 复制到另一个图层，否则在创建新图层时无法保持效果。
+
+*此 API 的头文件是 <GithubLink path="os/MatrixOS.h"/> 的一部分，实现位于 <GithubLink path="os/system/LED.cpp"/>。*
+
+---
+
+## `MatrixOS::LED::NextBrightness`
+```cpp
+void NextBrightness();
+```
+
+将 LED 切换到下一个预定义的亮度级别。
+
+---
+
+## `MatrixOS::LED::SetBrightness`
+```cpp
+void SetBrightness(uint8_t brightness);
+```
+
+设置 LED 的亮度级别。
+
+**参数：**
+- `brightness` (`uint8_t`)：亮度级别（0-255）。
+
+---
+
+## `MatrixOS::LED::SetBrightnessMultiplier`
+```cpp
+void SetBrightnessMultiplier(string partition_name, float multiplier);
+```
+
+对特定分区的亮度应用乘数。
+
+**参数：**
+- `partition_name`：LED 分区的名称。
+- `multiplier` (`float`)：亮度的乘数值。
+
+---
+
+## `MatrixOS::LED::SetColor` (按位置)
+```cpp
+void SetColor(Point xy, Color color, uint8_t layer = 255);
+```
+
+设置指定位置 LED 的颜色。
+
+**参数：**
+- `xy` ([`Point`](./Types/Point/))：LED 的位置。
+- `color` ([`Color`](./Types/Color/))：要设置的颜色。
+- `layer` (`uint8_t`，可选)：应用颜色的图层。默认值为 `255` - 顶层。
+
+---
+
+## `MatrixOS::LED::SetColor` (按 ID)
+```cpp
+void SetColor(uint16_t ID, Color color, uint8_t layer = 255);
+```
+
+通过 LED 的 ID 设置其颜色。
+
+**参数：**
+- `ID` (`uint16_t`)：LED 的 ID。
+- `color` ([`Color`](./Types/Color/))：要设置的颜色。
+- `layer` (`uint8_t`，可选)：应用颜色的图层。默认值为 `255`。
+
+---
+
+## `MatrixOS::LED::Fill`
+```cpp
+void Fill(Color color, uint8_t layer = 255);
+```
+
+用指定颜色填充所有 LED。
+
+**参数：**
+- `color` ([`Color`](./Types/Color/))：要填充的颜色。
+- `layer` (`uint8_t`，可选)：应用颜色的图层。默认值为 `255` - 顶层。
+
+---
+
+## `MatrixOS::LED::FillPartition`
+```cpp
+void FillPartition(string partition, Color color, uint8_t layer = 255);
+```
+
+用指定颜色填充特定分区。如果分区不存在，将不执行任何操作。
+
+每个设备具有不同的分区，更多信息请参考设备文档。对于魔矩，它有 2 个分区：`Gain` 和 `Underglow`。
+
+**参数：**
+- `partition`：要填充的分区名称。
+- `color` ([`Color`](./Types/Color/))：要填充的颜色。
+- `layer` (`uint8_t`，可选)：应用颜色的图层。默认值为 `255` - 顶层。
+
+---
+
+## `MatrixOS::LED::Update`
+```cpp
+void Update(uint8_t layer = 255);
+```
+
+用指定图层更新显示。
+
+**参数：**
+- `layer` (`uint8_t`，可选)：要更新的图层。默认值为 `255` - 顶层。
+
+---
+
+## `MatrixOS::LED::CurrentLayer`
+```cpp
+int8_t CurrentLayer();
+```
+
+返回当前活动图层。
+
+**返回值：**
+- `int8_t`：当前图层的 ID。
+
+---
+
+## `MatrixOS::LED::CreateLayer`
+```cpp
+int8_t CreateLayer(uint16_t crossfade = crossfade_duration);
+```
+
+创建一个新图层，可选择使用交叉渐变效果。
+
+**参数：**
+- `crossfade` (`uint16_t`，可选)：交叉渐变的持续时间（毫秒）。默认值为 `crossfade_duration`。
+
+**返回值：**
+- `int8_t`：新创建图层的 ID，如果无法创建图层则返回 -1。
+
+---
+
+## `MatrixOS::LED::CopyLayer`
+```cpp
+void CopyLayer(uint8_t dest, uint8_t src);
+```
+
+将内容从一个图层复制到另一个图层。
+
+**参数：**
+- `dest` (`uint8_t`)：目标图层 ID。
+- `src` (`uint8_t`)：源图层 ID。
+
+---
+
+## `MatrixOS::LED::DestroyLayer`
+```cpp
+bool DestroyLayer(uint16_t crossfade = crossfade_duration);
+```
+
+销毁图层，可选择使用交叉渐变效果。
+
+**参数：**
+- `crossfade` (`uint16_t`，可选)：交叉渐变的持续时间（毫秒）。默认值为 `crossfade_duration`。
+
+**返回值：**
+- `bool`：如果图层成功销毁则返回 `true`，否则返回 `false`。
+
+---
+
+## `MatrixOS::LED::Fade`
+```cpp
+void Fade(uint16_t crossfade = crossfade_duration, [`Color`](./Types/Color/)* source_buffer = nullptr);
+```
+
+在特定持续时间内对 LED 进行渐变。你还可以指定要渐变的缓冲区。
+
+**参数：**
+- `crossfade` (`uint16_t`，可选)：交叉渐变的持续时间（毫秒）。默认值为 `crossfade_duration`。
+- `source_buffer` ([`Color`](./Types/Color/)*，可选)：要渐变到的颜色缓冲区。默认值为 `nullptr`，表示当前帧缓冲区。
+
+---
+
+## `MatrixOS::LED::PauseUpdate`
+```cpp
+void PauseUpdate(bool pause);
+```
+
+暂停或恢复对 LED 的自动定时缓冲区更新。
+
+（注意：这是指从活动缓冲区到设备的更新。不是从图层缓冲区到活动缓冲区。你始终需要 Update() 来将更改从图层缓冲区应用到活动缓冲区）
+
+**参数：**
+- `pause` (`bool`)：`true` 表示暂停自动更新，`false` 表示恢复。

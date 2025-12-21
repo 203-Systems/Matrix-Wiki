@@ -1,0 +1,27 @@
+---
+sidebar_position: 6
+---
+
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# TRS MIDI 转换器
+
+你可以在[我们的商店](https://203.io/products/matrix-midi-out-adapter)购买用于魔矩的 TRS MIDI 转换器（A 型 / B 型）。
+
+A 型转换器标有 `Type A`，而 B 型转换器**没有标签**。
+
+## 使用转换器
+
+1. 将转换器的 USB-C 公头连接到魔矩的 USB-C 母座。
+2. 将 MIDI TRS 线缆和用于电源/数据的 USB-C 线缆连接到转换器。
+3. 在大多数情况下，转换器将被 Matrix OS 自动检测，大多数 MIDI 信号将路由到 USB 和 TRS 端口。
+
+## 附加信息
+
+### Matrix OS 路由
+
+魔矩和 Matrix OS 能够检测转换器是否连接，并会自动将 MIDI 信号路由至转换器。
+
+Matrix OS 应用还能够灵活地将 MIDI 信号路由至转换器或 USB 端口，功能远超简单的信号镜像。
+
+如果您想开发利用转换器进行高级 MIDI 路由的自定义应用，可以在<DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/MIDI">这里</DocLink>了解有关 Matrix OS MIDI API 中 MIDI 路由系统的更多信息。

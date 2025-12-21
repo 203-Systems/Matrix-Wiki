@@ -1,0 +1,558 @@
+---
+sidebar_position: 4
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# System Settings
+
+The System Settings control various system-wide features such as brightness, rotation, device-specific features, and more.
+
+System Settings can be accessed from the Application Launcher or from various apps' action menus throughout MatrixOS.
+
+export function SystemSettings() {
+    const uiElements = [
+        {
+            "name": "Device Settings",
+            "desc": "Enter the device settings",
+            "link": "/docs/Mystrix/DeviceSettings",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Fast Text Toggle",
+            "desc": "Toggles alternative text display when holding down any button in Matrix OS. If set to ON, letters will flash quickly one by one, otherwise it will slowly scroll text. (Useful if you are a fast reader or already know the UI)",
+            "elements": [
+                {
+                    "pos": [6, 0],
+                    "color": "#5A39BD"
+                }
+            ]
+        },
+        {
+            "name": "UI Animation Toggle",
+            "desc": "Toggle UI animations on or off",
+            "elements": [
+                {
+                    "pos": [7, 0],
+                    "color": "#FFFF00"
+                }
+            ]
+        },
+        {
+            "name": "Brightness Control",
+            "desc": "Tap to cycle through brightness levels. Hold to enter brightness control menu.",
+            "link": "#brightness-control",
+            "elements": [
+                {
+                    "pos": [3, 3],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Up",
+            "desc": "This technically doesn't do anything.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 2],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Left",
+            "desc": "Rotate the device so that the top of the device is oriented to the left.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [2, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Down",
+            "desc": "Rotate the device so that the top of the device is oriented to the bottom.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [3, 5],
+                    "size": [2, 1],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "Rotate Device Right",
+            "desc": "Rotate the device so that the top of the device is oriented to the right.",
+            "link": "#device-rotation",
+            "elements": [
+                {
+                    "pos": [5, 3],
+                    "size": [1, 2],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "USB Storage Mode",
+            "desc": "Enter USB Mass Storage mode (only available if SD card is installed)",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#FF8000"
+                }
+            ]
+        },
+        {
+            "name": "Device ID",
+            "desc": "Assign an ID to the device.",
+            "link": "#device-id",
+            "elements": [
+                {
+                    "pos": [6, 7],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "Factory Reset",
+            "desc": "Factory reset the device.",
+            "link": "#factory-reset",
+            "elements": [
+                {
+                    "pos": [0, 6],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "Enter Device Update Mode",
+            "desc": "Reboot the device into update mode.",
+            "link": "/docs/Mystrix/UpdateMatrixOS",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "Matrix OS Version",
+            "desc": "View the current version of the Matrix OS.",
+            "elements": [
+                {
+                    "pos": [1, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        },
+        {
+            "name": "Device Name",
+            "desc": "View the name of the device.",
+            "elements": [
+                {
+                    "pos": [2, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        },
+        {
+            "name": "Device Serial",
+            "desc": "View the serial number of the device.",
+            "elements": [
+                {
+                    "pos": [3, 7],
+                    "color": "#00FF30"
+                }
+            ]
+        }
+    ];
+
+    const uiName = "System Settings"
+    const uiDescription = "The System Settings include system-wide configurations, device information, and more for Matrix OS. There is also a dedicated Device Settings page for device-specific configurations."
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<SystemSettings />
+
+## Rotate Device
+
+Rotates the device so that the top of the device is oriented to the specified side.
+
+:::note
+Some device controls are asymmetrical, and certain controls might not work or may function differently when the device is in a different orientation.
+
+For example, in the Performance App with Mystrix, the touchbar will be mapped differently when the device is rotated, as there are only two touchbars on the device.
+:::
+
+## Brightness Control
+
+You can tap the brightness control pad to cycle through brightness levels. Additionally, you can hold the brightness control pad to enter the brightness control menu.
+
+### Brightness Control Menu
+
+The brightness control menu allows you to fine-tune the brightness of the device and set brightness multipliers for different LED sections (if the device supports it).
+
+export function BrightnessControlMenu() {
+
+    const uiElements = [
+    {
+        "name": "Brightness Level Display",
+        "desc": "Displays the current brightness level as a percentage.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 0],
+                "size": [3, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2],
+                "color": undefined
+            }
+        ]
+    },
+    {
+        "name": "Global Brightness",
+        "desc": "Controls the System Wide brightness level. (Only visible if the device has multiple LED sections)",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "LED Sections Brightness Multiplier",
+        "desc": "Adjusts the brightness multiplier for different LED sections. (Only visible if the device has multiple LED sections. For Mystrix Pro, this applies to the underglow)",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            },
+        ]
+    },
+    {
+        "name": "Brightness Selector",
+        "desc": "Adjusts the brightness. If an LED section is selected, the selector will adjust the multiplier for that section.",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Brightness Selector (Overdrive)",
+        "desc": "Adjusts LED brightness beyond safety limits. Use with caution as it may be unsafe for your eyes.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [4, 1],
+                "color": "#C00000"
+            },
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Tap to return to the previous screen.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Brightness Control Menu"
+    const uiDescription = "The brightness control menu allows you to fine-tune the brightness of the device and set brightness multipliers for different LED sections (if the device supports it)."
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<BrightnessControlMenu />
+
+## Factory Reset
+
+Resets the device to its factory settings.
+
+You will need to confirm the factory reset by clicking on the green pad to proceed.
+
+export function FactoryResetConfirmMenu() {
+
+    const uiElements = [
+    {
+        "name": "Clear",
+        "desc": "Indicates that you are about to perform a factory reset on the device.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [3, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 1],
+                "size": [2, 2],
+                "color": undefined
+            },
+            {
+                "pos": [3, 0],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 3],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [7, 0],
+                "color": undefined
+            },
+            {
+                "pos": [6, 1],
+                "color": undefined
+            },
+            {
+                "pos": [7, 2],
+                "color": undefined
+            },
+            {
+                "pos": [6, 3],
+                "color": undefined
+            },
+        ]
+    },
+    {
+        "name": "Cancel",
+        "desc": "Tap to cancel the factory reset process.",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "size": [2, 2],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Confirm",
+        "desc": "Tap to confirm the factory reset process.",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "size": [2, 2],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Tap to return to the previous screen.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Factory Reset Confirm Menu"
+    const uiDescription = "The factory reset confirm menu allows you to confirm the factory reset of the device."
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<FactoryResetConfirmMenu />
+
+## Device ID
+
+Assign an ID to the device. The ID will show up on the host after the device's name. This is useful for identifying the device when you have multiple devices connected to the same host.
+
+If set to zero, the device ID will not show up on the host.
+
+export function DeviceIDSelector() {
+
+    const uiElements = [
+    {
+        "name": "Device ID Display",
+        "desc": "Displays the current device ID number.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2],
+                "color": undefined
+            },
+        ]
+    },
+    {
+        "name": "-50",
+        "desc": "Decrease the device ID by 50.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "-20",
+        "desc": "Decrease the device ID by 20.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "Decrease the device ID by 5.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "Decrease the device ID by 1.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "Increase the device ID by 1.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "Increase the device ID by 5.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "+20",
+        "desc": "Increase the device ID by 20.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "+50",
+        "desc": "Increase the device ID by 50.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Go Back",
+        "desc": "Tap to return to the previous screen.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "Device ID Selector"
+    const uiDescription = "The device ID selector allows you to assign an ID to the device."
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<DeviceIDSelector />

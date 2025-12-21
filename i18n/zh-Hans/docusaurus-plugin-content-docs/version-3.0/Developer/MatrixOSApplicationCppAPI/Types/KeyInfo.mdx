@@ -1,0 +1,128 @@
+---
+title: KeyInfo
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# Struct: `KeyInfo`
+
+The `KeyInfo` struct represents the state and properties of a key of the device.
+
+*The source file for this class is located in <GithubLink path="os/framework/KeyInfo.h"/>*
+
+---
+
+## Enumerations
+
+### `KeyState`
+Represents the possible states of a key.
+
+**Values:**
+- `IDLE`: The key is not active.
+- `ACTIVATED`: The key is active but not generating events.
+- `PRESSED`: The key has been pressed.
+- `RELEASED`: The key has been released.
+- `HOLD`: The key is being held down.
+- `AFTERTOUCH`: The key is generating aftertouch events.
+- `DEBUNCING`: The key is being debounced after activation.
+- `RELEASE_DEBUNCING`: The key is being debounced after release.
+- `INVALID`: Placeholder state for invalid keys.
+
+---
+
+## Member Variables
+
+### `state`
+```cpp
+KeyState state = IDLE;
+```
+
+The current state of the key.
+
+---
+
+### `lastEventTime`
+```cpp
+uint32_t lastEventTime = 0;
+```
+
+The timestamp of the last key event (`PRESSED` or `RELEASED`).
+
+---
+
+### `velocity`
+```cpp
+Fract16 velocity = 0;
+```
+
+The velocity of the keypress.
+
+---
+
+### `hold`
+```cpp
+bool hold = false;
+```
+
+Indicates whether the key is currently held down.
+
+---
+
+### `cleared`
+```cpp
+bool cleared = false;
+```
+
+Indicates whether the key has been cleared for event generation.
+
+---
+
+## Member Functions
+
+### `holdTime`
+```cpp
+uint32_t holdTime(void);
+```
+
+Calculates the time the key has been held down.
+
+**Returns:**
+- `uint32_t`: The hold duration in milliseconds. Returns `0` if the key is not active or the timing is invalid.
+
+---
+
+### `active`
+```cpp
+bool active();
+```
+
+Checks if the key is active (e.g., `ACTIVATED`, `AFTERTOUCH`, or `RELEASE_DEBUNCING`).
+
+**Returns:**
+- `bool`: `true` if the key is active, otherwise `false`.
+
+---
+
+### `Clear`
+```cpp
+void Clear();
+```
+
+Clears the key, preventing it from generating further events until its state changes.
+
+---
+
+## Device Layer API
+
+### `update`
+```cpp
+bool update(KeyConfig& config, Fract16 new_velocity);
+```
+
+Updates the key's state based on new input velocity and configuration.
+
+**Parameters:**
+- `config` (`KeyConfig&`): The configuration for debouncing, thresholds, and velocity curves.
+- `new_velocity` (`Fract16`): The new input velocity.
+
+**Returns:**
+- `bool`: `true` if the state has generated a new event, otherwise `false`.

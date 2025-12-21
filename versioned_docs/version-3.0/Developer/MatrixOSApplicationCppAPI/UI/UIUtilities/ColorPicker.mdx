@@ -1,0 +1,25 @@
+---
+title: Color Picker
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# `ColorPicker` UI Utility
+
+The `ColorPicker` UI utility allows users to interactively select a color.
+
+For user interaction usage. See <DocLink to="/docs/MatrixOS/SharedUI/ColorPicker">Color Picker</DocLink>.
+
+*The source file for this UI utility is located in <GithubLink path="os/ui/UIUtilities.h"/> and it's implemented in <GithubLink path="os/ui/Utilities/ColorPicker.cpp"/>.*
+---
+
+## Method
+```cpp
+bool ColorPicker(Color& color);
+
+```
+
+This UI utility modifies the provided `Color` reference based on the user's choice. The function returns `true` if a color was selected, and `false` if the user canceled the selection.
+
+**Parameters:**
+- `color` ([`Color`](../../Types/Color/)): The initial color and the color selected by the user.

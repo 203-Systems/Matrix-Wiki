@@ -49,7 +49,11 @@ const config: Config = {
           lastVersion: 'current',
           versions: {
               current: {
+                label: 'Matrix OS 3.1',
+              },
+              '3.0': {
                 label: 'Matrix OS 3.0',
+                banner: 'none',
               },
               '2.6': {
                 label: 'Matrix OS 2.6',

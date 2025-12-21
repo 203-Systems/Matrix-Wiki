@@ -1,0 +1,68 @@
+---
+sidebar_position: 4
+---
+
+# 编写 Python 应用
+
+:::warning 开发状态
+Python 支持和 Matrix OS API 在 OS 3.0 中处于预览发布阶段。
+我们欢迎社区试用它们并报告发现的任何问题。
+:::
+
+## 编写 Python 应用
+
+有两种方式在 Matrix OS 中使用 Python：
+
+### 方式 1：Python REPL - 测试与实验
+使用应用启动器中的 Python 应用通过 USB 串口访问 Python REPL。适合测试和快速原型开发。
+
+### 方式 2：独立应用 - 用于保存和分享
+将文件存储在设备上来创建独立的 Python 应用。适合保存作品并与他人分享。
+
+:::warning 需要 Micro SD 卡
+使用独立 Python 应用必须在设备中安装Micro SD卡。安装说明请见 [安装Micro SD卡](../Mystrix/InstallMicroSD)。
+:::
+
+## 创建独立应用
+
+### 文件结构
+将应用文件放在设备存储中：
+```
+/MatrixOS/Applications/<应用名>/
+```
+
+应用文件夹必须包含：
+- Python 脚本文件（`.py`）
+- `AppInfo.json` 配置文件
+
+### AppInfo.json
+
+`AppInfo.json` 文件定义应用的元数据：
+
+```json
+{
+  "name": "Hello World",
+  "author": "203 System",
+  "color": [255, 0, 0],
+  "version": 1,
+  "osMinimalVer": [3, 0, 0],
+  "appMainFile": "HelloWorld.py"
+}
+```
+
+**必需字段：**
+- `name`: 应用的显示名称
+- `author`: 作者或机构名称
+- `color`: 应用图标的 RGB 颜色数组 [R, G, B]（0-255）
+- `version`: 应用版本号
+- `osMinimalVer`: 需要的最低 Matrix OS 版本 [主版本，次版本，修订版本]
+- `appMainFile`: 要执行的主 Python 文件（可以是源码的 `.py` 或编译后的 `.py.a`）
+
+## 清理编译字节码
+
+Matrix OS 会优先使用编译后的字节码而不是原始的 .py 文件。如果更新了 .py 文件，记得删除 `/MatrixOS/Applications/<应用名>/pikapython-api` 文件夹来强制重新编译。
+
+## 示例应用
+
+参考应用示例，请见：
+[https://github.com/203-Systems/Matrix-OS-Python-App-Examples](https://github.com/203-Systems/Matrix-OS-Python-App-Examples)

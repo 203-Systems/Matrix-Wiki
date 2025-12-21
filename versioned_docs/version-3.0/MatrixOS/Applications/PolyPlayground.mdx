@@ -1,0 +1,168 @@
+---
+sidebar_position: 8
+unlisted: true
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Poly Playground App
+
+Poly Playground is a simple app inspired by the [Poly Playground App by Mike Gao](https://apps.apple.com/us/app/polyplayground/id511514938).
+
+:::warning
+It will be merged into Note App V2 in a future update.
+:::
+
+## Note Map
+
+The note pad is chromatic, meaning every note is a semitone apart. On the X axis, each key is spaced by 3 semitones, and on the Y axis, each key is spaced by 4 semitones.
+
+Pads with the same color use the same semitone (but may be in different octaves).
+
+## Config Menu
+
+export function ConfigMenu() {
+
+    const uiElements = [
+        {
+            "name": "Octave Selector",
+            "desc": "Select the octave of the note pad layout.",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "size": [1, 8],
+                    "color": "#8000FF"
+                },
+                {
+                    "pos": [0, 4],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "Root Selector",
+            "desc": "Select the root note of the note pad.",
+            "elements": [
+                {
+                    "pos": [7, 2],
+                    "color": "#FF0090"
+                }
+            ]
+        },
+        {
+            "name": "MIDI Channel Selector",
+            "desc": "Select the MIDI out channel of the note pad.",
+            "link": "#midi-channel",
+            "elements": [
+                {
+                    "pos": [7, 4],
+                    "color": "#60FF00"
+                }
+            ]
+        },
+        {
+            "name": "Velocity Sensitivity",
+            "desc": "Enable or disable velocity sensitivity for the note pad. (Device with Force Sensitive Keypad only)",
+            "elements": [
+                {
+                    "pos": [6, 7],
+                    "color": "#00FFB0"
+                }
+            ]
+        },
+        {
+            "name": "System Settings",
+            "desc": "Enter the system settings.",
+            "link": "/docs/MatrixOS/SystemSettings",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "Note Pad or Exit App",
+            "desc": "Tap to return to the note pad. Hold to exit the app.",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "Config Menu"
+    const uiDescription = "The config menu allows you to modify the note pad layout and other customization options."
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+    />
+
+}
+
+<ConfigMenu />
+
+## MIDI Channel
+
+This setting allows you to select the MIDI output channel (1-16) for the note pad.
+
+export function ChannelSelector() {
+
+    const uiElements = [
+    {
+        "name": "MIDI Channel Display",
+        "desc": "Displays the MIDI out channel of the active note pad layout.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Channel Selector",
+        "desc": "Selects the MIDI out channel of the active note pad.",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#48C000"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#60FF00"
+            }
+
+        ]
+    },
+    {
+        "name": "Return to Config Menu",
+        "desc": "Tap to return to the config menu.",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "MIDI Channel Selector"
+    const uiDescription = "The MIDI Channel Selector allows you to select the MIDI out channel of the active note pad layout."
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ChannelSelector />

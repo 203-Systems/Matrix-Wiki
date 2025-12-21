@@ -1,0 +1,20 @@
+---
+sidebar_position: 3
+---
+
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# 调试 C++ 应用
+
+
+## 在 Matrix OS 中启用调试
+要在 Matrix OS 中启用调试，你需要首先在调试模式下构建 Matrix OS。
+
+在 Matrix OS 源文件夹中运行
+> make DEVICE=Mystrix **build-dev** uf2-upload
+
+然后将在设备的 USB 和硬件 UART 上启用日志记录。
+
+## 发送调试日志
+
+你可以使用 MLOG* 宏或 MatrixOS::Logging:Log* 函数从代码中发送调试日志。请参阅 <DocLink to="/docs/Developer/MatrixOSApplicationCppAPI/Logging">日志记录 API</DocLink>

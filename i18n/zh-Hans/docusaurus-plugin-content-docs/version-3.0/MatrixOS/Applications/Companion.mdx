@@ -1,0 +1,65 @@
+---
+sidebar_position: 4
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Companion应用
+
+Companion应用用于连接[Bitfocus Companion](https://bitfocus.io/companion/)，以实现对各种设备的高级和强大控制。
+
+:::info
+魔矩集成自[Bitfocus Companion](https://bitfocus.io/companion/) 3.4.0版本起已可用。
+:::
+
+## Companion视图
+
+## 配置菜单
+
+export function ConfigMenu() {
+
+    const uiElements = [
+    {
+        "name": "系统设置",
+        "desc": "进入系统设置。",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Companion视图或退出应用",
+        "desc": "轻触返回Companion视图。长按退出应用。",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "配置菜单"
+    const uiDescription = "配置菜单允许你修改应用程序和设备的设置。"
+    const uiParentLink = "#"
+    return <MystrixVisualizer
+    uiName={uiName}
+    uiDescription={uiDescription}
+    uiElements={uiElements}
+    uiParentLink={uiParentLink}
+    />
+
+}
+
+<ConfigMenu />
+
+## 设置Companion
+
+查看Bitfocus提供的Companion应用设置指南[点击这里](https://user.bitfocus.io/docs/companion)。
+
+:::note 正在进行中
+关于如何专门为魔矩设置Companion应用的指南，包括魔矩优化模板，将很快提供。
+:::

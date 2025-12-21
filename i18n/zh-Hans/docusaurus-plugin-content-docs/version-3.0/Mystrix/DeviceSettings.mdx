@@ -1,0 +1,67 @@
+---
+sidebar_position: 4
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# 设备设置
+
+设备设置页面允许配置魔矩的各种硬件选项。
+
+export function DeviceSettings() {
+const uiElements = [
+    {
+        "name": "蓝牙 MIDI",
+        "desc": "启用或禁用蓝牙 MIDI",
+        "link": "/docs/Mystrix/BluetoothMIDI",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#0082FC"
+            }
+        ]
+    },
+    {
+        "name": "触摸栏切换",
+        "desc": "启用或禁用触摸栏",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#7957FB"
+            }
+        ]
+    },
+    {
+        "name": "键盘校准",
+        "desc": "（仅限魔矩 Pro）校准魔矩 Pro 的键盘",
+        "link": "/docs/Mystrix/KeypadCalibration",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "返回到上一屏幕",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "设备设置"
+    const uiDescription = "设备设置包含魔矩特定的所有设置。"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<DeviceSettings />

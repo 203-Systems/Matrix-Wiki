@@ -1,0 +1,224 @@
+---
+title: MidiPacket
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 类：`MidiPacket`
+
+`MidiPacket` 类封装了 MIDI 消息，包括其端口、状态和数据。它提供了创建、分析和操作 MIDI 消息的实用方法。
+
+*该类的源文件位于 <GithubLink path="os/framework/MidiPacket.h"/>*
+
+---
+## Enumerations
+
+### `EMidiStatus`
+Represents MIDI message types. Includes various MIDI commands like `NoteOn`, `NoteOff`, and `SysEx`.
+
+**Values:**
+- `None`: No status.
+- `NoteOff`: Note Off event.
+- `NoteOn`: Note On event.
+- `AfterTouch`: Aftertouch event.
+- `ControlChange`: Control Change event.
+- `ProgramChange`: Program Change event.
+- `ChannelPressure`: Channel Pressure event.
+- `PitchChange`: Pitch Bend Change event.
+- `MTCQuarterFrame`: MIDI Time Code Quarter Frame event.
+- `SongPosition`: Song Position Pointer event.
+- `SongSelect`: Song Select event.
+- `TuneRequest`: Tune Request event.
+- `Sync`: MIDI Sync event.
+- `Tick`: MIDI Tick event.
+- `Start`: MIDI Start event.
+- `Continue`: MIDI Continue event.
+- `Stop`: MIDI Stop event.
+- `ActiveSense`: Active Sensing event.
+- `Reset`: Reset event.
+- `SysExData`: SysEx Data event.
+- `SysExEnd`: SysEx End event.
+
+---
+
+### `EMidiPortID`
+Represents MIDI port identifiers.
+
+**Values:**
+- `MIDI_PORT_EACH_CLASS`: Default MIDI out mode, sends to the first port of each class.
+- `MIDI_PORT_ALL`: Send to all ports.
+- `MIDI_PORT_USB`: USB MIDI port.
+- `MIDI_PORT_PHYSICAL`: Physical MIDI port.
+- `MIDI_PORT_BLUETOOTH`: Bluetooth MIDI port.
+- `MIDI_PORT_WIRELESS`: Wireless MIDI port.
+- `MIDI_PORT_RTP`: Real-Time Protocol (RTP) MIDI port.
+- `MIDI_PORT_DEVICE_CUSTOM`: Custom device MIDI port.
+- `MIDI_PORT_SYNTH`: Synthesizer MIDI port.
+- `MIDI_PORT_INVALID`: Invalid MIDI port.
+---
+
+## Constructors
+
+### Default Constructor
+```cpp
+MidiPacket();
+```
+
+Creates an empty MIDI packet with `MIDI_PORT_INVALID` and no data.
+
+---
+
+### From Status
+```cpp
+MidiPacket(EMidiStatus status, ...);
+```
+
+Creates a MIDI packet with a specified status and variable arguments for data.
+
+**Parameters:**
+- `status` (`EMidiStatus`): The MIDI status type.
+- `...`: Additional arguments for MIDI data.
+
+---
+
+### From Port and Status
+```cpp
+MidiPacket(uint16_t port, EMidiStatus status, ...);
+```
+
+Creates a MIDI packet with a specified port and status, and variable arguments for data.
+
+**Parameters:**
+- `port` (`uint16_t`): MIDI port identifier.
+- `status` (`EMidiStatus`): The MIDI status type.
+- `...`: Additional arguments for MIDI data.
+
+---
+
+### From Raw Data
+```cpp
+MidiPacket(EMidiStatus status, uint16_t length, uint8_t* data);
+MidiPacket(uint16_t port, EMidiStatus status, uint16_t length, uint8_t* data);
+```
+
+Creates a MIDI packet from raw data.
+
+**Parameters:**
+- `port` (`uint16_t`): MIDI port identifier.
+- `status` (`EMidiStatus`): The MIDI status type.
+- `length` (`uint16_t`): Length of the data.
+- `data` (`uint8_t*`): Pointer to the data array.
+
+---
+
+## Data Alias Functions
+
+### `channel`
+```cpp
+uint8_t channel();
+```
+
+Gets the MIDI channel from the message.
+
+**Returns:**
+- `uint8_t`: The channel number.
+
+---
+
+### `note`
+```cpp
+uint8_t note();
+```
+
+Gets the MIDI note or controller value.
+
+**Returns:**
+- `uint8_t`: The note value.
+
+---
+
+### `controller`
+```cpp
+uint8_t controller();
+```
+
+Alias for `note()`. Useful for `ProgramChange` events.
+
+**Returns:**
+- `uint8_t`: The controller value.
+
+---
+
+### `velocity`
+```cpp
+uint8_t velocity();
+```
+
+Gets the velocity or pressure value for the MIDI message.
+
+**Returns:**
+- `uint8_t`: The velocity value.
+
+---
+
+### `value`
+```cpp
+uint16_t value();
+```
+
+Gets the value associated with the MIDI message (e.g., pitch bend or control change).
+
+**Returns:**
+- `uint16_t`: The value.
+
+---
+
+## Member Functions
+
+### `Length`
+```cpp
+uint8_t Length();
+```
+
+Gets the length of the MIDI message based on its status.
+
+**Returns:**
+- `uint8_t`: The length of the message.
+
+---
+
+### `SysEx`
+```cpp
+bool SysEx();
+```
+
+Checks if the message is a SysEx message.
+
+**Returns:**
+- `bool`: `true` if the message is SysEx, otherwise `false`.
+
+---
+
+### `SysExStart`
+```cpp
+bool SysExStart();
+```
+
+Checks if the message is the start of a SysEx message.
+
+**Returns:**
+- `bool`: `true` if the message is a SysEx start, otherwise `false`.
+
+---
+
+## Operators
+
+### Boolean Conversion
+```cpp
+operator bool();
+```
+
+Checks if the MIDI packet has valid data.
+
+**Returns:**
+- `bool`: `true` if valid, otherwise `false`.
+```

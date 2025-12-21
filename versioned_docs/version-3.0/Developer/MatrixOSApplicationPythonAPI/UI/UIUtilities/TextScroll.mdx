@@ -1,0 +1,242 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# TextScroll
+
+## Overview
+
+The `TextScroll` utility provides scrolling text display functionality on the LED matrix. It can display text that's longer than the display width by scrolling it across the screen.
+
+*The TextScroll utility is implemented in <GithubLink path="Applications/Python/PikaPython/MatrixOS_UIUtility.py"/> with type hints in <GithubLink path="Applications/Python/PikaPython/_MatrixOS_UIUtility.pyi"/>.*
+
+---
+
+## `TextScroll`
+```python
+def TextScroll(text: str, color: Color, speed: int, loop: bool) -> None
+```
+
+Displays scrolling text on the LED matrix.
+
+**Parameters:**
+- `text` (`str`): Text to display and scroll
+- `color` (`Color`): Color of the text
+- `speed` (`int`): Scroll speed (higher = faster)
+- `loop` (`bool`): Whether to loop the text continuously
+
+**Example:**
+```python
+# Display scrolling text
+MatrixOS.UIUtility.TextScroll("Hello, MatrixOS!", Color(255, 255, 0), 5, True)
+
+# One-time scroll with different color
+MatrixOS.UIUtility.TextScroll("Welcome", Color(0, 255, 0), 3, False)
+```
+
+---
+
+## Usage Examples
+
+### Basic Text Scrolling
+```python
+def show_welcome_message():
+    """Display a welcome message"""
+    welcome_text = "Welcome to MatrixOS Python!"
+    MatrixOS.UIUtility.TextScroll(welcome_text, Color(0, 255, 255), 4, False)
+
+def show_status_loop():
+    """Display continuous status information"""
+    status_text = "System Status: OK - Temperature: 25C - Battery: 85%"
+    MatrixOS.UIUtility.TextScroll(status_text, Color(0, 255, 0), 3, True)
+
+# Usage
+show_welcome_message()
+MatrixOS.SYS.DelayMs(3000)  # Wait for welcome to finish
+show_status_loop()
+```
+
+### Dynamic Text Display
+```python
+def display_sensor_data():
+    """Display real-time sensor data"""
+
+    def get_sensor_reading():
+        # Simulate sensor reading
+        import random
+        return random.randint(20, 30)
+
+    while True:
+        temperature = get_sensor_reading()
+        humidity = random.randint(40, 60)
+
+        data_text = f"Temp: {temperature}C  Humidity: {humidity}%  "
+
+        # Choose color based on temperature
+        if temperature > 25:
+            text_color = Color(255, 100, 0)  # Orange for warm
+        elif temperature < 22:
+            text_color = Color(0, 100, 255)  # Blue for cool
+        else:
+            text_color = Color(0, 255, 0)    # Green for normal
+
+        MatrixOS.UIUtility.TextScroll(data_text, text_color, 4, False)
+        MatrixOS.SYS.DelayMs(5000)  # Update every 5 seconds
+
+display_sensor_data()
+```
+
+### Interactive Text Notifications
+```python
+def notification_system():
+    """Simple notification system with different priorities"""
+
+    notifications = [
+        {"text": "INFO: System started successfully", "color": Color(0, 255, 0), "speed": 3},
+        {"text": "WARNING: Low battery detected", "color": Color(255, 255, 0), "speed": 4},
+        {"text": "ERROR: Connection failed", "color": Color(255, 0, 0), "speed": 5},
+        {"text": "UPDATE: New features available", "color": Color(0, 255, 255), "speed": 3}
+    ]
+
+    for notification in notifications:
+        print(f"Showing: {notification['text']}")
+        MatrixOS.UIUtility.TextScroll(
+            notification["text"],
+            notification["color"],
+            notification["speed"],
+            False
+        )
+        MatrixOS.SYS.DelayMs(1000)  # Brief pause between notifications
+
+notification_system()
+```
+
+### Application Information Display
+```python
+def show_app_info():
+    """Display application information"""
+    app_info = {
+        "name": "Matrix Python Demo",
+        "version": "1.0.0",
+        "author": "Matrix Developer",
+        "description": "Demonstrating Python UI utilities"
+    }
+
+    # Show each piece of information
+    info_items = [
+        f"App: {app_info['name']}",
+        f"Version: {app_info['version']}",
+        f"By: {app_info['author']}",
+        f"Info: {app_info['description']}"
+    ]
+
+    colors = [
+        Color(255, 255, 255),  # White for name
+        Color(0, 255, 255),    # Cyan for version
+        Color(255, 255, 0),    # Yellow for author
+        Color(255, 0, 255)     # Magenta for description
+    ]
+
+    for i, (text, color) in enumerate(zip(info_items, colors)):
+        MatrixOS.UIUtility.TextScroll(text, color, 4, False)
+        if i < len(info_items) - 1:  # Don't delay after last item
+            MatrixOS.SYS.DelayMs(500)
+
+show_app_info()
+```
+
+---
+
+## Speed Guidelines
+
+### Recommended Speed Values
+- **1-2**: Very slow, good for important messages
+- **3-4**: Normal reading speed, good for general text
+- **5-6**: Fast, good for notifications
+- **7+**: Very fast, good for tickers or alerts
+
+### Speed Selection Tips
+```python
+def get_appropriate_speed(text_length, importance):
+    """Calculate appropriate scroll speed based on content"""
+
+    # Base speed on text length
+    if text_length < 20:
+        base_speed = 3
+    elif text_length < 50:
+        base_speed = 4
+    else:
+        base_speed = 5
+
+    # Adjust for importance
+    if importance == "critical":
+        return min(7, base_speed + 2)  # Faster for critical
+    elif importance == "info":
+        return max(2, base_speed - 1)  # Slower for info
+    else:
+        return base_speed
+
+# Usage examples
+error_speed = get_appropriate_speed(25, "critical")    # Result: 5
+info_speed = get_appropriate_speed(15, "info")         # Result: 2
+normal_speed = get_appropriate_speed(30, "normal")     # Result: 4
+```
+
+---
+
+## Text Formatting Tips
+
+### Character Considerations
+```python
+def format_text_for_scroll(text):
+    """Format text for optimal scrolling display"""
+
+    # Add spacing for better readability
+    formatted_text = f"  {text}  "
+
+    # Replace problematic characters if needed
+    replacements = {
+        '"': "'",   # Use single quotes instead of double
+        '&': "and", # Replace ampersand
+        '%': "pct"  # Replace percent if too wide
+    }
+
+    for old, new in replacements.items():
+        formatted_text = formatted_text.replace(old, new)
+
+    return formatted_text
+
+# Example usage
+original = 'Status: "Good" & 85% battery'
+formatted = format_text_for_scroll(original)
+MatrixOS.UIUtility.TextScroll(formatted, Color(0, 255, 0), 4, True)
+```
+
+### Message Composition
+```python
+def create_status_message():
+    """Create a comprehensive status message"""
+
+    # Gather system information
+    uptime = MatrixOS.SYS.Millis() // 1000  # Convert to seconds
+    uptime_min = uptime // 60
+
+    # USB status
+    usb_status = "Connected" if MatrixOS.USB.Connected() else "Disconnected"
+
+    # Compose message
+    status_parts = [
+        f"Uptime: {uptime_min}min",
+        f"USB: {usb_status}",
+        "System: OK"
+    ]
+
+    full_message = " | ".join(status_parts)
+    return full_message
+
+# Display status
+status_msg = create_status_message()
+MatrixOS.UIUtility.TextScroll(status_msg, Color(255, 255, 255), 4, True)
+```
+

@@ -1,0 +1,270 @@
+---
+sidebar_position: 4
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# MIDI API
+
+## 概述
+
+Matrix OS 中的 MIDI 系统提供与外部 MIDI 设备和软件的通信。它支持标准 MIDI 消息、SysEx 数据，并处理多个 MIDI 端口。MIDI API 可通过 `MatrixOS.MIDI` 访问，默认已导入。
+
+*Python MIDI API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_MIDI.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_MIDI.pyi"/>。*
+
+---
+
+## `MatrixOS.MIDI.Get`
+```python
+def Get(timeout_ms: int = 0) -> any
+```
+
+从输入队列接收下一个 MIDI 数据包。
+
+**参数：**
+- `timeout_ms` (`int`，可选)：等待 MIDI 数据的超时时间（毫秒）（默认为 0，无超时）
+
+**返回值：**
+- `MidiPacket`：成功时返回 MIDI 数据包对象
+- `None`：超时或无数据可用时
+
+**示例：**
+```python
+# 等待最多 1 秒 MIDI 输入
+midi_packet = MatrixOS.MIDI.Get(1000)
+if midi_packet is not None:
+    print(f"接收到 MIDI：状态={midi_packet.status}, 数据1={midi_packet.data1}")
+```
+
+---
+
+## `MatrixOS.MIDI.Send`
+```python
+def Send(packet: MidiPacket, timeout_ms: int = 0) -> bool
+```
+
+向输出发送 MIDI 数据包。
+
+**参数：**
+- `packet` (`MidiPacket`)：要发送的 MIDI 数据包
+- `timeout_ms` (`int`，可选)：发送操作的超时时间（毫秒）（默认为 0，无超时）
+
+**返回值：**
+- `bool`：成功发送时返回 True，超时或错误时返回 False
+
+**示例：**
+```python
+
+# 创建一个 Note On 消息（C4，力度 127）
+packet = MidiPacket()
+packet.status = 0x90  # Note On，通道 1
+packet.data1 = 60     # C4（中央 C）
+packet.data2 = 127    # 力度
+packet.port = 0       # MIDI 端口 0
+
+# 使用 100毫秒超时发送
+success = MatrixOS.MIDI.Send(packet, 100)
+if success:
+    print("MIDI 音符发送成功")
+```
+
+---
+
+## `MatrixOS.MIDI.SendSysEx`
+```python
+def SendSysEx(port: int, length: int, data: bytes, include_meta: bool = False) -> bool
+```
+
+发送系统专用 (SysEx) MIDI 数据。
+
+**参数：**
+- `port` (`int`)：发送到的 MIDI 端口
+- `length` (`int`)：SysEx 数据长度
+- `data` (`bytes`)：SysEx 数据字节
+- `include_meta` (`bool`，可选)：是否包含 SysEx 元数据字节 (F0/F7)（默认为 False）
+
+**返回值：**
+- `bool`：成功发送时返回 True
+
+**示例：**
+```python
+# 发送设备查询 SysEx 消息
+sysex_data = bytes([0xF0, 0x7E, 0x00, 0x06, 0x01, 0xF7])
+success = MatrixOS.MIDI.SendSysEx(0, len(sysex_data), sysex_data, False)
+if success:
+    print("SysEx 发送成功")
+```
+
+---
+
+## MIDI 数据包结构
+
+`MidiPacket` 类提供用于访问数据包数据的 setter 和 getter 方法：
+
+```python
+# 创建数据包并使用 setter 方法设置值
+packet = MidiPacket()
+packet.SetStatus(0x90)     # MIDI 状态字节
+packet.SetNote(60)         # 音符号（C4）
+packet.SetVelocity(127)    # 力度
+packet.SetChannel(0)       # 通道 (0-15)
+
+# 使用 getter 方法读取值
+status = packet.Status()
+note = packet.Note()
+velocity = packet.Velocity()
+channel = packet.Channel()
+port = packet.Port()
+```
+
+### 常见 MIDI 消息
+
+#### Note On/Off
+```python
+# Note On（通道 1，C4，力度 100）- 使用工厂方法
+packet = MidiPacket()
+note_on = packet.NoteOn(0, 60, 100)  # 通道 0，C4，力度 100
+MatrixOS.MIDI.Send(note_on, 100)
+
+# Note Off（通道 1，C4）- 使用工厂方法
+packet2 = MidiPacket()
+note_off = packet2.NoteOff(0, 60, 0)  # 通道 0，C4，释放力度 0
+MatrixOS.MIDI.Send(note_off, 100)
+
+# 替代方案：使用 setter 手动构建
+manual_packet = MidiPacket()
+manual_packet.SetStatus(0x90)  # Note On
+manual_packet.SetChannel(0)    # 通道 1
+manual_packet.SetNote(60)      # C4
+manual_packet.SetVelocity(100) # 力度
+MatrixOS.MIDI.Send(manual_packet, 100)
+```
+
+#### 控制更改
+```python
+# 调制轮 (CC1) 到 50% - 使用工厂方法
+packet = MidiPacket()
+cc_packet = packet.ControlChange(0, 1, 64)  # 通道 0，CC1，值 64
+MatrixOS.MIDI.Send(cc_packet, 100)
+
+# 替代方案：手动构建
+manual_cc = MidiPacket()
+manual_cc.SetStatus(0xB0)      # 控制更改
+manual_cc.SetChannel(0)        # 通道 1
+manual_cc.SetController(1)     # CC 号（调制）
+manual_cc.SetValue(64)         # 值 (0-127, 64 = 50%)
+MatrixOS.MIDI.Send(manual_cc, 100)
+```
+
+#### 程序更改
+```python
+# 切换到程序 5 - 使用工厂方法
+packet = MidiPacket()
+pc_packet = packet.ProgramChange(0, 4)  # 通道 0，程序 4（程序 5）
+MatrixOS.MIDI.Send(pc_packet, 100)
+
+# 替代方案：手动构建
+manual_pc = MidiPacket()
+manual_pc.SetStatus(0xC0)  # 程序更改
+manual_pc.SetChannel(0)    # 通道 1
+manual_pc.SetNote(4)       # 程序号 (0-127, 4 = 程序 5)
+MatrixOS.MIDI.Send(manual_pc, 100)
+```
+
+---
+
+## MIDI 输入处理
+
+### 基本 MIDI 监控器
+```python
+import MatrixOS.MIDI as MIDI
+
+def midi_monitor():
+    while True:
+        packet = MIDI.Get(100)  # 100毫秒超时
+        if packet is not None:
+            status = packet.status & 0xF0  # 消息类型
+            channel = packet.status & 0x0F  # 通道 (0-15)
+
+            if status == 0x90:  # Note On
+                print(f"Note On：通道{channel+1}, 音符{packet.data1}, 力度{packet.data2}")
+            elif status == 0x80:  # Note Off
+                print(f"Note Off：通道{channel+1}, 音符{packet.data1}")
+            elif status == 0xB0:  # Control Change
+                print(f"CC：通道{channel+1}, CC{packet.data1}, 值{packet.data2}")
+
+midi_monitor()
+```
+
+### MIDI 直通处理
+```python
+def midi_thru_with_transpose(semitones):
+    """带音符移调的 MIDI 直通"""
+    while True:
+        packet = MIDI.Get(10)
+        if packet is not None:
+            status = packet.status & 0xF0
+
+            # 移调音符消息
+            if status in [0x80, 0x90]:  # Note On/Off
+                new_note = packet.data1 + semitones
+                if 0 <= new_note <= 127:  # 有效 MIDI 范围
+                    packet.data1 = new_note
+                    MIDI.Send(packet, 10)
+            else:
+                # 其他消息不变直通
+                MIDI.Send(packet, 10)
+
+# 向上移调一个八度
+midi_thru_with_transpose(12)
+```
+
+---
+
+## MIDI 端口
+
+Matrix OS 支持用于不同连接的多个 MIDI 端口：
+
+- **端口 0**：主 MIDI 端口（通常是 USB MIDI）
+- **端口 1-15**：附加端口（设备相关）
+
+### 向特定端口发送
+```python
+# 向不同端口发送
+packet = MidiPacket()
+packet.status = 0x90
+packet.data1 = 60
+packet.data2 = 127
+
+# 向 USB MIDI 发送
+packet.port = 0
+MIDI.Send(packet, 100)
+
+# 向 DIN MIDI 发送（如果可用）
+packet.port = 1
+MIDI.Send(packet, 100)
+```
+
+---
+
+## 性能提示
+
+1. **使用适当的超时**：平衡响应性和 CPU 使用
+2. **处理 None 返回**：调用 `Get()` 时始终检查是否为 None
+3. **批量操作**：在循环中处理多个 MIDI 事件
+4. **端口管理**：为目标设备使用正确的端口
+5. **SysEx 处理**：使用 `SendSysEx()` 进行大数据传输
+
+---
+
+## MIDI 状态字节参考
+
+| 消息类型 | 状态范围 | 描述 |
+|--------------|--------------|-------------|
+| Note Off | 0x80-0x8F | 音符释放 |
+| Note On | 0x90-0x9F | 音符按下 |
+| Aftertouch | 0xA0-0xAF | 按键压力 |
+| Control Change | 0xB0-0xBF | 连续控制器 |
+| Program Change | 0xC0-0xCF | 音色/程序选择 |
+| Channel Pressure | 0xD0-0xDF | 通道全局压力 |
+| Pitch Bend | 0xE0-0xEF | 弯音轮 |
+| System | 0xF0-0xFF | 系统消息/SysEx |

@@ -1,0 +1,286 @@
+---
+sidebar_position: 1
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# 系统 API
+
+## 概述
+
+Matrix OS 中的系统 API 提供核心系统函数，包括计时、应用程序管理、设备控制和系统实用程序。系统 API 可通过 `MatrixOS.SYS` 访问，默认已导入。
+
+*Python 系统 API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_SYS.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_SYS.pyi"/>。*
+
+---
+
+## 版本信息
+
+### `MatrixOS.SYS.GetVersion`
+```python
+def GetVersion() -> tuple
+```
+
+返回当前 Matrix OS 版本，以主版本号、次版本号和补丁版本号的元组形式。
+
+**返回值：**
+- `tuple`：包含 (major, minor, patch) 版本号的元组
+
+**示例：**
+```python
+version = MatrixOS.SYS.GetVersion()
+major, minor, patch = version
+print(f"Matrix OS 版本：{major}.{minor}.{patch}")
+
+# 示例：检查是否至少是 3.0.0 版本
+if version >= (3, 0, 0):
+    print("检测到 3.0.0 或更新版本")
+```
+
+---
+
+## 设备控制
+
+### `MatrixOS.SYS.Reboot`
+```python
+def Reboot() -> None
+```
+
+重启 Matrix OS 设备。设备将重启并正常启动。
+
+**示例：**
+```python
+MatrixOS.SYS.Reboot()  # 设备将重启
+```
+
+---
+
+### `MatrixOS.SYS.Bootloader`
+```python
+def Bootloader() -> None
+```
+
+将设备重启到 bootloader 模式以进行固件更新。
+
+**示例：**
+```python
+MatrixOS.SYS.Bootloader()  # 进入 bootloader 进行固件更新
+```
+
+---
+
+## 计时函数
+
+### `MatrixOS.SYS.DelayMs`
+```python
+def DelayMs(ms: int) -> None
+```
+
+按指定的毫秒数延迟执行。
+
+**参数：**
+- `ms` (`int`)：延迟时间（毫秒）
+
+**示例：**
+```python
+MatrixOS.SYS.DelayMs(1000)  # 等待 1 秒
+print("一秒已经过去")
+```
+
+---
+
+### `MatrixOS.SYS.Millis`
+```python
+def Millis() -> int
+```
+
+返回设备启动以来的毫秒数。
+
+**返回值：**
+- `int`：启动以来的毫秒数
+
+**示例：**
+```python
+start_time = MatrixOS.SYS.Millis()
+# ... 执行一些工作 ...
+elapsed = MatrixOS.SYS.Millis() - start_time
+print(f"操作耗时 {elapsed} 毫秒")
+```
+
+---
+
+### `MatrixOS.SYS.Micros`
+```python
+def Micros() -> int
+```
+
+返回设备启动以来的微秒数。
+
+**返回值：**
+- `int`：启动以来的微秒数
+
+**示例：**
+```python
+start_time = MatrixOS.SYS.Micros()
+# ... 精确计时操作 ...
+elapsed = MatrixOS.SYS.Micros() - start_time
+print(f"精确计时：{elapsed} 微秒")
+```
+
+---
+
+## 应用程序管理
+
+### `MatrixOS.SYS.OpenSetting`
+```python
+def OpenSetting() -> None
+```
+
+打开系统设置应用程序。
+
+**示例：**
+```python
+MatrixOS.SYS.OpenSetting()  # 启动设置应用
+```
+
+---
+
+### `MatrixOS.SYS.ExecuteAPP`
+```python
+def ExecuteAPP(author: str, app_name: str, args: list = []) -> None
+```
+
+通过作者和名称启动应用程序，可选择传递参数。
+
+**参数：**
+- `author` (`str`)：应用程序作者名称
+- `app_name` (`str`)：应用程序名称
+- `args` (`list`，可选)：传递给应用程序的参数（默认为空列表）
+
+**示例：**
+```python
+# 启动特定应用程序
+MatrixOS.SYS.ExecuteAPP("203 Systems", "Performance")
+
+# 带参数启动
+MatrixOS.SYS.ExecuteAPP("MyAuthor", "MyApp", ["demo_mode"])
+```
+
+---
+
+### `MatrixOS.SYS.ExecuteAPPByID`
+```python
+def ExecuteAPPByID(app_id: int, args: list = []) -> None
+```
+
+通过 ID 启动应用程序，可选择传递参数。
+
+**参数：**
+- `app_id` (`int`)：应用程序 ID 号
+- `args` (`list`，可选)：传递给应用程序的参数（默认为空列表）
+
+**示例：**
+```python
+# 启动应用程序 ID 0xDEADBEED
+MatrixOS.SYS.ExecuteAPPByID(0xDEADBEED)
+
+# 带参数启动
+MatrixOS.SYS.ExecuteAPPByID(0xDEADBEED, ["parameter1", "parameter2"])
+```
+
+---
+
+## 计时和性能示例
+
+### 精确计时循环
+```python
+def precise_timing_demo():
+    """演示具有微秒精度的精确计时"""
+    interval_us = 10000  # 10毫秒（以微秒计）
+    last_time = MatrixOS.SYS.Micros()
+
+    for i in range(100):
+        current_time = MatrixOS.SYS.Micros()
+
+        # 等待精确间隔
+        while (current_time - last_time) < interval_us:
+            current_time = MatrixOS.SYS.Micros()
+
+        print(f"节拍 {i}: {current_time - last_time} 微秒")
+        last_time = current_time
+
+precise_timing_demo()
+```
+
+### 性能测量
+```python
+def measure_performance(function, iterations=1000):
+    """测量函数执行时间"""
+    start_time = MatrixOS.SYS.Micros()
+
+    for i in range(iterations):
+        function()
+
+    end_time = MatrixOS.SYS.Micros()
+    total_time = end_time - start_time
+    avg_time = total_time / iterations
+
+    print(f"总时间：{total_time} 微秒")
+    print(f"平均每次调用时间：{avg_time} 微秒")
+    return avg_time
+
+# 使用示例
+def test_function():
+    # 要测量的一些操作
+    pass
+
+measure_performance(test_function)
+```
+
+### 超时实现
+```python
+def wait_with_timeout(condition_func, timeout_ms):
+    """带超时的条件等待"""
+    start_time = MatrixOS.SYS.Millis()
+
+    while not condition_func():
+        if (MatrixOS.SYS.Millis() - start_time) > timeout_ms:
+            return False  # 超时
+        MatrixOS.SYS.DelayMs(1)  # 小延迟防止繁忙等待
+
+    return True  # 条件满足
+
+# 使用示例
+def is_key_pressed():
+    # 检查某些条件
+    return False
+
+if wait_with_timeout(is_key_pressed, 5000):
+    print("5 秒内按了按键")
+else:
+    print("超时：未检测到按键按下")
+```
+
+---
+
+## 系统监控
+
+```python
+def system_monitor():
+    """监控系统运行时间和性能"""
+    start_time = MatrixOS.SYS.Millis()
+
+    while True:
+        current_time = MatrixOS.SYS.Millis()
+        uptime_ms = current_time
+        uptime_seconds = uptime_ms // 1000
+        uptime_minutes = uptime_seconds // 60
+        uptime_hours = uptime_minutes // 60
+
+        print(f"系统运行时间：{uptime_hours:02d}:{uptime_minutes%60:02d}:{uptime_seconds%60:02d}")
+
+        MatrixOS.SYS.DelayMs(1000)  # 每秒更新
+
+# 短时间运行监控器
+system_monitor()
+```
+

@@ -1,0 +1,5680 @@
+---
+sidebar_position: 2
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+import DocLink from "@site/src/components/DocLink/DocLink";
+
+# 音符应用
+
+音符应用（V2）是一个功能完整的MIDI音符界面，你可以用它来演奏MIDI音符，支持多种布局、音阶、调式，还有自动和弦、琶音器、分屏显示和颜色自定义等高级功能。
+
+启动后会直接进入[演奏界面](#演奏界面)界面。点击功能键可以打开[配置菜单](#配置菜单)，再次点击即可返回[演奏界面](#演奏界面)。
+
+要退出音符应用，先进入[配置菜单](#配置菜单)，然后按住功能键就能返回<DocLink to="/docs/MatrixOS/ApplicationLauncher">应用启动器</DocLink>。
+
+## 演奏界面
+
+演奏界面是音符应用的主界面，会根据你选择的布局、音阶和调式来显示不同的按键排列。
+
+按键的颜色和样式可以自定义。想看看不同设置效果的话，可以查看[示例布局](#示例布局)。
+
+点击功能键可以打开[配置菜单](#配置菜单)。
+
+export function NotePad() {
+
+    const uiElements = [
+    {
+        "name": "演奏界面",
+        "desc": "示例演奏界面",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00B0FF"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00B0FF"
+            },
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "演奏界面"
+    const uiDescription = "示例演奏界面"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<NotePad />
+
+## 配置菜单
+
+export function ConfigMenu() {
+
+    const uiElements = [
+    {
+        "name": "系统设置",
+        "desc": "进入系统设置",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "音阶选择器",
+        "desc": "选择当前演奏界面布局的音阶（独立于布局配置）",
+        "link": "#音阶选择器",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#FF0090"
+            }
+        ]
+    },
+    {
+        "name": "布局选择器",
+        "desc": "选择演奏界面的布局模式（八度音程、偏移或钢琴布局）",
+        "link": "#布局选择器",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI通道选择器",
+        "desc": "选择当前演奏界面的MIDI输出通道（独立于布局配置）",
+        "link": "#midi通道",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "布局1",
+        "desc": "使用演奏界面布局1（颜色可能根据布局配置而变化）",
+        "link": "#演奏界面",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "布局2",
+        "desc": "使用演奏界面布局2（颜色可能根据布局配置而变化）",
+        "link": "#演奏界面",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "颜色选择器",
+        "desc": "更改当前演奏界面布局的颜色组合（颜色可能根据当前演奏界面布局配置而变化）",
+        "link": "#演奏界面颜色",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "分屏模式",
+        "desc": "循环切换分屏模式\n\n- 暗白色：关闭\n- 青色：垂直\n- 紫色：水平",
+        "link": "#分屏模式",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "力度敏感度",
+        "desc": "启用或禁用当前演奏界面布局的力度敏感度（仅限于具有力度敏感按键的设备）",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#00FFB0"
+            }
+        ]
+    },
+    {
+        "name": "控制栏",
+        "desc": "在演奏界面中启用或禁用控制栏",
+        "link": "#控制栏",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "琶音器设置",
+        "desc": "进入琶音器设置菜单（仅在启用控制栏时可用）",
+        "link": "#琶音器设置",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [1, 4],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "八度 - 1",
+        "desc": "降低八度。最低到-2",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [2, 1],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "八度 + 1",
+        "desc": "提高八度。最高到12",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "size": [2, 1],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "八度",
+        "desc": "显示当前八度。范围从-2到12",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "size": [4, 4],
+            },
+            {
+                "pos": [3, 2],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 3],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "演奏界面或退出应用",
+        "desc": "点击返回演奏界面；长按退出应用",
+        "link": "#演奏界面",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "配置菜单"
+    const uiDescription = "在这里可以调整演奏界面的布局、音阶、颜色等各种设置"
+    const uiParentLink = "#演奏界面"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ConfigMenu />
+
+## 音阶选择器
+
+可将音符限制在指定音阶内，或用颜色高亮显示音阶音符，该设置与布局选择相互独立。
+
+export function ScaleSelector() {
+
+    const uiElements = [
+    {
+        "name": "音阶可视化器和根音选择器",
+        "desc": "选择当前演奏界面布局的音阶和根音",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "小调 (Minor)",
+        "desc": "使用小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "大调 (Major)",
+        "desc": "使用大调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "多利亚调式 (Dorian)",
+        "desc": "使用多利亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "弗里吉亚调式 (Phrygian)",
+        "desc": "使用弗里吉亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "混合利底亚调式 (Mixolydian)",
+        "desc": "使用混合利底亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "旋律小调上行 (Melodic Minor Ascending)",
+        "desc": "使用旋律小调上行音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "和声小调 (Harmonic Minor)",
+        "desc": "使用和声小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "比波普多利亚 (Bebop Dorian)",
+        "desc": "使用比波普多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "布鲁斯 (Blues)",
+        "desc": "使用布鲁斯音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "小调五声音阶 (Minor Pentatonic)",
+        "desc": "使用小调五声音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "匈牙利小调 (Hungarian Minor)",
+        "desc": "使用匈牙利小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "乌克兰多利亚 (Ukrainian Dorian)",
+        "desc": "使用乌克兰多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "马尔瓦音阶 (Marva)",
+        "desc": "使用马尔瓦音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "托迪音阶 (Todi)",
+        "desc": "使用托迪音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "全音音阶 (Whole Tone)",
+        "desc": "使用全音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "半音音阶 (Chromatic)",
+        "desc": "使用半音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "利底亚调式 (Lydian)",
+        "desc": "使用利底亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "洛克里亚调式 (Locrian)",
+        "desc": "使用洛克里亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "大调五声音阶 (Major Pentatonic)",
+        "desc": "使用大调五声音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "弗里吉亚主音调式 (Phrygian Dominant)",
+        "desc": "使用弗里吉亚主音调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "半全减音阶 (Half Whole Diminished)",
+        "desc": "使用半全减音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "混合利底亚比波普 (Mixolydian Bebop)",
+        "desc": "使用混合利底亚比波普音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "超洛克里亚 (Super Locrian)",
+        "desc": "使用超洛克里亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "平调子 (Hirajoshi)",
+        "desc": "使用平调子音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "陰旋 (In Sen)",
+        "desc": "使用陰旋音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "呂音阶 (Yo Scale)",
+        "desc": "使用呂音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "岩户 (Iwato)",
+        "desc": "使用岩户音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "全半音阶 (Whole Half)",
+        "desc": "使用全半音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "比波普小调 (Bebop Minor)",
+        "desc": "使用比波普小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "大调布鲁斯 (Major Blues)",
+        "desc": "使用大调布鲁斯音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "雲井 (Kumoi)",
+        "desc": "使用雲井音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "比波普大调 (Bebop Major)",
+        "desc": "使用比波普大调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "音阶选择器"
+    const uiDescription = "选择当前演奏界面布局的音阶和根音"
+    const uiParentLink = "#配置菜单"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelector />
+
+### 音阶表
+
+| 索引 | 音阶                   | C   | C#  | D   | Eb  | E   | F   | F#  | G   | Ab  | A   | Bb  | B   |
+| ----- | ----------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1     | 小调 (Minor)           | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 2     | 大调 (Major)                   | X   |     | X   |     | X   | X   |     | X   |     | X   |     | X   |
+| 3     | 多利亚调式 (Dorian)                  | X   |     | X   | X   |     | X   |     | X   |     | X   | X   |     |
+| 4     | 弗里吉亚调式 (Phrygian)                | X   | X   |     | X   |     | X   |     | X   | X   |     | X   |     |
+| 5     | 混合利底亚调式 (Mixolydian)              | X   |     | X   |     | X   | X   |     | X   |     | X   | X   |     |
+| 6     | 旋律小调上行 (Melodic Minor Ascending) | X   |     | X   | X   |     | X   |     | X   |     | X   |     | X   |
+| 7     | 和声小调 (Harmonic Minor)          | X   |     | X   | X   |     | X   |     | X   | X   |     |     | X   |
+| 8     | 比波普多利亚 (Bebop Dorian)            | X   |     | X   | X   |     | X   |     | X   |     | X   | X   | X   |
+| 9     | 布鲁斯 (Blues)                   | X   |     |     | X   |     | X   | X   | X   |     |     | X   |     |
+| 10    | 小调五声音阶 (Minor Pentatonic)        | X   |     |     | X   |     | X   |     | X   |     |     | X   |     |
+| 11    | 匈牙利小调 (Hungarian Minor)         | X   |     | X   | X   |     |     | X   | X   | X   |     |     | X   |
+| 12    | 乌克兰多利亚 (Ukrainian Dorian)        | X   |     | X   | X   |     |     | X   | X   |     | X   | X   |     |
+| 13    | 马尔瓦音阶 (Marva)                   | X   | X   |     |     | X   |     | X   |     |     | X   |     | X   |
+| 14    | 托迪音阶 (Todi)                    | X   | X   |     | X   |     |     | X   | X   | X   |     | X   |     |
+| 15    | 全音音阶 (Whole Tone)              | X   |     | X   |     | X   |     | X   |     | X   |     | X   |     |
+| 16    | 半音音阶 (Chromatic)               | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   |
+
+### 现代调式
+
+启用现代调式模式后，你可以在已选定的音阶中选择新的根音。
+
+export function ScaleSelectorModernDiatonic() {
+
+    const uiElements = [
+    {
+        "name": "音阶可视化器和根音选择器",
+        "desc": "选择当前演奏界面布局的音阶和根音",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "现代调式切换（已激活）",
+        "desc": "现代调式模式已启用",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "小调",
+        "desc": "使用小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "大调",
+        "desc": "使用大调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "多利亚调式",
+        "desc": "使用多利亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "弗里吉亚调式",
+        "desc": "使用弗里吉亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "混合利底亚调式",
+        "desc": "使用混合利底亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "旋律小调上行",
+        "desc": "使用旋律小调上行音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "和声小调",
+        "desc": "使用和声小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "比波普多利亚",
+        "desc": "使用比波普多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "布鲁斯",
+        "desc": "使用布鲁斯音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "小调五声音阶",
+        "desc": "使用小调五声音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "匈牙利小调",
+        "desc": "使用匈牙利小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "乌克兰多利亚",
+        "desc": "使用乌克兰多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "马尔瓦音阶",
+        "desc": "使用马尔瓦音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "托迪音阶",
+        "desc": "使用托迪音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "全音音阶",
+        "desc": "使用全音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "半音音阶",
+        "desc": "使用半音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "自定义音阶槽位",
+        "desc": "选择或创建自定义音阶槽位（共16个）。暗白色=空，亮白色=已选择，黄色=有音阶",
+        "link": "#自定义音阶",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "音阶选择器 - 现代调式模式"
+    const uiDescription = "现代调式模式允许在选定的音阶内选择根音偏移"
+    const uiParentLink = "#音阶选择器"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelectorModernDiatonic />
+
+### 自定义音阶
+
+选择自定义音阶后，将启用音阶修改器，可以调整音阶包含的音符
+
+
+export function ScaleSelectorCustom() {
+
+    const uiElements = [
+    {
+        "name": "音阶可视化器和根音选择器",
+        "desc": "选择当前演奏界面布局的音阶和根音",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "现代调式切换",
+        "desc": "在经典和现代调式模式之间切换（影响根音偏移行为）",
+        "link": "#现代调式",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "音阶修改器",
+        "desc": "切换自定义音阶中的单个音符",
+        "elements": [
+            {
+                "pos": [1, 3],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 2],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 2],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "删除自定义音阶",
+        "desc": "删除当前选定的自定义音阶",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "小调",
+        "desc": "使用小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "大调",
+        "desc": "使用大调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "多利亚调式",
+        "desc": "使用多利亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "弗里吉亚调式",
+        "desc": "使用弗里吉亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "混合利底亚调式",
+        "desc": "使用混合利底亚调式音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "旋律小调上行",
+        "desc": "使用旋律小调上行音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "和声小调",
+        "desc": "使用和声小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "比波普多利亚",
+        "desc": "使用比波普多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "布鲁斯",
+        "desc": "使用布鲁斯音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "小调五声音阶",
+        "desc": "使用小调五声音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "匈牙利小调",
+        "desc": "使用匈牙利小调音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "乌克兰多利亚",
+        "desc": "使用乌克兰多利亚音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "马尔瓦音阶",
+        "desc": "使用马尔瓦音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "托迪音阶",
+        "desc": "使用托迪音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "全音音阶",
+        "desc": "使用全音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [6, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "半音音阶",
+        "desc": "使用半音音阶",
+        "link": "#音阶表",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "自定义音阶槽位",
+        "desc": "自定义音阶槽位，其中一个已选择（白色），一个已创建（黄色），其他未设置",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#FFFFFF"
+            },
+                     {
+                "pos": [1, 6],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "音阶选择器 - 自定义音阶"
+    const uiDescription = "选择自定义音阶时，可以修改单个音符并删除音阶"
+    const uiParentLink = "#音阶选择器"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+
+}
+
+<ScaleSelectorCustom />
+
+
+## 布局选择器
+
+可以选择不同的演奏界面布局模式
+
+- **八度布局**：基于八度的布局，每一行都从根音开始，如果音阶包含超过 8 个音符，会跨越两行
+- **偏移布局**：自定义偏移模式，可配置 X/Y 偏移
+- **半音布局**：传统音符布局，按半音顺序从左到右，从下到上排列
+- **钢琴布局**：钢琴风格按键排列
+
+### 八度布局模式
+
+export function LayoutSelectorOctave() {
+
+    const uiElements = [
+    {
+        "name": "八度模式（已选择）",
+        "desc": "切换到八度布局模式",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "偏移模式",
+        "desc": "切换到偏移布局模式",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "半音模式",
+        "desc": "切换到半音布局模式",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "钢琴模式",
+        "desc": "切换到钢琴布局模式",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "八度模式（Octave Mode）",
+        "desc": "八度模式文本",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+                "size": [1, 2],
+            },
+            {
+                "pos": [3, 2],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 3],
+                "size": [1, 2],
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 1],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 3],
+                "color": "#FFFF00"
+            },
+        ]
+    },
+    {
+        "name": "强制音阶",
+        "desc": "切换强制音阶模式",
+        "link": "#强制音阶模式",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "返回上一个菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "布局选择器 - 八度模式"
+    const uiDescription = "每一行都从根音开始的八度模式"
+    const uiParentLink = "#配置菜单"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<LayoutSelectorOctave />
+
+### 偏移布局模式
+
+export function LayoutSelectorOffset() {
+
+    const uiElements = [
+    {
+        "name": "八度模式",
+        "desc": "切换到八度布局模式",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "偏移模式（已选择）",
+        "desc": "可自定义的偏移模式布局",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "半音模式",
+        "desc": "半音排列",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "钢琴模式",
+        "desc": "切换到钢琴布局模式",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "Y偏移选择器",
+        "desc": "选择行之间的垂直偏移",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Y偏移数值",
+        "desc": "显示当前Y偏移值",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "size": [3, 4],
+                "color": undefined
+            },
+            {
+                "pos": [2, 2],
+                "size": [3, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 5],
+                "size": [3, 1],
+                "color": "#FF00FF"
+            },
+        ]
+    },
+    {
+        "name": "X偏移数值",
+        "desc": "显示当前X偏移值",
+        "elements": [
+          {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": undefined
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "X偏移选择器",
+        "desc": "选择行之间的水平偏移",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 7],
+                "size": [5, 1],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "强制音阶",
+        "desc": "切换强制音阶模式",
+        "link": "#强制音阶模式",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "返回上一个菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "布局选择器 - 偏移模式"
+    const uiDescription = "具有可自定义X和Y偏移的偏移布局模式"
+    const uiParentLink = "#配置菜单"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
+    />
+}
+
+<LayoutSelectorOffset />
+
+### 半音布局模式
+
+export function LayoutSelectorChromatic() {
+
+    const uiElements = [
+    {
+        "name": "八度模式",
+        "desc": "切换到八度布局模式",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "偏移模式",
+        "desc": "切换到偏移布局模式",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "半音模式（已选择）",
+        "desc": "半音排列",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "钢琴模式",
+        "desc": "切换到钢琴布局模式",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "半音模式（Chromatic）",
+        "desc": "半音模式文本",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 2],
+                "size": [2, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+                "size": [1, 2],
+            },
+            {
+                "pos": [2, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 4],
+                "size": [1, 2],
+            },
+        ]
+    },
+    {
+        "name": "强制音阶",
+        "desc": "切换强制音阶模式",
+        "link": "#强制音阶模式",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "返回上一个菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "布局选择器 - 半音模式"
+    const uiDescription = "传统风格布局，音符以连续方式从左下到右上排列"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<LayoutSelectorChromatic />
+
+### 钢琴布局模式
+
+export function LayoutSelectorPiano() {
+
+    const uiElements = [
+    {
+        "name": "八度模式",
+        "desc": "切换到八度布局模式",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "偏移模式",
+        "desc": "切换到偏移布局模式",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "半音模式",
+        "desc": "切换到半音布局模式",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#C0C000"
+            }
+        ]
+    },
+    {
+        "name": "钢琴模式（已选择）",
+        "desc": "钢琴键盘模式",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "钢琴模式（Piano）",
+        "desc": "钢琴模式文本",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 2],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 2],
+                "size": [2, 3],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [1, 3],
+            },
+            {
+                "pos": [4, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2],
+            },
+        ]
+    },
+    {
+        "name": "返回",
+        "desc": "返回上一个菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "布局选择器 - 钢琴模式"
+    const uiDescription = "钢琴风格按键排列的钢琴布局模式"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<LayoutSelectorPiano />
+
+### 强制音阶模式
+
+启用强制音阶模式时（钢琴模式不可用），仅显示所选音阶内的音符；禁用时显示全部音符，但不在所选音阶内的音符会变暗
+
+
+## MIDI通道
+
+该设置与布局配置相互独立
+
+export function ChannelSelector() {
+
+    const uiElements = [
+    {
+        "name": "MIDI通道显示",
+        "desc": "显示当前演奏界面布局的MIDI输出通道",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI通道选择器",
+        "desc": "选择当前演奏界面的MIDI输出通道（1-16）",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#48C000"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#60FF00"
+            }
+
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "MIDI通道选择器"
+    const uiDescription = "选择当前演奏界面布局的MIDI输出通道"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ChannelSelector />
+
+## 琶音器设置
+
+可全面控制琶音器设置，仅在演奏界面启用控制栏时可访问
+
+包含7个不同的参数页面，每个都有独特的颜色标识：
+
+- **BPM**（红色）：调节琶音器节拍速度
+- **摇摆**（橙色）：调整音符时序摇摆
+- **门限**（黄色）：设置音符持续时间
+- **顺序**（绿色）：选择琶音模式顺序
+- **步进**（青色）：设置琶音器步进数量
+- **步进偏移**（蓝色）：在每步后添加音高偏移
+- **重复**（紫色）：设置模式重复次数
+
+### BPM
+
+调节琶音器的节拍速度<br/>
+BPM（每分钟节拍数）决定琶音器循环音符的速度
+
+**范围**：20-299 BPM<br/>
+**默认值**：120 BPM
+
+export function ArpConfigBPM() {
+    const uiElements = [
+    {
+        "name": "BPM页面（已选择）",
+        "desc": "BPM设置页面",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆设置",
+        "desc": "切换到摇摆设置页面",
+        "link": "#摇摆",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "门限设置",
+        "desc": "切换到门限设置页面",
+        "link": "#门限",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "顺序设置",
+        "desc": "切换到顺序设置页面",
+        "link": "#顺序",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "步进设置",
+        "desc": "切换到步进设置页面",
+        "link": "#步进",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移设置",
+        "desc": "切换到步进偏移设置页面",
+        "link": "#步进偏移",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "重复设置",
+        "desc": "切换到重复设置页面",
+        "link": "#重复",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "BPM显示",
+        "desc": "显示当前BPM值（此示例中为120）",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [1, 2],
+                "size": [1, 4],
+                "color": "#FF0000"
+            },
+            {
+                "pos": [3, 2],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 3],
+            },
+            {
+                "pos": [4, 4],
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FF0000"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2],
+            },
+        ]
+    },
+    {
+        "name": "-25",
+        "desc": "BPM减少25",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "BPM减少10",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D80000"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "BPM减少5",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B80000"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "BPM减少1",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A00000"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "BPM增加1",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A00000"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "BPM增加5",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B80000"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "BPM增加10",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D80000"
+            }
+        ]
+    },
+    {
+        "name": "+25",
+        "desc": "BPM增加25",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF0000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器BPM配置"
+    const uiDescription = "配置琶音器节拍（20-299 BPM）"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpConfigBPM />
+
+### 摇摆
+
+调整交替音符的时序来创造摇摆感。<br/>
+摇摆百分比决定每对音符中第二个音符的延迟程度
+
+**范围**：20-80%<br/>
+**默认值**：50%
+
+export function ArpConfigSwing() {
+    const uiElements = [
+    {
+        "name": "BPM设置",
+        "desc": "切换到BPM设置页面",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆页面（已选择）",
+        "desc": "摇摆设置页面",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "门限设置",
+        "desc": "切换到门限设置页面",
+        "link": "#门限",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "顺序设置",
+        "desc": "切换到顺序设置页面",
+        "link": "#顺序",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "步进设置",
+        "desc": "切换到步进设置页面",
+        "link": "#步进",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移设置",
+        "desc": "切换到步进偏移设置页面",
+        "link": "#步进偏移",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "重复设置",
+        "desc": "切换到重复设置页面",
+        "link": "#重复",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "摇摆显示",
+        "desc": "显示当前摇摆百分比（此示例中为50%）",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [3, 2],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 3],
+            },
+            {
+                "pos": [3, 4],
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FF8000"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2]
+            },
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "摇摆减少10%",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "摇摆减少5%",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D86800"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "摇摆减少2%",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B85800"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "摇摆减少1%",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A05000"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "摇摆增加1%",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A05000"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "摇摆增加2%",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B85800"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "摇摆增加5%",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D86800"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "摇摆增加10%",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF8000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器摇摆配置"
+    const uiDescription = "调节琶音器摇摆时序（20-80%）"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpConfigSwing />
+
+### 门限
+
+控制每个音符的播放时长，以完整持续时间的百分比表示。
+
+**范围**：0-200%（0表示无限长度）<br/>
+**默认值**：100%
+
+export function ArpConfigGate() {
+    const uiElements = [
+    {
+        "name": "门限页面（已选择）",
+        "desc": "门限设置页面",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "BPM设置",
+        "desc": "切换到BPM设置页面",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆设置",
+        "desc": "切换到摇摆设置页面",
+        "link": "#摇摆",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "顺序设置",
+        "desc": "切换到顺序设置页面",
+        "link": "#顺序",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "步进设置",
+        "desc": "切换到步进设置页面",
+        "link": "#步进",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移设置",
+        "desc": "切换到步进偏移设置页面",
+        "link": "#步进偏移",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "重复设置",
+        "desc": "切换到重复设置页面",
+        "link": "#重复",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "门限显示",
+        "desc": "显示当前门限百分比\n\n如果设置为无限或0，则显示Inf",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [1, 2],
+                "size": [1, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [2, 2],
+                "size": [3, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [1, 2]
+            },
+            {
+                "pos": [5, 2],
+                "size": [3, 4],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [6, 3],
+                "size": [1, 2]
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "门限减少10%",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "门限减少5%",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D8D800"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "门限减少2%",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B8B800"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "门限减少1%",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "门限增加1%",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "门限增加2%",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B8B800"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "门限增加5%",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D8D800"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "门限增加10%",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器门限配置"
+    const uiDescription = "调节音符持续时间（0-200%，0=无限延音）"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpConfigGate />
+
+### 顺序
+
+从16种模式中选择琶音器的演奏顺序。
+
+**演奏顺序：**
+- **向上** (Up)
+- **向下** (Down)
+- **向上向下** (Up Down)
+- **向下向上** (Down Up)
+- **向上和向下** (Up and Down)
+- **向下和向上** (Down and Up)
+- **随机** (Random)
+- **播放顺序** (Played Order)
+- **汇聚** (Converge)
+- **发散** (Diverge)
+- **汇聚和发散** (Converge and Diverge)
+- **发散和汇聚** (Diverge and Converge)
+- **小指向上** (Pinky Up)
+- **小指向上向下** (Pinky UpDown)
+- **拇指向上** (Thumb Up)
+- **拇指向上向下** (Thumb UpDown)
+
+**默认值**：向上
+
+export function ArpConfigDirection() {
+    const uiElements = [
+    {
+        "name": "BPM设置",
+        "desc": "切换到BPM设置页面",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆设置",
+        "desc": "切换到摇摆设置页面",
+        "link": "#摇摆",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "门限设置",
+        "desc": "切换到门限设置页面",
+        "link": "#门限",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "顺序页面（已选择）",
+        "desc": "顺序设置页面",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "步进设置",
+        "desc": "切换到步进设置页面",
+        "link": "#步进",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移设置",
+        "desc": "切换到步进偏移设置页面",
+        "link": "#步进偏移",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "重复设置",
+        "desc": "切换到重复设置页面",
+        "link": "#重复",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "顺序可视化器",
+        "desc": "所选琶音器顺序模式的可视化表示\n\n白色显示下一个重复序列\n\n随机模式显示Rnd\n\n播放顺序模式显示ORd",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 5],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [6, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [7, 2],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "向上",
+        "desc": "选择向上模式",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "向下",
+        "desc": "选择向下模式",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "向上向下",
+        "desc": "选择向上向下模式",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "向下向上",
+        "desc": "选择向下向上模式",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "向上和向下",
+        "desc": "选择向上和向下模式",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "向下和向上",
+        "desc": "选择向下和向上模式",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "随机",
+        "desc": "选择随机模式",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "播放顺序",
+        "desc": "选择播放顺序模式",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "汇聚",
+        "desc": "选择汇聚模式",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "发散",
+        "desc": "选择发散模式",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "汇聚和发散",
+        "desc": "选择汇聚和发散模式",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "发散和汇聚",
+        "desc": "选择发散和汇聚模式",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "小指向上",
+        "desc": "选择小指向上模式",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "小指向上向下",
+        "desc": "选择小指向上向下模式",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "拇指向上",
+        "desc": "选择拇指向上模式",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "拇指向上向下",
+        "desc": "选择拇指向上向下模式",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#008000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器顺序配置"
+    const uiDescription = "选择琶音器演奏顺序（当前：向上）"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpConfigDirection />
+
+### 步进
+
+控制琶音器序列的循环次数，每次循环都会应用步进偏移。<br/>
+
+**范围**：1-16步<br/>
+**默认值**：1
+
+export function ArpConfigStep() {
+    const uiElements = [
+    {
+        "name": "BPM设置",
+        "desc": "切换到BPM设置页面",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆设置",
+        "desc": "切换到摇摆设置页面",
+        "link": "#摇摆",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "门限设置",
+        "desc": "切换到门限设置页面",
+        "link": "#门限",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "顺序设置",
+        "desc": "切换到顺序设置页面",
+        "link": "#顺序",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "步进页面（已选择）",
+        "desc": "步进间隔设置页面",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移设置",
+        "desc": "切换到步进偏移设置页面",
+        "link": "#步进偏移",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "重复设置",
+        "desc": "切换到重复设置页面",
+        "link": "#重复",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "步进显示",
+        "desc": "显示当前步进间隔（半音）（此示例为1）",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [7, 2],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "步进间隔减少10个半音",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "步进间隔减少5个半音",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "步进间隔减少2个半音",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "步进间隔减少1个半音",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "步进间隔增加1个半音",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#00A0A0"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "步进间隔增加2个半音",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#00B8B8"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "步进间隔增加5个半音",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00D8D8"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "步进间隔增加10个半音",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器步进配置"
+    const uiDescription = "配置音符间步进间隔（0-16半音）"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpConfigStep />
+
+### 步进偏移
+
+为琶音器序列中的每个步进添加音高偏移。<br/>
+
+**范围**：-48至+48半音（±4八度）<br/>
+**默认值**：12
+
+export function ArpConfigStepOffset() {
+    const uiElements = [
+    {
+        "name": "BPM设置",
+        "desc": "切换到BPM设置页面",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆设置",
+        "desc": "切换到摇摆设置页面",
+        "link": "#摇摆",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "门限设置",
+        "desc": "切换到门限设置页面",
+        "link": "#门限",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "顺序设置",
+        "desc": "切换到顺序设置页面",
+        "link": "#顺序",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "步进设置",
+        "desc": "切换到步进设置页面",
+        "link": "#步进",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移页面（已选择）",
+        "desc": "步进偏移设置页面",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#4000FF"
+            }
+        ]
+    },
+    {
+        "name": "重复设置",
+        "desc": "切换到重复设置页面",
+        "link": "#重复",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移显示",
+        "desc": "显示当前步进偏移值（此示例为0，无负号）",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [4, 2],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 4],
+                "color": "#4000FF"
+            },
+            {
+                "pos": [6, 3],
+            },
+            {
+                "pos": [7, 4],
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "步进偏移减少10个半音",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#4000FF"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "步进偏移减少5个半音",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#3600D8"
+            }
+        ]
+    },
+    {
+        "name": "-2",
+        "desc": "步进偏移减少2个半音",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#2E00B8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "步进偏移减少1个半音",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#2800A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "步进偏移增加1个半音",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#2800A0"
+            }
+        ]
+    },
+    {
+        "name": "+2",
+        "desc": "步进偏移增加2个半音",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#2E00B8"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "步进偏移增加5个半音",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#3600D8"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "步进偏移增加10个半音",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#4000FF"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器步进偏移配置"
+    const uiDescription = "配置所有音符音高偏移（-48至+48）"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpConfigStepOffset />
+
+### 重复
+
+设置琶音器重复播放的次数。
+
+**范围**：0-100次（0 = 无限）<br/>
+**默认值**：0（无限）
+
+export function ArpConfigRepeat() {
+    const uiElements = [
+    {
+        "name": "BPM设置",
+        "desc": "切换到BPM设置页面",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆设置",
+        "desc": "切换到摇摆设置页面",
+        "link": "#摇摆",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "门限设置",
+        "desc": "切换到门限设置页面",
+        "link": "#门限",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "顺序设置",
+        "desc": "切换到顺序设置页面",
+        "link": "#顺序",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "步进设置",
+        "desc": "切换到步进设置页面",
+        "link": "#步进",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移设置",
+        "desc": "切换到步进偏移设置页面",
+        "link": "#步进偏移",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "重复页面（已选择）",
+        "desc": "重复设置页面",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "重复显示",
+        "desc": "显示当前重复次数\n\n如果设置为无限或0，显示Inf",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 4],
+            },
+            {
+                "pos": [1, 2],
+                "size": [1, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 3],
+                "size": [3, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 4],
+                "size": [1, 2],
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [6, 2],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "-10",
+        "desc": "重复次数减少10",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "-5",
+        "desc": "重复次数减少5",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#D800D8"
+            }
+        ]
+    },
+    {
+        "name": "-1",
+        "desc": "重复次数减少1",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#B800B8"
+            }
+        ]
+    },
+    {
+        "name": "微调-1",
+        "desc": "微调重复次数减少1",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A000A0"
+            }
+        ]
+    },
+    {
+        "name": "微调+1",
+        "desc": "微调重复次数增加1",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#A000A0"
+            }
+        ]
+    },
+    {
+        "name": "+1",
+        "desc": "重复次数增加1",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#B800B8"
+            }
+        ]
+    },
+    {
+        "name": "+5",
+        "desc": "重复次数增加5",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#D800D8"
+            }
+        ]
+    },
+    {
+        "name": "+10",
+        "desc": "重复次数增加10",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器重复配置"
+    const uiDescription = "配置重复次数（0-100次，0 = 无限）"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+<ArpConfigRepeat />
+
+## 演奏界面颜色
+
+可使用颜色选择器自定义当前演奏界面布局的颜色组合。该设置独立于布局配置。
+
+export function NotePadColorSelectorPresetMenu() {
+
+    const uiElements = [
+    {
+        "name": "演奏界面预览",
+        "desc": "使用所选颜色组合预览激活的演奏界面布局",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设菜单（当前）",
+        "desc": "从预设中选择颜色",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "自定义颜色菜单",
+        "desc": "修改颜色",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "音阶外白色模式",
+        "desc": "使音阶外的按键显示暗白色而不是暗彩色",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设1",
+        "desc": "选择颜色预设1",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设2",
+        "desc": "选择颜色预设2",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设3",
+        "desc": "选择颜色预设3",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设4",
+        "desc": "选择颜色预设4",
+        "elements": [
+            {
+                "pos": [5, 5],
+                "color": "#C06090"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设5",
+        "desc": "选择颜色预设5",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#60C000"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设6",
+        "desc": "选择颜色预设6",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#C0C0C0"
+            }
+        ]
+    },
+    {
+        "name": "彩虹颜色",
+        "desc": "选择彩虹颜色模式",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#C00000"
+            }
+        ]
+    },
+    {
+        "name": "Poly颜色",
+        "desc": "选择Poly颜色模式",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#502AC0"
+            }
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "演奏界面颜色选择器 - 预设"
+    const uiDescription = "为演奏界面布局选择颜色预设"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<NotePadColorSelectorPresetMenu />
+
+export function NotePadColorSelectorCustomMenu() {
+
+    const uiElements = [
+    {
+        "name": "演奏界面预览",
+        "desc": "使用所选颜色组合预览激活的演奏界面布局",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 4],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "颜色预设菜单",
+        "desc": "从预设中选择颜色",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#c0c0c0"
+            }
+        ]
+    },
+    {
+        "name": "自定义颜色菜单（当前）",
+         "desc": "修改颜色",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "音阶外白色模式",
+        "desc": "使音阶外的按键显示暗白色而不是暗彩色",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00C0C0"
+            }
+        ]
+    },
+    {
+        "name": "根音颜色",
+        "desc": "选择根音的颜色",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "size": [2, 2],
+                "color": "#0040FF"
+            }
+        ]
+    },
+    {
+        "name": "演奏界面颜色",
+        "desc": "选择演奏界面的颜色",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "size": [2, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "返回配置菜单",
+        "desc": "点击返回配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "演奏界面颜色选择器 - 自定义"
+    const uiDescription = "自定义演奏界面布局的颜色组合"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<NotePadColorSelectorCustomMenu />
+
+## 分屏模式
+
+可选择启用或禁用分屏模式。分屏模式包括：无分屏、水平分屏或垂直分屏。
+
+分屏模式选择器将根据当前的分屏模式显示不同的颜色：
+
+- **无分屏模式**：暗白色
+- **垂直分屏模式**：青色
+- **水平分屏模式**：紫色
+
+## 控制栏
+
+
+
+功能：
+- **弯音向下** (X=1)：力度映射的弯音向下（Shift：MIDI停止）
+- **弯音向上** (X=2)：力度映射的弯音向上（Shift：MIDI播放）
+- **音符锁定** (X=3)：三种状态的音符延音（Shift：启用切换锁定模式）
+- **和弦** (X=4)：进入和弦控制
+- **琶音器** (X=5)：进入琶音器速度控制（Shift：进入琶音器设置）
+- **调性模式** (X=6)：更改当前布局的调性（Shift：进入音阶选择器）
+- **八度向下和向上** (X=7和8)：按八度移调音符（按住任一作为Shift）
+- **交换布局**：同时按下八度向下 + 八度向上来交换布局
+
+**分屏模式下**：控制栏仅作用于主演奏界面（垂直分屏时为左侧板，水平分屏时为顶部板），你启用的模式或效果在切换演奏界面时会保持，你可以先在主演奏界面上配置锁定、和弦或琶音器，再切换到副演奏界面，这些设置会继续独立运行
+
+:::note
+**非持久性**：控制栏配置（锁定、和弦、琶音器等）不会跨会话保存，退出并重新启动音符应用时，所有控制栏设置都会重置为默认状态
+:::
+
+export function ControlBar() {
+
+    const uiElements = [
+    {
+        "name": "演奏界面",
+        "desc": "音符演奏区域",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "弯音向下",
+        "desc": "弯音向下（力度映射）\n\nShift：MIDI停止",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "弯音向上",
+        "desc": "弯音向上（力度映射）\n\nShift：MIDI播放",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "音符锁定",
+        "desc": "音符锁定切换\n\nShift：切换模式\n\n黄色：禁用\n白色：启用\n洋红色：切换模式",
+        "link": "#音符锁定",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "和弦控制",
+        "desc": "和弦控制切换\n\n青色：未激活\n白色：激活",
+        "link": "#和弦控制",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "琶音器控制",
+        "desc": "琶音器控制切换\n\nShift：琶音器设置\n\n亮绿色：未激活\n白色：激活",
+        "link": "#琶音器控制",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "调性控制",
+        "desc": "调性控制切换\n\nShift：音阶选择器\n\n粉色：未激活\n白色：激活",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "八度向下",
+        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度向上",
+        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "演奏界面控制栏"
+    const uiDescription = "带有弯音、播放模式和八度控制的控制栏。按住Shift以在弯音按钮上获得额外功能。"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ControlBar />
+
+
+
+### 八度控制 / 移调
+
+可按八度向上或向下移调所有音符。这些按钮也用作Shift修饰键来访问辅助功能。
+
+**控制**：
+- **八度向下** (X=7)：降低一个八度
+- **八度向上** (X=8)：提高一个八度
+
+**特殊功能**：
+- **按住任意按钮**：启用其他控制的Shift模式
+- **同时点击两个**：分屏模式下交换主次布局
+
+**视觉反馈**：
+  - **颜色**：主演奏界面颜色
+  - **渐变**：演奏界面八度
+
+### 弯音
+
+可向上或向下弯曲演奏音符的音高。弯音量与力度映射，按得越用力弯音越大。
+
+**按钮**：
+- **弯音向下** (X=0)：音高向下弯曲（红色）
+- **弯音向上** (X=1)：音高向上弯曲（绿色）
+
+**Shift功能**：
+- **Shift + 弯音向下**：MIDI停止命令
+- **Shift + 弯音向上**：MIDI播放命令
+
+### 音符锁定
+
+可保持音符播放而无需持续按住按键。有三种模式。
+
+**按钮**：
+- **点击** (X=2)：在三种模式间切换
+- **Shift点击**：直接进入切换模式
+
+**颜色状态**：
+- **黄色**：锁定禁用，音符正常播放
+- **白色**：锁定启用，按下的音符保持播放
+- **洋红色**：切换模式，按键像开关一样
+
+**模式行为**：
+1. **禁用**（黄色）：标准音符播放
+2. **启用**（白色）：所有按下的音符持续播放
+3. **切换**（洋红色）：每个键在开关状态间切换
+
+### 和弦控制
+
+可使用单个音符演奏完整和弦。激活后，演奏界面顶部两行变为和弦类型和转位控制。
+
+**按钮**：
+- **点击** (X=3)：切换和弦控制
+- **Shift点击**：锁定当前和弦
+
+**颜色状态**：
+- **青色**：和弦控制已关闭
+- **白色**：和弦控制已开启
+
+**和弦构建控制**：
+- **和弦类型**：大和弦、小和弦、减和弦、增和弦（同时只能选择一个）
+- **扩展音**：六和弦扩展，小七和弦扩展，大七和弦扩展，九和弦扩展（可多选组合）
+- **按住组合**：在演奏界面上演奏时按住一个组合来使用和弦
+- **Shift点击**：锁定和弦类型和扩展
+- **转位**：选择一个转位或在锁定和弦时滑动穿过它们来扫弦。
+
+export function ControlBarChord() {
+
+    const uiElements = [
+    {
+        "name": "演奏界面",
+        "desc": "音符演奏区域",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "减三和弦",
+        "desc": "选择减三和弦",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "小三和弦",
+        "desc": "选择小三和弦",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "大三和弦",
+        "desc": "选择大三和弦",
+        "elements": [
+            {
+                "pos": [2, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "挂留和弦",
+        "desc": "选择挂留和弦",
+        "elements": [
+            {
+                "pos": [3, 5],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "六和弦",
+        "desc": "增加六和弦扩展音",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "小七和弦",
+        "desc": "增加小七和弦扩展音",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "大七和弦",
+        "desc": "增加大七和弦扩展音",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "九和弦",
+        "desc": "增加九和弦扩展音",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "转位",
+        "desc": "选择和弦转位",
+        "elements": [
+            {
+                "pos": [4, 5],
+                "size": [4, 1],
+                "color": "#808000"
+            },
+            {
+                "pos": [4, 6],
+                "size": [3, 1],
+                "color": "#808000"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "禁用和弦",
+        "desc": "取消选择所有和弦，仅在和弦启用时亮起",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "弯音向下",
+        "desc": "弯音向下（力度映射）\n\nShift：MIDI停止",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "弯音向上",
+        "desc": "弯音向上（力度映射）\n\nShift：MIDI播放",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "音符锁定",
+        "desc": "音符锁定切换\n\nShift：切换模式\n\n黄色：禁用\n白色：启用\n洋红色：切换模式",
+        "link": "#音符锁定",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "和弦控制（启用）",
+        "desc": "打开和弦构建控制\n\nShift：锁定和弦选项",
+        "link": "#和弦控制",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度向下",
+        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "琶音器控制",
+        "desc": "琶音器控制切换\n\nShift：琶音器设置",
+        "link": "#琶音器控制",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "音阶根音控制",
+        "desc": "选择音阶根音\n\nShift：选择音阶类型",
+        "link": "#音阶控制",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFAAFF"
+            }
+        ]
+    },
+    {
+        "name": "八度向上",
+        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+];
+
+    const uiName = "和弦控制"
+    const uiDescription = "带和弦控制的控制栏"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ControlBarChord />
+
+### 琶音器控制
+
+琶音器控制用于设置琶音器的分拍，让你在演奏时快速开启并调整琶音器速度
+
+**按钮**：
+- **点击** (X=5)：开关琶音器控制
+
+**颜色状态**：
+- **青柠色**：琶音器控制关闭
+- **白色**：琶音器控制开启
+
+**琶音器分拍值**：
+1. **关闭**
+2. **1/4** (四分音符)
+3. **1/6** (六分音符)
+4. **1/8** (八分音符)
+5. **1/12** (十二分音符)
+6. **1/16** (十六分音符)
+7. **1/24** (二十四分音符)
+8. **1/32** (三十二分音符)
+
+有关更多琶音器参数，请参考[琶音器设置菜单](#琶音器设置)
+
+export function ControlBarArpeggiator() {
+
+    const uiElements = [
+    {
+        "name": "演奏界面",
+        "desc": "音符演奏区域",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "关闭",
+        "desc": "琶音器关闭",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "1/4分度",
+        "desc": "四分音符分度",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/6分度",
+        "desc": "六分音符分度",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/8分度",
+        "desc": "八分音符分度",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/12分度",
+        "desc": "十二分音符分度",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/16分度",
+        "desc": "十六分音符分度",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/24分度",
+        "desc": "二十四分音符分度",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "1/32分度",
+        "desc": "三十二分音符分度",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#50C000"
+            }
+        ]
+    },
+    {
+        "name": "弯音向下",
+        "desc": "弯音向下（力度映射）\n\nShift：MIDI停止",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "弯音向上",
+        "desc": "弯音向上（力度映射）\n\nShift：MIDI播放",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "音符锁定",
+        "desc": "音符锁定切换\n\nShift：切换模式\n\n黄色：禁用\n白色：启用\n洋红色：切换模式",
+        "link": "#音符锁定",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "和弦控制",
+        "desc": "和弦控制切换\n\n青色：未激活\n白色：激活",
+        "link": "#和弦控制",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "琶音器控制",
+        "desc": "琶音器控制切换\n\nShift：琶音器设置\n\n青柠色：未激活\n白色：激活",
+        "link": "#琶音器控制",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "音阶控制",
+        "desc": "音阶控制切换\n\nShift：音阶选择器\n\n粉色：未激活\n白色：激活",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "八度向下",
+        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度向上",
+        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "琶音器控制"
+    const uiDescription = "带有琶音器分度控制的控制栏"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ControlBarArpeggiator />
+
+### 音阶控制
+
+音阶控制可切换音阶并访问音阶选择器，激活后，音符将被限制在选定的音阶内。
+
+**按钮**：
+- **点击**：切换音阶控制开/关
+
+**颜色状态**：
+- **粉色**：音阶控制关闭
+- **白色**：音阶控制开启
+
+**控制**：
+
+有关音阶选择选项，请参见[音阶选择器](#音阶选择器)
+
+export function ControlBarKey() {
+
+    const uiElements = [
+    {
+        "name": "演奏界面",
+        "desc": "音符演奏区域",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 7],
+                "color": "#00A0A0"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#0060A0"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#0060A0"
+            }
+        ]
+    },
+    {
+        "name": "调性选择器",
+        "desc": "选择主演奏界面布局的根调性",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [8, 2],
+            },
+            {
+                "pos": [1, 6],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 5],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 5],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 6],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 6],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 5],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "现代调式切换",
+        "desc": "在经典和现代调式模式之间切换（影响根音偏移行为）",
+        "link": "#现代调式",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "弯音向下",
+        "desc": "弯音向下（力度映射）\n\nShift：MIDI停止",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "弯音向上",
+        "desc": "弯音向上（力度映射）\n\nShift：MIDI播放",
+        "link": "#弯音",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "音符锁定",
+        "desc": "音符锁定切换\n\nShift：切换模式\n\n黄色：禁用\n白色：启用\n洋红色：切换模式",
+        "link": "#音符锁定",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "和弦控制",
+        "desc": "和弦控制切换\n\n青色：未激活\n白色：激活",
+        "link": "#和弦控制",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "琶音器控制",
+        "desc": "琶音器控制切换\n\nShift：琶音器设置\n\n青柠色：未激活\n白色：激活",
+        "link": "#琶音器控制",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "音阶控制",
+        "desc": "音阶控制切换\n\nShift：音阶选择器\n\n粉色：未激活\n白色：激活",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度向下",
+        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度向上",
+        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局\n\n颜色：主演奏界面颜色",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "音阶控制"
+    const uiDescription = "带有音阶控制的控制栏。"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ControlBarKey />
+
+## 示例布局
+
+### 示例布局 1 - 音阶折叠布局
+
+**布局模式**: 八度<br/>
+**强制音阶**: 开启
+
+export function ExampleLayout1() {
+
+    const uiElements = [
+    {
+        "name": "音符面板",
+        "desc": "示例音符面板布局 1",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "size": [6, 8],
+                "color": "#8800FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "示例布局 1 - 音阶"
+    const uiDescription = "布局模式: 八度\n\n强制音阶: 开启"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout1 />
+
+### 示例布局 2 - 等距布局
+
+**布局模式**: 偏移<br/>
+**X 偏移**: 1<br/>
+**Y 偏移**: 3<br/>
+**强制音阶**: 开启
+
+export function ExampleLayout2() {
+
+    const uiElements = [
+    {
+        "name": "音符面板",
+        "desc": "示例音符面板布局 2",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "示例布局 2 - 等距"
+    const uiDescription = "布局模式: 偏移\n\nX 偏移: 1\n\nY 偏移: 3\n\n强制音阶: 开启"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout2 />
+
+### 示例布局 3 - 半音布局
+
+**布局模式**: 半音<br/>
+**强制音阶**: 关闭
+
+export function ExampleLayout3() {
+
+    const uiElements = [
+    {
+        "name": "音符面板",
+        "desc": "示例音符面板布局 3",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 8],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [1, 6],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 4],
+                "color": undefined
+            },
+            ,
+            {
+                "pos": [3, 4],
+                "size": [1, 4],
+                "color": undefined
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 2],
+                "color": undefined
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [6, 7],
+                "size": [1, 1],
+                "color": undefined
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 5],
+                "color": undefined
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [7, 6],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 3],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [6, 1],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00FF00"
+            },
+
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "示例布局 3 - 半音"
+    const uiDescription = "布局模式: 半音\n\n强制音阶: 关闭"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout3 />
+
+### 示例布局 4 - 钢琴布局
+
+**布局模式**: 钢琴<br/>
+**音阶**: C 小调<br/>
+
+export function ExampleLayout4() {
+
+    const uiElements = [
+    {
+        "name": "音符面板",
+        "desc": "示例音符面板布局 4 - 钢琴",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 0],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 2],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 2],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 4],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 5],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 7],
+                "size": [6, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [1, 6],
+                "size": [2, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [4, 6],
+                "size": [3, 1],
+                "color": "#00C0C0"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#0040FF"
+            },
+            {
+                "pos": [1, 7],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 6],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 7],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 6],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 5],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "示例布局 4 - 钢琴"
+    const uiDescription = "布局模式: 钢琴\n\n音阶: C 小调"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout4 />
+
+### 示例布局 5 - 八度布局
+
+**布局模式**: 八度<br/>
+**颜色预设**: 彩虹<br/>
+**音阶**: C 大调<br/>
+
+export function ExampleLayout5() {
+
+    const uiElements = [
+    {
+        "name": "音符面板",
+        "desc": "示例音符面板布局 5 - 八度",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#FF0000"
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 8],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 8],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [3, 0],
+                "size": [1, 8],
+                "color": "#00FF80"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 8],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [5, 0],
+                "size": [1, 8],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 8],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 8],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "示例布局 5 - 八度"
+    const uiDescription = "布局模式: 八度\n\n颜色预设: 彩虹\n\n音阶: C 大调"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout5 />
+
+### 示例布局 6 - Poly Playground
+
+**模式**: 偏移<br/>
+**颜色预设**: Poly颜色<br/>
+**X 偏移**: 2<br/>
+**Y 偏移**: 3<br/>
+**音阶**: 半音<br/>
+
+export function ExampleLayout6() {
+
+    const uiElements = [
+    {
+        "name": "音符面板",
+        "desc": "示例音符面板布局 6 - Poly Playground",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [2, 1],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [3, 1],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [5, 1],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [6, 1],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [7, 1],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [0, 2],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [1, 2],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [4, 2],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [7, 2],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [0, 3],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [1, 3],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [2, 3],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [3, 3],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [4, 3],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [5, 3],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [6, 3],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [7, 3],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [0, 4],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [1, 4],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [3, 4],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [4, 4],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [7, 4],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [0, 5],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [2, 5],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [3, 5],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [5, 5],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [6, 5],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [7, 5],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [1, 6],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [2, 6],
+                "color": "#AEFF00"
+            },
+            {
+                "pos": [3, 6],
+                "color": "#FFAE00"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#FF1D00"
+            },
+            {
+                "pos": [5, 6],
+                "color": "#FF0097"
+            },
+            {
+                "pos": [6, 6],
+                "color": "#5D00FF"
+            },
+            {
+                "pos": [7, 6],
+                "color": "#009BFF"
+            },
+            {
+                "pos": [0, 7],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [1, 7],
+                "color": "#FFFB00"
+            },
+            {
+                "pos": [2, 7],
+                "color": "#FF4B00"
+            },
+            {
+                "pos": [3, 7],
+                "color": "#FF003E"
+            },
+            {
+                "pos": [4, 7],
+                "color": "#ED00FF"
+            },
+            {
+                "pos": [5, 7],
+                "color": "#1000FF"
+            },
+            {
+                "pos": [6, 7],
+                "color": "#00FFD9"
+            },
+            {
+                "pos": [7, 7],
+                "color": "#FFFB00"
+            }
+        ]
+    },
+    {
+        "name": "进入配置菜单",
+        "desc": "点击进入配置菜单",
+        "link": "#配置菜单",
+        "elements": [
+            {
+                "pos": ["c"]
+            }
+        ]
+    }
+
+];
+
+    const uiName = "示例布局 6 - Poly Playground"
+    const uiDescription = "模式: 偏移\n\n颜色预设: Poly颜色\n\nX 偏移: 2\n\nY 偏移: 3\n\n音阶: 半音"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ExampleLayout6 />

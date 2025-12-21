@@ -1,0 +1,374 @@
+---
+sidebar_position: 5
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# 骰子应用
+
+骰子应用是个简单的小应用，用来掷骰子。
+
+骰子有两种模式：点数模式和数字模式。
+
+你可以设置骰子的面数（点数模式 2～9，数字模式 2～99），也能调整动画的颜色和效果。
+
+在骰子视图里按功能键，可以打开配置菜单。
+
+## 骰子视图
+
+### 点数模式
+
+export function DotView() {
+
+    const uiElements = [
+        {
+            "name": "点数",
+            "desc": "显示骰子的点数。",
+            "elements": [
+                {
+                    "pos": [0, 1],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 1],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [6, 1],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [0, 5],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 5],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [6, 5],
+                    "size": [2, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "配置菜单",
+            "desc": "点击进入配置菜单。",
+            "link": "#配置菜单",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "骰子视图 - 点数模式"
+    const uiDescription = "点数模式会显示骰子的点数，面数可以设为 2～9。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+        uiParentLink={uiParentLink}
+    />
+
+}
+
+<DotView />
+
+### 数字模式
+
+export function NumberView() {
+
+    const uiElements = [
+        {
+            "name": "数字",
+            "desc": "显示骰子的数字。",
+            "elements": [
+                {
+                    "pos": [2, 2],
+                    "size": [1, 4],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 1],
+                    "size": [2, 1],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 3],
+                    "size": [2, 1],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [3, 6],
+                    "size": [2, 1],
+                    "color": "#FFFFFF"
+                },
+                {
+                    "pos": [5, 4],
+                    "size": [1, 2],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "配置菜单",
+            "desc": "点击进入配置菜单。",
+            "link": "#配置菜单",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "骰子视图 - 数字模式"
+    const uiDescription = "数字模式会显示数值，面数可以设为 2～99。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+        uiParentLink={uiParentLink}
+    />
+
+}
+
+<NumberView />
+
+## 配置菜单
+
+export function ConfigMenu() {
+
+    const uiElements = [
+        {
+            "name": "点数模式",
+            "desc": "切换到点数模式。",
+            "link": "#dot-mode",
+            "elements": [
+                {
+                    "pos": [3, 0],
+                    "color": "#FF00FF"
+                }
+            ]
+        },
+        {
+            "name": "数字模式",
+            "desc": "切换到数字模式。",
+            "link": "#number-mode",
+            "elements": [
+                {
+                    "pos": [4, 0],
+                    "color": "#FF5000"
+                }
+            ]
+        },
+        {
+            "name": "滚动彩虹模式",
+            "desc": "骰子滚动时启用彩虹模式。",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "滚动颜色",
+            "desc": "设置骰子滚动时的颜色（开启滚动彩虹模式时会是彩虹效果）。",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [0, 2],
+                    "size": [1, 4],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "滚动底光效果",
+            "desc": "设置骰子滚动时的底光效果（开启滚动彩虹模式时会是彩虹效果）（仅限魔矩Pro）。",
+            "link": "#underglow-effect",
+            "elements": [
+                {
+                    "pos": [0, 7],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "确认彩虹模式",
+            "desc": "结果确认后启用彩虹模式。",
+            "elements": [
+                {
+                    "pos": [7, 0],
+                    "color": "#FF0000"
+                }
+            ]
+        },
+        {
+            "name": "确认颜色",
+            "desc": "设置结果确认后的颜色（开启确认彩虹模式时会是彩虹效果）。",
+            "link": "/docs/MatrixOS/SharedUI/ColorPicker",
+            "elements": [
+                {
+                    "pos": [7, 2],
+                    "size": [1, 4],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "确认底光效果",
+            "desc": "设置结果确认后的底光效果（开启确认彩虹模式时会是彩虹效果）（仅限魔矩Pro）。",
+            "link": "#underglow-effect",
+            "elements": [
+                {
+                    "pos": [7, 7],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "面数",
+            "desc": "设置骰子面数（两种模式独立设置）。",
+            "elements": [
+                {
+                    "pos": [2, 7],
+                    "size": [4, 1],
+                    "color": "#00FFFF"
+                }
+            ]
+        },
+        {
+            "name": "骰子视图或退出应用",
+            "desc": "点击返回骰子视图。长按退出应用。",
+            "link": "#骰子视图",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "配置菜单"
+    const uiDescription = "在这里可以调整各种选项。"
+    const uiParentLink = "#骰子视图"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+        uiParentLink={uiParentLink}
+    />
+
+}
+
+<ConfigMenu />
+
+## 底光效果
+
+底光在骰子滚动时或结束后可以显示不同的LED效果。你可以选效果、调速度，也可以关掉。底光效果仅限魔矩Pro。
+
+export function UnderglowEffect() {
+
+    const uiElements = [
+        {
+            "name": "启用底光",
+            "desc": "启用或禁用底光效果。",
+            "elements": [
+                {
+                    "pos": [0, 0],
+                    "color": "#00FF00"
+                }
+            ]
+        },
+        {
+            "name": "效果：静态",
+            "desc": "将底光效果设置为静态。",
+            "elements": [
+                {
+                    "pos": [2, 0],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "效果：呼吸",
+            "desc": "将底光效果设置为呼吸。",
+            "elements": [
+                {
+                    "pos": [3, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "效果：闪烁",
+            "desc": "将底光效果设置为闪烁。",
+            "elements": [
+                {
+                    "pos": [4, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "效果：锯齿",
+            "desc": "将底光效果设置为锯齿。",
+            "elements": [
+                {
+                    "pos": [5, 0],
+                    "color": "#C0C0C0"
+                }
+            ]
+        },
+        {
+            "name": "速度控制",
+            "desc": "更改底光效果的速度。",
+            "elements": [
+                {
+                    "pos": [0, 6],
+                    "size": [8, 2],
+                    "color": "#C0C0C0"
+                },
+                {
+                    "pos": [3, 6],
+                    "color": "#FFFFFF"
+                }
+            ]
+        },
+        {
+            "name": "返回配置菜单",
+            "desc": "点击返回配置菜单。",
+            "link": "#配置菜单",
+            "elements": [
+                {
+                    "pos": ["c"]
+                }
+            ]
+        }
+    ];
+
+    const uiName = "底光效果菜单"
+    const uiDescription = "在这里可以调整底光效果。"
+    const uiParentLink = "#配置菜单"
+    return <MystrixVisualizer
+        uiName={uiName}
+        uiDescription={uiDescription}
+        uiElements={uiElements}
+        uiParentLink={uiParentLink}
+    />
+
+}
+
+<UnderglowEffect />

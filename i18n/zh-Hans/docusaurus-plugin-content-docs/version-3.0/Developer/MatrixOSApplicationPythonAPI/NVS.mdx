@@ -1,0 +1,337 @@
+---
+sidebar_position: 6
+---
+import GithubLink from '@site/src/components/GithubLink/GithubLink';
+
+# NVS API
+
+## 概述
+
+Matrix OS 中的 NVS（非易失存储）API 为应用数据提供持久存储，数据在设备重启后仍然保存。数据使用基于哈希的键存储，可以存储任意二进制数据。NVS API 可通过 `MatrixOS.NVS` 访问，默认已导入。
+
+*Python NVS API 实现位于 <GithubLink path="Applications/Python/PikaPython/MatrixOS_NVS.py"/>，类型提示位于 <GithubLink path="Applications/Python/PikaPython/_MatrixOS_NVS.pyi"/>。*
+
+---
+
+## `MatrixOS.NVS.GetSize`
+```python
+def GetSize(hash: int) -> int
+```
+
+获取给定哈希键存储数据的大小。
+
+**参数：**
+- `hash` (`int`)：标识存储数据的哈希键
+
+**返回值：**
+- `int`：存储数据的字节大小，未找到时返回 0
+
+**示例：**
+```python
+data_size = MatrixOS.NVS.GetSize(0xDEADBEAF)
+if data_size > 0:
+    print(f"数据大小：{data_size} 字节")
+else:
+    print("此键未找到数据")
+```
+
+---
+
+## `MatrixOS.NVS.GetVariable`
+```python
+def GetVariable(hash: int) -> bytes
+```
+
+检索给定哈希键的存储数据。
+
+**参数：**
+- `hash` (`int`)：标识存储数据的哈希键
+
+**返回值：**
+- `bytes`：作为字节对象的存储数据，未找到时返回空字节
+
+**示例：**
+```python
+data = MatrixOS.NVS.GetVariable(0xDEADBEAF)
+if data:
+    print(f"检索到数据：{data}")
+else:
+    print("未找到数据")
+```
+
+---
+
+## `MatrixOS.NVS.SetVariable`
+```python
+def SetVariable(hash: int, data: bytes) -> bool
+```
+
+使用给定的哈希键存储数据。
+
+**参数：**
+- `hash` (`int`)：用于标识数据的哈希键
+- `data` (`bytes`)：要存储的数据
+
+**返回值：**
+- `bool`：成功时返回 True，错误时返回 False
+
+**示例：**
+```python
+data_to_store = b"你好，持久世界！"
+success = MatrixOS.NVS.SetVariable(0xDEADBEAF, data_to_store)
+if success:
+    print("数据存储成功")
+else:
+    print("存储数据失败")
+```
+
+---
+
+## `MatrixOS.NVS.DeleteVariable`
+```python
+def DeleteVariable(hash: int) -> bool
+```
+
+删除给定哈希键的存储数据。
+
+**参数：**
+- `hash` (`int`)：标识要删除数据的哈希键
+
+**返回值：**
+- `bool`：成功时返回 True，键未找到或错误时返回 False
+
+**示例：**
+```python
+success = MatrixOS.NVS.DeleteVariable(0xDEADBEAF)
+if success:
+    print("数据删除成功")
+else:
+    print("删除数据失败或键未找到")
+```
+
+---
+
+## 实际示例
+
+### 简单键值存储
+```python
+def simple_storage_example():
+    """演示基本 NVS 操作"""
+
+    # 存储一些配置
+    config_key = 0xDEADBEAF
+    config_data = b"brightness:128,volume:75"
+
+    # 存储数据
+    if MatrixOS.NVS.SetVariable(config_key, config_data):
+        print("配置已保存")
+
+        # 检索数据
+        retrieved = MatrixOS.NVS.GetVariable(config_key)
+        if retrieved:
+            print(f"检索到配置：{retrieved.decode()}")
+
+        # 检查大小
+        size = MatrixOS.NVS.GetSize(config_key)
+        print(f"配置大小：{size} 字节")
+
+        # 清理
+        MatrixOS.NVS.DeleteVariable(config_key)
+        print("配置已删除")
+
+simple_storage_example()
+```
+
+### 设置管理器
+```python
+class SettingsManager:
+    """使用 NVS 的简单设置管理器"""
+
+    def __init__(self, base_key=2000):
+        self.base_key = base_key
+        self.key_counter = 0
+
+    def _get_key(self, name):
+        """从设置名生成哈希键"""
+        # 简单哈希 - 生产中使用适当的哈希函数
+        return self.base_key + hash(name) % 10000
+
+    def save_setting(self, name, value):
+        """保存设置为类 JSON 字符串"""
+        key = self._get_key(name)
+        data = f"{name}:{value}".encode()
+
+        success = MatrixOS.NVS.SetVariable(key, data)
+        return success
+
+    def load_setting(self, name, default=None):
+        """加载设置，未找到时返回默认值"""
+        key = self._get_key(name)
+        data = MatrixOS.NVS.GetVariable(key)
+
+        if data:
+            try:
+                # 解析简单的 name:value 格式
+                decoded = data.decode()
+                if ':' in decoded:
+                    _, value = decoded.split(':', 1)
+                    return value
+            except:
+                pass
+
+        return default
+
+    def delete_setting(self, name):
+        """删除设置"""
+        key = self._get_key(name)
+        return MatrixOS.NVS.DeleteVariable(key)
+
+    def setting_exists(self, name):
+        """检查设置是否存在"""
+        key = self._get_key(name)
+        return MatrixOS.NVS.GetSize(key) > 0
+
+# 使用示例
+settings = SettingsManager()
+
+# 保存设置
+settings.save_setting("brightness", "128")
+settings.save_setting("last_app", "Performance")
+settings.save_setting("user_name", "MatrixUser")
+
+# 加载设置
+brightness = settings.load_setting("brightness", "100")
+last_app = settings.load_setting("last_app", "Default")
+user_name = settings.load_setting("user_name", "Anonymous")
+
+print(f"亮度：{brightness}")
+print(f"上次应用：{last_app}")
+print(f"用户：{user_name}")
+
+# 检查存在性
+if settings.setting_exists("brightness"):
+    print("亮度设置存在")
+
+# 清理
+settings.delete_setting("brightness")
+```
+
+### 二进制数据存储
+```python
+def binary_storage_example():
+    """存储和检索二进制数据"""
+
+    # 创建一些二进制数据（例如色彩调色板）
+    color_palette = bytes([
+        255, 0, 0,    # 红色
+        0, 255, 0,    # 绿色
+        0, 0, 255,    # 蓝色
+        255, 255, 0,  # 黄色
+    ])
+
+    palette_key = 0xDEADBEAF
+
+    # 存储调色板
+    if MatrixOS.NVS.SetVariable(palette_key, color_palette):
+        print("色彩调色板已保存")
+
+        # 检索和验证
+        retrieved_palette = MatrixOS.NVS.GetVariable(palette_key)
+        if retrieved_palette == color_palette:
+            print("✓ 调色板检索正确")
+
+            # 解析颜色
+            for i in range(0, len(retrieved_palette), 3):
+                r, g, b = retrieved_palette[i:i+3]
+                print(f"颜色 {i//3}: RGB({r}, {g}, {b})")
+        else:
+            print("✗ 检测到调色板损坏")
+
+binary_storage_example()
+```
+
+### Application State Persistence
+```python
+class AppState:
+    """Persistent application state"""
+
+    def __init__(self, app_name):
+        self.app_name = app_name
+        self.base_key = hash(app_name) % 50000
+
+    def save_state(self, state_dict):
+        """Save application state dictionary"""
+        # Convert dict to simple string format
+        state_str = ""
+        for key, value in state_dict.items():
+            state_str += f"{key}={value};"
+
+        data = state_str.encode()
+        key = self.base_key + 1  # State key
+
+        return MatrixOS.NVS.SetVariable(key, data)
+
+    def load_state(self):
+        """Load application state dictionary"""
+        key = self.base_key + 1
+        data = MatrixOS.NVS.GetVariable(key)
+
+        if not data:
+            return {}
+
+        try:
+            state_str = data.decode()
+            state_dict = {}
+
+            for pair in state_str.split(';'):
+                if '=' in pair:
+                    k, v = pair.split('=', 1)
+                    state_dict[k] = v
+
+            return state_dict
+        except:
+            return {}
+
+    def clear_state(self):
+        """Clear saved state"""
+        key = self.base_key + 1
+        return MatrixOS.NVS.DeleteVariable(key)
+
+# Usage example
+app_state = AppState("MyPythonApp")
+
+# Save state
+current_state = {
+    "level": "5",
+    "score": "1250",
+    "mode": "advanced"
+}
+app_state.save_state(current_state)
+
+# Later... load state
+loaded_state = app_state.load_state()
+print(f"Loaded state: {loaded_state}")
+
+# Get specific values with defaults
+level = loaded_state.get("level", "1")
+score = loaded_state.get("score", "0")
+print(f"Level: {level}, Score: {score}")
+```
+
+---
+
+## 哈希键指南
+
+1. **唯一性**：确保哈希键在应用程序之间不会冲突
+2. **一致性**：在整个应用中使用相同的键生成方法
+3. **命名空间**：考虑为不同数据类型使用基础偏移量
+4. **文档**：记录你的键分配方案
+
+---
+
+## 存储注意事项
+
+- **持久性**：数据在重启和断电后仍然保存
+- **磨损均衡**：NVS 自动处理闪存磨损均衡
+- **大小限制**：检查设备规格了解 NVS 容量
+- **性能**：NVS 操作可能有延迟，避免在时间关键代码中使用

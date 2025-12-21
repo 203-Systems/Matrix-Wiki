@@ -1,0 +1,243 @@
+---
+sidebar_position: 6
+---
+
+# Debug Your Application (Python)
+
+## Python Application Debugging Overview
+
+Debugging Python applications in MatrixOS primarily involves using print statements. Since Python applications run in the PikaPython interpreter, the print function is your main tool for understanding program flow and variable states.
+
+## Print Debugging
+
+The print function is the primary debugging tool for Python applications in MatrixOS. Use print statements strategically to understand program flow and variable states.
+
+### Basic Print Usage
+```python
+def my_function():
+    print("Starting function")
+
+    # Your code here
+    result = some_calculation()
+    print(f"Calculation result: {result}")
+
+    return result
+
+# Debug variable values
+value = 42
+print(f"Debug: value = {value}")
+```
+
+### Tracking Program Flow
+```python
+def complex_operation():
+    print("Step 1: Initializing")
+    # initialization code
+
+    print("Step 2: Processing data")
+    # processing code
+
+    print("Step 3: Finalizing")
+    # finalization code
+
+    print("Operation complete")
+```
+
+### Debugging Variables
+```python
+# Print variable types and values
+my_variable = 123
+print(f"Variable type: {type(my_variable)}, value: {my_variable}")
+
+# Print multiple values
+x, y = 5, 10
+print(f"Coordinates: x={x}, y={y}")
+
+# Print list/array contents
+my_list = [1, 2, 3, 4, 5]
+print(f"List contents: {my_list}")
+```
+
+### Debugging Loops
+```python
+# Track loop iterations
+for i in range(5):
+    print(f"Loop iteration: {i}")
+    # Your loop code here
+
+# Debug while loops
+counter = 0
+while counter < 3:
+    print(f"While loop: counter = {counter}")
+    counter += 1
+```
+
+### Debugging Functions
+```python
+def calculate(a, b):
+    print(f"Function called with a={a}, b={b}")
+    result = a + b
+    print(f"Returning result: {result}")
+    return result
+
+# Call the function
+answer = calculate(3, 4)
+print(f"Final answer: {answer}")
+```
+
+### Debugging MatrixOS API Calls
+```python
+# Debug LED operations
+print("Setting LED color")
+MatrixOS.LED.SetColor(Point(3, 3), Color(255, 0, 0), 255)
+print("LED color set, updating display")
+MatrixOS.LED.Update(255)
+print("Display updated")
+
+# Debug keypad events
+key_event = MatrixOS.KeyPad.Get(1000)
+if key_event is not None:
+    print(f"Key pressed at position ({key_event.xy.x}, {key_event.xy.y})")
+else:
+    print("No key pressed")
+
+# Debug timing
+start_time = MatrixOS.SYS.Millis()
+# Your code here
+end_time = MatrixOS.SYS.Millis()
+print(f"Operation took {end_time - start_time} milliseconds")
+```
+
+### Debugging Conditional Logic
+```python
+def check_value(value):
+    print(f"Checking value: {value}")
+
+    if value < 0:
+        print("Value is negative")
+    elif value == 0:
+        print("Value is zero")
+    else:
+        print("Value is positive")
+
+    return value
+```
+
+### Formatted Output for Clarity
+```python
+# Use separators for clarity
+print("=" * 30)
+print("Starting Debug Section")
+print("=" * 30)
+
+# Format numbers
+value = 3.14159
+print(f"Pi value: {value:.2f}")  # Two decimal places
+
+# Align output
+for i in range(3):
+    print(f"Item {i:2d}: {'Active' if i > 0 else 'Inactive'}")
+```
+
+## Best Practices for Print Debugging
+
+1. **Be Descriptive**: Make print messages clear and informative
+   ```python
+   # Good
+   print(f"Processing key at position ({x}, {y})")
+
+   # Less helpful
+   print("here")
+   ```
+
+2. **Include Context**: Show what part of the code is executing
+   ```python
+   print("MainLoop: Checking for key events")
+   ```
+
+3. **Show Variable States**: Include relevant variable values
+   ```python
+   print(f"LED brightness set to {brightness}/255")
+   ```
+
+4. **Use Consistent Formatting**: Make output easy to read
+   ```python
+   print(f"[INFO] System ready")
+   print(f"[ERROR] Failed to initialize")
+   print(f"[DEBUG] Variable x = {x}")
+   ```
+
+5. **Track Entry and Exit**: Show when functions start and end
+   ```python
+   def my_function():
+       print(">>> Entering my_function")
+       # function code
+       print("<<< Exiting my_function")
+   ```
+
+## Example: Complete Debug Session
+
+Here's a practical example showing effective print debugging:
+
+```python
+def interactive_app():
+    """Example application with comprehensive print debugging"""
+
+    print("=" * 40)
+    print("Application Starting")
+    print("=" * 40)
+
+    # Initialize
+    print("Initializing LED display...")
+    MatrixOS.LED.Fill(Color(0, 0, 0), 0)
+    MatrixOS.LED.Update(0)
+    print("LED display initialized")
+
+    # Main loop
+    print("Entering main loop")
+    loop_count = 0
+
+    while loop_count < 10:
+        print(f"\n--- Loop iteration {loop_count} ---")
+
+        # Check for input
+        print("Checking for key press...")
+        key_event = MatrixOS.KeyPad.Get(100)
+
+        if key_event is not None:
+            x = key_event.xy.x
+            y = key_event.xy.y
+            print(f"Key detected at ({x}, {y})")
+
+            # Process the key
+            if key_event.info.state == 1:
+                print(f"  Key pressed - lighting LED")
+                MatrixOS.LED.SetColor(Point(x, y), Color(255, 0, 0), 255)
+                MatrixOS.LED.Update(255)
+            elif key_event.info.state == 2:
+                print(f"  Key released - turning off LED")
+                MatrixOS.LED.SetColor(Point(x, y), Color(0, 0, 0), 0)
+                MatrixOS.LED.Update(0)
+        else:
+            print("No key press detected")
+
+        loop_count += 1
+        print(f"Loop {loop_count} complete")
+
+    print("\n" + "=" * 40)
+    print("Application Ending")
+    print("=" * 40)
+
+# Run the app
+interactive_app()
+```
+
+## Tips for Effective Print Debugging
+
+- **Start Simple**: Add prints one at a time to isolate issues
+- **Remove When Done**: Clean up debug prints after fixing issues
+- **Use Meaningful Labels**: Make it clear what each print represents
+- **Watch for Timing**: Too many prints can affect program timing
+- **Check Output Frequency**: Avoid flooding output in fast loops
+
+Remember: Print debugging is simple but powerful. Well-placed print statements can quickly reveal what your program is doing and help identify where issues occur.
