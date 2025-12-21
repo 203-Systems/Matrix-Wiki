@@ -1994,7 +1994,7 @@ export function ChannelSelector() {
 
 可全面控制琶音器设置，仅在演奏界面启用控制栏时可访问
 
-包含7个不同的参数页面，每个都有独特的颜色标识：
+包含8个不同的参数页面，每个都有独特的颜色标识：
 
 - **BPM**（红色）：调节琶音器节拍速度
 - **摇摆**（橙色）：调整音符时序摇摆
@@ -2003,6 +2003,7 @@ export function ChannelSelector() {
 - **步进**（青色）：设置琶音器步进数量
 - **步进偏移**（蓝色）：在每步后添加音高偏移
 - **重复**（紫色）：设置模式重复次数
+- **欧几里得音序**（亮粉色）：欧几里得音序长度与步数
 
 ### BPM
 
@@ -2087,6 +2088,17 @@ export function ArpConfigBPM() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "欧几里得音序",
+        "desc": "切换到欧几里得音序页面",
+        "link": "#欧几里得音序",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -2305,6 +2317,17 @@ export function ArpConfigSwing() {
         ]
     },
     {
+        "name": "欧几里得音序",
+        "desc": "切换到欧几里得音序页面",
+        "link": "#欧几里得音序",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
         "name": "摇摆显示",
         "desc": "显示当前摇摆百分比（此示例中为50%）",
         "elements": [
@@ -2509,6 +2532,17 @@ export function ArpConfigGate() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "欧几里得音序",
+        "desc": "切换到欧几里得音序页面",
+        "link": "#欧几里得音序",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -2737,6 +2771,17 @@ export function ArpConfigDirection() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "欧几里得音序",
+        "desc": "切换到欧几里得音序页面",
+        "link": "#欧几里得音序",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -3041,6 +3086,17 @@ export function ArpConfigStep() {
         ]
     },
     {
+        "name": "欧几里得音序",
+        "desc": "切换到欧几里得音序页面",
+        "link": "#欧几里得音序",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
         "name": "步进显示",
         "desc": "显示当前步进间隔（半音）（此示例为1）",
         "elements": [
@@ -3230,6 +3286,17 @@ export function ArpConfigStepOffset() {
             {
                 "pos": [6, 0],
                 "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "欧几里得音序",
+        "desc": "切换到欧几里得音序页面",
+        "link": "#欧几里得音序",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
             }
         ]
     },
@@ -3438,6 +3505,17 @@ export function ArpConfigRepeat() {
         ]
     },
     {
+        "name": "欧几里得音序",
+        "desc": "切换到欧几里得音序页面",
+        "link": "#欧几里得音序",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#800020"
+            }
+        ]
+    },
+    {
         "name": "重复显示",
         "desc": "显示当前重复次数\n\n如果设置为无限或0，显示Inf",
         "elements": [
@@ -3567,6 +3645,214 @@ export function ArpConfigRepeat() {
 }
 
 <ArpConfigRepeat />
+
+### 欧几里得音序
+
+通过在一个周期长度内均匀分布步数来生成欧几里得音序模式。你还可以设置一个根步作为节奏起点。
+
+**长度**: 1-32 步<br/>
+**步数**: 1-长度 的触发（上限为长度）<br/>
+**默认**: 长度 16，步数 16
+
+export function ArpConfigRhythm() {
+    const uiElements = [
+    {
+        "name": "BPM设置",
+        "desc": "切换到BPM设置页面",
+        "link": "#bpm",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#800000"
+            }
+        ]
+    },
+    {
+        "name": "摇摆设置",
+        "desc": "切换到摇摆设置页面",
+        "link": "#摇摆",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "color": "#804000"
+            }
+        ]
+    },
+    {
+        "name": "门限设置",
+        "desc": "切换到门限设置页面",
+        "link": "#门限",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#808000"
+            }
+        ]
+    },
+    {
+        "name": "顺序设置",
+        "desc": "切换到顺序设置页面",
+        "link": "#顺序",
+        "elements": [
+            {
+                "pos": [3, 0],
+                "color": "#008000"
+            }
+        ]
+    },
+    {
+        "name": "步进设置",
+        "desc": "切换到步进设置页面",
+        "link": "#步进",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "color": "#008080"
+            }
+        ]
+    },
+    {
+        "name": "步进偏移设置",
+        "desc": "切换到步进偏移设置页面",
+        "link": "#步进偏移",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "color": "#202080"
+            }
+        ]
+    },
+    {
+        "name": "重复设置",
+        "desc": "切换到重复设置页面",
+        "link": "#重复",
+        "elements": [
+            {
+                "pos": [6, 0],
+                "color": "#800080"
+            }
+        ]
+    },
+    {
+        "name": "节奏页面（已选择）",
+        "desc": "欧几里得音序配置页面",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#FF0040"
+            }
+        ]
+    },
+    {
+        "name": "节奏可视化",
+        "desc": "长度条显示完整周期",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 2],
+                "color": "#800030"
+            }
+        ]
+    },
+    {
+        "name": "节奏可视化 - 步数",
+        "desc": "触发标记显示选中的步数",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [2, 2],
+                "size": [2, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [7, 2],
+                "size": [1, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "节奏可视化 - 根步",
+        "desc": "根步标记显示周期起点",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#8000FF"
+            },
+        ]
+    },
+    {
+        "name": "长度 -1",
+        "desc": "节奏长度减少 1 步",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "长度 +1",
+        "desc": "节奏长度增加 1 步",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "步数 -1",
+        "desc": "节奏步数减少 1",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "步数 +1",
+        "desc": "节奏步数增加 1",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "重置",
+        "desc": "将节奏长度与步数重置为默认值",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+    ];
+
+    const uiName = "琶音器节奏配置"
+    const uiDescription = "配置欧几里得音序长度与步数"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+}
+
+
+<ArpConfigRhythm />
 
 ## 演奏界面颜色
 
