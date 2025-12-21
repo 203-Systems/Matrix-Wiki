@@ -2008,7 +2008,8 @@ export function ChannelSelector() {
 ### BPM
 
 调节琶音器的节拍速度<br/>
-BPM（每分钟节拍数）决定琶音器循环音符的速度
+BPM（每分钟节拍数）决定琶音器循环音符的速度<br/>
+你也可以点按数字来敲 BPM。
 
 **范围**：20-299 BPM<br/>
 **默认值**：120 BPM
@@ -2104,7 +2105,7 @@ export function ArpConfigBPM() {
     },
     {
         "name": "BPM显示",
-        "desc": "显示当前BPM值（此示例中为120）",
+        "desc": "显示当前BPM值（此示例中为120）\n\n点按数字可敲 BPM",
         "elements": [
             {
                 "pos": [0, 2],
@@ -2214,6 +2215,27 @@ export function ArpConfigBPM() {
             {
                 "pos": [7, 7],
                 "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "重置",
+        "desc": "将BPM重置为默认值",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "时钟输出",
+        "desc": "启用MIDI时钟同步输出",
+        "link": "#clock-sync-output",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#80FF00"
             }
         ]
     }
@@ -2436,6 +2458,16 @@ export function ArpConfigSwing() {
                 "color": "#FF8000"
             }
         ]
+    },
+    {
+        "name": "重置",
+        "desc": "将摇摆重置为默认值",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
     }
     ];
 
@@ -2656,6 +2688,26 @@ export function ArpConfigGate() {
             {
                 "pos": [7, 7],
                 "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "重置",
+        "desc": "将门限重置为默认值",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "无限",
+        "desc": "将门限设为无限（延音）",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#C0C0C0"
             }
         ]
     }
@@ -3190,6 +3242,16 @@ export function ArpConfigStep() {
                 "color": "#00FFFF"
             }
         ]
+    },
+    {
+        "name": "重置",
+        "desc": "将步进间隔重置为默认值",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
     }
     ];
 
@@ -3403,6 +3465,16 @@ export function ArpConfigStepOffset() {
             {
                 "pos": [7, 7],
                 "color": "#4000FF"
+            }
+        ]
+    },
+    {
+        "name": "重置",
+        "desc": "将步进偏移重置为默认值",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
             }
         ]
     }
@@ -3632,6 +3704,26 @@ export function ArpConfigRepeat() {
                 "color": "#FF00FF"
             }
         ]
+    },
+    {
+        "name": "重置",
+        "desc": "将重复次数重置为默认值",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "无限",
+        "desc": "将重复设为无限（循环播放）",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FFFFFF"
+            }
+        ]
     }
     ];
 
@@ -3835,7 +3927,7 @@ export function ArpConfigRhythm() {
         "desc": "将节奏长度与步数重置为默认值",
         "elements": [
             {
-                "pos": [0, 6],
+                "pos": [7, 6],
                 "color": "#FF0000"
             }
         ]
@@ -4359,7 +4451,6 @@ export function ControlBar() {
 
 **按钮**：
 - **点击** (X=3)：切换和弦控制
-- **Shift点击**：锁定当前和弦
 
 **颜色状态**：
 - **青色**：和弦控制已关闭
@@ -4509,7 +4600,7 @@ export function ControlBarChord() {
             },
             {
                 "pos": [4, 6],
-                "size": [3, 1],
+                "size": [4, 1],
                 "color": "#808000"
             },
             {
@@ -4518,14 +4609,6 @@ export function ControlBarChord() {
             }
         ]
     },
-    {
-        "name": "禁用和弦",
-        "desc": "取消选择所有和弦，仅在和弦启用时亮起",
-        "elements": [
-            {
-                "pos": [7, 6],
-                "color": "#800000"
-            }
         ]
     },
     {
