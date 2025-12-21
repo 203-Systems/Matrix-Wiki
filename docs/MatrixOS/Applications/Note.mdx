@@ -4336,7 +4336,6 @@ Chord control transforms single note presses into full chords, allowing you to p
 
 **Controls Bar Button**:
 - **Tap** (X=4): Open chord selector interface
-- **Shift Tap**: Toggle chord toggle mode
 
 **Color States**:
 - **Cyan**: Chord control closed
@@ -4348,7 +4347,6 @@ Chord control transforms single note presses into full chords, allowing you to p
 - **Hold Combo**: Hold a combo to chord while you perform on the note pad
 - **Shift Tap**: Latch chord types and extensions
 - **Inversion**: Select an inversion or slide across them when chord is latched to strum.
-- **Disable**: Tap to remove all selected chords (You can also shift tap Base or Extension selector to remove all chords)
 
 export function ControlBarChord() {
 
@@ -4487,22 +4485,12 @@ export function ControlBarChord() {
             },
             {
                 "pos": [4, 6],
-                "size": [3, 1],
+                "size": [4, 1],
                 "color": "#808000"
             },
             {
                 "pos": [4, 5],
                 "color": "#FFFF00"
-            }
-        ]
-    },
-    {
-        "name": "Disable Chord",
-        "desc": "Unselect all chords, only lit if chord is enabled",
-        "elements": [
-            {
-                "pos": [7, 6],
-                "color": "#800000"
             }
         ]
     },
