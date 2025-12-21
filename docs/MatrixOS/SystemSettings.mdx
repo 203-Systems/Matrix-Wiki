@@ -24,16 +24,6 @@ export function SystemSettings() {
             ]
         },
         {
-            "name": "Fast Text Toggle",
-            "desc": "Toggles alternative text display when holding down any button in Matrix OS. If set to ON, letters will flash quickly one by one, otherwise it will slowly scroll text. (Useful if you are a fast reader or already know the UI)",
-            "elements": [
-                {
-                    "pos": [6, 0],
-                    "color": "#5A39BD"
-                }
-            ]
-        },
-        {
             "name": "UI Animation Toggle",
             "desc": "Toggle UI animations on or off",
             "elements": [
@@ -130,7 +120,7 @@ export function SystemSettings() {
             "link": "#factory-reset",
             "elements": [
                 {
-                    "pos": [0, 6],
+                    "pos": [1, 7],
                     "color": "#FF00FF"
                 }
             ]
@@ -151,31 +141,12 @@ export function SystemSettings() {
             "desc": "View the current version of the Matrix OS.",
             "elements": [
                 {
-                    "pos": [1, 7],
-                    "color": "#00FF30"
-                }
-            ]
-        },
-        {
-            "name": "Device Name",
-            "desc": "View the name of the device.",
-            "elements": [
-                {
-                    "pos": [2, 7],
-                    "color": "#00FF30"
-                }
-            ]
-        },
-        {
-            "name": "Device Serial",
-            "desc": "View the serial number of the device.",
-            "elements": [
-                {
                     "pos": [3, 7],
+                    "size": [2, 1],
                     "color": "#00FF30"
                 }
             ]
-        }
+        },
     ];
 
     const uiName = "System Settings"
