@@ -608,6 +608,7 @@ export function ScaleSelector() {
 ### 现代调式
 
 启用现代调式模式后，你可以在已选定的音阶中选择新的根音。
+
 export function ScaleSelectorModernDiatonic() {
 
     const uiElements = [
@@ -4456,11 +4457,9 @@ export function ControlBarChord() {
             }
         ]
     },
-        ]
-    },
     {
         "name": "弯音向下",
-        "desc": "弯音向下（力度映射）\n\nShift：MIDI停止",
+        "desc": "弯音向下（力度映射）\\n\\nShift：MIDI停止",
         "link": "#弯音",
         "elements": [
             {
@@ -4471,7 +4470,7 @@ export function ControlBarChord() {
     },
     {
         "name": "弯音向上",
-        "desc": "弯音向上（力度映射）\n\nShift：MIDI播放",
+        "desc": "弯音向上（力度映射）\\n\\nShift：MIDI播放",
         "link": "#弯音",
         "elements": [
             {
@@ -4482,7 +4481,7 @@ export function ControlBarChord() {
     },
     {
         "name": "音符锁定",
-        "desc": "音符锁定切换\n\nShift：切换模式\n\n黄色：禁用\n白色：启用\n洋红色：切换模式",
+        "desc": "音符锁定切换\\n\\nShift：切换模式\\n\\n黄色：禁用\\n白色：启用\\n洋红色：切换模式",
         "link": "#音符锁定",
         "elements": [
             {
@@ -4493,7 +4492,7 @@ export function ControlBarChord() {
     },
     {
         "name": "和弦控制（启用）",
-        "desc": "打开和弦构建控制\n\nShift：锁定和弦选项",
+        "desc": "打开和弦构建控制\\n\\nShift：锁定和弦选项",
         "link": "#和弦控制",
         "elements": [
             {
@@ -4503,41 +4502,41 @@ export function ControlBarChord() {
         ]
     },
     {
-        "name": "八度向下",
-        "desc": "降低八度\n\n按住：Shift\n\nShift：交换布局",
-        "link": "#八度控制--移调",
-        "elements": [
-            {
-                "pos": [4, 7],
-                "color": "#00FFFF"
-            }
-        ]
-    },
-    {
         "name": "琶音器控制",
-        "desc": "琶音器控制切换\n\nShift：琶音器设置",
+        "desc": "琶音器控制切换\\n\\nShift：琶音器设置",
         "link": "#琶音器控制",
         "elements": [
             {
-                "pos": [5, 7],
+                "pos": [4, 7],
                 "color": "#80FF00"
             }
         ]
     },
     {
         "name": "音阶根音控制",
-        "desc": "选择音阶根音\n\nShift：选择音阶类型",
+        "desc": "选择音阶根音\\n\\nShift：选择音阶类型",
         "link": "#音阶控制",
         "elements": [
             {
+                "pos": [5, 7],
+                "color": "#FF0060"
+            }
+        ]
+    },
+    {
+        "name": "八度向下",
+        "desc": "降低八度\\n\\n按住：Shift\\n\\nShift：交换布局",
+        "link": "#八度控制--移调",
+        "elements": [
+            {
                 "pos": [6, 7],
-                "color": "#FFAAFF"
+                "color": "#00FFFF"
             }
         ]
     },
     {
         "name": "八度向上",
-        "desc": "提高八度\n\n按住：Shift\n\nShift：交换布局",
+        "desc": "提高八度\\n\\n按住：Shift\\n\\nShift：交换布局",
         "link": "#八度控制--移调",
         "elements": [
             {
@@ -4556,6 +4555,7 @@ export function ControlBarChord() {
             }
         ]
     }
+
 ];
 
     const uiName = "和弦控制"

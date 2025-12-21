@@ -144,19 +144,17 @@ export function SystemSettings() {
                     "color": "#00FF30"
                 }
             ]
-        },
-            ]
-        },
-            ]
         }
     ];
 
     const uiName = "系统设置"
     const uiDescription = "系统设置包括Matrix OS的系统级配置、设备信息等。还有专门的设备设置页面用于设备特定配置。"
+    const uiParentLink = "/docs/MatrixOS/ApplicationLauncher"
     return <MystrixVisualizer
-        uiName={uiName}
-        uiDescription={uiDescription}
-        uiElements={uiElements}
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    uiParentLink = {uiParentLink}
     />
 
 }
