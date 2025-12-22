@@ -1,0 +1,4011 @@
+---
+sidebar_position: 2.1
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# Sequencer App
+
+A powerful sequencer for Matrix OS. Learning about the [Note App](/docs/MatrixOS/Applications/Note) first is highly recommended.
+
+:::warning Preview version
+The documention here is incomplete and might contain factual errors. Matrix OS 3.2 is still not in final release yet so things in the OS might change as well.
+:::
+
+## Core Concepts
+
+- Track: An independent lane with its own clip, patterns, color, channel, and note layout. This sequencer have 8 tracks. 
+- Clip: a container of patterns per track. Clips can be launched or switched. Each track in this sequencer have up to 14 clips.
+- Pattern: a grid of steps. Patterns have a per-pattern length. Each clip in this sequencer have 16 patterns.
+- Step: a time slice in a pattern. A step can hold multiple events. Each pattern in this sequencer can have up to 16 steps, but you can also set micro steps.
+
+## Sequencer View
+
+Default Sequencer view layout. The Pattern Selector overlays the Note Pad when shift is held or latched, and the Message Display overlays the same area for action feedback.
+
+export function SequencerView() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid for pattern editing.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note input area. Layout depends on the track mode (scale, chromatic, piano, drum).",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 4],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Enter the clip launcher.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer View"
+    const uiDescription = "Primary view for track, pattern, and note editing"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerView/>
+
+### Track Selector
+
+- Tap a track to select it. Selecting a different track clears step selections and active notes.
+- Tap the current track to mark it as "active track selected" (affects Control Bar behavior).
+- Clear + tap a track clears all steps in the current clip for that track.
+
+### Pattern Pad
+
+- Default view is 8x2 (16 steps). Two-pattern mode expands to 8x4 (two patterns at once).
+- Tap a step to select it; release to deselect it.
+- Tap a step while notes are selected on the Note Pad to add or remove those notes on that step.
+- Tap a step to preview its notes (note on); release to stop preview (note off).
+- Clear + tap step clears events in that step.
+- Copy mode:
+  - Tap a step with events to set the copy source.
+  - Tap another step to copy events into it (supports cross-pattern copy).
+- Shift + tap a step with events opens step detial menu (only when not playing that track).
+
+### Note Pad
+
+- Used for note entry and preview.
+- Layout modes: Scale, Chromatic, Piano, Drum.
+- Velocity-sensitive input when supported and enabled.
+- In Sequencer view, if steps are selected, tapping notes toggles those notes on the selected steps.
+- If the sequencer is playing and record is enabled, note input is recorded directly.
+
+### Shift Modifier
+This is the view if you held down any of the octave key. (They act as shift when held)
+
+- Hold Shift: Preview Pattern Selector
+- Tap Both Shift: Toggle Enable Pattern Selector
+- Shift + Step: [Step Detail Menu](#step-detail-menu)
+- Shift + Play (x1 in control bar): Resume Playing
+- Shift + Copy (x6 in control bar): Toggle two pattern view
+
+export function ShiftModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid for pattern editing.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Selector",
+        "desc": "Select or add patterns into the clip.\n\nTo keep this view open, tap both octave key at once.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+    {
+        "name": "Created Pattern",
+        "desc": "Switch to modify this pattern",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Active Pattern",
+        "desc": "Active pattern in view.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#C0FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Add Pattern",
+        "desc": "Create a new pattern",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "Shift Enabled Visualizer",
+        "desc": "Visual animation for shift enabled",
+        "elements": [
+
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#F0FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [1, 2],
+                "color": "#F0FFFF"
+            },
+            {
+                "pos": [2, 5],
+                "size": [1, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [1, 2],
+                "color": "#A0FFFF"
+            },
+            {
+                "pos": [4, 5],
+                "size": [1, 2],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [5, 5],
+                "size": [1, 2],
+                "color": "#50FFFF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+
+        ]
+    },
+    {
+        "name": "Resume",
+        "desc": "Resume playback from the last stop point.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "Two Pattern View",
+        "desc": "Toggle two-pattern mode for the current track.",
+        "link": "#two-pattern-view",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Shift Modifier"
+    const uiDescription = "Shift overlay and Pattern Selector latch"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ShiftModifierUI />
+
+### Pattern Selector
+
+- Shown when Pattern Selector is active (shift held or latched).
+- Tap a pattern slot to select or switch patterns (switching is disabled while playing).
+- Tap the "add" slot to create a new pattern.
+- Clear + tap pattern deletes it.
+- Copy mode:
+  - Tap a pattern to set the copy source.
+  - Tap another pattern to copy into it.
+- Hold a pattern to enter length adjustment mode, then tap a length (1-16) to set that pattern's length.
+
+export function PatternSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid for pattern editing.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Selector",
+        "desc": "Select or add patterns into the clip.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+   {
+        "name": "Created Pattern",
+        "desc": "Switch to modify this pattern. Hold it down to adjust the pattern length.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Active Pattern",
+        "desc": "Active pattern in view. Hold it down to adjust the pattern length.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#C0FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Add Pattern",
+        "desc": "Create a new pattern.",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note input area. Layout depends on the track mode (scale, chromatic, piano, drum).",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Enter the clip launcher.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Pattern Selector"
+    const uiDescription = "Pattern selection and length adjustment overlay"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<PatternSelectorUI />
+
+#### Pattern Length Modifier
+
+Hold any pattern to adjust it's length.
+
+export function PatternLengthModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid for pattern editing.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Selector",
+        "desc": "Select or add patterns into the clip.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+   {
+        "name": "Created Pattern",
+        "desc": "Switch to modify this pattern",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Selected Pattern",
+        "desc": "Pattern selected after being held down",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Add Pattern",
+        "desc": "Create a new pattern",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "Pattern Length Modifier",
+        "desc": "Selects how long is the pattern",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [8, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Enter the clip launcher.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Pattern Length Modifier"
+    const uiDescription = "Adjust the pattern length. Enabled by held down a step"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<PatternLengthModifierUI />
+
+### Clear Modifier
+
+- Clear + Current Track: Clear current pattern
+- Clear + Step: Clear selected step
+- Clear + Pattern: Clear selected pattern
+- Clear + Record: Clear last record session
+
+export function ClearModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid, but step with events are highlighted for erase.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Clear Enabled Visualizer",
+        "desc": "Signal that clear modifier is in effect",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 3],
+                "size": [3, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 2],
+            },
+            {
+                "pos": [3, 3],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 3],
+                "size": [3, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [6, 4],
+            },
+            {
+                "pos": [7, 5],
+            },
+            {
+                "pos": [6, 6],
+            },
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Undo Last Record",
+        "desc": "Allow you to erase last record section",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Enter the clip launcher.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer View - Clear"
+    const uiDescription = "Clear actions across steps, patterns, and clips"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ClearModifierUI />
+
+### Copy Modifier
+
+export function CopyModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Copy modifier has effect on them",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid, but step with events are highlighted for select as copy source.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Copy Enabled Visualizer",
+        "desc": "Signal that copy modifier is in effect",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 3],
+                "size": [3, 4],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 2],
+            },
+            {
+                "pos": [3, 3],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 3],
+                "size": [1, 2],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 3],
+                "size": [1, 2],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [1, 2],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 2],
+                "color": "#0080FF"
+            },
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Enter the clip launcher.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer View - Copy"
+    const uiDescription = "Copy source and destination selection"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<CopyModifierUI />
+
+### Step Selected
+
+export function SequencerStepSelected() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid for pattern editing.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+        {
+        "name": "Selected Step",
+        "desc": "Step Selected by holding on it.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note input area. Layout depends on the track mode (scale, chromatic, piano, drum).",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 4],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Selected Note",
+        "desc": "Note that exists in the step. Tap to remove note.",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 4],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "Play From Step",
+        "desc": "Play the track from this step.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Quantize",
+        "desc": "Quantize current pattern.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Step Octave -",
+        "desc": "Transpose selected steps down an octave.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "Step Octave +",
+        "desc": "Transpose selected steps up an octave.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer View - Step Selected"
+    const uiDescription = "Sequencer view after any step is selected."
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSelected/>
+
+### Pattern Selected
+
+export function SequencerPatternSelected() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad",
+        "desc": "Step grid for pattern editing.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Pattern Selector",
+        "desc": "Select or add patterns into the clip.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+   {
+        "name": "Created Pattern",
+        "desc": "Switch to modify this pattern",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Selected Pattern",
+        "desc": "Pattern selected after being held down",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Add Pattern",
+        "desc": "Create a new pattern",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note input area. Layout depends on the track mode (scale, chromatic, piano, drum).",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Nudge Left",
+        "desc": "Nudge the pattern left 1 step. (Nudged off step will loop back in the end)",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Nudge Right",
+        "desc": "Nudge the pattern right 1 step. (Nudged off step will loop back in the front)",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Octave -",
+        "desc": "Transpose selected pattern down an octave.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Octave +",
+        "desc": "Transpose selected pattern up an octave.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+];
+
+    const uiName = "Sequencer View - Pattern Selected"
+    const uiDescription = "Sequencer view after any pattern is selected."
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerPatternSelected/>
+
+### Two Pattern View
+Expands the Pattern Pad to 8x4 so you can see two patterns at once.
+
+export function SequencerTwoPatternView() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the active track. Track selection affects Pattern Pad, Note Pad, and Control Bar behavior.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Pad 1",
+        "desc": "Step grid for pattern editing. It will be the odd number pattern.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+        {
+        "name": "Pattern Pad 2",
+        "desc": "Step grid for pattern editing. It will be the even number pattern.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 3],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 3],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Note Pad",
+        "desc": "Note input area. Layout depends on the track mode (scale, chromatic, piano, drum).",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Enter the clip launcher.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for steps, patterns, clips, or tracks.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for steps, patterns, or clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Octave - (Shift)",
+        "desc": "Octave down button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Octave + (Shift)",
+        "desc": "Octave up button, act as shift is held.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequencer View - Two Pattern View"
+    const uiDescription = "Primary sequencer view with two pattern view enabled "
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerTwoPatternView/>
+
+## Step Detail Menu
+
+- Event selector row (Y=0): choose an event in the step. Note events light in note color, aftertouch notes in a separate color.
+- Microstep row (Y=1, X0-5): move the selected event to one of six microstep slots.
+- Delete (Y=1, X7): remove the selected event.
+- Note event config:
+  - Toggle Note vs Aftertouch event.
+  - Length selector (2 rows): tap to set, tap again to cycle partial lengths.
+  - Velocity selector (2 rows): tap to set, tap again to cycle partial levels.
+- CC event config exists but is currently stubbed (no UI behavior yet).
+
+export function StepDetailMenu() {
+
+    const uiElements = [
+    {
+        "name": "Event Selector",
+        "desc": "Row of events in the selected step. Selected event highlights white.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFFFC0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Microstep Slots",
+        "desc": "Move the selected event within the step.\n\nPosition will be purple if step isn't perfectly aligned (from live recording)",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [6, 1],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [2, 1],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "Delete Event",
+        "desc": "Remove the selected event.",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Note/Aftertouch Toggle",
+        "desc": "Switch between note on and aftertouch events.",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Length Selector",
+        "desc": "Set note length in steps.\n\nTap the end of the selected bar to change the micro length.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 3],
+                "size": [4, 1],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "Velocity Selector",
+        "desc": "Set velocity in 16 slots.\n\nTap the end of the selected bar to change the micro velocity.",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [8, 2],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Clip launcher active.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear (Not used)",
+        "desc": "Clear modifier for clips.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy (Not used)",
+        "desc": "Copy modifier for clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Go back to sequencer view",
+        "desc": "Go baco to sequencer view",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Step Detail Menu"
+    const uiDescription = "Per-step event editor for notes and timing"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<StepDetailMenu />
+
+## Clip Launcher
+
+A grid for you to select clips to play. Similar to Ableton Live's Session mode.
+
+- Normal mode: 8 tracks across, 7 clips high. Clip page selects page 1 or 2.
+- Wide clip mode: 4 tracks across with 2 columns per track.
+
+Not Playing:
+- Tap a clip to select it.
+- Tap an empty slot to create a clip.
+- Shift + clip will start play this clip only.
+- Clear + clip will deletes it.
+- Copy mode: select a source clip, then tap a destination to copy it.
+
+While Playing: 
+- Tap a clip to queue it.
+- Tap an empty slot to queue stop track.
+- Double tap a clip to launch the entire row.
+
+
+export function ClipLauncherUI() {
+
+    const uiElements = [
+    {
+        "name": "Clip Grid",
+        "desc": "8x7 clip launcher grid per track.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#006060"
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 8],
+                "color": "#000060"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 8],
+                "color": "#300060"
+            },
+            {
+                "pos": [3, 0],
+                "size": [1, 8],
+                "color": "#600060"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 8],
+                "color": "#600030"
+            },
+            {
+                "pos": [5, 0],
+                "size": [1, 8],
+                "color": "#601800"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 8], 
+                "color": "#606000"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 8], 
+                "color": "#006018"
+            },
+        ]
+    },
+    {
+        "name": "Existing Clips",
+        "desc": "Clips use their track color.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#00FFFF"
+            },
+
+        ]
+    },
+    {
+        "name": "Active Clip",
+        "desc": "Active clip that is currenting being edited.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Clip launcher active.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for clips.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Clip page 0",
+        "desc": "Select clip page 1 (clip 1 ~ 7).",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Clip page 2",
+        "desc": "Select clip page 2 (clip 8 ~ 14).",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#808080"
+            }
+        ]
+    }
+];
+
+    const uiName = "Clip Launcher"
+    const uiDescription = "Session view clip grid"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ClipLauncherUI />
+
+### Clip Launcher Copy Modifier
+{/* <! TO CODEX  MAKE UI HERE> */}
+
+### Clip Launcher Clear Modifier
+{/* <! TO CODEX  MAKE UI HERE> */}
+
+### Wide Mode
+
+Tap both page key to switch between wide mode and normal mode.
+
+If you don't need to perform on all 8 tracks. Use this to have more clip shown at the same time.
+
+export function ClipLauncherWideUI() {
+
+    const uiElements = [
+    {
+        "name": "Clip Grid",
+        "desc": "8x7 clip launcher grid per track, each track is 2 wide.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [2, 8],
+                "color": "#006060"
+            },
+            {
+                "pos": [2, 0],
+                "size": [2, 8],
+                "color": "#000060"
+            },
+            {
+                "pos": [4, 0],
+                "size": [2, 8],
+                "color": "#300060"
+            },
+            {
+                "pos": [6, 0],
+                "size": [2, 8],
+                "color": "#600060"
+            }
+        ]
+    },
+    {
+        "name": "Existing Clips",
+        "desc": "Clips use their track color.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#00FFFF"
+            },
+
+        ]
+    },
+    {
+        "name": "Active Clip",
+        "desc": "Active clip that is currenting being edited.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play or stop the sequence.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "Record",
+        "desc": "Toggle record mode.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "Session View",
+        "desc": "Clip launcher active.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Mixer View",
+        "desc": "Enter the mixer.",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for clips.",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for clips.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "Clip page 0",
+        "desc": "Select clip page 1 (track 1 ~ 4).",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Clip page 2",
+        "desc": "Select clip page 2 (track 5 ~ 8).",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#808080"
+            }
+        ]
+    }
+];
+
+    const uiName = "Clip Launcher - Wide Mode"
+    const uiDescription = "Session view clip grid"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ClipLauncherWideUI />
+
+## Mixer View
+
+- 3 rows per track: Mute (Y=0), Solo (Y=1), Record (Y=2).
+- Mute is disabled when any track is soloed.
+- Hold shows a label for the row; tap toggles the state.
+
+export function MixerViewUI() {
+
+    const uiElements = [
+    {
+        "name": "Mute Row",
+        "desc": "Track mute states (track color).",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Solo Row",
+        "desc": "Solo toggles (blue).",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 1],
+                "color": "#0060A0"
+            },
+        ]
+    },
+    {
+        "name": "Record Row",
+        "desc": "Per-track record enable (red).",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 1],
+                "color": "#FF0000"
+            }
+        ]
+    }
+];
+
+    const uiName = "Mixer View"
+    const uiDescription = "Mute, solo, and record controls per track"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<MixerViewUI />
+
+## Action Menu
+
+Left 4 options are sequence-wide configs. Right  options are track local configs.
+
+export function ActionMenuUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select the track for track-specific settings.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "BPM Selector",
+        "desc": "Open BPM selector.",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Swing Selector",
+        "desc": "Open swing selector.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#FFA000"
+            }
+        ]
+    },
+    {
+        "name": "Time Signature Selector",
+        "desc": "Open time signature selector.",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Length Selector",
+        "desc": "Open pattern length selector.",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#00A0FF"
+            }
+        ]
+    },
+    {
+        "name": "Track Color Selector",
+        "desc": "Pick the track color.",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Track Layout Selector",
+        "desc": "Open track layout selector.",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Track Channel Selector",
+        "desc": "Open track channel selector.",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "Velocity Sensitivity",
+        "desc": "Toggle velocity sensitivity if supported.",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#00FFB0"
+            }
+        ]
+    },
+    {
+        "name": "Save",
+        "desc": "Save the sequence to storage.\nDouble tap to save.\n\nSquare: Saved\nArrow: Unsaved\nRed Cross: No SD Card",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "size": [4, 4],
+                "color": "#00FF40"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 2],
+            }
+        ]
+    },
+    {
+        "name": "Sequence Browser",
+        "desc": "Open the sequence browser.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [4, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Play",
+        "desc": "Play/stop while in the menu.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "System Settings",
+        "desc": "Open MatrixOS system settings.",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Action Menu"
+    const uiDescription = "Sequencer settings and utilities"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ActionMenuUI />
+
+### Save Sequence
+The center glyph have 3 states:
+- Square: Saved
+- Down Arrow: Unsaved Changes
+- Red Cross: No SD card installed; see [Install Micro SD Card](/docs/Mystrix/InstallMicroSD).
+
+To save your sequence, double tap the center arrow button.
+
+### BPM Selector
+
+Adjust tempo with coarse modifiers and a reset shortcut. <br/>
+Tap the number display to tap in BPM. <br/>
+Clock output can be toggled from here.
+
+export function BPMSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "BPM Display",
+        "desc": "Shows the BPM label and value.\n\nTap the number display to tap in BPM.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4]
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [3, 0],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 1]
+            },
+            {
+                "pos": [4, 2]
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2]
+            }
+        ]
+    },
+    {
+        "name": "BPM Modifiers",
+        "desc": "Coarse BPM adjust row.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": [
+                    "#FF0000",
+                    "#D80000",
+                    "#B80000",
+                    "#A00000",
+                    "#A00000",
+                    "#B80000",
+                    "#D80000",
+                    "#FF0000"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Clock Output",
+        "desc": "Toggle clock output.",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "Reset BPM",
+        "desc": "Reset BPM to default.",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+];
+
+    const uiName = "BPM Selector"
+    const uiDescription = "Tap tempo, modifiers, and clock output"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<BPMSelectorUI />
+
+### Swing Selector
+
+Fine-tune swing amount with incremental modifiers and reset when needed.
+
+export function SwingSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "Swing Display",
+        "desc": "Shows current swing percentage (50% in this example).",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+            },
+            {
+                "pos": [3, 0],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1]
+            },
+            {
+                "pos": [3, 2]
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#FF8000"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2]
+            }
+        ]
+    },
+    {
+        "name": "Swing Modifiers",
+        "desc": "Fine swing adjust row.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": [
+                    "#FF8000",
+                    "#D86800",
+                    "#B85800",
+                    "#A05000",
+                    "#A05000",
+                    "#B85800",
+                    "#D86800",
+                    "#FF8000"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Reset Swing",
+        "desc": "Reset swing to default.",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+];
+
+    const uiName = "Swing Selector"
+    const uiDescription = "Fine swing modifiers and reset"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SwingSelectorUI />
+
+### Time Signature Selector
+
+Set beats per bar and beat unit with dedicated increment/decrement keys.<br/>
+This affects the clip switching behaviour in clip launcher.
+
+export function TimeSignatureSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "Time Signature - Beat",
+        "desc": "Shows beats per bar",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "size": [1, 3],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [1, 3],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "Time Signature - Beat Unit",
+        "desc": "Shows beat unit",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "size": [1, 3],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 3],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Beats -1",
+        "desc": "Decrease beats per bar.",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Beats +1",
+        "desc": "Increase beats per bar.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Beat Unit -1",
+        "desc": "Decrease beat unit.",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Beat Unit +1",
+        "desc": "Increase beat unit.",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Time Signature Selector"
+    const uiDescription = "Beats per bar and beat unit controls"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TimeSignatureSelectorUI />
+
+### Pattern Length Selector
+
+Set the default pattern length and optionally update empty patterns to match.
+
+export function PatternLengthSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "Pattern Length Display",
+        "desc": "Shows the current pattern length.",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 4],
+                "color": "#00A0FF"
+            },
+            {
+                "pos": [7, 2],
+                "size": [1, 2],
+                "color": "#00A0FF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern Length Grid",
+        "desc": "Select length from 1-64 steps.",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#00A0FF"
+            }
+        ]
+    },
+    {
+        "name": "Update Empty Patterns",
+        "desc": "Apply length to empty patterns.",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#80FF00"
+            }
+        ]
+    }
+];
+
+    const uiName = "Pattern Length Selector"
+    const uiDescription = "Global pattern length and update"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<PatternLengthSelectorUI />
+
+### Track Layout Selector
+
+Choose the note layout mode, scale behavior, and note mapping tools for the active track.
+
+#### Note Layouts
+
+For difference between layouts, see [Note App](/docs/MatrixOS/Applications/Note).
+
+export function TrackLayoutSelectorNoteUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select a track to edit its layout.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Scale Layout",
+        "desc": "Note Mode with Scale layout.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Chromatic Layout",
+        "desc": "Note Mode with Chromatic layout.",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Piano Layout",
+        "desc": "Note Mode with Piano layout.",
+        "elements": [
+            {
+                "pos": [2, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Drum Layout",
+        "desc": "Note Mode with Drum layout.",
+        "elements": [
+            {
+                "pos": [3, 1],
+                "color": "#A06000"
+            }
+        ]
+    },
+    {
+        "name": "Note Map Test",
+        "desc": "Toggle note map test.",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Enforce Scale",
+        "desc": "Force notes to the selected scale.",
+        "elements": [
+            {
+                "pos": [1, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "Custom Scale",
+        "desc": "Enable custom scale editing.",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Apply to Note Tracks",
+        "desc": "Apply layout settings to other note tracks.",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "Scale Visualizer & Root Key Selector",
+        "desc": "Select the scale and root key of the active note pad layout",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 4],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 5],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 4],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Modern Diatonic Toggle",
+        "desc": "Toggle between classic and modern diatonic mode (affects root offset behavior)",
+        "link": "#modern-diatonic",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "Minor",
+        "desc": "Use the Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "Major",
+        "desc": "Use the Major scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Dorian",
+        "desc": "Use the Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Phrygian",
+        "desc": "Use the Phrygian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Mixolydian",
+        "desc": "Use the Mixolydian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Melodic Minor Ascending",
+        "desc": "Use the Melodic Minor Ascending scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Harmonic Minor",
+        "desc": "Use the Harmonic Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop Dorian",
+        "desc": "Use the Bebop Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Blues",
+        "desc": "Use the Blues scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Minor Pentatonic",
+        "desc": "Use the Minor Pentatonic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Hungarian Minor",
+        "desc": "Use the Hungarian Minor scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Ukrainian Dorian",
+        "desc": "Use the Ukrainian Dorian scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Marva",
+        "desc": "Use the Marva scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Todi",
+        "desc": "Use the Todi scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Whole Tone",
+        "desc": "Use the Whole Tone scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Chromatic",
+        "desc": "Use the Chromatic scale",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#C000C0"
+            }
+        ]
+    }
+];
+
+    const uiName = "Track Layout Selector - Note Mode"
+    const uiDescription = "Layout mode, scale, and note mapping"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TrackLayoutSelectorNoteUI />
+
+#### Scale Table
+
+| Index | Scale                   | C   | C#  | D   | Eb  | E   | F   | F#  | G   | Ab  | A   | Bb  | B   |
+| ----- | ----------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1     | Natural Minor           | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 2     | Major                   | X   |     | X   |     | X   | X   |     | X   |     | X   |     | X   |
+| 3     | Dorian                  | X   |     | X   | X   |     | X   |     | X   |     | X   | X   |     |
+| 4     | Phrygian                | X   | X   |     | X   |     | X   |     | X   | X   |     | X   |     |
+| 5     | Mixolydian              | X   |     | X   |     | X   | X   |     | X   |     | X   | X   |     |
+| 6     | Melodic Minor Ascending | X   |     | X   | X   |     | X   |     | X   |     | X   |     | X   |
+| 7     | Harmonic Minor          | X   |     | X   | X   |     | X   |     | X   | X   |     |     | X   |
+| 8     | Bebop Dorian            | X   |     | X   | X   |     | X   |     | X   |     | X   | X   | X   |
+| 9     | Blues                   | X   |     |     | X   |     | X   | X   | X   |     |     | X   |     |
+| 10    | Minor Pentatonic        | X   |     |     | X   |     | X   |     | X   |     |     | X   |     |
+| 11    | Hungarian Minor         | X   |     | X   | X   |     |     | X   | X   | X   |     |     | X   |
+| 12    | Ukrainian Dorian        | X   |     | X   | X   |     |     | X   | X   |     | X   | X   |     |
+| 13    | Marva                   | X   | X   |     |     | X   |     | X   |     |     | X   |     | X   |
+| 14    | Todi                    | X   | X   |     | X   |     |     | X   | X   | X   |     | X   |     |
+| 15    | Whole Tone              | X   |     | X   |     | X   |     | X   |     | X   |     | X   |     |
+| 16    | Chromatic               | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   |
+
+#### Modern Diatonic
+
+When Modern Diatonic mode is enabled, you can selecte a new root note in the existing selected scale.
+
+
+#### Drum Layout
+
+
+export function TrackLayoutSelectorDrumUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector - Note",
+        "desc": "Select a track to edit its layout.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Scale Layout",
+        "desc": "Note Mode with Scale layout.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Chromatic Layout",
+        "desc": "Note Mode with Chromatic layout.",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Piano Layout",
+        "desc": "Note Mode with Piano layout.",
+        "elements": [
+            {
+                "pos": [2, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "Note Mode - Drum Layout",
+        "desc": "Note Mode with Drum layout.",
+        "elements": [
+            {
+                "pos": [3, 1],
+                "color": "#FFA000"
+            }
+        ]
+    },
+    {
+        "name": "Drum Mode Tip Text",
+        "desc": "Drm for Drum Mode",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 4],
+                "size": [2, 4],
+                "color": "#FFA000"
+            },
+            {
+                "pos": [1, 5],
+                "size": [1, 2],
+            },
+            {
+                "pos": [2, 5],
+                "size": [1, 2],
+                "color": "#FFA000"
+            },
+            {
+                "pos": [3, 5],
+                "size": [1, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 5],
+                "size": [3, 3],
+                "color": "#FFA000"
+            },
+            {
+                "pos": [6, 7],
+            },
+        ]
+    },
+];
+
+    const uiName = "Track Layout Selector - Drum Mode"
+    const uiDescription = "Layout mode, scale, and note mapping"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TrackLayoutSelectorDrumUI />
+
+### Track Channel Selector
+
+Select the MIDI output channel for each track.
+
+export function TrackChannelSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "Track Selector",
+        "desc": "Select a track to edit its MIDI channel.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Channel Display",
+        "desc": "Displays the MIDI out channel of the active track.",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 4],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 4],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI Channel Selector",
+        "desc": "Select a MIDI channel (1-16).",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#48C000"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#60FF00"
+            }
+        ]
+    }
+];
+
+    const uiName = "Track Channel Selector"
+    const uiDescription = "Per-track MIDI channel selection"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TrackChannelSelectorUI />
+
+### Sequence Browser
+
+Manage saved sequences: load, copy, clear, and select color for your sequence.
+
+export function SequenceBrowserUI() {
+
+    const uiElements = [
+    {
+        "name": "Slot Grid",
+        "desc": "8x6 grid of sequence slots.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 6],
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "name": "Saved Slots",
+        "desc": "Populated slots show their sequence color.",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "Active Slot",
+        "desc": "Current active sequence\n\nBreath toward white if saved\nBreath toward red if unsaved",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#D0FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Clear",
+        "desc": "Clear modifier for slots.",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Color Picker",
+        "desc": "Pick sequence color.",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [4, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Copy",
+        "desc": "Copy modifier for slots.",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#0080FF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Sequence Browser"
+    const uiDescription = "Load, copy, and clear sequence slots"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequenceBrowserUI />
+
+## Advance Tips
+- You can copy or share your sequence by copy the sequence file using the USB Storage Mode in [System Setting](/docs/MatrixOS/SystemSettings). The files are located `Drive:\MatrixOS\AppData\203 Systems-Sequencer\sequences\#\`
+- There is also a prev folder for each sequence, they are your previously saved files. if you accidently over wrote your sequence, you can revert them by using those files.
