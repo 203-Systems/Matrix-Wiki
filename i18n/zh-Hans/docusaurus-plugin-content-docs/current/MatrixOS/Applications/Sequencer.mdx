@@ -1,0 +1,4011 @@
+---
+sidebar_position: 2.1
+---
+
+import MystrixVisualizer from "@site/src/components/MystrixVisualizer/MystrixVisualizer";
+
+# 音序器应用
+
+Matrix OS 的强大音序器应用。强烈建议先了解[音符应用](/docs/MatrixOS/Applications/Note)。
+
+:::warning 预览版本
+这里的文档尚不完整，可能存在事实错误。Matrix OS 3.2 仍未正式发布，系统内容也可能会变化。
+:::
+
+## 核心概念
+
+- 轨道：独立的通道，拥有各自的片段、Pattern、颜色、通道和音符布局。本音序器共有 8 条轨道。 
+- 片段：每条轨道的 Pattern 容器。片段可被启动或切换。本音序器每条轨道最多 14 个片段。
+- Pattern：由步组成的网格。每个 Pattern 有独立的长度。本音序器每个片段包含 16 个 Pattern。
+- 步：Pattern 中的时间片。一个步可包含多个事件。本音序器每个 Pattern 最多 16 步，但也支持微步。
+
+## 音序器视图
+
+默认的音序器视图布局。按住或锁定 Shift 时，Pattern 选择器会覆盖音符垫，消息显示也会覆盖同一区域用于操作反馈。
+
+export function SequencerView() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "用于编辑 Pattern 的步进网格。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "音符垫",
+        "desc": "音符输入区域。布局取决于轨道模式（Scale、Chromatic、Piano、Drum）。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 4],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "进入片段启动器。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "音序器视图"
+    const uiDescription = "用于轨道、Pattern 与音符编辑的主视图"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerView/>
+
+### 轨道选择
+
+- 点击轨道以选中它。选择不同轨道会清除步选择与正在发声的音符。
+- 点击当前轨道可标记为“当前轨道已选中”（影响控制栏行为）。
+- 清除 + 点击轨道会清空该轨道在当前片段中的所有步。
+
+### Pattern 步进区
+
+- 默认视图为 8x2（16 步）。双 Pattern 模式会扩展为 8x4（同时显示两个 Pattern）。
+- 点按步以选中，松开即取消选中。
+- 当音符垫上已选中音符时，点按步可在该步添加或移除这些音符。
+- 点按步可试听其音符（Note On）；松开停止试听（Note Off）。
+- 清除 + 点按步可清除该步中的事件。
+- 复制模式：
+  - 点按含事件的步以设置复制源。
+  - 点按另一步将事件复制到该步（支持跨 Pattern 复制）。
+- Shift + 点按含事件的步可打开步详情菜单（仅在该轨道未播放时）。
+
+### 音符垫
+
+- 用于输入与试听音符。
+- 布局模式：Scale、Chromatic、Piano、Drum。
+- 在支持且启用时提供力度感应输入。
+- 在音序器视图中，若已选择步，点按音符会在所选步上切换这些音符。
+- 若音序器正在播放且录音已开启，输入的音符会直接被录入。
+
+### Shift 修饰
+当按住任一八度键时会进入此视图（按住时作为 Shift）。
+
+- 按住 Shift：预览 Pattern 选择器
+- 同时点按两个 Shift：切换是否启用 Pattern 选择器
+- Shift + 步：[步详情菜单](#step-detail-menu)
+- Shift + 播放（控制栏 x1）：继续播放
+- Shift + 复制（控制栏 x6）：切换双 Pattern 视图
+
+export function ShiftModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "用于编辑 Pattern 的步进网格。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 选择器",
+        "desc": "在片段中选择或添加 Pattern。\n\n如需保持此视图常驻，同时点按两个八度键。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+    {
+        "name": "已创建 Pattern",
+        "desc": "切换到该 Pattern 进行编辑。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "当前 Pattern",
+        "desc": "当前视图中的 Pattern。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#C0FFFF"
+            },
+        ]
+    },
+    {
+        "name": "添加 Pattern",
+        "desc": "创建新的 Pattern。",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "Shift 启用指示",
+        "desc": "Shift 启用时的视觉动画。",
+        "elements": [
+
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#F0FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [1, 2],
+                "color": "#F0FFFF"
+            },
+            {
+                "pos": [2, 5],
+                "size": [1, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [1, 2],
+                "color": "#A0FFFF"
+            },
+            {
+                "pos": [4, 5],
+                "size": [1, 2],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [5, 5],
+                "size": [1, 2],
+                "color": "#50FFFF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+
+        ]
+    },
+    {
+        "name": "继续播放",
+        "desc": "从上次停止位置继续播放。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF8000"
+            }
+        ]
+    },
+    {
+        "name": "双 Pattern 视图",
+        "desc": "切换当前轨道的双 Pattern 模式。",
+        "link": "#two-pattern-view",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Shift 修饰"
+    const uiDescription = "Shift 叠层与 Pattern 选择器锁定"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ShiftModifierUI />
+
+### Pattern 选择器
+
+- 当 Pattern 选择器激活时显示（Shift 按住或锁定）。
+- 点按 Pattern 槽以选择或切换 Pattern（播放时禁用切换）。
+- 点按“添加”槽创建新的 Pattern。
+- 清除 + 点按 Pattern 可删除。
+- 复制模式：
+  - 点按 Pattern 以设置复制源。
+  - 点按另一 Pattern 进行复制。
+- 按住 Pattern 进入长度调整模式，然后点按长度（1-16）设置该 Pattern 的长度。
+
+export function PatternSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "用于编辑 Pattern 的步进网格。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 选择器",
+        "desc": "在片段中选择或添加 Pattern。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+   {
+        "name": "已创建 Pattern",
+        "desc": "切换到该 Pattern 进行编辑。按住可调整 Pattern 长度。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "当前 Pattern",
+        "desc": "当前视图中的 Pattern。按住可调整 Pattern 长度。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#C0FFFF"
+            },
+        ]
+    },
+    {
+        "name": "添加 Pattern",
+        "desc": "创建新的 Pattern。",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "音符垫",
+        "desc": "音符输入区域。布局取决于轨道模式（Scale、Chromatic、Piano、Drum）。",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "进入片段启动器。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Pattern 选择器"
+    const uiDescription = "Pattern 选择与长度调整叠层"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<PatternSelectorUI />
+
+#### Pattern 长度调整
+
+按住任意 Pattern 以调整其长度。
+
+export function PatternLengthModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "用于编辑 Pattern 的步进网格。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 选择器",
+        "desc": "在片段中选择或添加 Pattern。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+   {
+        "name": "已创建 Pattern",
+        "desc": "切换到该 Pattern 进行编辑。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "已选中 Pattern",
+        "desc": "按住后选中的 Pattern",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "添加 Pattern",
+        "desc": "创建新的 Pattern。",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "Pattern 长度调整",
+        "desc": "选择 Pattern 的长度。",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [8, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "进入片段启动器。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "Pattern 长度调整"
+    const uiDescription = "调整 Pattern 长度。按住步即可启用。"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<PatternLengthModifierUI />
+
+### 清除修饰
+
+- 清除 + 当前轨道：清除当前 Pattern
+- 清除 + 步：清除所选步
+- 清除 + Pattern：清除所选 Pattern
+- 清除 + 录音：清除上一次录音会话
+
+export function ClearModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "步进网格，但含事件的步会高亮以便清除。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "清除启用指示",
+        "desc": "提示清除修饰已生效。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 3],
+                "size": [3, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 2],
+            },
+            {
+                "pos": [3, 3],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 6],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 3],
+                "size": [3, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [6, 4],
+            },
+            {
+                "pos": [7, 5],
+            },
+            {
+                "pos": [6, 6],
+            },
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "撤销上次录音",
+        "desc": "用于清除上次录音段。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "进入片段启动器。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "音序器视图 - 清除"
+    const uiDescription = "用于步、Pattern 与片段的清除操作"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ClearModifierUI />
+
+### 复制修饰
+
+export function CopyModifierUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。复制修饰会作用于该轨道。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "步进网格，但含事件的步会高亮以便选择复制源。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "复制启用指示",
+        "desc": "提示复制修饰已生效。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 3],
+                "size": [3, 4],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 2],
+            },
+            {
+                "pos": [3, 3],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 3],
+                "size": [1, 2],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 3],
+                "size": [1, 2],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [6, 5],
+                "size": [1, 2],
+                "color": "#0080FF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 2],
+                "color": "#0080FF"
+            },
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "进入片段启动器。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "音序器视图 - 复制"
+    const uiDescription = "复制源与目标的选择"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<CopyModifierUI />
+
+### 步已选中
+
+export function SequencerStepSelected() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "用于编辑 Pattern 的步进网格。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+        {
+        "name": "已选中步",
+        "desc": "按住后选中的步。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "音符垫",
+        "desc": "音符输入区域。布局取决于轨道模式（Scale、Chromatic、Piano、Drum）。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 3],
+                "size": [6, 4],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 4],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "已选中音符",
+        "desc": "步内存在的音符。点按可移除音符。",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#00FF00"
+            },
+            {
+                "pos": [4, 4],
+                "color": "#00FF00"
+            },
+        ]
+    },
+    {
+        "name": "从此步播放",
+        "desc": "从此步开始播放该轨道。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "量化",
+        "desc": "量化当前 Pattern。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "步八度 -",
+        "desc": "将所选步下移一个八度。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "步八度 +",
+        "desc": "将所选步上移一个八度。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "音序器视图 - 步已选中"
+    const uiDescription = "任一步被选中后的音序器视图。"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerStepSelected/>
+
+### Pattern 已选中
+
+export function SequencerPatternSelected() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区",
+        "desc": "用于编辑 Pattern 的步进网格。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "Pattern 选择器",
+        "desc": "在片段中选择或添加 Pattern。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+            },
+        ]
+    },
+   {
+        "name": "已创建 Pattern",
+        "desc": "切换到该 Pattern 进行编辑。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [3, 1],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "已选中 Pattern",
+        "desc": "按住后选中的 Pattern",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "添加 Pattern",
+        "desc": "创建新的 Pattern。",
+        "elements": [
+            {
+                "pos": [3, 3],
+                "color": "#008080"
+            },
+        ]
+    },
+    {
+        "name": "音符垫",
+        "desc": "音符输入区域。布局取决于轨道模式（Scale、Chromatic、Piano、Drum）。",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "向左微移",
+        "desc": "将 Pattern 向左微移 1 步（移出的步会回到末尾）。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "向右微移",
+        "desc": "将 Pattern 向右微移 1 步（移出的步会回到开头）。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 八度 -",
+        "desc": "将所选 Pattern 下移一个八度。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 八度 +",
+        "desc": "将所选 Pattern 上移一个八度。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+];
+
+    const uiName = "音序器视图 - Pattern 已选中"
+    const uiDescription = "任一 Pattern 被选中后的音序器视图。"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerPatternSelected/>
+
+### 双 Pattern 视图
+将 Pattern 步进区扩展为 8x4，以便同时查看两个 Pattern。
+
+export function SequencerTwoPatternView() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择当前轨道。轨道选择会影响 Pattern 步进区、音符垫和控制栏的行为。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 步进区 1",
+        "desc": "用于编辑 Pattern 的步进网格。对应奇数编号的 Pattern。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 2],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+        {
+        "name": "Pattern 步进区 2",
+        "desc": "用于编辑 Pattern 的步进网格。对应偶数编号的 Pattern。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+                "color": "#008080"
+            },
+            {
+                "pos": [0, 3],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 3],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [4, 3],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [7, 3],
+                "size": [1, 1],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [3, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [5, 4],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [6, 4],
+                "color": "#00FFFF"
+            },
+        ]
+    },
+    {
+        "name": "音符垫",
+        "desc": "音符输入区域。布局取决于轨道模式（Scale、Chromatic、Piano、Drum）。",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 5],
+                "size": [6, 2],
+                "color": "#D0FFFF"
+            },
+            {
+                "pos": [7, 5],
+                "size": [1, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "进入片段启动器。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于步、Pattern、片段或轨道的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于步、Pattern 或片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "八度 -（Shift）",
+        "desc": "八度降低按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "八度 +（Shift）",
+        "desc": "八度升高按钮，按住时等同于 Shift。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "音序器视图 - 双 Pattern 视图"
+    const uiDescription = "启用双 Pattern 视图的主音序器视图"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequencerTwoPatternView/>
+
+## 步详情菜单
+
+- 事件选择行（Y=0）：在该步内选择事件。音符事件以音符颜色点亮，触后事件使用不同颜色。
+- 微步行（Y=1，X0-5）：将所选事件移动到六个微步槽之一。
+- 删除（Y=1，X7）：移除所选事件。
+- 音符事件配置：
+  - 切换音符与触后事件。
+  - 长度选择器（两行）：点按设置，再次点按可循环细分长度。
+  - 力度选择器（两行）：点按设置，再次点按可循环细分力度。
+- CC 事件配置已存在，但目前仍是占位（暂无 UI 行为）。
+
+export function StepDetailMenu() {
+
+    const uiElements = [
+    {
+        "name": "事件选择器",
+        "desc": "已选步中的事件行。当前选中的事件以白色高亮。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFFFC0"
+            },
+            {
+                "pos": [1, 0],
+                "size": [2, 1],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "微步槽",
+        "desc": "Move the selected event within the step.\n\nPosition will be purple if step isn't perfectly aligned (from live recording)",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [6, 1],
+                "color": "#C0C0C0"
+            },
+            {
+                "pos": [2, 1],
+                "color": "#FFFFFF"
+            },
+        ]
+    },
+    {
+        "name": "删除事件",
+        "desc": "移除所选事件。",
+        "elements": [
+            {
+                "pos": [7, 1],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "音符/触后切换",
+        "desc": "在 Note On 与触后事件之间切换。",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "长度选择器",
+        "desc": "Set note length in steps.\n\nTap the end of the selected bar to change the micro length.",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "size": [8, 2],
+                "color": "#808080"
+            },
+            {
+                "pos": [0, 3],
+                "size": [4, 1],
+                "color": "#A000FF"
+            }
+        ]
+    },
+    {
+        "name": "力度选择器",
+        "desc": "Set velocity in 16 slots.\n\nTap the end of the selected bar to change the micro velocity.",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "size": [8, 2],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "片段启动器已激活。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除（未使用）",
+        "desc": "用于片段的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制（未使用）",
+        "desc": "用于片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "返回音序器视图",
+        "desc": "返回音序器视图。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "size": [2, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "步详情菜单"
+    const uiDescription = "用于音符与时序的逐步事件编辑器"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<StepDetailMenu />
+
+## 片段启动器
+
+用于选择片段播放的网格。类似 Ableton Live 的 Session 模式。
+
+- 普通模式：横向 8 条轨道，纵向 7 个片段。片段分页选择第 1 或第 2 页。
+- 宽片段模式：横向 4 条轨道，每条轨道占 2 列。
+
+未播放时：
+- 点按片段以选中。
+- 点按空槽创建片段。
+- Shift + 片段将仅播放该片段。
+- 清除 + 片段会删除它。
+- 复制模式：选择源片段，然后点按目标进行复制。
+
+播放中：
+- 点按片段将其排队。
+- 点按空槽以排队停止该轨道。
+- 双击片段可启动整行。
+
+
+export function ClipLauncherUI() {
+
+    const uiElements = [
+    {
+        "name": "片段网格",
+        "desc": "每轨 8x7 的片段启动器网格。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [1, 8],
+                "color": "#006060"
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 8],
+                "color": "#000060"
+            },
+            {
+                "pos": [2, 0],
+                "size": [1, 8],
+                "color": "#300060"
+            },
+            {
+                "pos": [3, 0],
+                "size": [1, 8],
+                "color": "#600060"
+            },
+            {
+                "pos": [4, 0],
+                "size": [1, 8],
+                "color": "#600030"
+            },
+            {
+                "pos": [5, 0],
+                "size": [1, 8],
+                "color": "#601800"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 8], 
+                "color": "#606000"
+            },
+            {
+                "pos": [7, 0],
+                "size": [1, 8], 
+                "color": "#006018"
+            },
+        ]
+    },
+    {
+        "name": "已有片段",
+        "desc": "片段使用其轨道颜色。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#00FFFF"
+            },
+
+        ]
+    },
+    {
+        "name": "当前片段",
+        "desc": "当前正在编辑的片段。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "片段启动器已激活。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于片段的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "片段页 1",
+        "desc": "选择片段页 1（片段 1 ~ 7）。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "片段页 2",
+        "desc": "选择片段页 2（片段 8 ~ 14）。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#808080"
+            }
+        ]
+    }
+];
+
+    const uiName = "片段启动器"
+    const uiDescription = "会话视图片段网格"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ClipLauncherUI />
+
+### 片段启动器 Copy Modifier
+{/* <! TO CODEX  MAKE UI HERE> */}
+
+### 片段启动器 Clear Modifier
+{/* <! TO CODEX  MAKE UI HERE> */}
+
+### 宽模式
+
+同时点按分页键以在宽模式与普通模式间切换。
+
+如果不需要操作全部 8 条轨道，可使用该模式同时显示更多片段。
+
+export function ClipLauncherWideUI() {
+
+    const uiElements = [
+    {
+        "name": "片段网格",
+        "desc": "每轨 8x7 的片段启动器网格，每条轨道占 2 列。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [2, 8],
+                "color": "#006060"
+            },
+            {
+                "pos": [2, 0],
+                "size": [2, 8],
+                "color": "#000060"
+            },
+            {
+                "pos": [4, 0],
+                "size": [2, 8],
+                "color": "#300060"
+            },
+            {
+                "pos": [6, 0],
+                "size": [2, 8],
+                "color": "#600060"
+            }
+        ]
+    },
+    {
+        "name": "已有片段",
+        "desc": "片段使用其轨道颜色。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [0, 1],
+                "color": "#00FFFF"
+            },
+
+        ]
+    },
+    {
+        "name": "当前片段",
+        "desc": "当前正在编辑的片段。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "播放或停止序列。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "录音",
+        "desc": "切换录音模式。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF0000"
+            }
+        ]
+    },
+    {
+        "name": "会话视图",
+        "desc": "片段启动器已激活。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "混音器视图",
+        "desc": "进入混音器。",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#40FF00"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于片段的清除修饰。",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于片段的复制修饰。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#0080FF"
+            }
+        ]
+    },
+    {
+        "name": "片段页 1",
+        "desc": "选择片段页 1（轨道 1 ~ 4）。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "片段页 2",
+        "desc": "选择片段页 2（轨道 5 ~ 8）。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#808080"
+            }
+        ]
+    }
+];
+
+    const uiName = "片段启动器 - 宽模式"
+    const uiDescription = "会话视图片段网格"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ClipLauncherWideUI />
+
+## 混音器视图
+
+- 每轨 3 行：静音（Y=0）、独奏（Y=1）、录音（Y=2）。
+- 任何轨道处于独奏时，静音会被禁用。
+- 按住可显示该行标签；点按可切换状态。
+
+export function MixerViewUI() {
+
+    const uiElements = [
+    {
+        "name": "静音行",
+        "desc": "轨道静音状态（轨道颜色）。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "独奏行",
+        "desc": "独奏开关（蓝色）。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 1],
+                "color": "#0060A0"
+            },
+        ]
+    },
+    {
+        "name": "录音行",
+        "desc": "每轨录音启用（红色）。",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "size": [8, 1],
+                "color": "#FF0000"
+            }
+        ]
+    }
+];
+
+    const uiName = "混音器视图"
+    const uiDescription = "每轨静音、独奏与录音控制"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<MixerViewUI />
+
+## 操作菜单
+
+左侧 4 个选项为序列全局配置，右侧 4 个为轨道本地配置。
+
+export function ActionMenuUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择要进行轨道设置的轨道。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#80FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "BPM 选择器",
+        "desc": "打开 BPM 选择器。",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "摇摆选择器",
+        "desc": "打开摇摆选择器。",
+        "elements": [
+            {
+                "pos": [0, 3],
+                "color": "#FFA000"
+            }
+        ]
+    },
+    {
+        "name": "拍号选择器",
+        "desc": "打开拍号选择器。",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 长度选择器",
+        "desc": "打开 Pattern 长度选择器。",
+        "elements": [
+            {
+                "pos": [0, 5],
+                "color": "#00A0FF"
+            }
+        ]
+    },
+    {
+        "name": "轨道颜色选择器",
+        "desc": "选择轨道颜色。",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "轨道布局选择器",
+        "desc": "打开轨道布局选择器。",
+        "elements": [
+            {
+                "pos": [7, 3],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "轨道通道选择器",
+        "desc": "打开轨道通道选择器。",
+        "elements": [
+            {
+                "pos": [7, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "力度感应",
+        "desc": "在支持时切换力度感应。",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#00FFB0"
+            }
+        ]
+    },
+    {
+        "name": "保存",
+        "desc": "保存序列到存储。\n双击确认保存。\n\n方块：已保存\n箭头：未保存\n红叉：无 SD 卡",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "size": [4, 4],
+                "color": "#00FF40"
+            },
+            {
+                "pos": [3, 3],
+                "size": [2, 2],
+            }
+        ]
+    },
+    {
+        "name": "序列浏览器",
+        "desc": "打开序列浏览器。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [4, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "播放",
+        "desc": "在菜单中播放/停止。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#00FF00"
+            }
+        ]
+    },
+    {
+        "name": "系统设置",
+        "desc": "打开 MatrixOS 系统设置。",
+        "link": "/docs/MatrixOS/SystemSettings",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#FFFFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "操作菜单"
+    const uiDescription = "音序器设置与工具"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<ActionMenuUI />
+
+### 保存序列
+中心图标有 3 种状态：
+- 方块：已保存
+- 向下箭头：未保存的更改
+- 红叉：未安装 SD 卡；参见[安装 Micro SD 卡](/docs/Mystrix/InstallMicroSD)。
+
+要保存序列，请双击中心箭头按钮。
+
+### BPM 选择器
+
+使用粗调按钮调整速度，并提供重置快捷键。 <br/>
+点按数值显示可手动敲入 BPM。 <br/>
+也可在此切换时钟输出。
+
+export function BPMSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "BPM 显示",
+        "desc": "显示 BPM 标签与数值。\n\n点按数值显示可手动敲入 BPM。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4]
+            },
+            {
+                "pos": [1, 0],
+                "size": [1, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [3, 0],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 1]
+            },
+            {
+                "pos": [4, 2]
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2]
+            }
+        ]
+    },
+    {
+        "name": "BPM 调整",
+        "desc": "BPM 粗调行。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": [
+                    "#FF0000",
+                    "#D80000",
+                    "#B80000",
+                    "#A00000",
+                    "#A00000",
+                    "#B80000",
+                    "#D80000",
+                    "#FF0000"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "时钟输出",
+        "desc": "切换时钟输出。",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "重置 BPM",
+        "desc": "将 BPM 重置为默认值。",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+];
+
+    const uiName = "BPM 选择器"
+    const uiDescription = "敲入速度、调整与时钟输出"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<BPMSelectorUI />
+
+### 摇摆选择器
+
+使用细微调整按钮微调摇摆，并在需要时重置。
+
+export function SwingSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "摇摆显示",
+        "desc": "显示当前摇摆百分比（此例为 50%）。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 4],
+            },
+            {
+                "pos": [3, 0],
+                "size": [2, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1]
+            },
+            {
+                "pos": [3, 2]
+            },
+            {
+                "pos": [5, 0],
+                "size": [3, 4],
+                "color": "#FF8000"
+            },
+            {
+                "pos": [6, 1],
+                "size": [1, 2]
+            }
+        ]
+    },
+    {
+        "name": "摇摆调整",
+        "desc": "摇摆微调行。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "size": [8, 1],
+                "color": [
+                    "#FF8000",
+                    "#D86800",
+                    "#B85800",
+                    "#A05000",
+                    "#A05000",
+                    "#B85800",
+                    "#D86800",
+                    "#FF8000"
+                ]
+            }
+        ]
+    },
+    {
+        "name": "重置摇摆",
+        "desc": "将摇摆重置为默认值。",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#FF0000"
+            }
+        ]
+    }
+];
+
+    const uiName = "摇摆选择器"
+    const uiDescription = "摇摆微调与重置"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SwingSelectorUI />
+
+### 拍号选择器
+
+使用专用增减键设置每小节拍数与拍单位。<br/>
+这会影响片段启动器中的切换行为。
+
+export function TimeSignatureSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "拍号 - 拍数",
+        "desc": "显示每小节拍数",
+        "elements": [
+            {
+                "pos": [1, 0],
+                "size": [1, 3],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 1],
+                "size": [1, 3],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [2, 2],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "拍号 - 拍单位",
+        "desc": "显示拍单位",
+        "elements": [
+            {
+                "pos": [5, 0],
+                "size": [1, 3],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 3],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [6, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "拍数 -1",
+        "desc": "减少每小节拍数。",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "拍数 +1",
+        "desc": "增加每小节拍数。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "拍单位 -1",
+        "desc": "减小拍单位。",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "拍单位 +1",
+        "desc": "增大拍单位。",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#00FFFF"
+            }
+        ]
+    }
+];
+
+    const uiName = "拍号选择器"
+    const uiDescription = "每小节拍数与拍单位控制"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TimeSignatureSelectorUI />
+
+### Pattern 长度选择器
+
+设置默认 Pattern 长度，并可选择同步更新空 Pattern。
+
+export function PatternLengthSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "Pattern 长度显示",
+        "desc": "显示当前 Pattern 长度。",
+        "elements": [
+            {
+                "pos": [4, 0],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [6, 0],
+                "size": [1, 4],
+                "color": "#00A0FF"
+            },
+            {
+                "pos": [7, 2],
+                "size": [1, 2],
+                "color": "#00A0FF"
+            }
+        ]
+    },
+    {
+        "name": "Pattern 长度网格",
+        "desc": "从 1-64 步选择长度。",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#00A0FF"
+            }
+        ]
+    },
+    {
+        "name": "更新空 Pattern",
+        "desc": "将长度应用到空 Pattern。",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#80FF00"
+            }
+        ]
+    }
+];
+
+    const uiName = "Pattern 长度选择器"
+    const uiDescription = "全局 Pattern 长度与更新"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<PatternLengthSelectorUI />
+
+### 轨道布局选择器
+
+为当前轨道选择音符布局模式、音阶行为与音符映射工具。
+
+#### 音符布局
+
+布局差异可参考[音符应用](/docs/MatrixOS/Applications/Note)。
+
+export function TrackLayoutSelectorNoteUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择轨道以编辑其布局。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Scale 布局",
+        "desc": "音符模式下的 Scale 布局。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Chromatic 布局",
+        "desc": "音符模式下的 Chromatic 布局。",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Piano 布局",
+        "desc": "音符模式下的 Piano 布局。",
+        "elements": [
+            {
+                "pos": [2, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Drum 布局",
+        "desc": "音符模式下的 Drum 布局。",
+        "elements": [
+            {
+                "pos": [3, 1],
+                "color": "#A06000"
+            }
+        ]
+    },
+    {
+        "name": "音符映射测试",
+        "desc": "切换音符映射测试。",
+        "elements": [
+            {
+                "pos": [0, 2],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "强制音阶",
+        "desc": "强制音符落在所选音阶内。",
+        "elements": [
+            {
+                "pos": [1, 2],
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    {
+        "name": "自定义音阶",
+        "desc": "启用自定义音阶编辑。",
+        "elements": [
+            {
+                "pos": [2, 2],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "应用到音符轨道",
+        "desc": "将布局设置应用到其他音符轨道。",
+        "elements": [
+            {
+                "pos": [7, 2],
+                "color": "#80FF00"
+            }
+        ]
+    },
+    {
+        "name": "音阶显示与根音选择",
+        "desc": "选择当前音符垫布局的音阶与根音",
+        "elements": [
+            {
+                "pos": [1, 5],
+                "size": [6, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [1, 4],
+                "size": [2, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [4, 4],
+                "size": [3, 1],
+                "color": "#C000C0"
+            },
+            {
+                "pos": [0, 5],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [1, 5],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 4],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [3, 5],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [5, 4],
+                "size": [2, 1],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "现代自然音阶切换",
+        "desc": "在经典与现代自然音阶模式间切换（影响根音偏移行为）。",
+        "link": "#modern-diatonic",
+        "elements": [
+            {
+                "pos": [7, 5],
+                "color": "#8000FF"
+            }
+        ]
+    },
+    {
+        "name": "自然小调",
+        "desc": "使用自然小调音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "color": "#FF00FF"
+            }
+        ]
+    },
+    {
+        "name": "大调",
+        "desc": "使用大调音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "多利亚",
+        "desc": "使用多利亚音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "弗里几亚",
+        "desc": "使用弗里几亚音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "混合利底亚",
+        "desc": "使用混合利底亚音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "旋律小调（上行）",
+        "desc": "使用旋律小调（上行）音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "和声小调",
+        "desc": "使用和声小调音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "Bebop 多利亚",
+        "desc": "使用 Bebop 多利亚音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 6],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "布鲁斯",
+        "desc": "使用布鲁斯音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "小调五声音阶",
+        "desc": "使用小调五声音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [1, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "匈牙利小调",
+        "desc": "使用匈牙利小调音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "乌克兰多利亚",
+        "desc": "使用乌克兰多利亚音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [3, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "马瓦",
+        "desc": "使用马瓦音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [4, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "托迪",
+        "desc": "使用托迪音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [5, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "全音",
+        "desc": "使用全音音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [6, 7],
+                "color": "#C000C0"
+            }
+        ]
+    },
+    {
+        "name": "半音阶",
+        "desc": "使用半音阶",
+        "link": "#scale-table",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#C000C0"
+            }
+        ]
+    }
+];
+
+    const uiName = "轨道布局选择器 - 音符模式"
+    const uiDescription = "布局模式、音阶与音符映射"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TrackLayoutSelectorNoteUI />
+
+#### 音阶表
+
+| 序号 | 音阶                   | C   | C#  | D   | Eb  | E   | F   | F#  | G   | Ab  | A   | Bb  | B   |
+| ----- | ----------------------- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1     | 自然小调           | X   |     | X   | X   |     | X   |     | X   | X   |     | X   |     |
+| 2     | 大调                   | X   |     | X   |     | X   | X   |     | X   |     | X   |     | X   |
+| 3     | 多利亚                  | X   |     | X   | X   |     | X   |     | X   |     | X   | X   |     |
+| 4     | 弗里几亚                | X   | X   |     | X   |     | X   |     | X   | X   |     | X   |     |
+| 5     | 混合利底亚              | X   |     | X   |     | X   | X   |     | X   |     | X   | X   |     |
+| 6     | 旋律小调（上行） | X   |     | X   | X   |     | X   |     | X   |     | X   |     | X   |
+| 7     | 和声小调          | X   |     | X   | X   |     | X   |     | X   | X   |     |     | X   |
+| 8     | Bebop 多利亚            | X   |     | X   | X   |     | X   |     | X   |     | X   | X   | X   |
+| 9     | 布鲁斯                   | X   |     |     | X   |     | X   | X   | X   |     |     | X   |     |
+| 10    | 小调五声音阶        | X   |     |     | X   |     | X   |     | X   |     |     | X   |     |
+| 11    | 匈牙利小调         | X   |     | X   | X   |     |     | X   | X   | X   |     |     | X   |
+| 12    | 乌克兰多利亚        | X   |     | X   | X   |     |     | X   | X   |     | X   | X   |     |
+| 13    | 马瓦                   | X   | X   |     |     | X   |     | X   |     |     | X   |     | X   |
+| 14    | 托迪                    | X   | X   |     | X   |     |     | X   | X   | X   |     | X   |     |
+| 15    | 全音              | X   |     | X   |     | X   |     | X   |     | X   |     | X   |     |
+| 16    | 半音阶               | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   | X   |
+
+#### 现代自然音阶
+
+启用现代自然音阶模式后，可以在当前已选音阶中选择新的根音。
+
+
+#### 鼓机布局
+
+
+export function TrackLayoutSelectorDrumUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择 - 音符",
+        "desc": "选择轨道以编辑其布局。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Scale 布局",
+        "desc": "音符模式下的 Scale 布局。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Chromatic 布局",
+        "desc": "音符模式下的 Chromatic 布局。",
+        "elements": [
+            {
+                "pos": [1, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Piano 布局",
+        "desc": "音符模式下的 Piano 布局。",
+        "elements": [
+            {
+                "pos": [2, 1],
+                "color": "#A0A000"
+            }
+        ]
+    },
+    {
+        "name": "音符模式 - Drum 布局",
+        "desc": "音符模式下的 Drum 布局。",
+        "elements": [
+            {
+                "pos": [3, 1],
+                "color": "#FFA000"
+            }
+        ]
+    },
+    {
+        "name": "鼓机模式提示文本",
+        "desc": "Drm 表示鼓机模式。",
+        "elements": [
+            {
+                "pos": [0, 4],
+                "size": [8, 4],
+            },
+            {
+                "pos": [0, 4],
+                "size": [2, 4],
+                "color": "#FFA000"
+            },
+            {
+                "pos": [1, 5],
+                "size": [1, 2],
+            },
+            {
+                "pos": [2, 5],
+                "size": [1, 2],
+                "color": "#FFA000"
+            },
+            {
+                "pos": [3, 5],
+                "size": [1, 3],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 5],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [5, 5],
+                "size": [3, 3],
+                "color": "#FFA000"
+            },
+            {
+                "pos": [6, 7],
+            },
+        ]
+    },
+];
+
+    const uiName = "轨道布局选择器 - 鼓机模式"
+    const uiDescription = "布局模式、音阶与音符映射"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TrackLayoutSelectorDrumUI />
+
+### 轨道通道选择器
+
+为每条轨道选择 MIDI 输出通道。
+
+export function TrackChannelSelectorUI() {
+
+    const uiElements = [
+    {
+        "name": "轨道选择",
+        "desc": "选择轨道以编辑其 MIDI 通道。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#0000FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#8000FF"
+            },
+            {
+                "pos": [3, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [4, 0],
+                "color": "#FF0080"
+            },
+            {
+                "pos": [5, 0],
+                "color": "#FF4000"
+            },
+            {
+                "pos": [6, 0],
+                "color": "#FFFF00"
+            },
+            {
+                "pos": [7, 0],
+                "color": "#00FF40"
+            }
+        ]
+    },
+    {
+        "name": "MIDI 通道显示",
+        "desc": "显示当前轨道的 MIDI 输出通道。",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "size": [8, 4],
+                "color": undefined
+            },
+            {
+                "pos": [0, 1],
+                "size": [1, 4],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 1],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [1, 4],
+                "color": "#60FF00"
+            },
+            {
+                "pos": [2, 1],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [3, 2],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [4, 1],
+                "size": [1, 4],
+                "color": "#FFFFFF"
+            },
+            {
+                "pos": [7, 1],
+                "size": [1, 4],
+                "color": "#60FF00"
+            }
+        ]
+    },
+    {
+        "name": "MIDI 通道选择器",
+        "desc": "选择 MIDI 通道（1-16）。",
+        "elements": [
+            {
+                "pos": [0, 6],
+                "size": [8, 2],
+                "color": "#48C000"
+            },
+            {
+                "pos": [0, 6],
+                "color": "#60FF00"
+            }
+        ]
+    }
+];
+
+    const uiName = "轨道通道选择器"
+    const uiDescription = "每轨 MIDI 通道选择"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<TrackChannelSelectorUI />
+
+### 序列浏览器
+
+管理已保存序列：加载、复制、清除，并为序列选择颜色。
+
+export function SequenceBrowserUI() {
+
+    const uiElements = [
+    {
+        "name": "槽位网格",
+        "desc": "8x6 序列槽位网格。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "size": [8, 6],
+                "color": "#808080"
+            }
+        ]
+    },
+    {
+        "name": "已保存槽位",
+        "desc": "已有序列的槽位显示其颜色。",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#00FFFF"
+            },
+            {
+                "pos": [1, 0],
+                "color": "#FF00FF"
+            },
+            {
+                "pos": [2, 0],
+                "color": "#FFFF00"
+            }
+        ]
+    },
+    {
+        "name": "当前槽位",
+        "desc": "当前激活的序列\n\n已保存时向白色呼吸\n未保存时向红色呼吸",
+        "elements": [
+            {
+                "pos": [0, 0],
+                "color": "#D0FFFF"
+            }
+        ]
+    },
+    {
+        "name": "清除",
+        "desc": "用于槽位的清除修饰。",
+        "elements": [
+            {
+                "pos": [0, 7],
+                "color": "#FF0080"
+            }
+        ]
+    },
+    {
+        "name": "颜色选择",
+        "desc": "选择序列颜色。",
+        "elements": [
+            {
+                "pos": [2, 7],
+                "size": [4, 1],
+                "color": "#00FFFF"
+            }
+        ]
+    },
+    {
+        "name": "复制",
+        "desc": "用于槽位的复制修饰。",
+        "elements": [
+            {
+                "pos": [7, 7],
+                "color": "#0080FF"
+            }
+        ]
+    }
+];
+
+    const uiName = "序列浏览器"
+    const uiDescription = "加载、复制与清除序列槽位"
+    return <MystrixVisualizer
+    uiName = {uiName}
+    uiDescription = {uiDescription}
+    uiElements = {uiElements}
+    />
+
+}
+
+<SequenceBrowserUI />
+
+## 进阶提示
+- 你可以在[系统设置](/docs/MatrixOS/SystemSettings)中使用 USB 存储模式拷贝序列文件，从而复制或分享序列。文件位于 `Drive:\MatrixOS\AppData\203 Systems-Sequencer\sequences\#\`
+- 每个序列还有一个 prev 文件夹，里面是之前保存的文件。如果不小心覆盖了序列，可用这些文件进行恢复。
