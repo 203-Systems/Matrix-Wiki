@@ -19,9 +19,9 @@ Matrix OS 的强大音序器应用。强烈建议先了解[音符应用](/docs/M
 - Pattern：由步组成的网格。每个 Pattern 有独立的长度。本音序器每个片段包含 16 个 Pattern。
 - 步：Pattern 中的时间片。一个步可包含多个事件。本音序器每个 Pattern 最多 16 步，但也支持微步。
 
-## 音序器视图
+## 音序器界面
 
-默认的音序器视图布局。按住或锁定 Shift 时，Pattern 选择器会覆盖音符垫，消息显示也会覆盖同一区域用于操作反馈。
+默认的音序器界面布局。按住或锁定 Shift 时，Pattern 选择器会覆盖音符垫，消息显示也会覆盖同一区域用于操作反馈。
 
 export function SequencerView() {
 
@@ -154,7 +154,7 @@ export function SequencerView() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -205,7 +205,7 @@ export function SequencerView() {
     }
 ];
 
-    const uiName = "音序器视图"
+    const uiName = "音序器界面"
     const uiDescription = "用于轨道、Pattern 与音符编辑的主视图"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -238,9 +238,9 @@ export function SequencerView() {
 ### 音符垫
 
 - 用于输入与试听音符。
-- 布局模式：Scale、Chromatic、Piano、Drum。
+- 布局模式：Scale音阶视图、Chromatic半音视图、Piano钢琴视图、Drum鼓机视图。
 - 在支持且启用时提供力度感应输入。
-- 在音序器视图中，若已选择步，点按音符会在所选步上切换这些音符。
+- 在音序器界面中，若已选择步，点按音符会在所选步上切换这些音符。
 - 若音序器正在播放且录音已开启，输入的音符会直接被录入。
 
 ### Shift 修饰
@@ -658,7 +658,7 @@ export function PatternSelectorUI() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -887,7 +887,7 @@ export function PatternLengthModifierUI() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -939,7 +939,7 @@ export function PatternLengthModifierUI() {
 ];
 
     const uiName = "Pattern 长度调整"
-    const uiDescription = "调整 Pattern 长度。按住步即可启用。"
+    const uiDescription = "调整 Pattern 长度，按住步即可启用"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1109,7 +1109,7 @@ export function ClearModifierUI() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -1160,7 +1160,7 @@ export function ClearModifierUI() {
     }
 ];
 
-    const uiName = "音序器视图 - 清除"
+    const uiName = "音序器界面 - 清除"
     const uiDescription = "用于步、Pattern 与片段的清除操作"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -1328,7 +1328,7 @@ export function CopyModifierUI() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -1379,7 +1379,7 @@ export function CopyModifierUI() {
     }
 ];
 
-    const uiName = "音序器视图 - 复制"
+    const uiName = "音序器界面 - 复制"
     const uiDescription = "复制源与目标的选择"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -1603,8 +1603,8 @@ export function SequencerStepSelected() {
     }
 ];
 
-    const uiName = "音序器视图 - 步已选中"
-    const uiDescription = "任一步被选中后的音序器视图。"
+    const uiName = "音序器界面 - 步已选中"
+    const uiDescription = "任一步被选中后的音序器界面"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -1820,8 +1820,8 @@ export function SequencerPatternSelected() {
     },
 ];
 
-    const uiName = "音序器视图 - Pattern 已选中"
-    const uiDescription = "任一 Pattern 被选中后的音序器视图。"
+    const uiName = "音序器界面 - Pattern 已选中"
+    const uiDescription = "任一 Pattern 被选中后的音序器界面"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -2008,7 +2008,7 @@ export function SequencerTwoPatternView() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -2059,8 +2059,8 @@ export function SequencerTwoPatternView() {
     }
 ];
 
-    const uiName = "音序器视图 - 双 Pattern 视图"
-    const uiDescription = "启用双 Pattern 视图的主音序器视图"
+    const uiName = "音序器界面 - 双 Pattern 视图"
+    const uiDescription = "启用双 Pattern 视图的主音序器界面"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -2193,7 +2193,7 @@ export function StepDetailMenu() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -2223,8 +2223,8 @@ export function StepDetailMenu() {
         ]
     },
     {
-        "name": "返回音序器视图",
-        "desc": "返回音序器视图。",
+        "name": "返回音序器界面",
+        "desc": "返回音序器界面。",
         "elements": [
             {
                 "pos": [6, 7],
@@ -2400,7 +2400,7 @@ export function ClipLauncherUI() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -2576,7 +2576,7 @@ export function ClipLauncherWideUI() {
         ]
     },
     {
-        "name": "混音器视图",
+        "name": "混音器界面",
         "desc": "进入混音器。",
         "elements": [
             {
@@ -2639,7 +2639,7 @@ export function ClipLauncherWideUI() {
 
 <ClipLauncherWideUI />
 
-## 混音器视图
+## 混音器界面
 
 - 每轨 3 行：静音（Y=0）、独奏（Y=1）、录音（Y=2）。
 - 任何轨道处于独奏时，静音会被禁用。
@@ -2710,7 +2710,7 @@ export function MixerViewUI() {
     }
 ];
 
-    const uiName = "混音器视图"
+    const uiName = "混音器界面"
     const uiDescription = "每轨静音、独奏与录音控制"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -2768,8 +2768,8 @@ export function ActionMenuUI() {
         ]
     },
     {
-        "name": "BPM 选择器",
-        "desc": "打开 BPM 选择器。",
+        "name": "BPM设置界面",
+        "desc": "打开BPM设置界面。",
         "elements": [
             {
                 "pos": [0, 2],
@@ -2788,8 +2788,8 @@ export function ActionMenuUI() {
         ]
     },
     {
-        "name": "拍号选择器",
-        "desc": "打开拍号选择器。",
+        "name": "拍数选择界面",
+        "desc": "打开拍数选择界面。",
         "elements": [
             {
                 "pos": [0, 4],
@@ -2863,8 +2863,8 @@ export function ActionMenuUI() {
         ]
     },
     {
-        "name": "序列浏览器",
-        "desc": "打开序列浏览器。",
+        "name": "预设管理界面",
+        "desc": "打开预设管理界面",
         "elements": [
             {
                 "pos": [2, 7],
@@ -2916,7 +2916,7 @@ export function ActionMenuUI() {
 
 要保存序列，请双击中心箭头按钮。
 
-### BPM 选择器
+### BPM设置界面
 
 使用粗调按钮调整速度，并提供重置快捷键。 <br/>
 点按数值显示可手动敲入 BPM。 <br/>
@@ -2982,7 +2982,7 @@ export function BPMSelectorUI() {
     },
     {
         "name": "时钟输出",
-        "desc": "切换时钟输出。",
+        "desc": "打开或关闭时钟输出",
         "elements": [
             {
                 "pos": [0, 6],
@@ -2991,8 +2991,8 @@ export function BPMSelectorUI() {
         ]
     },
     {
-        "name": "重置 BPM",
-        "desc": "将 BPM 重置为默认值。",
+        "name": "重置BPM",
+        "desc": "将BPM重置为默认值",
         "elements": [
             {
                 "pos": [7, 6],
@@ -3002,8 +3002,8 @@ export function BPMSelectorUI() {
     }
 ];
 
-    const uiName = "BPM 选择器"
-    const uiDescription = "敲入速度、调整与时钟输出"
+    const uiName = "BPM设置界面"
+    const uiDescription = "手动敲入速度、调整与时钟输出"
     return <MystrixVisualizer
     uiName = {uiName}
     uiDescription = {uiDescription}
@@ -3073,7 +3073,7 @@ export function SwingSelectorUI() {
     },
     {
         "name": "重置摇摆",
-        "desc": "将摇摆重置为默认值。",
+        "desc": "将摇摆重置为默认值",
         "elements": [
             {
                 "pos": [7, 6],
@@ -3095,7 +3095,7 @@ export function SwingSelectorUI() {
 
 <SwingSelectorUI />
 
-### 拍号选择器
+### 拍数选择界面
 
 使用专用增减键设置每小节拍数与拍单位。<br/>
 这会影响片段启动器中的切换行为。
@@ -3104,8 +3104,8 @@ export function TimeSignatureSelectorUI() {
 
     const uiElements = [
     {
-        "name": "拍号 - 拍数",
-        "desc": "显示每小节拍数",
+        "name": "拍数",
+        "desc": "设置每小节有几拍",
         "elements": [
             {
                 "pos": [1, 0],
@@ -3124,8 +3124,8 @@ export function TimeSignatureSelectorUI() {
         ]
     },
     {
-        "name": "拍号 - 拍单位",
-        "desc": "显示拍单位",
+        "name": "拍的单位",
+        "desc": "以几分音符为一拍",
         "elements": [
             {
                 "pos": [5, 0],
@@ -3145,7 +3145,7 @@ export function TimeSignatureSelectorUI() {
     },
     {
         "name": "拍数 -1",
-        "desc": "减少每小节拍数。",
+        "desc": "减少每小节拍数",
         "elements": [
             {
                 "pos": [1, 7],
@@ -3155,7 +3155,7 @@ export function TimeSignatureSelectorUI() {
     },
     {
         "name": "拍数 +1",
-        "desc": "增加每小节拍数。",
+        "desc": "增加每小节拍数",
         "elements": [
             {
                 "pos": [2, 7],
@@ -3165,7 +3165,7 @@ export function TimeSignatureSelectorUI() {
     },
     {
         "name": "拍单位 -1",
-        "desc": "减小拍单位。",
+        "desc": "减小拍单位",
         "elements": [
             {
                 "pos": [5, 7],
@@ -3175,7 +3175,7 @@ export function TimeSignatureSelectorUI() {
     },
     {
         "name": "拍单位 +1",
-        "desc": "增大拍单位。",
+        "desc": "增大拍单位",
         "elements": [
             {
                 "pos": [6, 7],
@@ -3185,7 +3185,7 @@ export function TimeSignatureSelectorUI() {
     }
 ];
 
-    const uiName = "拍号选择器"
+    const uiName = "拍数选择界面"
     const uiDescription = "每小节拍数与拍单位控制"
     return <MystrixVisualizer
     uiName = {uiName}
@@ -3206,7 +3206,7 @@ export function PatternLengthSelectorUI() {
     const uiElements = [
     {
         "name": "Pattern 长度显示",
-        "desc": "显示当前 Pattern 长度。",
+        "desc": "显示当前 Pattern 长度",
         "elements": [
             {
                 "pos": [4, 0],
@@ -3227,7 +3227,7 @@ export function PatternLengthSelectorUI() {
     },
     {
         "name": "Pattern 长度网格",
-        "desc": "从 1-64 步选择长度。",
+        "desc": "从 1-64 步选择长度",
         "elements": [
             {
                 "pos": [0, 6],
@@ -3238,7 +3238,7 @@ export function PatternLengthSelectorUI() {
     },
     {
         "name": "更新空 Pattern",
-        "desc": "将长度应用到空 Pattern。",
+        "desc": "将长度应用到空 Pattern",
         "elements": [
             {
                 "pos": [7, 5],
@@ -3273,7 +3273,7 @@ export function TrackLayoutSelectorNoteUI() {
     const uiElements = [
     {
         "name": "轨道选择",
-        "desc": "选择轨道以编辑其布局。",
+        "desc": "选择轨道以编辑其布局",
         "elements": [
             {
                 "pos": [0, 0],
@@ -3310,8 +3310,8 @@ export function TrackLayoutSelectorNoteUI() {
         ]
     },
     {
-        "name": "音符模式 - Scale 布局",
-        "desc": "音符模式下的 Scale 布局。",
+        "name": "Scale音阶布局",
+        "desc": "音符模式下的Scale音阶布局",
         "elements": [
             {
                 "pos": [0, 1],
@@ -3320,8 +3320,8 @@ export function TrackLayoutSelectorNoteUI() {
         ]
     },
     {
-        "name": "音符模式 - Chromatic 布局",
-        "desc": "音符模式下的 Chromatic 布局。",
+        "name": "Chromatic半音布局",
+        "desc": "音符模式下的Chromatic半音布局",
         "elements": [
             {
                 "pos": [1, 1],
@@ -3330,8 +3330,8 @@ export function TrackLayoutSelectorNoteUI() {
         ]
     },
     {
-        "name": "音符模式 - Piano 布局",
-        "desc": "音符模式下的 Piano 布局。",
+        "name": "Piano钢琴布局",
+        "desc": "音符模式下的Piano钢琴布局",
         "elements": [
             {
                 "pos": [2, 1],
@@ -3340,8 +3340,8 @@ export function TrackLayoutSelectorNoteUI() {
         ]
     },
     {
-        "name": "音符模式 - Drum 布局",
-        "desc": "音符模式下的 Drum 布局。",
+        "name": "Drum鼓机布局",
+        "desc": "音符模式下的Drum鼓机布局",
         "elements": [
             {
                 "pos": [3, 1],
@@ -3351,7 +3351,7 @@ export function TrackLayoutSelectorNoteUI() {
     },
     {
         "name": "音符映射测试",
-        "desc": "切换音符映射测试。",
+        "desc": "切换音符映射测试",
         "elements": [
             {
                 "pos": [0, 2],
@@ -3361,7 +3361,7 @@ export function TrackLayoutSelectorNoteUI() {
     },
     {
         "name": "强制音阶",
-        "desc": "强制音符落在所选音阶内。",
+        "desc": "强制音符落在所选音阶内",
         "elements": [
             {
                 "pos": [1, 2],
@@ -3371,7 +3371,7 @@ export function TrackLayoutSelectorNoteUI() {
     },
     {
         "name": "自定义音阶",
-        "desc": "启用自定义音阶编辑。",
+        "desc": "进入自定义音阶编辑模式",
         "elements": [
             {
                 "pos": [2, 2],
@@ -3381,7 +3381,7 @@ export function TrackLayoutSelectorNoteUI() {
     },
     {
         "name": "应用到音符轨道",
-        "desc": "将布局设置应用到其他音符轨道。",
+        "desc": "将布局设置应用到其他音符轨道",
         "elements": [
             {
                 "pos": [7, 2],
@@ -3434,7 +3434,7 @@ export function TrackLayoutSelectorNoteUI() {
     },
     {
         "name": "现代自然音阶切换",
-        "desc": "在经典与现代自然音阶模式间切换（影响根音偏移行为）。",
+        "desc": "在经典与现代自然音阶模式间切换（影响根音偏移行为）",
         "link": "#modern-diatonic",
         "elements": [
             {
@@ -3915,7 +3915,7 @@ export function TrackChannelSelectorUI() {
 
 <TrackChannelSelectorUI />
 
-### 序列浏览器
+### 预设管理界面
 
 管理已保存序列：加载、复制、清除，并为序列选择颜色。
 
@@ -3924,7 +3924,7 @@ export function SequenceBrowserUI() {
     const uiElements = [
     {
         "name": "槽位网格",
-        "desc": "8x6 序列槽位网格。",
+        "desc": "8x6 序列槽位网格",
         "elements": [
             {
                 "pos": [0, 0],
@@ -3935,7 +3935,7 @@ export function SequenceBrowserUI() {
     },
     {
         "name": "已保存槽位",
-        "desc": "已有序列的槽位显示其颜色。",
+        "desc": "已有序列的槽位显示其颜色",
         "elements": [
             {
                 "pos": [0, 0],
@@ -3963,7 +3963,7 @@ export function SequenceBrowserUI() {
     },
     {
         "name": "清除",
-        "desc": "用于槽位的清除修饰。",
+        "desc": "用于清除存储的预设",
         "elements": [
             {
                 "pos": [0, 7],
@@ -3973,7 +3973,7 @@ export function SequenceBrowserUI() {
     },
     {
         "name": "颜色选择",
-        "desc": "选择序列颜色。",
+        "desc": "选择预设的颜色",
         "elements": [
             {
                 "pos": [2, 7],
@@ -3984,7 +3984,7 @@ export function SequenceBrowserUI() {
     },
     {
         "name": "复制",
-        "desc": "用于槽位的复制修饰。",
+        "desc": "用于复制保存的预设",
         "elements": [
             {
                 "pos": [7, 7],
@@ -3994,7 +3994,7 @@ export function SequenceBrowserUI() {
     }
 ];
 
-    const uiName = "序列浏览器"
+    const uiName = "预设管理界面"
     const uiDescription = "加载、复制与清除序列槽位"
     return <MystrixVisualizer
     uiName = {uiName}
