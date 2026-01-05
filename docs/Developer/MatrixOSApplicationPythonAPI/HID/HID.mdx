@@ -5,6 +5,10 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # HID API
 
+## Preview notice
+The MatrixOS Python API is in preview and is subject to change; it may contain errors.
+
+
 ## Overview
 
 The HID (Human Interface Device) system in MatrixOS allows the device to act as a USB HID device, emulating keyboards, gamepads, and custom communication protocols. The HID API is available as `MatrixOS.HID` with various submodules for different device types.
@@ -23,14 +27,6 @@ Checks if the HID subsystem is ready for operation.
 **Returns:**
 - `bool`: True if HID is ready, False otherwise
 
-**Example:**
-```python
-if MatrixOS.HID.Ready():
-    print("HID system is ready")
-    # Safe to use HID functionality
-else:
-    print("HID system not available")
-```
 
 ---
 
@@ -44,18 +40,6 @@ The keyboard HID interface allows sending keyboard input to connected devices. S
 - Text input simulation
 - Function keys and special keys
 
-**Example:**
-```python
-if MatrixOS.HID.Ready():
-    # Type the letter 'A'
-    MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
-
-    # Send Ctrl+C shortcut
-    MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-    MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_C)
-    MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_C)
-    MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-```
 
 ### Gamepad API - Game Controller Device
 The gamepad HID interface allows the device to appear as a game controller. See the [Gamepad documentation](./Gamepad) for detailed information on:
@@ -75,199 +59,4 @@ The raw HID interface provides custom communication protocols. See the [RawHID d
 
 ---
 
-## HID Device Management
 
-### Checking HID Status
-```python
-def check_hid_status():
-    """Check if various HID interfaces are ready"""
-    if MatrixOS.HID.Ready():
-        print("✓ HID system is ready")
-
-        # Test keyboard availability
-        try:
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
-            print("✓ Keyboard HID working")
-        except:
-            print("✗ Keyboard HID not available")
-    else:
-        print("✗ HID system not ready")
-
-check_hid_status()
-```
-
-### HID Mode Detection
-```python
-def detect_hid_capabilities():
-    """Detect available HID capabilities"""
-
-    capabilities = {
-        "keyboard": False,
-        "gamepad": False,
-        "rawhid": False
-    }
-
-    if MatrixOS.HID.Ready():
-        # Test each HID interface
-        try:
-            # Test keyboard
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_A)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_A)
-            capabilities["keyboard"] = True
-        except:
-            pass
-
-        # Additional capability tests would go here
-
-    return capabilities
-
-caps = detect_hid_capabilities()
-print("Available HID capabilities:", caps)
-```
-
----
-
-## Integration Examples
-
-### Multi-Modal HID Controller
-```python
-def multi_modal_controller():
-    """Example of using multiple HID interfaces"""
-
-    mode = "keyboard"  # keyboard, gamepad
-
-    print(f"Multi-modal HID controller - Mode: {mode}")
-    print("Press keys to interact, key 63 to switch modes")
-
-    while True:
-        if not MatrixOS.HID.Ready():
-            print("HID not ready, retrying...")
-            MatrixOS.SYS.DelayMs(1000)
-            continue
-
-        key_event = MatrixOS.KeyPad.Get(100)
-        if key_event is not None:
-            key_id = key_event.ID()
-            key_info = key_event.KeyInfo()
-
-            if key_info.Active():
-                if key_id == 63:  # Mode switch key
-                    modes = ["keyboard", "gamepad"]
-                    current_idx = modes.index(mode)
-                    mode = modes[(current_idx + 1) % len(modes)]
-                    print(f"Switched to {mode} mode")
-
-                elif mode == "keyboard":
-                    # Keyboard mode - map keys to letters
-                    if key_id < 26:  # A-Z
-                        keycode = getattr(KeyboardKeycode, f"KEY_{chr(65 + key_id)}")
-                        MatrixOS.HID.Keyboard.Tap(keycode)
-
-                elif mode == "gamepad":
-                    # Gamepad mode - map to gamepad buttons
-                    print(f"Gamepad button {key_id} pressed")
-
-multi_modal_controller()
-```
-
-### Keyboard Macro System
-```python
-def keyboard_macro_system():
-    """Keyboard macro system using HID interface"""
-
-    macros = {
-        # Keyboard macros
-        0: {"name": "Copy", "action": "ctrl+c"},
-        1: {"name": "Paste", "action": "ctrl+v"},
-        2: {"name": "Undo", "action": "ctrl+z"},
-        3: {"name": "Redo", "action": "ctrl+y"},
-        8: {"name": "Select All", "action": "ctrl+a"},
-        9: {"name": "Save", "action": "ctrl+s"},
-        10: {"name": "Find", "action": "ctrl+f"},
-        16: {"name": "Alt+Tab", "action": "alt+tab"},
-    }
-
-    def execute_macro(macro):
-        """Execute a keyboard macro"""
-        action = macro["action"]
-
-        if action == "ctrl+c":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_C)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-        elif action == "ctrl+v":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_V)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-        elif action == "ctrl+z":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_Z)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-        elif action == "ctrl+y":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_Y)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-        elif action == "ctrl+a":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_A)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-        elif action == "ctrl+s":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_S)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-        elif action == "ctrl+f":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_CTRL)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_F)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_CTRL)
-        elif action == "alt+tab":
-            MatrixOS.HID.Keyboard.Press(KeyboardKeycode.KEY_LEFT_ALT)
-            MatrixOS.HID.Keyboard.Tap(KeyboardKeycode.KEY_TAB)
-            MatrixOS.HID.Keyboard.Release(KeyboardKeycode.KEY_LEFT_ALT)
-
-    print("Keyboard Macro System Active")
-    print("Available macros:")
-    for key_id, macro in macros.items():
-        xy = MatrixOS.KeyPad.ID2XY(key_id)
-        print(f"  Key ({xy.x},{xy.y}): {macro['name']}")
-
-    # Light up macro keys
-    for key_id in macros.keys():
-        xy = MatrixOS.KeyPad.ID2XY(key_id)
-        MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 150)
-    MatrixOS.LED.Update(255)
-
-    while True:
-        if MatrixOS.HID.Ready():
-            key_event = MatrixOS.KeyPad.Get(100)
-            if key_event is not None:
-                key_id = key_event.ID()
-                key_info = key_event.KeyInfo()
-
-                if key_info.Active() and key_id in macros:
-                    print(f"Executing macro: {macros[key_id]['name']}")
-                    execute_macro(macros[key_id])
-
-                    # Visual feedback
-                    xy = MatrixOS.KeyPad.ID2XY(key_id)
-                    MatrixOS.LED.SetColor(xy, Color(255, 255, 255), 255)
-                    MatrixOS.LED.Update(255)
-                    MatrixOS.SYS.DelayMs(150)
-                    MatrixOS.LED.SetColor(xy, Color(0, 255, 0), 150)
-                    MatrixOS.LED.Update(255)
-
-keyboard_macro_system()
-```
-
----
-
-## HID Modes and Behavior
-
-The HID functionality depends on various system conditions:
-
-- **USB Connection**: Most HID functionality requires active USB connection
-- **Host OS Support**: Different operating systems may handle HID devices differently
-- **Device Configuration**: HID capabilities depend on device configuration and build options
-- **Interface Priority**: Some HID interfaces may have priority over others
-- **Power Management**: HID operation may affect power consumption and sleep modes
-
-Check the specific MatrixOS configuration and device capabilities for detailed HID mode support.

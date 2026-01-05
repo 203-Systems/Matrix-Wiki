@@ -5,6 +5,10 @@ import GithubLink from '@site/src/components/GithubLink/GithubLink';
 
 # UI Framework
 
+## Preview notice
+The MatrixOS Python API is in preview and is subject to change; it may contain errors.
+
+
 :::warning Development Status
 You can only use the UI Utilities API in OS 3.0.
 The UI Framework & Components wrapper in Python is not ready for the OS 3.0 release.
@@ -28,11 +32,6 @@ class UI:
 
 Creates a new UI instance for building interactive interfaces.
 
-**Example:**
-```python
-
-ui = UI()
-```
 
 ---
 
@@ -48,12 +47,6 @@ Starts the UI, making it active and visible on the device.
 **Returns:**
 - `bool`: True if successful
 
-**Example:**
-```python
-ui = UI()
-# Configure UI...
-ui.Start()  # Launch the UI
-```
 
 ---
 
@@ -117,13 +110,6 @@ Sets the setup callback function, called once when UI starts.
 **Returns:**
 - `bool`: True if successful
 
-**Example:**
-```python
-def setup_callback():
-    print("UI setup complete")
-
-ui.SetSetupFunc(setup_callback)
-```
 
 ---
 
@@ -200,13 +186,6 @@ Sets the key event handler for processing input events.
 **Returns:**
 - `bool`: True if successful
 
-**Example:**
-```python
-def handle_key_event(key_event):
-    print(f"Key at ({key_event.xy.x}, {key_event.xy.y}) pressed")
-
-ui.SetKeyEventHandler(handle_key_event)
-```
 
 ---
 
@@ -226,13 +205,6 @@ Adds a UI component to the interface at the specified position.
 **Returns:**
 - `bool`: True if successful
 
-**Example:**
-```python
-
-button = UIButton()
-button.SetName("Test")
-ui.AddUIComponent(button, Point(2, 2))
-```
 
 ---
 
@@ -278,53 +250,7 @@ Sets the frame rate for UI updates.
 **Returns:**
 - `bool`: True if successful
 
-**Example:**
-```python
-ui.SetFPS(30)  # Set to 30 FPS
-```
-
 ---
-
-## Complete UI Example
-
-```python
-
-# Create UI instance
-ui = UI()
-ui.SetName("My Interface")
-ui.SetColor(Color(0, 255, 0))
-
-# Setup callback
-def setup():
-    print("UI initialized")
-
-# Loop callback
-def loop():
-    # UI update logic here
-    pass
-
-# Key event handler
-def handle_keys(key_event):
-    if key_event.state == 1:  # Key pressed
-        print(f"Button at ({key_event.xy.x}, {key_event.xy.y}) pressed")
-
-# Configure callbacks
-ui.SetSetupFunc(setup)
-ui.SetLoopFunc(loop)
-ui.SetKeyEventHandler(handle_keys)
-
-# Add a button component
-button = UIButton()
-button.SetName("Click Me")
-button.SetColor(Color(255, 0, 0))
-ui.AddUIComponent(button, Point(3, 3))
-
-# Configure and start UI
-ui.SetFPS(30)
-ui.AllowExit(True)
-ui.Start()
-```
-
 ---
 
 ## UI Components
@@ -341,4 +267,3 @@ Value selector with multiple lighting modes and directions.
 4-pixel number display component.
 
 See individual component documentation for detailed usage information.
-
