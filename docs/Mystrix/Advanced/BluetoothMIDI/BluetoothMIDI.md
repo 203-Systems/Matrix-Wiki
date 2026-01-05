@@ -1,5 +1,6 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
+slug: /Mystrix/BluetoothMIDI
 ---
 
 import DocLink from "@site/src/components/DocLink/DocLink";

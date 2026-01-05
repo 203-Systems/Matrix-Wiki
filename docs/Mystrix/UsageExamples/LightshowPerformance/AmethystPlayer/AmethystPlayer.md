@@ -6,7 +6,7 @@ import DocLink from "@site/src/components/DocLink/DocLink";
 
 # Amethyst Player
 
-Amethyst Player is 203 System's in-house web application for performing lightshows.
+Amethyst Player is 203 Systems' in-house web application for performing lightshows.
 
 It is available on [play.203.io](https://play.203.io) as a web app or PWA (Progressive Web App).
 

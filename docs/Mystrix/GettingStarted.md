@@ -35,7 +35,7 @@ We want to build a vibrant community of Mystrix users, and we need your help!
 
 You can join the community in various ways:
 
-- Discord - [203 System](https://discord.gg/rRVCBHHPfw)
+- Discord - [203 Systems](https://discord.gg/rRVCBHHPfw)
 - Reddit - r/Mystrix (Currently banned because u/203Null was hacked, working on restoring that!)
 - GitHub - [Discussion](https://github.com/203-Systems/MatrixOS/discussions)
 - If you have other platform suggestions, leave a comment under this post or <DocLink to="/docs/Support/ConnectWithUs">Connect with Us</DocLink>

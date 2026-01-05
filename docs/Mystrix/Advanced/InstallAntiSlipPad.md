@@ -1,5 +1,6 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
+slug: /Mystrix/InstallAntiSlipPad
 ---
 
 # Install the Anti-Slip Pad

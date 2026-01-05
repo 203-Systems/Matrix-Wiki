@@ -1,5 +1,6 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
+slug: /Mystrix/InstallMicroSD
 ---
 
 # Install Micro SD Card
@@ -9,7 +10,7 @@ sidebar_position: 3
 In Matrix OS 3, a Micro SD card is required to enable Python application functionality. This guide will walk you through the process of installing a Micro SD card into your Mystrix device.
 
 :::info Mystrix 2 Users
-Mystrix 2 devices come preloaded with a 32GB SD card. This page only applies to Mystrix 1 family devices.
+Mystrix 2 devices come preloaded with a SD card. This page only applies to Mystrix 1 family devices.
 :::
 
 ## Requirements
