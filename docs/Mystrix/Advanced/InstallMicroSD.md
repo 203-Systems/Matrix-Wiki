@@ -7,7 +7,7 @@ slug: /Mystrix/InstallMicroSD
 
 ## Overview
 
-In Matrix OS 3, a Micro SD card is required to enable Python application functionality. This guide will walk you through the process of installing a Micro SD card into your Mystrix device.
+In Matrix OS 3, a Micro SD card is required to enable Python application functionality, and it is also required for the Sequencer App to save your sequences. This guide will walk you through the process of installing a Micro SD card into your Mystrix device.
 
 :::info Mystrix 2 Users
 Mystrix 2 devices come preloaded with a SD card. This page only applies to Mystrix 1 family devices.
@@ -45,6 +45,14 @@ To install the Micro SD card, you'll need to open the Mystrix device:
 2. **Remove Screws**: Carefully remove all **16 screws** from the back panel using a small Phillips head screwdriver
 3. **Keep Screws Safe**: Place all screws in a small container to prevent loss
 4. **Remove Back Panel**: Gently lift off the back panel to access the internal components
+
+:::warning Screw warning
+The screws are a bit fragile. Please be careful and do not strip them.
+
+If you need replacements, the screw spec is **M2.3x8 self-tapping sinkhead flat head**.
+
+If replacement parts are required, please [contact us](/docs/Support/ConnectWithUs).
+:::
 
 :::caution Handle with Care
 Take care when handling the internal components. Avoid touching circuit boards or sensitive components.
