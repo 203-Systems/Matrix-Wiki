@@ -42,13 +42,13 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Companion App",
-        "desc": "Enter the companion application",
-        "link": "/docs/MatrixOS/Applications/Companion",
+        "name": "Sequencer App",
+        "desc": "Enter the sequencer application",
+        "link": "/docs/MatrixOS/Applications/Sequencer",
         "elements": [
             {
                 "pos": [2, 0],
-                "color": "#0000FF"
+                "color": "#40FF00"
             }
         ]
     },
@@ -86,24 +86,35 @@ export function ApplicationLauncher() {
         ]
     },
     {
-        "name": "Reversi App",
-        "desc": "Enter the Reversi application",
-        "link": "/docs/MatrixOS/Applications/Reversi",
-        "elements": [
-            {
-                "pos": [6, 0],
-                "color": "#00C000"
-            }
-        ]
-    },
-    {
         "name": "Strum App",
         "desc": "Enter the Strum application",
         "link": "/docs/MatrixOS/Applications/Strum",
         "elements": [
             {
-                "pos": [7, 0],
+                "pos": [6, 0],
                 "color": "#FF80FF"
+            }
+        ]
+    },
+    {
+        "name": "Reversi App",
+        "desc": "Enter the Reversi application",
+        "link": "/docs/MatrixOS/Applications/Reversi",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#00C000"
+            }
+        ]
+    },
+    {
+        "name": "Companion App",
+        "desc": "Enter the companion application",
+        "link": "/docs/MatrixOS/Applications/Companion",
+        "elements": [
+            {
+                "pos": [0, 1],
+                "color": "#0000FF"
             }
         ]
     },
@@ -113,7 +124,7 @@ export function ApplicationLauncher() {
         "link": "/docs/MatrixOS/Applications/Python",
         "elements": [
             {
-                "pos": [0, 1],
+                "pos": [1, 1],
                 "color": "#4995d0"
             }
         ]
@@ -211,8 +222,19 @@ export function ApplicationLauncherEditing() {
         "link": "/docs/MatrixOS/Applications/Companion",
         "elements": [
             {
-                "pos": [2, 0],
+                "pos": [0, 1],
                 "color": "#0000C0"
+            }
+        ]
+    },
+    {
+        "name": "Sequencer App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the sequencer application",
+        "link": "/docs/MatrixOS/Applications/Sequencer",
+        "elements": [
+            {
+                "pos": [2, 0],
+                "color": "#30C000"
             }
         ]
     },
@@ -250,24 +272,24 @@ export function ApplicationLauncherEditing() {
         ]
     },
     {
-        "name": "Reversi App (Not Selected)",
-        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Reversi application",
-        "link": "/docs/MatrixOS/Applications/Reversi",
-        "elements": [
-            {
-                "pos": [6, 0],
-                "color": "#009000"
-            }
-        ]
-    },
-    {
         "name": "Strum App (Not Selected)",
         "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Strum application",
         "link": "/docs/MatrixOS/Applications/Strum",
         "elements": [
             {
-                "pos": [7, 0],
+                "pos": [6, 0],
                 "color": "#C060C0"
+            }
+        ]
+    },
+    {
+        "name": "Reversi App (Not Selected)",
+        "desc": "If active app selected: Swap position with the selected application.\nIf no active app selected: Select the Reversi application",
+        "link": "/docs/MatrixOS/Applications/Reversi",
+        "elements": [
+            {
+                "pos": [7, 0],
+                "color": "#009000"
             }
         ]
     },
@@ -277,7 +299,7 @@ export function ApplicationLauncherEditing() {
         "link": "/docs/MatrixOS/Applications/Python",
         "elements": [
             {
-                "pos": [0, 1],
+                "pos": [1, 1],
                 "color": "#36709C"
             }
         ]
